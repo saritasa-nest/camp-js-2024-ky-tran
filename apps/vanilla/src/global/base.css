@@ -15,7 +15,7 @@ body {
   min-height: 100vh;
   color: var(--main-text-color);
   background: var(--main-background-color);
-  font-family: "Inter";
+  font-family: Inter, sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   line-height: 1.4;

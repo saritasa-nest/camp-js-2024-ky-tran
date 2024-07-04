@@ -1,8 +1,11 @@
-/* I use em to avoid unexpected behaviors based on this article -> https://zellwk.com/blog/media-query-units/ */
-/* Change px to em -> https://www.w3schools.com/tags/ref_pxtoemconversion.asp */
-/* I haven't seen best practices about media query in Wiki so I decided to use em here, if Saritasa has some requirements about this problem, please notice me in the Code Review, thanks so much. */
-
 /*
+  Use em to avoid unexpected behaviors based on this article -> https://zellwk.com/blog/media-query-units/
+  Change px to em -> https://www.w3schools.com/tags/ref_pxtoemconversion.asp
+
+  I haven't seen best practices about media query in Wiki
+  so I decided to use em here, if Saritasa has some requirements about this problem,
+  please notice me in the Code Review, thanks so much.
+
   In the design we have breakpoints 1280px, 786px and 360px
   I add 2 more breakpoints: 1024px and 640px to make the layout more flexible but don't break the rules of the design
   Additional breakpoints based on Tailwindcss -> Check it here: https://v1.tailwindcss.com/docs/breakpoints
@@ -70,7 +73,6 @@
   .content-gap {
     display: none;
   }
-
 
   /* Category styles */
 
@@ -142,7 +144,6 @@
     text-align: right;
     margin-top: var(--gap-regular);
   }
-
 }
 
 /* 360px */

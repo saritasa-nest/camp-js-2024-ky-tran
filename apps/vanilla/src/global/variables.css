@@ -3,17 +3,23 @@
   --heading-color-2: #e9967a;
   --heading-color-3: #b0e0e6;
 
+  /* Colors */
+
   --main-background-color: #fff;
   --main-text-color: #000;
 
   /* 0.05 */
   --shadow-color-tiny: #0000000d;
+
   /* 0.1 */
   --shadow-color-small: #0000001a;
+
   /* 0.15 */
   --shadow-color-regular: #00000026;
+
   /* 0.2 */
-  --shadow-color-medium: #00000033;
+  --shadow-color-medium: #0003;
+
   /* 0.5 */
   --shadow-color-large: #00000080;
 
@@ -25,14 +31,12 @@
   --width-main-layout-number: 1360;
   --width-sub-layout-number: 900;
   --width-tiny-layout-number: 380;
-
   --gap-small: 8px;
   --gap-regular: 16px;
   --gap-medium: 24px;
   --gap-extra-medium: 32px;
   --gap-large: 40px;
   --gap-huge: 80px;
-
   --gap-large-number: 40;
   --gap-huge-number: 80;
 
@@ -40,9 +44,7 @@
 
   --height-main-header: 64px;
   --height-main-footer: 128px;
-
   --height-sub-title: 24px;
-
   --height-main-input: 48px;
   --height-sub-input: 32px;
 
@@ -51,8 +53,7 @@
   --font-size-small: 16px;
   --font-size-regular: 18px;
   --font-size-medium: 20px;
-
-  --boder-radius-tiny: 4px;
-  --boder-radius-regular: 16px;
-  --boder-radius-medium: 24px;
+  --border-radius-tiny: 4px;
+  --border-radius-regular: 16px;
+  --border-radius-medium: 24px;
 }

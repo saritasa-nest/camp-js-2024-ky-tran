@@ -76,10 +76,14 @@
   display: flex;
   flex-direction: column;
   gap: var(--gap-large);
-  /* The reason we need to substract gap 2 times */
-  /* [main-header] [gap] [content] [gap] [main-footer] */
+
+  /*
+    The reason we need to subtract gap 2 time
+    [main-header] [gap] [content] [gap] [main-footer]
+  */
   height: calc(100vh - var(--height-main-header) - var(--height-main-footer) - 2 * var(--gap-medium));
   overflow-y: scroll;
+
   /* This help hide scrollbar on Firefox, Safari and IE */
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -89,7 +93,6 @@
 .category::-webkit-scrollbar {
   display: none;
 }
-
 
 .category__books {
   display: flex;
@@ -102,6 +105,7 @@
   background-color: var(--main-background-color);
   padding-bottom: var(--gap-medium);
   position: sticky;
+
   /* top: 0; sometimes cause unexpected behavior */
   top: -1px;
 }
@@ -114,13 +118,13 @@
 
 .category__book-image {
   /*
-    We use backgound-image here so instead of using height, we use padding-top
+    We use background-image here so instead of using height, we use padding-top
     with percent value, now this value will based on the width of the item
     -> Make the UI flexible for easier responsive
   */
   padding-top: 150%;
   margin-bottom: var(--gap-small);
-  border-radius: var(--boder-radius-medium);
+  border-radius: var(--border-radius-medium);
   border: 1px solid var(--shadow-color-small);
   background-color: var(--main-text-color);
   background-image: url("/assets/images/books/image-3.png");
@@ -131,7 +135,9 @@
 
 .category__book-title {
   /* In case long title -> only display as 2 lines of text + ... */
+
   /* e.g: A book is so cool -> A book is... */
+  /* stylelint-disable-next-line value-no-vendor-prefix */
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -151,7 +157,6 @@
 .filter {
   /* https://monosnap.com/file/vJ8gzEqXQhu77XzeCbj7djNiNQ2rj1 */
   flex: calc(var(--width-tiny-layout-number) / var(--width-main-layout-number));
-
 }
 
 .filter__title {
@@ -167,9 +172,10 @@
 #sort {
   display: block;
   width: 100%;
+
   /* Set height like this violates the Wiki best practices but this is for easier to calculate layout later */
   height: var(--height-main-input);
-  border-radius: var(--boder-radius-regular);
+  border-radius: var(--border-radius-regular);
 }
 
 .filter__input-search-icon,
@@ -181,6 +187,7 @@
 
 .filter__input-search-icon {
   --search-icon-size: 20px;
+
   width: var(--search-icon-size);
   height: var(--search-icon-size);
   left: var(--gap-regular);
@@ -189,6 +196,7 @@
 #search {
   background: var(--shadow-color-tiny);
   padding: var(--gap-small) 0;
+
   /* 48px -> Leave space for icon */
   padding-left: 48px;
   padding-right: var(--gap-medium);
@@ -196,6 +204,7 @@
 
 .filter__input-sort-icon {
   --sort-icon-size: 18px;
+
   width: var(--sort-icon-size);
   right: var(--gap-regular);
 }
@@ -206,15 +215,18 @@
   padding: var(--gap-small) var(--gap-regular);
   border: none;
   cursor: pointer;
+
   /* Remove default arrow */
   appearance: none;
+  /* stylelint-disable-next-line property-no-vendor-prefix */
   -webkit-appearance: none;
+  /* stylelint-disable-next-line property-no-vendor-prefix */
   -moz-appearance: none;
 }
 
-
 #sort:focus {
   outline: 1px solid var(--main-text-color);
+
   /* On mobile outline is out of parent element */
   outline-offset: -4px;
 }
@@ -224,6 +236,7 @@
   align-items: center;
   justify-content: flex-start;
   gap: var(--gap-regular);
+
   /* Set height like this violates the Wiki best practices but this is for easier to calculate layout later */
   height: var(--height-sub-input);
   cursor: pointer;
@@ -233,20 +246,21 @@
   display: none;
 }
 
-#show-comics+.show-comics__box {
+#show-comics + .show-comics__box {
   --check-box-size: 20px;
+
   display: block;
   width: var(--check-box-size);
   height: var(--check-box-size);
   border: 2px solid var(--shadow-color-medium);
-  border-radius: var(--boder-radius-tiny);
+  border-radius: var(--border-radius-tiny);
   position: relative;
   cursor: pointer;
 }
 
-/* Style the checkmark (hidden by default) */
-#show-comics+.show-comics__box::after {
-  content: '';
+/* Style the check mark (hidden by default) */
+#show-comics + .show-comics__box::after {
+  content: "";
   display: none;
   position: absolute;
   left: 4px;
@@ -257,8 +271,8 @@
   transform: rotate(45deg);
 }
 
-/* Show the checkmark when the checkbox is checked */
-#show-comics:checked+.show-comics__box::after {
+/* Show the check mark when the checkbox is checked */
+#show-comics:checked + .show-comics__box::after {
   display: block;
 }
 
