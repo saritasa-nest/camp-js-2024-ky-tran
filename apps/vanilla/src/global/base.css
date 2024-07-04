@@ -1,4 +1,35 @@
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: inherit;
+}
+
 html {
-  font-size: 20px;
-  font-family: system-ui, sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  color: var(--main-text-color);
+  background: var(--main-background-color);
+  font-family: "Inter";
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.4;
+  position: relative;
+  overflow-x: hidden;
+}
+
+button,
+input {
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
+
+button {
+  cursor: pointer;
 }

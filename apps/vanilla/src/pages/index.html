@@ -1,16 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./index.css" />
-    <title>Vite App</title>
-  </head>
-  <body class="default-layout">
-    <h1 class="title">Main page ⚡</h1>
-    <div class="links">
-      <a href="example/">Go to example page</a>
-    </div>
-    <script type="module" src="./index.ts"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Discover and organize books effortlessly with Saritasa's Book Catalog. Enjoy a vast collection, detailed descriptions, user reviews, and personalized recommendations. Create and manage your collections while connecting with a community of readers.">
+
+  <link rel="apple-touch-icon" href="/assets/images/logos/touchicon-apple-180.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./styles/index.css" />
+  <link rel="stylesheet" href="./styles/index-responsive.css" title="Resposive stylesheet" />
+
+  <title>Saritasa &mdash; Book Catalog</title>
+
+</head>
+
+<body class="main">
+  <main class="container">
+    <!-- HEADER -->
+    <header class="main-header">
+      <h1 class="logo-font-bold main-header__title ">📚 Books app</h1>
+    </header>
+
+    <main class="content">
+      <!-- BOOKS -->
+      <div class="category">
+        <section class="category__books">
+          <h2 class="category__books-header">
+            <span class="subtitle-font-semibold category__books-header-year">2020</span>
+            <span class="subtitle-font-semibold">YEAR</span>
+          </h2>
+
+          <div class="category__books-body">
+            <article class="category__book">
+              <div class="category__book-image"></div>
+              <h3 class="body-font-small category__book-title">Master Debugging Skills in Software Engineering
+              </h3>
+            </article>
+
+            <article class="category__book">
+              <div class="category__book-image"></div>
+              <h3 class="body-font-small category__book-title">Master Debugging Skills in Software Engineering
+              </h3>
+            </article>
+
+            <article class="category__book">
+              <div class="category__book-image"></div>
+              <h3 class="body-font-small category__book-title">Master Debugging Skills in Software Engineering
+              </h3>
+            </article>
+          </div>
+        </section>
+
+        <section class="category__books">
+          <h2 class="category__books-header">
+            <span class="subtitle-font-semibold category__books-header-year">1980</span>
+            <span class="subtitle-font-semibold">YEAR</span>
+          </h2>
+
+          <div class="category__books-body">
+            <article class="category__book">
+              <div class="category__book-image"></div>
+              <h3 class="body-font-small category__book-title">Master Debugging Skills in Software Engineering
+              </h3>
+            </article>
+
+            <article class="category__book">
+              <div class="category__book-image"></div>
+              <h3 class="body-font-small category__book-title">Master Debugging Skills in Software Engineering
+              </h3>
+            </article>
+
+            <article class="category__book">
+              <div class="category__book-image"></div>
+              <h3 class="body-font-small category__book-title">Master Debugging Skills in Software Engineering
+              </h3>
+            </article>
+
+            <article class="category__book">
+              <div class="category__book-image"></div>
+              <h3 class="body-font-small category__book-title">Master Debugging Skills in Software Engineering
+              </h3>
+            </article>
+
+            <article class="category__book">
+              <div class="category__book-image"></div>
+              <h3 class="body-font-small category__book-title">Master Debugging Skills in Software Engineering
+              </h3>
+            </article>
+
+            <article class="category__book">
+              <div class="category__book-image"></div>
+              <h3 class="body-font-small category__book-title">Master Debugging Skills in Software Engineering
+              </h3>
+            </article>
+          </div>
+        </section>
+
+        <section class="category__books">
+          <h2 class="category__books-header">
+            <span class="subtitle-font-semibold category__books-header-year">1920</span>
+            <span class="subtitle-font-semibold">YEAR</span>
+          </h2>
+
+          <div class="category__books-body">
+            <article class="category__book">
+              <div class="category__book-image"></div>
+              <h3 class="body-font-small category__book-title">Master Debugging Skills in Software Engineering
+              </h3>
+            </article>
+
+            <article class="category__book">
+              <div class="category__book-image"></div>
+              <h3 class="body-font-small category__book-title">Master Debugging Skills in Software Engineering
+              </h3>
+            </article>
+
+            <article class="category__book">
+              <div class="category__book-image"></div>
+              <h3 class="body-font-small category__book-title">Master Debugging Skills in Software Engineering
+              </h3>
+            </article>
+
+            <article class="category__book">
+              <div class="category__book-image"></div>
+              <h3 class="body-font-small category__book-title">Master Debugging Skills in Software Engineering
+              </h3>
+            </article>
+
+            <article class="category__book">
+              <div class="category__book-image"></div>
+              <h3 class="body-font-small category__book-title">Master Debugging Skills in Software Engineering
+              </h3>
+            </article>
+
+            <article class="category__book">
+              <div class="category__book-image"></div>
+              <h3 class="body-font-small category__book-title">Master Debugging Skills in Software Engineering
+              </h3>
+            </article>
+          </div>
+        </section>
+      </div>
+
+      <!-- Support layout of Desktop UI -> Check here for information: https://monosnap.com/file/vJ8gzEqXQhu77XzeCbj7djNiNQ2rj1 -->
+      <!-- Why not use flex gap? -> It will make the width item not like what we as expected in the design -->
+      <div class="content-gap"></div>
+
+      <!-- SEARCH & SORT -->
+      <aside class="filter">
+        <h2 class="subtitle-font-semibold filter__title">Filters</h2>
+
+        <div class="filter-inputs">
+          <div class="filter__input-group filter__input-group--search">
+            <img class="filter__input-search-icon" src="/assets/images/icons/search.svg" alt="Input search icon">
+            <input id="search" class="body-font-regular" name="search" type="text"
+              placeholder="e.g. &quot;Refactoring&quot;">
+          </div>
+
+          <div class="filter__input-group filter__input-group--sort">
+            <img class="filter__input-sort-icon" src="/assets/images/icons/filter.svg" alt="Input filter icon">
+
+            <select id="sort" class="body-font-regular">
+              <option value="default">Choose sort field</option>
+              <option value="greet">привет</option>
+              <option value="">Russian girls are so beautiful</option>
+            </select>
+          </div>
+
+          <div class="filter__input-group filter__input-group--show-comics">
+            <label class="filter__input-show-comics-label" for="show-comics">
+              <input id="show-comics" type="checkbox">
+              <span class="filter__input-group-box"></span>
+              <span class="body-font-regular filter__input-group-text">Show comics</span>
+            </label>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="main-footer">
+      <div class="main-footer__more">
+        <div class="main-footer__more-info">
+          <h1 class="logo-font-bold main-footer__more-label">Books app</h1>
+          <span class="main-footer__more-copyright">© 2023</span>
+        </div>
+
+        <a href="#" class="body-font-regular main-footer__more-github">Github</a>
+      </div>
+
+      <button type="button" class="main-footer__go-to-top">
+        <span>Go to top</span>
+        <img src="/assets/images/icons/arrow-up.svg" alt="Go to top arrow up icon">
+      </button>
+    </footer>
+  </main>
+</body>
+
 </html>
