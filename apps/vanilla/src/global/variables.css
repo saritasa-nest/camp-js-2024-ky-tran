@@ -45,4 +45,14 @@
 
   --height-main-input: 48px;
   --height-sub-input: 32px;
+
+  /* Utils */
+
+  --font-size-small: 16px;
+  --font-size-regular: 18px;
+  --font-size-medium: 20px;
+
+  --boder-radius-tiny: 4px;
+  --boder-radius-regular: 16px;
+  --boder-radius-medium: 24px;
 }

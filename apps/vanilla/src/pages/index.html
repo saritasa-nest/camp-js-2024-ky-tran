@@ -23,8 +23,8 @@
 <body class="main">
   <main class="container">
     <!-- HEADER -->
-    <header class="main-header">
-      <h1 class="logo-font-bold main-header__title ">📚 Books app</h1>
+    <header class="main__header">
+      <h1 class="logo-font-bold">📚 Books app</h1>
     </header>
 
     <main class="content">
@@ -32,8 +32,8 @@
       <div class="category">
         <section class="category__books">
           <h2 class="category__books-header">
-            <span class="subtitle-font-semibold category__books-header-year">2020</span>
-            <span class="subtitle-font-semibold">YEAR</span>
+            <span class="subtitle-font-semibold letter-spacing-tiny category__books-header-year">2020</span>
+            <span class="subtitle-font-semibold letter-spacing-tiny">YEAR</span>
           </h2>
 
           <div class="category__books-body">
@@ -59,8 +59,8 @@
 
         <section class="category__books">
           <h2 class="category__books-header">
-            <span class="subtitle-font-semibold category__books-header-year">1980</span>
-            <span class="subtitle-font-semibold">YEAR</span>
+            <span class="subtitle-font-semibold letter-spacing-tiny category__books-header-year">1980</span>
+            <span class="subtitle-font-semibold letter-spacing-tiny">YEAR</span>
           </h2>
 
           <div class="category__books-body">
@@ -104,8 +104,8 @@
 
         <section class="category__books">
           <h2 class="category__books-header">
-            <span class="subtitle-font-semibold category__books-header-year">1920</span>
-            <span class="subtitle-font-semibold">YEAR</span>
+            <span class="subtitle-font-semibold letter-spacing-tiny category__books-header-year">1960</span>
+            <span class="subtitle-font-semibold letter-spacing-tiny">YEAR</span>
           </h2>
 
           <div class="category__books-body">
@@ -154,9 +154,9 @@
 
       <!-- SEARCH & SORT -->
       <aside class="filter">
-        <h2 class="subtitle-font-semibold filter__title">Filters</h2>
+        <h2 class="subtitle-font-semibold letter-spacing-tiny filter__title">Filters</h2>
 
-        <div class="filter-inputs">
+        <div class="filter__inputs">
           <div class="filter__input-group filter__input-group--search">
             <img class="filter__input-search-icon" src="/assets/images/icons/search.svg" alt="Input search icon">
             <input id="search" class="body-font-regular" name="search" type="text"
@@ -169,15 +169,14 @@
             <select id="sort" class="body-font-regular">
               <option value="default">Choose sort field</option>
               <option value="greet">привет</option>
-              <option value="">Russian girls are so beautiful</option>
             </select>
           </div>
 
-          <div class="filter__input-group filter__input-group--show-comics">
-            <label class="filter__input-show-comics-label" for="show-comics">
+          <div class="filter__input-group show-comics__container">
+            <label class="show-comics__label" for="show-comics">
               <input id="show-comics" type="checkbox">
-              <span class="filter__input-group-box"></span>
-              <span class="body-font-regular filter__input-group-text">Show comics</span>
+              <span class="show-comics__box"></span>
+              <span class="body-font-regular show-comics__text">Show comics</span>
             </label>
           </div>
         </div>
@@ -185,19 +184,19 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="main-footer">
-      <div class="main-footer__more">
-        <div class="main-footer__more-info">
-          <h1 class="logo-font-bold main-footer__more-label">Books app</h1>
-          <span class="main-footer__more-copyright">© 2023</span>
+    <footer class="main__footer">
+      <div class="main__footer-more">
+        <div class="main__footer-more-info">
+          <h1 class="logo-font-bold">Books app</h1>
+          <span class="main__footer-more-info-copyright">© 2023</span>
         </div>
 
-        <a href="#" class="body-font-regular main-footer__more-github">Github</a>
+        <a href="#" class="body-font-regular main__footer-more-github">Github</a>
       </div>
 
-      <button type="button" class="main-footer__go-to-top">
+      <button type="button" class="go-to-top">
         <span>Go to top</span>
-        <img src="/assets/images/icons/arrow-up.svg" alt="Go to top arrow up icon">
+        <img class="go-to-top__image" src="/assets/images/icons/arrow-up.svg" alt="Go to top arrow up icon">
       </button>
     </footer>
   </main>
