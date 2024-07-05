@@ -1,59 +1,59 @@
 :root {
-  --heading-color-1: #ffd700;
-  --heading-color-2: #e9967a;
-  --heading-color-3: #b0e0e6;
+	--heading-color-1: #ffd700;
+	--heading-color-2: #e9967a;
+	--heading-color-3: #b0e0e6;
 
-  /* Colors */
+	/* Colors */
 
-  --main-background-color: #fff;
-  --main-text-color: #000;
+	--main-background-color: #fff;
+	--main-text-color: #000;
+	--shadow-color-tiny: #0000000d;
+	--shadow-color-small: #0000001a;
+	--shadow-color-regular: #00000026;
+	--shadow-color-medium: #0003;
+	--shadow-color-large: #00000080;
 
-  /* 0.05 */
-  --shadow-color-tiny: #0000000d;
+	/* Layouts */
 
-  /* 0.1 */
-  --shadow-color-small: #0000001a;
+	--width-main-layout: 1360px;
+	--gap-small: 8px;
+	--gap-regular: 16px;
+	--gap-medium: 24px;
+	--gap-extra-medium: 32px;
+	--gap-large: 40px;
+	--gap-huge: 80px;
 
-  /* 0.15 */
-  --shadow-color-regular: #00000026;
+	/*
+    We need these variable to calc flex to create layout -> "flex" property requires number
+    Check this: https://monosnap.com/file/vJ8gzEqXQhu77XzeCbj7djNiNQ2rj1
+  */
+	--width-main-layout-no-unit: 1360;
+	--width-sub-layout-no-unit: 900;
+	--width-tiny-layout-no-unit: 380;
+	--gap-large-no-unit: 40;
+	--gap-huge-no-unit: 80;
 
-  /* 0.2 */
-  --shadow-color-medium: #0003;
+	/* Dimensions */
 
-  /* 0.5 */
-  --shadow-color-large: #00000080;
+	--height-main-header: 64px;
+	--height-main-footer: 128px;
+	--height-sub-title: 24px;
+	--height-main-input: 48px;
+	--height-sub-input: 32px;
+	--width-card-large: 152px;
+	--width-card-medium: 136px;
 
-  /* Layouts */
+	/* Utils */
 
-  --width-main-layout: 1360px;
-
-  /* We need these variable to calc flex to create layout */
-  --width-main-layout-number: 1360;
-  --width-sub-layout-number: 900;
-  --width-tiny-layout-number: 380;
-  --gap-small: 8px;
-  --gap-regular: 16px;
-  --gap-medium: 24px;
-  --gap-extra-medium: 32px;
-  --gap-large: 40px;
-  --gap-huge: 80px;
-  --gap-large-number: 40;
-  --gap-huge-number: 80;
-
-  /* Dimensions */
-
-  --height-main-header: 64px;
-  --height-main-footer: 128px;
-  --height-sub-title: 24px;
-  --height-main-input: 48px;
-  --height-sub-input: 32px;
-
-  /* Utils */
-
-  --font-size-small: 16px;
-  --font-size-regular: 18px;
-  --font-size-medium: 20px;
-  --border-radius-tiny: 4px;
-  --border-radius-regular: 16px;
-  --border-radius-medium: 24px;
+	--font-size-small: 1.6rem;
+	--font-size-regular: 1.8rem;
+	--font-size-medium: 2rem;
+	--border-radius-tiny: 4px;
+	--border-radius-regular: 16px;
+	--border-radius-medium: 24px;
+	--outline-tiny: 1px;
+	--icon-size-small: 14px;
+	--icon-size-medium: 18px;
+	--icon-size-large: 20px;
+	--input-space-icon: 48px;
 }

@@ -1,0 +1,381 @@
+/* Layout styles */
+
+.main {
+	display: flex;
+	justify-content: center;
+	padding: 0 var(--gap-large);
+}
+
+.container {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--gap-medium);
+	max-width: var(--width-main-layout);
+}
+
+.content {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.content-gap {
+	/* https://monosnap.com/file/vJ8gzEqXQhu77XzeCbj7djNiNQ2rj1 */
+	flex-grow: calc(var(--gap-huge-no-unit) / var(--width-main-layout-no-unit));
+}
+
+/* Header styles */
+
+.main__header {
+	width: 100%;
+	height: var(--height-main-header);
+	padding: 20px 0;
+	border-bottom: 1px solid var(--shadow-color-regular);
+}
+
+/* Category styles */
+
+.category {
+	display: flex;
+	flex-direction: column;
+	gap: var(--gap-large);
+	overflow-y: scroll;
+
+	/* https://monosnap.com/file/vJ8gzEqXQhu77XzeCbj7djNiNQ2rj1 */
+	flex: calc(var(--width-sub-layout-no-unit) / var(--width-main-layout-no-unit));
+
+	/* The reason we need to subtract gap 2 time -> [main-header] [gap] [content] [gap] [main-footer] */
+	height: calc(100vh - var(--height-main-header) - var(--height-main-footer) - 2 * var(--gap-medium));
+
+	/* This help hide scrollbar on Firefox, Safari and IE */
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
+/* This help hide scrollbar on Chrome */
+.category::-webkit-scrollbar {
+	display: none;
+}
+
+.category__books {
+	display: flex;
+	flex-direction: column;
+}
+
+.category__books-header {
+	display: flex;
+	gap: var(--gap-small);
+	background-color: var(--main-background-color);
+	padding-bottom: var(--gap-medium);
+
+	/* top: 0; sometimes cause unexpected behavior */
+	top: -1px;
+	position: sticky;
+}
+
+.category__books-body {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(var(--width-card-large), 1fr));
+	gap: var(--gap-regular);
+}
+
+.category__book-image {
+	width: 100%;
+	aspect-ratio: 2 / 3;
+	margin-bottom: var(--gap-small);
+	border-radius: var(--border-radius-medium);
+	border: 1px solid var(--shadow-color-small);
+}
+
+/* Filter styles */
+
+.filter,
+.filter__inputs {
+	display: flex;
+	flex-direction: column;
+	gap: var(--gap-medium);
+	padding: 0 var(--outline-tiny);
+}
+
+.filter {
+	/* https://monosnap.com/file/vJ8gzEqXQhu77XzeCbj7djNiNQ2rj1 */
+	flex: calc(var(--width-tiny-layout-no-unit) / var(--width-main-layout-no-unit));
+}
+
+.filter__title {
+	/* Set height like this violates the Wiki best practices but this is for easier to calculate layout later */
+	height: var(--height-sub-title);
+}
+
+.filter__input-group {
+	position: relative;
+}
+
+.search-control,
+.sort-control {
+	display: block;
+	width: 100%;
+	border-radius: var(--border-radius-regular);
+
+	/* Set height like this violates the Wiki best practices but this is for easier to calculate layout later */
+	height: var(--height-main-input);
+}
+
+.filter__input-search-icon,
+.filter__input-sort-icon {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	pointer-events: none;
+}
+
+.filter__input-search-icon {
+	width: var(--icon-size-large);
+	height: var(--icon-size-large);
+	left: var(--gap-regular);
+}
+
+.search-control {
+	background: var(--shadow-color-tiny);
+	padding: var(--gap-small) var(--gap-medium) var(--gap-small) var(--input-space-icon);
+}
+
+.filter__input-sort-icon {
+	width: var(--icon-size-medium);
+	right: var(--gap-regular);
+}
+
+.sort-control {
+	/* Remove default arrow */
+	appearance: none;
+	background: var(--shadow-color-tiny);
+	color: var(--main-text-color);
+	padding: var(--gap-small) var(--gap-regular);
+	border: none;
+	cursor: pointer;
+}
+
+.sort-control:invalid {
+	color: var(--shadow-color-large);
+}
+
+.sort-control:focus,
+.search-control:focus {
+	outline: var(--outline-tiny) solid var(--main-text-color);
+}
+
+.show-comics__label {
+	/* Set height like this violates the Wiki best practices but this is for easier to calculate layout later */
+	height: var(--height-sub-input);
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	gap: var(--gap-regular);
+	cursor: pointer;
+}
+
+.show-comics-control {
+	display: none;
+}
+
+.show-comics-control + .show-comics__box {
+	--check-box-size: 20px;
+
+	display: grid;
+	place-items: center;
+	width: var(--check-box-size);
+	height: var(--check-box-size);
+	border: 2px solid var(--shadow-color-medium);
+	border-radius: var(--border-radius-tiny);
+	cursor: pointer;
+}
+
+.show-comics-control:checked + .show-comics__box {
+	border: 2px solid var(--primary-color);
+}
+
+.show-comics-control + .show-comics__box::after {
+	--box-dimension: 10px;
+
+	display: none;
+	content: "";
+	width: var(--box-dimension);
+	height: var(--box-dimension);
+	background-color: var(--primary-dark-color);
+	border-radius: calc(var(--border-radius-tiny) - 1px);
+}
+
+.show-comics-control:checked + .show-comics__box::after {
+	display: block;
+}
+
+.show-comics__text {
+	line-height: 1;
+}
+
+/* Footer styles */
+
+.main__footer {
+	display: flex;
+	align-items: start;
+	justify-content: space-between;
+	width: 100%;
+	height: var(--height-main-footer);
+	padding-top: var(--gap-medium);
+	border-top: 1px solid var(--shadow-color-regular);
+}
+
+.main__footer-more {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--gap-medium);
+}
+
+.main__footer-more-info {
+	display: flex;
+	align-items: center;
+	gap: var(--gap-small);
+}
+
+.main__footer-more-info-copyright {
+	font-size: var(--font-size-medium);
+	line-height: 1.6;
+}
+
+.main__footer-more-github {
+	display: block;
+	color: var(--main-text-color);
+	text-decoration-line: underline;
+	border-bottom: none;
+	cursor: pointer;
+}
+
+.go-to-top {
+	font-size: var(--font-size-medium);
+	line-height: 1.2;
+}
+
+.go-to-top__image {
+	width: var(--icon-size-small);
+}
+
+/*
+  RESPONSIVE SECTION
+  Use em to avoid unexpected behaviors based on this article -> https://zellwk.com/blog/media-query-units/
+  Change px to em -> https://www.w3schools.com/tags/ref_pxtoemconversion.asp
+  In the design we have breakpoints 1280px, 786px and 360px
+  I add 2 more breakpoints: 1024px and 640px to make the layout more flexible but don't break the rules of the design
+  Additional breakpoints based on Tailwindcss -> Check it here: https://v1.tailwindcss.com/docs/breakpoints
+*/
+
+/* 1280px */
+@media only screen and (max-width: 80em) {
+	.content-gap {
+		flex-grow: calc(var(--gap-large-no-unit) / var(--width-main-layout-no-unit));
+	}
+
+	.category {
+		flex: calc((var(--width-sub-layout-no-unit) + var(--gap-large-no-unit)) / var(--width-main-layout-no-unit));
+	}
+
+	.filter {
+		flex: calc((var(--width-tiny-layout-no-unit)) / var(--width-main-layout-no-unit));
+	}
+}
+
+/* 1024px */
+@media only screen and (max-width: 64em) {
+	.category__books-body {
+		grid-template-columns: repeat(auto-fill, minmax(var(--width-card-medium), 1fr));
+	}
+
+	.search-control,
+	.sort-control,
+	.show-comics__text {
+		font-size: var(--font-size-small);
+	}
+}
+
+/* 786px */
+@media only screen and (max-width: 49.125em) {
+	.main {
+		padding: 0 var(--gap-medium);
+	}
+
+	.content {
+		flex-direction: column;
+		justify-content: flex-start;
+		height: calc(100vh - var(--height-main-header) - var(--height-main-footer) - 2 * var(--gap-medium));
+		overflow-y: scroll;
+		scrollbar-width: none;
+		-ms-overflow-style: none;
+	}
+
+	.content::-webkit-scrollbar {
+		display: none;
+	}
+
+	.content-gap {
+		display: none;
+	}
+
+	.category {
+		order: 2;
+		flex: unset;
+		overflow-y: unset;
+	}
+
+	.filter {
+		order: 1;
+		flex: unset;
+		padding-bottom: var(--gap-medium);
+		margin-bottom: var(--gap-medium);
+		border-bottom: 1px solid var(--shadow-color-regular);
+	}
+
+	.filter__inputs {
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--gap-regular);
+	}
+
+	.filter__input-group-search,
+	.filter__input-group-sort {
+		flex: 3;
+	}
+
+	.show-comics__container {
+		flex: 2;
+	}
+
+	.show-comics__label {
+		gap: var(--gap-small);
+	}
+}
+
+/* 640px */
+@media only screen and (max-width: 40em) {
+	.filter__inputs {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.main__footer {
+		flex-direction: column;
+		align-items: stretch;
+		justify-content: flex-start;
+	}
+
+	.main__footer-more {
+		justify-content: space-between;
+	}
+
+	.go-to-top {
+		text-align: right;
+		margin-top: var(--gap-regular);
+	}
+}
