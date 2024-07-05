@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { RootRouter } from './routes/RootRouter';
 import { store } from './store';
 
+/** App. */
 export const App: FC = () => (
 	<Provider store={store}>
 		<BrowserRouter>

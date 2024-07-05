@@ -4,9 +4,7 @@
 	"overrides": [
 		{
 			"files": ["**/*.css", "**/*.scss"],
-			"rules": {
-				"indentation": "tab"
-			}
+			"rules": {}
 		}
 	]
 }
