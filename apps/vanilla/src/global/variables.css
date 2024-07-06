@@ -1,8 +1,4 @@
 :root {
-	--heading-color-1: #ffd700;
-	--heading-color-2: #e9967a;
-	--heading-color-3: #b0e0e6;
-
 	/* Colors */
 
 	--main-background-color: #fff;
@@ -14,24 +10,12 @@
 	--shadow-color-large: #00000080;
 
 	/* Layouts */
-
 	--width-main-layout: 1360px;
 	--gap-small: 8px;
 	--gap-regular: 16px;
 	--gap-medium: 24px;
-	--gap-extra-medium: 32px;
 	--gap-large: 40px;
 	--gap-huge: 80px;
-
-	/*
-    We need these variable to calc flex to create layout -> "flex" property requires number
-    Check this: https://monosnap.com/file/vJ8gzEqXQhu77XzeCbj7djNiNQ2rj1
-  */
-	--width-main-layout-no-unit: 1360;
-	--width-sub-layout-no-unit: 900;
-	--width-tiny-layout-no-unit: 380;
-	--gap-large-no-unit: 40;
-	--gap-huge-no-unit: 80;
 
 	/* Dimensions */
 

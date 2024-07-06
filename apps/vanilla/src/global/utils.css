@@ -1,0 +1,10 @@
+.button-reset {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+}
+
+.input-reset {
+	border: none;
+	background-color: transparent;
+}

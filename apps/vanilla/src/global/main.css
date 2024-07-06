@@ -1,12 +1,12 @@
 /* Layout styles */
 
-.main {
+.container {
 	display: flex;
 	justify-content: center;
 	padding: 0 var(--gap-large);
 }
 
-.container {
+.main {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
@@ -16,14 +16,10 @@
 }
 
 .content {
-	display: flex;
-	justify-content: space-between;
-	width: 100%;
-}
-
-.content-gap {
 	/* https://monosnap.com/file/vJ8gzEqXQhu77XzeCbj7djNiNQ2rj1 */
-	flex-grow: calc(var(--gap-huge-no-unit) / var(--width-main-layout-no-unit));
+	grid-template-columns: 0.66fr 0.06fr 0.28fr;
+	display: grid;
+	width: 100%;
 }
 
 /* Header styles */
@@ -42,9 +38,6 @@
 	flex-direction: column;
 	gap: var(--gap-large);
 	overflow-y: scroll;
-
-	/* https://monosnap.com/file/vJ8gzEqXQhu77XzeCbj7djNiNQ2rj1 */
-	flex: calc(var(--width-sub-layout-no-unit) / var(--width-main-layout-no-unit));
 
 	/* The reason we need to subtract gap 2 time -> [main-header] [gap] [content] [gap] [main-footer] */
 	height: calc(100vh - var(--height-main-header) - var(--height-main-footer) - 2 * var(--gap-medium));
@@ -69,10 +62,8 @@
 	gap: var(--gap-small);
 	background-color: var(--main-background-color);
 	padding-bottom: var(--gap-medium);
-
-	/* top: 0; sometimes cause unexpected behavior */
-	top: -1px;
 	position: sticky;
+	top: 0;
 }
 
 .category__books-body {
@@ -99,13 +90,7 @@
 	padding: 0 var(--outline-tiny);
 }
 
-.filter {
-	/* https://monosnap.com/file/vJ8gzEqXQhu77XzeCbj7djNiNQ2rj1 */
-	flex: calc(var(--width-tiny-layout-no-unit) / var(--width-main-layout-no-unit));
-}
-
 .filter__title {
-	/* Set height like this violates the Wiki best practices but this is for easier to calculate layout later */
 	height: var(--height-sub-title);
 }
 
@@ -117,10 +102,8 @@
 .sort-control {
 	display: block;
 	width: 100%;
-	border-radius: var(--border-radius-regular);
-
-	/* Set height like this violates the Wiki best practices but this is for easier to calculate layout later */
 	height: var(--height-main-input);
+	border-radius: var(--border-radius-regular);
 }
 
 .filter__input-search-icon,
@@ -167,12 +150,11 @@
 }
 
 .show-comics__label {
-	/* Set height like this violates the Wiki best practices but this is for easier to calculate layout later */
-	height: var(--height-sub-input);
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
 	gap: var(--gap-regular);
+	height: var(--height-sub-input);
 	cursor: pointer;
 }
 
@@ -266,25 +248,7 @@
   RESPONSIVE SECTION
   Use em to avoid unexpected behaviors based on this article -> https://zellwk.com/blog/media-query-units/
   Change px to em -> https://www.w3schools.com/tags/ref_pxtoemconversion.asp
-  In the design we have breakpoints 1280px, 786px and 360px
-  I add 2 more breakpoints: 1024px and 640px to make the layout more flexible but don't break the rules of the design
-  Additional breakpoints based on Tailwindcss -> Check it here: https://v1.tailwindcss.com/docs/breakpoints
 */
-
-/* 1280px */
-@media only screen and (max-width: 80em) {
-	.content-gap {
-		flex-grow: calc(var(--gap-large-no-unit) / var(--width-main-layout-no-unit));
-	}
-
-	.category {
-		flex: calc((var(--width-sub-layout-no-unit) + var(--gap-large-no-unit)) / var(--width-main-layout-no-unit));
-	}
-
-	.filter {
-		flex: calc((var(--width-tiny-layout-no-unit)) / var(--width-main-layout-no-unit));
-	}
-}
 
 /* 1024px */
 @media only screen and (max-width: 64em) {
@@ -301,13 +265,12 @@
 
 /* 786px */
 @media only screen and (max-width: 49.125em) {
-	.main {
+	.container {
 		padding: 0 var(--gap-medium);
 	}
 
 	.content {
-		flex-direction: column;
-		justify-content: flex-start;
+		grid-template-columns: 1fr;
 		height: calc(100vh - var(--height-main-header) - var(--height-main-footer) - 2 * var(--gap-medium));
 		overflow-y: scroll;
 		scrollbar-width: none;
@@ -318,19 +281,12 @@
 		display: none;
 	}
 
-	.content-gap {
-		display: none;
-	}
-
 	.category {
-		order: 2;
-		flex: unset;
 		overflow-y: unset;
 	}
 
 	.filter {
-		order: 1;
-		flex: unset;
+		grid-row: 1 / 2;
 		padding-bottom: var(--gap-medium);
 		margin-bottom: var(--gap-medium);
 		border-bottom: 1px solid var(--shadow-color-regular);
