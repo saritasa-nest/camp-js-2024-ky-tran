@@ -1,5 +1,3 @@
-/* Layout styles */
-
 .container {
 	display: flex;
 	justify-content: center;
@@ -17,12 +15,10 @@
 
 .content {
 	/* https://monosnap.com/file/vJ8gzEqXQhu77XzeCbj7djNiNQ2rj1 */
-	grid-template-columns: 0.66fr 0.06fr 0.28fr;
+	grid-template-columns: 33fr 3fr 14fr;
 	display: grid;
 	width: 100%;
 }
-
-/* Header styles */
 
 .main__header {
 	width: 100%;
@@ -30,8 +26,6 @@
 	padding: 20px 0;
 	border-bottom: 1px solid var(--shadow-color-regular);
 }
-
-/* Category styles */
 
 .category {
 	display: flex;
@@ -58,12 +52,16 @@
 }
 
 .category__books-header {
+	/*
+		top: 0; -> Unexpected UI
+		https://monosnap.com/file/s5zicpZP9JTnVKg0H1OSmViKnYKgR1
+	*/
+	top: -1px;
+	position: sticky;
 	display: flex;
 	gap: var(--gap-small);
-	background-color: var(--main-background-color);
+	background-color: var(--background-color-main);
 	padding-bottom: var(--gap-medium);
-	position: sticky;
-	top: 0;
 }
 
 .category__books-body {
@@ -80,7 +78,9 @@
 	border: 1px solid var(--shadow-color-small);
 }
 
-/* Filter styles */
+.filter {
+	grid-column: 3 / 4;
+}
 
 .filter,
 .filter__inputs {
@@ -98,8 +98,8 @@
 	position: relative;
 }
 
-.search-control,
-.sort-control {
+.filter__search-control,
+.filter__sort-control {
 	display: block;
 	width: 100%;
 	height: var(--height-main-input);
@@ -120,8 +120,8 @@
 	left: var(--gap-regular);
 }
 
-.search-control {
-	background: var(--shadow-color-tiny);
+.filter__search-control {
+	background-color: var(--shadow-color-tiny);
 	padding: var(--gap-small) var(--gap-medium) var(--gap-small) var(--input-space-icon);
 }
 
@@ -130,23 +130,23 @@
 	right: var(--gap-regular);
 }
 
-.sort-control {
+.filter__sort-control {
 	/* Remove default arrow */
 	appearance: none;
-	background: var(--shadow-color-tiny);
-	color: var(--main-text-color);
+	background-color: var(--shadow-color-tiny);
+	color: var(--text-color-main);
 	padding: var(--gap-small) var(--gap-regular);
 	border: none;
 	cursor: pointer;
 }
 
-.sort-control:invalid {
+.filter__sort-control:invalid {
 	color: var(--shadow-color-large);
 }
 
-.sort-control:focus,
-.search-control:focus {
-	outline: var(--outline-tiny) solid var(--main-text-color);
+.filter__sort-control:focus,
+.filter__search-control:focus {
+	outline: var(--outline-tiny) solid var(--text-color-main);
 }
 
 .show-comics__label {
@@ -197,8 +197,6 @@
 	line-height: 1;
 }
 
-/* Footer styles */
-
 .main__footer {
 	display: flex;
 	align-items: start;
@@ -229,7 +227,7 @@
 
 .main__footer-more-github {
 	display: block;
-	color: var(--main-text-color);
+	color: var(--text-color-main);
 	text-decoration-line: underline;
 	border-bottom: none;
 	cursor: pointer;
@@ -250,20 +248,20 @@
   Change px to em -> https://www.w3schools.com/tags/ref_pxtoemconversion.asp
 */
 
-/* 1024px */
+/* Break point: 1024px */
 @media only screen and (max-width: 64em) {
 	.category__books-body {
 		grid-template-columns: repeat(auto-fill, minmax(var(--width-card-medium), 1fr));
 	}
 
-	.search-control,
-	.sort-control,
+	.filter__search-control,
+	.filter__sort-control,
 	.show-comics__text {
 		font-size: var(--font-size-small);
 	}
 }
 
-/* 786px */
+/* Break point: 786px */
 @media only screen and (max-width: 49.125em) {
 	.container {
 		padding: 0 var(--gap-medium);
@@ -286,6 +284,7 @@
 	}
 
 	.filter {
+		grid-column: unset;
 		grid-row: 1 / 2;
 		padding-bottom: var(--gap-medium);
 		margin-bottom: var(--gap-medium);
@@ -313,7 +312,7 @@
 	}
 }
 
-/* 640px */
+/* Break point: 640px */
 @media only screen and (max-width: 40em) {
 	.filter__inputs {
 		flex-direction: column;

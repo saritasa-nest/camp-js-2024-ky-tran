@@ -106,24 +106,20 @@
 					</section>
 				</div>
 
-				<!-- Support layout of Desktop UI -> Check here for information: https://monosnap.com/file/vJ8gzEqXQhu77XzeCbj7djNiNQ2rj1 -->
-				<!-- Why not use flex gap? -> It will make the width item not like what we as expected in the design -->
-				<div class="content-gap"></div>
-
 				<aside class="filter">
 					<h2 class="subtitle-font-semibold letter-spacing-tiny filter__title">Filters</h2>
 
 					<div class="filter__inputs">
 						<div class="filter__input-group filter__input-group-search">
 							<img class="filter__input-search-icon" src="/assets/images/icons/search.svg" alt="Input search icon">
-							<input id="search" class="input-reset body-font-regular search-control" name="search" type="text"
+							<input id="search" class="input-reset body-font-regular filter__search-control" name="search" type="text"
 								placeholder="e.g. &quot;Refactoring&quot;">
 						</div>
 
 						<div class="filter__input-group filter__input-group-sort">
 							<img class="filter__input-sort-icon" src="/assets/images/icons/filter.svg" alt="Input filter icon">
 
-							<select id="sort" class="body-font-regular sort-control" required>
+							<select id="sort" class="body-font-regular filter__sort-control" required>
 								<option value="">Choose sort field</option>
 								<option value="greet">Hello World!</option>
 							</select>

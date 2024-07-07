@@ -1,8 +1,8 @@
 :root {
 	/* Colors */
 
-	--main-background-color: #fff;
-	--main-text-color: #000;
+	--background-color-main: #fff;
+	--text-color-main: #000;
 	--shadow-color-tiny: #0000000d;
 	--shadow-color-small: #0000001a;
 	--shadow-color-regular: #00000026;
