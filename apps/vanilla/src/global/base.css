@@ -7,8 +7,8 @@
 }
 
 html {
-	/* Browser default: 16px -> Reset: 10px -> Easier to set rem unit for "font-size" */
-	font-size: 62.5%;
+	/* 1rem now is equal to 10px -> easy for rem calculation */
+	font-size: 10px;
 	box-sizing: border-box;
 }
 
