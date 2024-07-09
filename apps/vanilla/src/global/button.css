@@ -1,0 +1,17 @@
+button.primary-button {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+}
+
+button.primary-button__to-top {
+	font-size: var(--font-size-medium);
+	line-height: 1.2;
+}
+
+@media only screen and (max-width: 640px) {
+	button.primary-button__to-top {
+		text-align: right;
+		margin-top: var(--gap-regular);
+	}
+}
