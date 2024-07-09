@@ -5,7 +5,7 @@
 }
 
 .main {
-	flex: 1;
+	flex-grow: 1;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -14,20 +14,22 @@
 }
 
 .content {
-	/* https://monosnap.com/file/vJ8gzEqXQhu77XzeCbj7djNiNQ2rj1 */
-	grid-template-columns: 33fr 3fr 14fr;
-	display: grid;
+	display: flex;
+	justify-content: space-between;
+	gap: var(--gap-huge);
 	width: 100%;
 }
 
 .main__header {
 	width: 100%;
 	height: var(--height-main-header);
-	padding: 20px 0;
+	padding-block: 20px;
 	border-bottom: 1px solid var(--shadow-color-regular);
 }
 
 .category {
+	flex-grow: 1;
+	flex-basis: 0;
 	display: flex;
 	flex-direction: column;
 	gap: var(--gap-large);
@@ -36,7 +38,7 @@
 	/* The reason we need to subtract gap 2 time -> [main-header] [gap] [content] [gap] [main-footer] */
 	height: calc(100vh - var(--height-main-header) - var(--height-main-footer) - 2 * var(--gap-medium));
 
-	/* This help hide scrollbar on Firefox, Safari and IE */
+	/* This help hide scrollbar on Firefox, Safari */
 	scrollbar-width: none;
 	-ms-overflow-style: none;
 }
@@ -52,10 +54,7 @@
 }
 
 .category__books-header {
-	/*
-		top: 0; -> Unexpected UI
-		https://monosnap.com/file/s5zicpZP9JTnVKg0H1OSmViKnYKgR1
-	*/
+	/* Fix the weird UI happens sometimes https://monosnap.com/file/s5zicpZP9JTnVKg0H1OSmViKnYKgR1 */
 	top: -1px;
 	position: sticky;
 	display: flex;
@@ -79,7 +78,8 @@
 }
 
 .filter {
-	grid-column: 3 / 4;
+	flex-grow: 0.5;
+	flex-basis: 0;
 }
 
 .filter,
@@ -98,14 +98,6 @@
 	position: relative;
 }
 
-.filter__search-control,
-.filter__sort-control {
-	display: block;
-	width: 100%;
-	height: var(--height-main-input);
-	border-radius: var(--border-radius-regular);
-}
-
 .filter__input-search-icon,
 .filter__input-sort-icon {
 	position: absolute;
@@ -120,33 +112,9 @@
 	left: var(--gap-regular);
 }
 
-.filter__search-control {
-	background-color: var(--shadow-color-tiny);
-	padding: var(--gap-small) var(--gap-medium) var(--gap-small) var(--input-space-icon);
-}
-
 .filter__input-sort-icon {
 	width: var(--icon-size-medium);
 	right: var(--gap-regular);
-}
-
-.filter__sort-control {
-	/* Remove default arrow */
-	appearance: none;
-	background-color: var(--shadow-color-tiny);
-	color: var(--text-color-main);
-	padding: var(--gap-small) var(--gap-regular);
-	border: none;
-	cursor: pointer;
-}
-
-.filter__sort-control:invalid {
-	color: var(--shadow-color-large);
-}
-
-.filter__sort-control:focus,
-.filter__search-control:focus {
-	outline: var(--outline-tiny) solid var(--text-color-main);
 }
 
 .show-comics__label {
@@ -156,41 +124,6 @@
 	gap: var(--gap-regular);
 	height: var(--height-sub-input);
 	cursor: pointer;
-}
-
-.show-comics-control {
-	display: none;
-}
-
-.show-comics-control + .show-comics__box {
-	--check-box-size: 20px;
-
-	display: grid;
-	place-items: center;
-	width: var(--check-box-size);
-	height: var(--check-box-size);
-	border: 2px solid var(--shadow-color-medium);
-	border-radius: var(--border-radius-tiny);
-	cursor: pointer;
-}
-
-.show-comics-control:checked + .show-comics__box {
-	border: 2px solid var(--primary-color);
-}
-
-.show-comics-control + .show-comics__box::after {
-	--box-dimension: 10px;
-
-	display: none;
-	content: "";
-	width: var(--box-dimension);
-	height: var(--box-dimension);
-	background-color: var(--primary-dark-color);
-	border-radius: calc(var(--border-radius-tiny) - 1px);
-}
-
-.show-comics-control:checked + .show-comics__box::after {
-	display: block;
 }
 
 .show-comics__text {
@@ -233,42 +166,28 @@
 	cursor: pointer;
 }
 
-.go-to-top {
-	font-size: var(--font-size-medium);
-	line-height: 1.2;
-}
-
 .go-to-top__image {
 	width: var(--icon-size-small);
 }
 
-/*
-  RESPONSIVE SECTION
-  Use em to avoid unexpected behaviors based on this article -> https://zellwk.com/blog/media-query-units/
-  Change px to em -> https://www.w3schools.com/tags/ref_pxtoemconversion.asp
-*/
+@media only screen and (max-width: 1024px) {
+	.content {
+		gap: var(--gap-medium);
+	}
 
-/* Break point: 1024px */
-@media only screen and (max-width: 64em) {
 	.category__books-body {
 		grid-template-columns: repeat(auto-fill, minmax(var(--width-card-medium), 1fr));
 	}
-
-	.filter__search-control,
-	.filter__sort-control,
-	.show-comics__text {
-		font-size: var(--font-size-small);
-	}
 }
 
-/* Break point: 786px */
-@media only screen and (max-width: 49.125em) {
+@media only screen and (max-width: 786px) {
 	.container {
 		padding: 0 var(--gap-medium);
 	}
 
 	.content {
-		grid-template-columns: 1fr;
+		flex-direction: column;
+		gap: unset;
 		height: calc(100vh - var(--height-main-header) - var(--height-main-footer) - 2 * var(--gap-medium));
 		overflow-y: scroll;
 		scrollbar-width: none;
@@ -280,12 +199,12 @@
 	}
 
 	.category {
+		order: 2;
 		overflow-y: unset;
 	}
 
 	.filter {
-		grid-column: unset;
-		grid-row: 1 / 2;
+		order: 1;
 		padding-bottom: var(--gap-medium);
 		margin-bottom: var(--gap-medium);
 		border-bottom: 1px solid var(--shadow-color-regular);
@@ -295,16 +214,18 @@
 		flex-direction: row;
 		align-items: center;
 		justify-content: space-between;
-		gap: var(--gap-regular);
+		gap: var(--gap-small);
 	}
 
 	.filter__input-group-search,
 	.filter__input-group-sort {
-		flex: 3;
+		flex-grow: 3;
+		flex-basis: 0;
 	}
 
 	.show-comics__container {
-		flex: 2;
+		flex-grow: 2.2;
+		flex-basis: 0;
 	}
 
 	.show-comics__label {
@@ -312,11 +233,11 @@
 	}
 }
 
-/* Break point: 640px */
-@media only screen and (max-width: 40em) {
+@media only screen and (max-width: 640px) {
 	.filter__inputs {
 		flex-direction: column;
 		align-items: stretch;
+		gap: var(--gap-regular);
 	}
 
 	.main__footer {
@@ -327,10 +248,5 @@
 
 	.main__footer-more {
 		justify-content: space-between;
-	}
-
-	.go-to-top {
-		text-align: right;
-		margin-top: var(--gap-regular);
 	}
 }
