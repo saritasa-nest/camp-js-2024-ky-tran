@@ -4,13 +4,13 @@ button.primary-button {
 	cursor: pointer;
 }
 
-button.primary-button__text-icon {
+button.primary-button_icon {
 	font-size: var(--font-size-medium);
 	line-height: 1.6;
 }
 
 @media only screen and (max-width: 640px) {
-	button.primary-button__text-icon {
+	button.primary-button_icon {
 		text-align: right;
 		margin-top: var(--gap-regular);
 	}
