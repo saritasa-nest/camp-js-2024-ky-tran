@@ -1,0 +1,91 @@
+input {
+	border: none;
+	background-color: transparent;
+}
+
+input.primary-input,
+select.primary-input {
+	display: block;
+	width: 100%;
+	height: var(--height-main-input);
+	border-radius: var(--border-radius-regular);
+}
+
+input.primary-input:focus {
+	outline: var(--outline-tiny) solid var(--text-color-main);
+}
+
+input.primary-input[type="search"] {
+	background-color: var(--shadow-color-tiny);
+	padding: var(--gap-small) var(--gap-regular) var(--gap-small) var(--input-space-icon-large);
+}
+
+/* Review cancel button for input search */
+input.primary-input[type="search"]::-webkit-search-cancel-button {
+	display: none;
+}
+
+select.primary-input:invalid {
+	color: var(--shadow-color-large);
+}
+
+select.primary-input:focus {
+	outline: var(--outline-tiny) solid var(--text-color-main);
+}
+
+select.primary-input_sort {
+	/* Remove default arrow */
+	appearance: none;
+	background-color: var(--shadow-color-tiny);
+	color: var(--text-color-main);
+	padding: var(--gap-small) var(--gap-regular);
+	border: none;
+	cursor: pointer;
+}
+
+input.primary-input_checkbox {
+	display: none;
+}
+
+input.primary-input_checkbox + .custom-checkbox {
+	--check-box-size: 20px;
+
+	display: grid;
+	place-items: center;
+	width: var(--check-box-size);
+	height: var(--check-box-size);
+	border: 2px solid var(--shadow-color-medium);
+	border-radius: var(--border-radius-tiny);
+	cursor: pointer;
+}
+
+input.primary-input_checkbox:checked + .custom-checkbox {
+	border: 2px solid var(--primary-color);
+}
+
+input.primary-input_checkbox + .custom-checkbox::after {
+	--box-dimension: 10px;
+
+	display: none;
+	content: "";
+	width: var(--box-dimension);
+	height: var(--box-dimension);
+	background-color: var(--primary-dark-color);
+	border-radius: calc(var(--border-radius-tiny) - 1px);
+}
+
+input.primary-input_checkbox:checked + .custom-checkbox::after {
+	display: block;
+}
+
+@media only screen and (max-width: 786px) {
+	input.primary-input[type="search"] {
+		padding: var(--gap-small) var(--gap-regular) var(--gap-small) var(--input-space-icon-medium);
+	}
+}
+
+@media only screen and (max-width: 640px) {
+	input.primary-input[type="search"] {
+		padding: var(--gap-small) var(--gap-regular) var(--gap-small) var(--input-space-icon-large);
+	}
+}

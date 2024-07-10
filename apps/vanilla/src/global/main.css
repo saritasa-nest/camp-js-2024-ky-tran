@@ -1,0 +1,252 @@
+.container {
+	display: flex;
+	justify-content: center;
+	padding: 0 var(--gap-large);
+}
+
+.main {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--gap-medium);
+	max-width: var(--width-main-layout);
+}
+
+.content {
+	display: flex;
+	justify-content: space-between;
+	gap: var(--gap-huge);
+	width: 100%;
+}
+
+.main__header {
+	width: 100%;
+	height: var(--height-main-header);
+	padding-block: 20px;
+	border-bottom: 1px solid var(--shadow-color-regular);
+}
+
+.category {
+	flex-grow: 1;
+	flex-basis: 0;
+	display: flex;
+	flex-direction: column;
+	gap: var(--gap-large);
+	overflow-y: scroll;
+
+	/* The reason we need to subtract gap 2 time -> [main-header] [gap] [content] [gap] [main-footer] */
+	height: calc(100vh - var(--height-main-header) - var(--height-main-footer) - 2 * var(--gap-medium));
+
+	/* This help hide scrollbar on Firefox, Safari */
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
+/* This help hide scrollbar on Chrome */
+.category::-webkit-scrollbar {
+	display: none;
+}
+
+.category__books {
+	display: flex;
+	flex-direction: column;
+}
+
+.category__books-header {
+	/* Fix the weird UI happens sometimes https://monosnap.com/file/s5zicpZP9JTnVKg0H1OSmViKnYKgR1 */
+	top: -1px;
+	position: sticky;
+	display: flex;
+	gap: var(--gap-small);
+	background-color: var(--background-color-main);
+	padding-bottom: var(--gap-medium);
+}
+
+.category__books-body {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(var(--width-card-large), 1fr));
+	gap: var(--gap-regular);
+}
+
+.category__book-image {
+	width: 100%;
+	aspect-ratio: 2 / 3;
+	margin-bottom: var(--gap-small);
+	border-radius: var(--border-radius-medium);
+	border: 1px solid var(--shadow-color-small);
+}
+
+.filter {
+	flex-grow: 0.5;
+	flex-basis: 0;
+}
+
+.filter,
+.filter__inputs {
+	display: flex;
+	flex-direction: column;
+	gap: var(--gap-medium);
+	padding: 0 var(--outline-tiny);
+}
+
+.filter__title {
+	height: var(--height-sub-title);
+}
+
+.filter__input-group {
+	position: relative;
+}
+
+.filter__input-search-icon,
+.filter__input-sort-icon {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	pointer-events: none;
+}
+
+.filter__input-search-icon {
+	width: var(--icon-size-large);
+	height: var(--icon-size-large);
+	left: var(--gap-regular);
+}
+
+.filter__input-sort-icon {
+	width: var(--icon-size-medium);
+	right: var(--gap-regular);
+}
+
+.show-comics__label {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	gap: var(--gap-regular);
+	height: var(--height-sub-input);
+	cursor: pointer;
+}
+
+.show-comics__text {
+	line-height: 1;
+}
+
+.main__footer {
+	display: flex;
+	align-items: start;
+	justify-content: space-between;
+	width: 100%;
+	height: var(--height-main-footer);
+	padding-top: var(--gap-medium);
+	border-top: 1px solid var(--shadow-color-regular);
+}
+
+.main__footer-more {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--gap-medium);
+}
+
+.main__footer-more-info {
+	display: flex;
+	align-items: center;
+	gap: var(--gap-small);
+}
+
+.main__footer-more-info-copyright {
+	font-size: var(--font-size-medium);
+	line-height: 1.6;
+}
+
+.main__footer-more-github {
+	display: block;
+	color: var(--text-color-main);
+	text-decoration-line: underline;
+	border-bottom: none;
+	cursor: pointer;
+}
+
+.go-to-top__image {
+	width: var(--icon-size-small);
+}
+
+@media only screen and (max-width: 1024px) {
+	.content {
+		gap: var(--gap-medium);
+	}
+
+	.category__books-body {
+		grid-template-columns: repeat(auto-fill, minmax(var(--width-card-medium), 1fr));
+	}
+}
+
+@media only screen and (max-width: 786px) {
+	.container {
+		padding: 0 var(--gap-medium);
+	}
+
+	.content {
+		flex-direction: column;
+		gap: unset;
+		height: calc(100vh - var(--height-main-header) - var(--height-main-footer) - 2 * var(--gap-medium));
+		overflow-y: scroll;
+		scrollbar-width: none;
+		-ms-overflow-style: none;
+	}
+
+	.content::-webkit-scrollbar {
+		display: none;
+	}
+
+	.category {
+		order: 2;
+		overflow-y: unset;
+	}
+
+	.filter {
+		order: 1;
+		padding-bottom: var(--gap-medium);
+		margin-bottom: var(--gap-medium);
+		border-bottom: 1px solid var(--shadow-color-regular);
+	}
+
+	.filter__inputs {
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--gap-small);
+	}
+
+	.filter__input-group-search,
+	.filter__input-group-sort {
+		flex-grow: 3;
+		flex-basis: 0;
+	}
+
+	.show-comics__container {
+		flex-grow: 2.2;
+		flex-basis: 0;
+	}
+
+	.show-comics__label {
+		gap: var(--gap-small);
+	}
+}
+
+@media only screen and (max-width: 640px) {
+	.filter__inputs {
+		flex-direction: column;
+		align-items: stretch;
+		gap: var(--gap-regular);
+	}
+
+	.main__footer {
+		flex-direction: column;
+		align-items: stretch;
+		justify-content: flex-start;
+	}
+
+	.main__footer-more {
+		justify-content: space-between;
+	}
+}

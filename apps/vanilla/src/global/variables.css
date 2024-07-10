@@ -1,5 +1,44 @@
 :root {
-  --heading-color-1: #ffd700;
-  --heading-color-2: #e9967a;
-  --heading-color-3: #b0e0e6;
+	/* Colors */
+
+	--background-color-main: #fff;
+	--text-color-main: #000;
+	--shadow-color-tiny: #0000000d;
+	--shadow-color-small: #0000001a;
+	--shadow-color-regular: #00000026;
+	--shadow-color-medium: #0003;
+	--shadow-color-large: #00000080;
+
+	/* Layouts */
+	--width-main-layout: 1360px;
+	--gap-small: 8px;
+	--gap-regular: 16px;
+	--gap-medium: 24px;
+	--gap-large: 40px;
+	--gap-huge: 80px;
+
+	/* Dimensions */
+
+	--height-main-header: 64px;
+	--height-main-footer: 128px;
+	--height-sub-title: 24px;
+	--height-main-input: 48px;
+	--height-sub-input: 32px;
+	--width-card-large: 152px;
+	--width-card-medium: 136px;
+
+	/* Utils */
+
+	--font-size-small: 1.6rem;
+	--font-size-regular: 1.8rem;
+	--font-size-medium: 2rem;
+	--border-radius-tiny: 4px;
+	--border-radius-regular: 16px;
+	--border-radius-medium: 24px;
+	--outline-tiny: 1px;
+	--icon-size-small: 14px;
+	--icon-size-medium: 18px;
+	--icon-size-large: 20px;
+	--input-space-icon-large: 48px;
+	--input-space-icon-medium: 40px;
 }
