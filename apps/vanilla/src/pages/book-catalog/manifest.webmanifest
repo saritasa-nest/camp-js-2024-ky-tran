@@ -1,7 +1,7 @@
 {
 	"icons": [
 		{
-			"src": "//assets/images/logos/touchicon-android-192.png",
+			"src": "/assets/images/logos/touchicon-android-192.png",
 			"type": "image/png",
 			"sizes": "192x192"
 		},

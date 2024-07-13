@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description"
+			content="Discover and organize books effortlessly with Saritasa's Book Catalog. Enjoy a vast collection, detailed descriptions, user reviews, and personalized recommendations. Create and manage your collections while connecting with a community of readers.">
+
+		<link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon">
+		<link rel="apple-touch-icon" href="./assets/images/logos/touchicon-apple-180.png">
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+		<link rel="stylesheet" href="./index.css" />
+
+		<title>Saritasa &mdash; Book Catalog</title>
+	</head>
+	<body class="container">
+		<div class="main">
+			<header class="main__header">
+				<h1 class="logo-font-bold">📚 Books app</h1>
+			</header>
+
+			<main class="content">
+				<div class="category">
+					<section class="category__books">
+						<h2 class="category__books-header">
+							<span class="subtitle-font-semibold letter-spacing-tiny category__books-header-year">2020</span>
+							<span class="subtitle-font-semibold letter-spacing-tiny">YEAR</span>
+						</h2>
+
+						<div class="category__books-body">
+							<article class="category__book">
+								<img class="category__book-image" src="./assets/images/books/image-1.png" alt="Refactoring UI">
+								<h3 class="body-font-small two-line-text category__book-title">
+									Refactoring UI
+								</h3>
+							</article>
+
+							<article class="category__book">
+								<img class="category__book-image" src="./assets/images/books/image-2.png" alt="Master the Skill of Debugging CSS">
+								<h3 class="body-font-small two-line-text category__book-title">
+									Master the Skill of Debugging CSS
+								</h3>
+							</article>
+
+							<article class="category__book">
+								<img class="category__book-image" src="./assets/images/books/image-3.png" alt="Blue Period">
+								<h3 class="body-font-small two-line-text category__book-title">
+									Blue Period
+								</h3>
+							</article>
+						</div>
+					</section>
+
+					<section class="category__books">
+						<h2 class="category__books-header">
+							<span class="subtitle-font-semibold letter-spacing-tiny category__books-header-year">1980</span>
+							<span class="subtitle-font-semibold letter-spacing-tiny">YEAR</span>
+						</h2>
+
+						<div class="category__books-body">
+							<article class="category__book">
+								<img class="category__book-image" src="./assets/images/books/image-4.png" alt="Yokohama Kaidashi Kikou">
+								<h3 class="body-font-small two-line-text category__book-title">
+									Yokohama Kaidashi Kikou
+								</h3>
+							</article>
+
+							<article class="category__book">
+								<img class="category__book-image" src="./assets/images/books/image-5.png" alt="Learning JavaScript Design Patterns">
+								<h3 class="body-font-small two-line-text category__book-title">
+									Learning JavaScript Design Patterns
+								</h3>
+							</article>
+
+							<article class="category__book">
+								<img class="category__book-image" src="./assets/images/books/image-6.png" alt="Yotsuba to!">
+								<h3 class="body-font-small two-line-text category__book-title">
+									Yotsuba to!
+								</h3>
+							</article>
+
+							<article class="category__book">
+								<img class="category__book-image" src="./assets/images/books/image-7.png" alt="Domain-Driven Design">
+								<h3 class="body-font-small two-line-text category__book-title">
+									Domain-Driven Design
+								</h3>
+							</article>
+
+							<article class="category__book">
+								<img class="category__book-image" src="./assets/images/books/image-8.png" alt="Implementing Domain-Driven Design">
+								<h3 class="body-font-small two-line-text category__book-title">
+									Implementing Domain-Driven Design
+								</h3>
+							</article>
+
+							<article class="category__book">
+								<img class="category__book-image" src="./assets/images/books/image-9.png" alt="7 Навыков высокэффективных">
+								<h3 class="body-font-small two-line-text category__book-title">
+									7 Навыков высокэффективных
+								</h3>
+							</article>
+						</div>
+					</section>
+				</div>
+
+				<aside class="filter">
+					<h2 class="subtitle-font-semibold letter-spacing-tiny filter__title">Filters</h2>
+
+					<div class="filter__inputs">
+						<div class="filter__input-group filter__input-group-search">
+							<img class="filter__input-search-icon" src="./assets/images/icons/search.svg" alt="Input search icon">
+							<input id="search" class="primary-input body-font-regular" name="search" type="search"
+								placeholder="e.g. &quot;Refactoring&quot;">
+						</div>
+
+						<div class="filter__input-group filter__input-group-sort">
+							<img class="filter__input-sort-icon" src="./assets/images/icons/filter.svg" alt="Input filter icon">
+
+							<select id="sort" class="primary-input primary-input_sort body-font-regular" required>
+								<option value="">Choose sort field</option>
+								<option value="greet">Hello World!</option>
+							</select>
+						</div>
+
+						<div class="filter__input-group show-comics__container">
+							<label class="show-comics__label" for="show-comics">
+								<input id="show-comics" class="primary-input_checkbox" type="checkbox">
+								<span class="custom-checkbox"></span>
+								<span class="body-font-regular show-comics__text">Show comics</span>
+							</label>
+						</div>
+					</div>
+				</aside>
+			</main>
+
+			<footer class="main__footer">
+				<div class="main__footer-more">
+					<div class="main__footer-more-info">
+						<p class="logo-font-bold">Books app
+						<p>
+							<span class="main__footer-more-info-copyright">&copy; 2024</span>
+					</div>
+
+					<a href="#" class="body-font-regular main__footer-more-github" title="Visit our GitHub page">Github</a>
+				</div>
+
+				<button type="button" class="primary-button primary-button_icon go-to-top">
+					<span>Go to top</span>
+					<img class="go-to-top__image" src="./assets/images/icons/arrow-up.svg" alt="Go to top arrow up icon">
+				</button>
+			</footer>
+		</div>
+	</body>
+</html>
