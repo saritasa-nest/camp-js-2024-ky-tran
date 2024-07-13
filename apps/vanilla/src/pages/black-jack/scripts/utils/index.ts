@@ -64,5 +64,5 @@ export function getRandomInt(min: number, max: number): number {
  * @returns The total sum of the numbers.
  */
 export function sum(numbers: number[]): number {
-	return numbers.reduce((total, number) => total + number);
+	return numbers.reduce((total, number) => total + number, 0);
 }
