@@ -13,27 +13,9 @@ import {
 
 /** The App class initializes the game, sets up generators, creates admin and players, and starts the game. */
 export class App {
-	// Generator instances
-
 	private readonly turnGenerator = new TurnGenerator(NUMBER_OF_PLAYERS);
 
 	private readonly diceGenerator = new DiceGenerator(NUMBER_OF_DICE_RESULTS);
-
-	// Admin displayer instances
-
-	private readonly initialAdminDisplayer = new InitialAdminDisplayer();
-
-	private readonly resultsAdminDisplayer = new ResultsAdminDisplayer();
-
-	// Player displayer instances
-
-	private readonly initialPlayerDisplayer = new InitialPlayerDisplayer();
-
-	private readonly resultsPlayerDisplayer = new ResultsPlayerDisplayer();
-
-	private readonly winStatusDisplayer = new WinStatusDisplayer();
-
-	private readonly inTurnDisplayer = new InTurnDisplayer();
 
 	public constructor() {
 		// Connect diceGenerator and turnGenerator to get player turn result
@@ -45,11 +27,11 @@ export class App {
 	}
 
 	private createAdmin(): void {
+		const initialAdminDisplayer = new InitialAdminDisplayer();
+		const resultsAdminDisplayer = new ResultsAdminDisplayer();
+
 		const adminPayload: AdminPayload = {
-			displayerInstances: {
-				initialAdminDisplayer: this.initialAdminDisplayer,
-				resultsAdminDisplayer: this.resultsAdminDisplayer,
-			},
+			displayerInstances: { initialAdminDisplayer, resultsAdminDisplayer },
 		};
 
 		const admin = new Admin(adminPayload);
@@ -57,14 +39,19 @@ export class App {
 	}
 
 	private createPlayers(): void {
+		const initialPlayerDisplayer = new InitialPlayerDisplayer();
+		const resultsPlayerDisplayer = new ResultsPlayerDisplayer();
+		const winStatusDisplayer = new WinStatusDisplayer();
+		const inTurnDisplayer = new InTurnDisplayer();
+
 		Array.from({ length: NUMBER_OF_PLAYERS }).map((_, playerIndex) => {
 			const playerPayload: PlayerPayload = {
 				selfIndex: playerIndex,
 				displayerInstances: {
-					initialPlayerDisplayer: this.initialPlayerDisplayer,
-					resultsPlayerDisplayer: this.resultsPlayerDisplayer,
-					winStatusDisplayer: this.winStatusDisplayer,
-					inTurnDisplayer: this.inTurnDisplayer,
+					initialPlayerDisplayer,
+					resultsPlayerDisplayer,
+					winStatusDisplayer,
+					inTurnDisplayer,
 				},
 			};
 
