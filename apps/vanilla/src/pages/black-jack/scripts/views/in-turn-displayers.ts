@@ -4,7 +4,6 @@ import { Subscriber } from '../models';
 
 /** Displays the current player's turn by highlighting the active player. */
 export class InTurnDisplayer implements Subscriber<InTurn> {
-
 	/**
 	 * Updates the display to highlight the current player's turn.
 	 * @param inTurnIndex - The index of the player whose turn it is.

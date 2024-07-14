@@ -1,0 +1,52 @@
+.block,
+.sub-block {
+	background-color: var(--background-color-light);
+	padding: var(--gap-medium);
+	border: 1px solid var(--border-main-color);
+	border-radius: var(--border-radius-small);
+}
+
+.block,
+.main__header-title {
+	margin-bottom: var(--gap-huge);
+}
+
+.sub-block,
+.user__info {
+	margin-bottom: var(--gap-medium);
+}
+
+.main {
+	flex: 1;
+	max-width: var(--width-main-layout);
+}
+
+.user.winner {
+	background-color: var(--winner-color);
+}
+
+.user__info {
+	display: flex;
+	align-items: center;
+}
+
+.user__info-dash {
+	margin-inline: var(--gap-small);
+}
+
+.user__info-result {
+	color: var(--text-dark-color);
+}
+
+.user__info-in-turn {
+	display: none;
+	background: var(--brand-color);
+	text-transform: uppercase;
+	padding: var(--gap-tiny) var(--gap-small);
+	margin-left: var(--gap-large);
+	border-radius: var(--border-radius-large);
+}
+
+.user.active .user__info-in-turn {
+	display: block;
+}

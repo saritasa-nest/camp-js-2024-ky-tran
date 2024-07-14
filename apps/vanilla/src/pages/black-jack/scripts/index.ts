@@ -8,7 +8,7 @@ window.onload = function() {
 
 	if (mainButton) {
 		mainButton.onclick = function() {
-			app.start();
+			app.run();
 		};
 	}
 };

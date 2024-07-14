@@ -32,11 +32,11 @@ export class ResultsAdminDisplayer extends ResultsDisplayer implements Subscribe
 	 * @param diceResults - Array of dice results to be displayed.
 	 */
 	public update({ diceResults }: PlayerResults): void {
-		const admin = $('.debug-user');
+		const adminEl = $('.debug-user');
 
 		this.render({
 			diceResults,
-			targetEl: admin,
+			targetEl: adminEl,
 			resultsClass: 'main__all-rolls',
 			infoResultClass: 'user__info-result',
 		});
@@ -51,11 +51,11 @@ export class ResultsPlayerDisplayer extends ResultsDisplayer implements Subscrib
 	 * @param diceResults - Array of dice results to be displayed.
 	 */
 	public update({ playerIndex, diceResults }: PlayerResults): void {
-		const player = $$('.user')[playerIndex];
+		const playerEl = $$('.user')[playerIndex];
 
 		this.render({
 			diceResults,
-			targetEl: player,
+			targetEl: playerEl,
 			resultsClass: 'user__results',
 			infoResultClass: 'user__info-result',
 		});

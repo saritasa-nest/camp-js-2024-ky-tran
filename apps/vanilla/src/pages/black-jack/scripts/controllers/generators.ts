@@ -1,17 +1,15 @@
+import { START_PLAYER_INDEX } from '../config';
 import { Publisher } from '../models';
 import { PlayerTurnResult } from '../types';
 import { getRandomInt } from '../utils';
 
-/** Manages the turn order of players in a game, notifying subscribers of each player's turn. */
+/** Manages the turn order of players in a game, notifying 'diceGenerator' of each player's turn. */
 export class TurnGenerator extends Publisher<number> {
-	public constructor(
-		private readonly playersCount: number,
-		public currentPlayerIndex = 0,
-	) {
+	public constructor(private readonly playersCount: number, public currentPlayerIndex = START_PLAYER_INDEX) {
 		super();
 	}
 
-	/** Advances to the next player's turn and updates the current player index. */
+	/** Notifies the current player index then updates the current player index to the next one. */
 	public next(): void {
 		this.notify(this.currentPlayerIndex);
 		this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.playersCount;

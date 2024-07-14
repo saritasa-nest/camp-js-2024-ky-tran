@@ -16,5 +16,5 @@ button.main-button_action:hover {
 }
 
 button.main-button_action:active {
-	filter: brightness(1);
+	filter: unset;
 }

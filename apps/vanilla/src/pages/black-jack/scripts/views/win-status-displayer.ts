@@ -2,7 +2,7 @@ import { $$ } from '../utils';
 import { WinStatus } from '../types';
 import { Subscriber } from '../models';
 
-/** Displays the win status for a specific player view. */
+/** Displays the win status for a specific player. */
 export class WinStatusDisplayer implements Subscriber<WinStatus> {
 	/**
 	 * Updates the player view to indicate if the player has won.
@@ -13,7 +13,7 @@ export class WinStatusDisplayer implements Subscriber<WinStatus> {
 		if (isWin) {
 			const player = $$('.user')[playerIndex];
 
-			if (!player.classList.contains('class')) {
+			if (!player.classList.contains('winner')) {
 				player.classList.add('winner');
 			}
 		}

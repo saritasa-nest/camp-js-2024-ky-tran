@@ -1,6 +1,6 @@
 :root {
 	/* Layouts */
-	--main-layout: 700px;
+	--width-main-layout: 700px;
 
 	/* Colors */
 	--winner-color: #ff2e2e;
@@ -12,8 +12,6 @@
 	--background-color-light: #fff;
 	--background-color-shadow: #f5f5f5;
 	--border-main-color: #ddd;
-
-	/* Font sizes */
 
 	/* Utils */
 	--gap-huge: 20px;

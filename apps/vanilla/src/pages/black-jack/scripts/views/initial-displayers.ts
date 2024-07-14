@@ -1,6 +1,7 @@
 import { $ } from '../utils';
 import { Subscriber } from '../models';
 import { InitialDisplay } from '../types';
+import { START_PLAYER_INDEX } from '../config';
 
 /** Displays the initial admin view. */
 export class InitialAdminDisplayer implements Subscriber<null> {
@@ -22,8 +23,7 @@ export class InitialAdminDisplayer implements Subscriber<null> {
 
 	/** Updates the admin view by inserting the generated markup into the container element. */
 	public update(): void {
-		const markup = this.generateMarkup();
-		this.containerEl?.insertAdjacentHTML('beforeend', markup);
+		this.containerEl.insertAdjacentHTML('beforeend', this.generateMarkup());
 	}
 }
 
@@ -33,7 +33,7 @@ export class InitialPlayerDisplayer implements Subscriber<InitialDisplay> {
 
 	private generateMarkup(playerIndex: number): string {
 		return `
-			<div class="block user ${playerIndex === 0 && 'active'}">
+			<div class="block user ${playerIndex === START_PLAYER_INDEX && 'active'}">
 				<div class="user__info">
 					<h2 class="user__info-name">Player ${playerIndex + 1}</h2>
 					<span class="user__info-dash">&mdash;</span>
@@ -50,7 +50,6 @@ export class InitialPlayerDisplayer implements Subscriber<InitialDisplay> {
 	 * @param playerIndex - The index of the player whose view is being updated.
 	 */
 	public update({ playerIndex }: InitialDisplay): void {
-		const markup = this.generateMarkup(playerIndex);
-		this.containerEl?.insertAdjacentHTML('beforeend', markup);
+		this.containerEl.insertAdjacentHTML('beforeend', this.generateMarkup(playerIndex));
 	}
 }

@@ -1,29 +1,23 @@
 import { sum } from '../utils';
-import { NUMBER_OF_PLAYERS } from '../config';
+import { NUMBER_OF_PLAYERS, WINNER_DICE_TOTAL_RESULT } from '../config';
 import { Publisher, Subscriber } from '../models';
-import { InitialAdminDisplayer, InitialPlayerDisplayer } from '../views';
-import { WinStatusDisplayer } from '../views/win-status-displayer';
-import { InTurnDisplayer } from '../views/in-turn-displayers';
 
 import {
+	AdminPayload,
 	InitialDisplay,
 	InTurn,
+	PlayerPayload,
 	PlayerResults,
 	PlayerTurnResult,
 	WinStatus,
 } from '../types';
 
-import {
-	ResultsAdminDisplayer,
-	ResultsPlayerDisplayer,
-} from '../views/results-displayers';
-
-/** Base class for managing dice results and notifying subscribers of player results. */
+/** Base class for all players to manage their own dice results and notify to displayers to display dice results all the screen. */
 class Attender {
-	/** Array to store dice roll results. */
+	/** Array to store all dice roll results of a player. */
 	protected readonly diceResults: number[] = [];
 
-	/** Publisher instance for notifying subscribers (displayers) with player results. */
+	/** Publisher instance for notifying displayers with player results. */
 	protected readonly results = new Publisher<PlayerResults>();
 }
 
@@ -31,11 +25,11 @@ class Attender {
 export class Admin extends Attender implements Subscriber<PlayerTurnResult> {
 	private readonly initial = new Publisher<null>();
 
-	public constructor() {
+	public constructor({ displayerInstances }: AdminPayload) {
 		super();
 
-		this.initial.subscribe(new InitialAdminDisplayer());
-		this.results.subscribe(new ResultsAdminDisplayer());
+		this.initial.subscribe(displayerInstances.initialAdminDisplayer);
+		this.results.subscribe(displayerInstances.resultsAdminDisplayer);
 
 		// 'null' -> No need data for initial render
 		this.initial.notify(null);
@@ -52,24 +46,31 @@ export class Admin extends Attender implements Subscriber<PlayerTurnResult> {
 	}
 }
 
-/** * Represents a player in the game, tracking their turns and notifying displayer for display result. */
+/** Represents a player in the game, tracking their turns and notifying displayer for display result. */
 export class Player extends Attender implements Subscriber<PlayerTurnResult> {
+	private readonly selfIndex: number;
+
+	private readonly winnerDiceTotalResult: number = WINNER_DICE_TOTAL_RESULT;
+
 	private readonly initial = new Publisher<InitialDisplay>();
 
 	private readonly winStatus = new Publisher<WinStatus>();
 
 	private readonly inTurn = new Publisher<InTurn>();
 
-	public constructor(
-		private readonly selfIndex: number,
-		private readonly winnerDiceTotalResult: number,
-	) {
+	public constructor({ selfIndex, winnerDiceTotalResult, displayerInstances }: PlayerPayload) {
 		super();
 
-		this.initial.subscribe(new InitialPlayerDisplayer());
-		this.results.subscribe(new ResultsPlayerDisplayer());
-		this.winStatus.subscribe(new WinStatusDisplayer());
-		this.inTurn.subscribe(new InTurnDisplayer());
+		this.selfIndex = selfIndex;
+
+		if (winnerDiceTotalResult !== undefined) {
+			this.winnerDiceTotalResult = winnerDiceTotalResult;
+		}
+
+		this.initial.subscribe(displayerInstances.initialPlayerDisplayer);
+		this.results.subscribe(displayerInstances.resultsPlayerDisplayer);
+		this.winStatus.subscribe(displayerInstances.winStatusDisplayer);
+		this.inTurn.subscribe(displayerInstances.inTurnDisplayer);
 
 		this.initial.notify({ playerIndex: this.selfIndex });
 	}
