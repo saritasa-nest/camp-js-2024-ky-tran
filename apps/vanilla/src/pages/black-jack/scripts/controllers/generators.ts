@@ -1,7 +1,7 @@
 import { START_PLAYER_INDEX } from '../config';
-import { Publisher } from '../models';
-import { PlayerTurnResult } from '../types';
-import { getRandomInt } from '../utils';
+import { Publisher } from '../models/publisher';
+import { PlayerTurnResult } from '../types/player-types';
+import { getRandomInt } from '../utils/mathematics';
 
 /** Manages the turn order of players in a game, notifying 'diceGenerator' of each player's turn. */
 export class TurnGenerator extends Publisher<number> {
@@ -9,10 +9,14 @@ export class TurnGenerator extends Publisher<number> {
 		super();
 	}
 
-	/** Notifies the current player index then updates the current player index to the next one. */
-	public next(): void {
-		this.notify(this.currentPlayerIndex);
+	private next(): void {
 		this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.playersCount;
+	}
+
+	/** Notifies the current player index then updates the current player index to the next one. */
+	public run(): void {
+		this.notify(this.currentPlayerIndex);
+		this.next();
 	}
 }
 
@@ -25,7 +29,7 @@ export class DiceGenerator extends Publisher<PlayerTurnResult> {
 	/**
 	 * Simulates rolling a dice and returns the result.
 	 * @returns A random integer representing the result of the dice roll.
-  */
+	 */
 	public roll(): number {
 		return getRandomInt(1, this.sidesCount);
 	}
@@ -33,7 +37,7 @@ export class DiceGenerator extends Publisher<PlayerTurnResult> {
 	/**
 	 * Receive turn index from Turn Generator.
 	 * @param playerIndex - Index of the player whose turn result is being updated.
-  */
+	 */
 	public update(playerIndex: number): void {
 		this.notify({ playerIndex, diceResult: this.roll() });
 	}

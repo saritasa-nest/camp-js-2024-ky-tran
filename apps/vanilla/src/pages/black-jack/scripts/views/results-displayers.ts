@@ -1,6 +1,7 @@
-import { $, $$, $_, sum } from '../utils';
-import { PlayerResults, ResultsRender } from '../types';
-import { Subscriber } from '../models';
+import { selectAllElements, selectElement, selectElementInParent } from '../utils/elements';
+import { sum } from '../utils/mathematics';
+import { Subscriber } from '../models/subscriber';
+import { PlayerResults, ResultsRender } from '../types/player-types';
 
 /** Base class for displaying the results of dice rolls. */
 class ResultsDisplayer {
@@ -17,8 +18,8 @@ class ResultsDisplayer {
 		resultsClass,
 		infoResultClass,
 	}: ResultsRender): void {
-		const resultsEl = $_(targetEl)(`.${resultsClass}`);
-		const infoResultEl = $_(targetEl)(`.${infoResultClass}`);
+		const resultsEl = selectElementInParent(targetEl, `.${resultsClass}`);
+		const infoResultEl = selectElementInParent(targetEl, `.${infoResultClass}`);
 
 		resultsEl.innerHTML = diceResults.join(', ');
 		infoResultEl.innerHTML = sum(diceResults).toString();
@@ -32,7 +33,7 @@ export class ResultsAdminDisplayer extends ResultsDisplayer implements Subscribe
 	 * @param diceResults - Array of dice results to be displayed.
 	 */
 	public update({ diceResults }: PlayerResults): void {
-		const adminEl = $('.debug-user');
+		const adminEl = selectElement('.admin');
 
 		this.render({
 			diceResults,
@@ -51,7 +52,7 @@ export class ResultsPlayerDisplayer extends ResultsDisplayer implements Subscrib
 	 * @param diceResults - Array of dice results to be displayed.
 	 */
 	public update({ playerIndex, diceResults }: PlayerResults): void {
-		const playerEl = $$('.user')[playerIndex];
+		const playerEl = selectAllElements('.user')[playerIndex];
 
 		this.render({
 			diceResults,

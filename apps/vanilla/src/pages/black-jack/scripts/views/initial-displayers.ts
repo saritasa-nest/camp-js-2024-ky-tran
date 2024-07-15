@@ -1,12 +1,12 @@
-import { $ } from '../utils';
-import { Subscriber } from '../models';
-import { InitialDisplay } from '../types';
+import { selectElement } from '../utils/elements';
 import { START_PLAYER_INDEX } from '../config';
+import { Subscriber } from '../models/subscriber';
+import { InitialDisplay } from '../types/player-types';
 
 /** Displays the initial admin view. */
 export class InitialAdminDisplayer implements Subscriber<null> {
 	/** The container element where the initial admin view is displayed. */
-	protected readonly containerEl = $('.debug-user');
+	protected readonly containerEl = selectElement('.admin');
 
 	private generateMarkup(): string {
 		return `
@@ -29,7 +29,7 @@ export class InitialAdminDisplayer implements Subscriber<null> {
 
 /** * Displays the initial player view. */
 export class InitialPlayerDisplayer implements Subscriber<InitialDisplay> {
-	private readonly containerEl = $('.users');
+	private readonly containerEl = selectElement('.users');
 
 	private generateMarkup(playerIndex: number): string {
 		return `

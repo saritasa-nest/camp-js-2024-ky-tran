@@ -1,16 +1,9 @@
-import { sum } from '../utils';
-import { NUMBER_OF_PLAYERS, WINNER_DICE_TOTAL_RESULT } from '../config';
-import { Publisher, Subscriber } from '../models';
-
-import {
-	AdminPayload,
-	InitialDisplay,
-	InTurn,
-	PlayerPayload,
-	PlayerResults,
-	PlayerTurnResult,
-	WinStatus,
-} from '../types';
+import { WINNER_DICE_TOTAL_RESULT } from '../config';
+import { AdminPayload, PlayerPayload } from '../types/displayer-types';
+import { sum } from '../utils/mathematics';
+import { Publisher } from '../models/publisher';
+import { Subscriber } from '../models/subscriber';
+import { InitialDisplay, PlayerResults, PlayerTurnResult, WinStatus } from '../types/player-types';
 
 /** Base class for all players to manage their own dice results and notify to displayers to display dice results all the screen. */
 class Attender {
@@ -25,11 +18,11 @@ class Attender {
 export class Admin extends Attender implements Subscriber<PlayerTurnResult> {
 	private readonly initial = new Publisher<null>();
 
-	public constructor({ displayerInstances }: AdminPayload) {
+	public constructor({ displayers }: AdminPayload) {
 		super();
 
-		this.initial.subscribe(displayerInstances.initialAdminDisplayer);
-		this.results.subscribe(displayerInstances.resultsAdminDisplayer);
+		this.initial.subscribe(displayers.initialAdminDisplayer);
+		this.results.subscribe(displayers.resultsAdminDisplayer);
 
 		// 'null' -> No need data for initial render
 		this.initial.notify(null);
@@ -56,21 +49,18 @@ export class Player extends Attender implements Subscriber<PlayerTurnResult> {
 
 	private readonly winStatus = new Publisher<WinStatus>();
 
-	private readonly inTurn = new Publisher<InTurn>();
-
-	public constructor({ selfIndex, winnerDiceTotalResult, displayerInstances }: PlayerPayload) {
+	public constructor({ selfIndex, winnerDiceTotalResult, displayers }: PlayerPayload) {
 		super();
 
 		this.selfIndex = selfIndex;
 
-		if (winnerDiceTotalResult !== undefined) {
+		if (winnerDiceTotalResult != null) {
 			this.winnerDiceTotalResult = winnerDiceTotalResult;
 		}
 
-		this.initial.subscribe(displayerInstances.initialPlayerDisplayer);
-		this.results.subscribe(displayerInstances.resultsPlayerDisplayer);
-		this.winStatus.subscribe(displayerInstances.winStatusDisplayer);
-		this.inTurn.subscribe(displayerInstances.inTurnDisplayer);
+		this.initial.subscribe(displayers.initialPlayerDisplayer);
+		this.results.subscribe(displayers.resultsPlayerDisplayer);
+		this.winStatus.subscribe(displayers.winStatusDisplayer);
 
 		this.initial.notify({ playerIndex: this.selfIndex });
 	}
@@ -84,17 +74,8 @@ export class Player extends Attender implements Subscriber<PlayerTurnResult> {
 	public update({ playerIndex, diceResult }: PlayerTurnResult): void {
 		if (playerIndex === this.selfIndex) {
 			this.diceResults.push(diceResult);
-
 			this.results.notify({ playerIndex, diceResults: this.diceResults });
-
-			this.winStatus.notify({
-				playerIndex,
-				isWin: sum(this.diceResults) >= this.winnerDiceTotalResult,
-			});
-
-			this.inTurn.notify({
-				inTurnIndex: (playerIndex + 1) % NUMBER_OF_PLAYERS,
-			});
+			this.winStatus.notify({ playerIndex, isWin: sum(this.diceResults) >= this.winnerDiceTotalResult });
 		}
 	}
 }

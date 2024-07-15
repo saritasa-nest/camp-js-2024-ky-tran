@@ -1,6 +1,6 @@
-import { $$ } from '../utils';
-import { WinStatus } from '../types';
-import { Subscriber } from '../models';
+import { selectAllElements } from '../utils/elements';
+import { Subscriber } from '../models/subscriber';
+import { WinStatus } from '../types/player-types';
 
 /** Displays the win status for a specific player. */
 export class WinStatusDisplayer implements Subscriber<WinStatus> {
@@ -11,7 +11,7 @@ export class WinStatusDisplayer implements Subscriber<WinStatus> {
 	 */
 	public update({ playerIndex, isWin }: WinStatus): void {
 		if (isWin) {
-			const player = $$('.user')[playerIndex];
+			const player = selectAllElements('.user')[playerIndex];
 
 			if (!player.classList.contains('winner')) {
 				player.classList.add('winner');

@@ -1,15 +1,13 @@
-import { Admin, DiceGenerator, Player, TurnGenerator } from '../controllers';
-import { AdminPayload, PlayerPayload } from '../types';
 import { NUMBER_OF_DICE_RESULTS, NUMBER_OF_PLAYERS } from '../config';
+import { AdminPayload, PlayerPayload } from '../types/displayer-types';
 
-import {
-	InitialAdminDisplayer,
-	InitialPlayerDisplayer,
-	InTurnDisplayer,
-	ResultsAdminDisplayer,
-	ResultsPlayerDisplayer,
-	WinStatusDisplayer,
-} from '../views';
+import { InTurnDisplayer } from '../views/in-turn-displayers';
+import { InitialAdminDisplayer, InitialPlayerDisplayer } from '../views/initial-displayers';
+import { ResultsAdminDisplayer, ResultsPlayerDisplayer } from '../views/results-displayers';
+import { WinStatusDisplayer } from '../views/win-status-displayer';
+
+import { Admin, Player } from './players';
+import { DiceGenerator, TurnGenerator } from './generators';
 
 /** The App class initializes the game, sets up generators, creates admin and players, and starts the game. */
 export class App {
@@ -21,6 +19,9 @@ export class App {
 		// Connect diceGenerator and turnGenerator to get player turn result
 		this.turnGenerator.subscribe(this.diceGenerator);
 
+		// Subscribe to handle active status of the in turn user
+		this.turnGenerator.subscribe(new InTurnDisplayer());
+
 		// Create / Subscribe admin and players for accessing player turn result and render view
 		this.createAdmin();
 		this.createPlayers();
@@ -31,37 +32,33 @@ export class App {
 		const resultsAdminDisplayer = new ResultsAdminDisplayer();
 
 		const adminPayload: AdminPayload = {
-			displayerInstances: { initialAdminDisplayer, resultsAdminDisplayer },
+			displayers: { initialAdminDisplayer, resultsAdminDisplayer },
 		};
 
-		const admin = new Admin(adminPayload);
-		this.diceGenerator.subscribe(admin);
+		this.diceGenerator.subscribe(new Admin(adminPayload));
 	}
 
 	private createPlayers(): void {
 		const initialPlayerDisplayer = new InitialPlayerDisplayer();
 		const resultsPlayerDisplayer = new ResultsPlayerDisplayer();
 		const winStatusDisplayer = new WinStatusDisplayer();
-		const inTurnDisplayer = new InTurnDisplayer();
 
 		Array.from({ length: NUMBER_OF_PLAYERS }).map((_, playerIndex) => {
 			const playerPayload: PlayerPayload = {
 				selfIndex: playerIndex,
-				displayerInstances: {
+				displayers: {
 					initialPlayerDisplayer,
 					resultsPlayerDisplayer,
 					winStatusDisplayer,
-					inTurnDisplayer,
 				},
 			};
 
-			const player = new Player(playerPayload);
-			this.diceGenerator.subscribe(player);
+			this.diceGenerator.subscribe(new Player(playerPayload));
 		});
 	}
 
 	/** Get the current result for the current player and initiate the next turn in the game. */
 	public run(): void {
-		this.turnGenerator.next();
+		this.turnGenerator.run();
 	}
 }
