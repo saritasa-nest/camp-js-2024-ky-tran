@@ -26,10 +26,7 @@ export class DiceGenerator extends Publisher<PlayerTurnResult> {
 		super();
 	}
 
-	/**
-	 * Simulates rolling a dice and returns the result.
-	 * @returns A random integer representing the result of the dice roll.
-	 */
+	/** Simulates rolling a dice and returns the result. */
 	public roll(): number {
 		return getRandomInt(1, this.sidesCount);
 	}

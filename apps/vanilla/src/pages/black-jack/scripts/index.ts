@@ -4,11 +4,13 @@ import { App } from './controllers/app';
 window.onload = function() {
 	const app = new App();
 
-	const mainButton = selectElement('.make-a-move');
+	selectElement('.make-a-move').onclick = function() {
+		app.run();
+	};
 
-	if (mainButton) {
-		mainButton.onclick = function() {
+	document.onkeydown = function(event) {
+		if (event.code === 'Enter') {
 			app.run();
-		};
-	}
+		}
+	};
 };

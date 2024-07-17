@@ -8,4 +8,4 @@ export const NUMBER_OF_DICE_RESULTS = 6;
 export const START_PLAYER_INDEX = 0;
 
 /** Total result of dice rolls to win the game. */
-export const WINNER_DICE_TOTAL_RESULT = 21;
+export const WIN_POINT = 21;

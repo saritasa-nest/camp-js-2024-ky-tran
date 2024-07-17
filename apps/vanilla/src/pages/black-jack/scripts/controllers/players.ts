@@ -1,4 +1,4 @@
-import { WINNER_DICE_TOTAL_RESULT } from '../config';
+import { WIN_POINT } from '../config';
 import { AdminPayload, PlayerPayload } from '../types/displayer-types';
 import { sum } from '../utils/mathematics';
 import { Publisher } from '../models/publisher';
@@ -22,17 +22,16 @@ export class Admin extends Attender implements Subscriber<PlayerTurnResult> {
 		super();
 
 		this.initial.subscribe(displayers.initialAdminDisplayer);
-		this.results.subscribe(displayers.resultsAdminDisplayer);
-
-		// 'null' -> No need data for initial render
 		this.initial.notify(null);
+
+		this.results.subscribe(displayers.resultsAdminDisplayer);
 	}
 
 	/**
 	 * Updates dice results for a player's turn and notifies subscribers (displayers) with the updated results.
 	 * @param playerIndex - Index of the player whose turn result is being updated.
 	 * @param diceResult - Result of the dice roll for the player's turn.
-  */
+	 */
 	public update({ playerIndex, diceResult }: PlayerTurnResult): void {
 		this.diceResults.push(diceResult);
 		this.results.notify({ playerIndex, diceResults: this.diceResults });
@@ -43,7 +42,7 @@ export class Admin extends Attender implements Subscriber<PlayerTurnResult> {
 export class Player extends Attender implements Subscriber<PlayerTurnResult> {
 	private readonly selfIndex: number;
 
-	private readonly winnerDiceTotalResult: number = WINNER_DICE_TOTAL_RESULT;
+	private readonly winnerDiceTotalResult: number = WIN_POINT;
 
 	private readonly initial = new Publisher<InitialDisplay>();
 
@@ -70,7 +69,7 @@ export class Player extends Attender implements Subscriber<PlayerTurnResult> {
 	 * Notifies subscribers with updated results, win status, and next player's turn.
 	 * @param playerIndex - Index of the player whose turn result is being updated.
 	 * @param diceResult - Result of the dice roll for the player's turn.
-  */
+	 */
 	public update({ playerIndex, diceResult }: PlayerTurnResult): void {
 		if (playerIndex === this.selfIndex) {
 			this.diceResults.push(diceResult);
