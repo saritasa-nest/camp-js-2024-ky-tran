@@ -32,7 +32,7 @@ export class DiceGenerator extends Publisher<PlayerTurnResult> {
 	}
 
 	/**
-	 * Receive turn index from Turn Generator.
+	 * Receive turn index from publisher.
 	 * @param playerIndex - Index of the player whose turn result is being updated.
 	 */
 	public update(playerIndex: number): void {

@@ -6,7 +6,7 @@ import { Subscriber } from '../models/subscriber';
 import { InitialDisplay, PlayerResults, PlayerTurnResult, WinStatus } from '../types/player-types';
 
 /** Base class for all players to manage their own dice results and notify to displayers to display dice results all the screen. */
-class Attender {
+class BaseUser {
 	/** Array to store all dice roll results of a player. */
 	protected readonly diceResults: number[] = [];
 
@@ -15,7 +15,7 @@ class Attender {
 }
 
 /** Admin role tracking all players results and displaying results. */
-export class Admin extends Attender implements Subscriber<PlayerTurnResult> {
+export class Admin extends BaseUser implements Subscriber<PlayerTurnResult> {
 	private readonly initial = new Publisher<null>();
 
 	public constructor({ displayers }: AdminPayload) {
@@ -39,7 +39,7 @@ export class Admin extends Attender implements Subscriber<PlayerTurnResult> {
 }
 
 /** Represents a player in the game, tracking their turns and notifying displayer for display result. */
-export class Player extends Attender implements Subscriber<PlayerTurnResult> {
+export class Player extends BaseUser implements Subscriber<PlayerTurnResult> {
 	private readonly selfIndex: number;
 
 	private readonly winnerDiceTotalResult: number = WIN_POINT;

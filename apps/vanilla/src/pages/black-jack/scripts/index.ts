@@ -4,7 +4,7 @@ import { App } from './controllers/app';
 window.onload = function() {
 	const app = new App();
 
-	selectElement('.make-a-move').onclick = function() {
+	selectElement('.make-move').onclick = function() {
 		app.run();
 	};
 
