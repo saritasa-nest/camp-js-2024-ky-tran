@@ -1,29 +1,30 @@
 /** Date range. */
 type DateRange = {
+
 	/** Start date in ISO format. */
 	readonly start: string;
 
 	/** End date in ISO format. */
 	readonly end: string;
-}
+};
 
 /** Anime type. */
 export enum AnimeType {
-  Tv = 'Tv',
-  Ova = 'Ova',
-  Movie = 'Movie',
-  Special = 'Special',
-  Ona = 'Ona',
-  Music = 'Music',
-  PromotionalVideos = 'Promotional Videos',
-  Unknown = 'Unknown',
+	Tv = 'Tv',
+	Ova = 'Ova',
+	Movie = 'Movie',
+	Special = 'Special',
+	Ona = 'Ona',
+	Music = 'Music',
+	PromotionalVideos = 'Promotional Videos',
+	Unknown = 'Unknown',
 }
 
 /** Anime status. */
 export enum AnimeStatus {
-  Airing = 'Airing',
-  Finished = 'Finished',
-  NotYetAired = 'Not Yet Aired',
+	Airing = 'Airing',
+	Finished = 'Finished',
+	NotYetAired = 'Not Yet Aired',
 }
 
 /** Anime. */
@@ -63,8 +64,8 @@ export type Anime = {
 	readonly userScore: number;
 
 	/** An array of IDs representing the studios that produced the anime. */
-	readonly studios: number[];
+	readonly studios: readonly number[];
 
 	/** An array of IDs representing the genres of the anime. */
-	readonly genres: number[];
+	readonly genres: readonly number[];
 };

@@ -1,13 +1,14 @@
-/** Date Range DTO */
+/** Date Range DTO. */
 type DateRangeDto = {
+
 	/** Start date in ISO format. */
 	readonly start: string;
 
 	/** End date in ISO format. */
 	readonly end: string;
-}
+};
 
-/** Anime Type DTO */
+/** Anime Type DTO. */
 export enum AnimeTypeDto {
 	Tv = 'TV',
 	Ova = 'OVA',
@@ -19,7 +20,7 @@ export enum AnimeTypeDto {
 	Unknown = 'UNKNOWN',
 }
 
-/** Anime Status DTO */
+/** Anime Status DTO. */
 export enum AnimeStatusDto {
 	Airing = 'AIRING',
 	Finished = 'FINISHED',
@@ -63,8 +64,8 @@ export type AnimeDto = {
 	readonly user_score: number;
 
 	/** An array of IDs representing the studios that produced the anime. */
-	readonly studios: number[];
+	readonly studios: readonly number[];
 
 	/** An array of IDs representing the genres of the anime. */
-	readonly genres: number[];
+	readonly genres: readonly number[];
 };

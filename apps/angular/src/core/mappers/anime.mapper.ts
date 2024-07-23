@@ -1,18 +1,25 @@
 import { Injectable } from '@angular/core';
 
 import { AnimeDto, AnimeStatusDto, AnimeTypeDto } from '../dtos/anime.dto';
-import { AnimeStatus, AnimeType } from '../models/anime.model';
+import { Anime, AnimeStatus, AnimeType } from '../models/anime.model';
 import { toCapitalize } from '../utils/toCapitalize';
 
+/** Anime mapper. */
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root',
 })
 export class AnimeMapper {
 	private convertStringDto<T extends string, U extends string>(str: T): U {
-		return str.split('_').map(toCapitalize).join(' ') as U;
+		const capitalizedWords = str.split('_').map(toCapitalize);
+		return capitalizedWords.join(' ') as U;
 	}
 
-	public fromDto(anime: AnimeDto) {
+	/**
+	 * Converts an AnimeDto object (snake_case to camelCase).
+	 * @param anime - The AnimeDto object to be converted.
+	 * @returns The converted object.
+	 */
+	public fromDto(anime: AnimeDto): Anime {
 		return {
 			id: anime.id,
 			created: anime.created,
@@ -30,4 +37,3 @@ export class AnimeMapper {
 		};
 	}
 }
- 

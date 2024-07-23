@@ -1,5 +1,6 @@
 /** Date range type. */
 export type TDateRange = {
+
 	/** Start date in ISO format. */
 	readonly start: string;
 
