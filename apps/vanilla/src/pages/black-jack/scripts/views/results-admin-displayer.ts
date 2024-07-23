@@ -8,7 +8,8 @@ import { ResultsDisplayer } from './results-displayers';
 export class ResultsAdminDisplayer extends ResultsDisplayer implements Subscriber<PlayerResults> {
 	/**
 	 * Updates the admin view with the latest dice results and total result.
-	 * @param diceResults - Array of dice results to be displayed.
+	 * @param renderOptions - The parameters for updating the admin view.
+	 * @param renderOptions.diceResults - Array of dice results to be displayed.
 	 */
 	public update({ diceResults }: PlayerResults): void {
 		const adminEl = selectElement('.admin');

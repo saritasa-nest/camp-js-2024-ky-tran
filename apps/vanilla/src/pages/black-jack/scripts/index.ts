@@ -9,7 +9,7 @@ window.onload = function() {
 	};
 
 	document.onkeydown = function(event) {
-		if (event.code === 'Enter') {
+		if (event.code === 'Space') {
 			app.run();
 		}
 	};

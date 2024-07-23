@@ -10,8 +10,6 @@ html {
 	box-sizing: border-box;
 	font-size: 10px;
 	overflow-x: hidden;
-	user-select: none;
-	-webkit-tap-highlight-color: transparent;
 }
 
 body {

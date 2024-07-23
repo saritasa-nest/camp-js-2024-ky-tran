@@ -1,5 +1,7 @@
-import { InitialAdminDisplayer, InitialPlayerDisplayer } from '../views/initial-displayers';
-import { ResultsAdminDisplayer, ResultsPlayerDisplayer } from '../views/results-displayers';
+import { InitialAdminDisplayer } from '../views/initial-admin-displayer';
+import { InitialPlayerDisplayer } from '../views/initial-player-displayer';
+import { ResultsAdminDisplayer } from '../views/results-admin-displayer';
+import { ResultsPlayerDisplayer } from '../views/results-player-displayer';
 import { WinStatusDisplayer } from '../views/win-status-displayer';
 
 /** Represents instances of admin displayers. */
@@ -22,13 +24,13 @@ export type AdminPayload = {
 /** Represents instances of player displayers. */
 export type PlayerDisplayers = {
 
-	/** The instance of InitialPlayerDisplayer. */
+	/** The instance of {@link InitialPlayerDisplayer}. */
 	readonly initialPlayerDisplayer: InitialPlayerDisplayer;
 
-	/** The instance of ResultsPlayerDisplayer. */
+	/** The instance of {@link ResultsPlayerDisplayer}. */
 	readonly resultsPlayerDisplayer: ResultsPlayerDisplayer;
 
-	/** The instance of WinStatusDisplayer. */
+	/** The instance of {@link WinStatusDisplayer}. */
 	readonly winStatusDisplayer: WinStatusDisplayer;
 };
 
@@ -39,7 +41,7 @@ export type PlayerPayload = {
 	readonly selfIndex: number;
 
 	/** The total result of the winner's dice. */
-	readonly winnerDiceTotalResult?: number;
+	readonly winnerDiceTotalResult: number | null;
 
 	/** The instances of player displayers. */
 	readonly displayers: PlayerDisplayers;
