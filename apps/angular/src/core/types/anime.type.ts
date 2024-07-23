@@ -1,9 +1,10 @@
-/** Date range type. */
-export type TDateRange = {
+import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
 
-	/** Start date in ISO format. */
-	readonly start: string;
+import { AnimeDto } from '../dtos/anime.dto';
+import { Anime } from '../models/anime.model';
 
-	/** End date in ISO format. */
-	readonly end: string;
-};
+/** Paginated Anime Dto. */
+export type PaginatedAnimeDto = PaginationDto<AnimeDto>;
+
+/** Paginated Anime. */
+export type PaginatedAnime = PaginationDto<Anime>;
