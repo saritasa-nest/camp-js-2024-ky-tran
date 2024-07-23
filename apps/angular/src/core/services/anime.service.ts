@@ -3,10 +3,8 @@ import { inject, Injectable, signal } from '@angular/core';
 import { map, Observable, tap } from 'rxjs';
 
 import { environment } from '@js-camp/angular/environments/environment';
-
-import { PaginatedAnime, PaginatedAnimeDto } from '../types/anime.type';
-import { AnimeMapper } from '../mappers/anime.mapper';
-import { Anime } from '../models/anime.model';
+import { AllAnimeKit, PaginatedAnime, PaginatedAnimeDto } from '@js-camp/angular/core/types/anime.type';
+import { AnimeMapper } from '@js-camp/angular/core/mappers/anime.mapper';
 
 /** Anime service. */
 @Injectable({
@@ -17,10 +15,16 @@ export class AnimeService {
 
 	private readonly animeMapper = inject(AnimeMapper);
 
-	private readonly allAnime_ = signal<readonly Anime[]>([]);
+	private readonly baseUrl = `${environment.animeUrl}/anime/`;
 
-	/** A list all anime for outside read. */
-	public readonly allAnime = this.allAnime_.asReadonly();
+	private allAnimeKit_ = signal<AllAnimeKit>({ isLoading: false, error: '', results: [] });
+
+	/** All Anime kit stores loading status, error and data of fetching all anime. */
+	public readonly allAnimeKit = this.allAnimeKit_.asReadonly();
+
+	private updateAllAnimeKit(modifier: Partial<AllAnimeKit>): void {
+		this.allAnimeKit_.update(prev => ({ ...prev, ...modifier }));
+	}
 
 	private mapAllAnimeDto(data: PaginatedAnimeDto): PaginatedAnime {
 		return {
@@ -29,13 +33,21 @@ export class AnimeService {
 		};
 	}
 
-	/** Get all animes service. */
+	/** Get all anime service. */
 	public getAllAnime(): Observable<unknown> {
-		const url = `${environment.animeUrl}/anime/`;
+		this.updateAllAnimeKit({ isLoading: true });
+		this.updateAllAnimeKit({ error: '' });
 
-		return this.httpClient.get<PaginatedAnimeDto>(url).pipe(
+		return this.httpClient.get<PaginatedAnimeDto>(this.baseUrl).pipe(
 			map(responseDto => this.mapAllAnimeDto(responseDto)),
-			tap({ next: response => this.allAnime_.set([...response.results]) }),
+			tap({
+				next: response => this.updateAllAnimeKit({ results: [...response.results] }),
+				error: (error: unknown) => {
+					console.error(error);
+					this.updateAllAnimeKit({ error: 'Something went wrong fetching all anime. Please try again later.' });
+				},
+				complete: () => this.updateAllAnimeKit({ isLoading: false }),
+			}),
 		);
 	}
 }

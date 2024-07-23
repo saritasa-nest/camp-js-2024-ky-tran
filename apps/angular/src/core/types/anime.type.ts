@@ -8,3 +8,16 @@ export type PaginatedAnimeDto = PaginationDto<AnimeDto>;
 
 /** Paginated Anime. */
 export type PaginatedAnime = PaginationDto<Anime>;
+
+/** All Anime Kit type. */
+export type AllAnimeKit = {
+
+	/** Fetching data loading status. */
+	readonly isLoading: boolean;
+
+	/** Error message for wrong fetching. */
+	readonly error: string;
+
+	/** A list of all anime. */
+	readonly results: readonly Anime[];
+};

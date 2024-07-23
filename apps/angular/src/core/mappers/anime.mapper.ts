@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { AnimeDto, AnimeStatusDto, AnimeTypeDto } from '../dtos/anime.dto';
-import { Anime, AnimeStatus, AnimeType } from '../models/anime.model';
+import { Anime, AnimeBluePrint, AnimeStatus, AnimeType } from '../models/anime.model';
 import { toCapitalize } from '../utils/toCapitalize';
 
 /** Anime mapper. */
@@ -20,10 +20,10 @@ export class AnimeMapper {
 	 * @returns The converted object.
 	 */
 	public fromDto(anime: AnimeDto): Anime {
-		return {
+		return new AnimeBluePrint({
 			id: anime.id,
-			created: anime.created,
-			modified: anime.modified,
+			createdAt: anime.created,
+			modifiedAt: anime.modified,
 			titleEng: anime.title_eng,
 			titleJpn: anime.title_jpn,
 			image: anime.image,
@@ -34,6 +34,6 @@ export class AnimeMapper {
 			userScore: anime.user_score,
 			studios: anime.studios,
 			genres: anime.genres,
-		};
+		});
 	}
 }

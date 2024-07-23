@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { AnimeService } from '@js-camp/angular/core/services/anime.service';
 
 /** Home page. */
@@ -15,11 +16,13 @@ export class HomeComponent implements OnInit {
 	private readonly animeService = inject(AnimeService);
 
 	/** A list all anime. */
-	public readonly allAnime = this.animeService.allAnime;
+	public readonly allAnimeKit = this.animeService.allAnimeKit;
 
 	/** On init. */
 	public ngOnInit(): void {
 		// Start fetching all anime.
-		this.animeService.getAllAnime().subscribe();
+		this.animeService.getAllAnime().subscribe({
+			next: res => console.log(res),
+		});
 	}
 }
