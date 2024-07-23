@@ -91,7 +91,7 @@
 }
 
 .filter__title {
-	height: var(--height-sub-title);
+	height: var(--height-subtitle);
 }
 
 .filter__input-group {
