@@ -12,11 +12,11 @@ type DateRange = {
 
 /** Anime type. */
 export enum AnimeType {
-	Tv = 'Tv',
-	Ova = 'Ova',
+	Tv = 'TV',
+	Ova = 'OVA',
 	Movie = 'Movie',
 	Special = 'Special',
-	Ona = 'Ona',
+	Ona = 'ONA',
 	Music = 'Music',
 	PromotionalVideos = 'Promotional Videos',
 	Unknown = 'Unknown',
@@ -24,8 +24,8 @@ export enum AnimeType {
 
 /** Anime status. */
 export enum AnimeStatus {
-	Airing = 'Airing',
-	Finished = 'Finished',
+	Airing = 'Currently Airing',
+	Finished = 'Finished Airing',
 	NotYetAired = 'Not Yet Aired',
 }
 
@@ -34,11 +34,11 @@ export class AnimeBluePrint extends Immerable {
 	/** The unique identifier of the anime. */
 	public readonly id: number;
 
-	/** The creation date of the anime record in ISO format. */
-	public readonly createdAt: string;
+	/** The creation date of the anime. */
+	public readonly createdAt: Date;
 
-	/** The last modified date of the anime record in ISO format. */
-	public readonly modifiedAt: string;
+	/** The last modified date of the anime. */
+	public readonly modifiedAt: Date;
 
 	/** The English title of the anime. */
 	public readonly titleEng: string;

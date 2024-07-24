@@ -1,13 +1,9 @@
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
-
-import { AnimeDto } from '../dtos/anime.dto';
-import { Anime } from '../models/anime.model';
+import { AnimeDto } from '@js-camp/angular/core/dtos/anime.dto';
+import { Anime } from '@js-camp/angular/core/models/anime.model';
 
 /** Paginated Anime Dto. */
 export type PaginatedAnimeDto = PaginationDto<AnimeDto>;
-
-/** Paginated Anime. */
-export type PaginatedAnime = PaginationDto<Anime>;
 
 /** All Anime Kit type. */
 export type AllAnimeKit = {

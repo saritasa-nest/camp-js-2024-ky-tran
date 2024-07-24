@@ -15,7 +15,7 @@ import { AnimeService } from '@js-camp/angular/core/services/anime.service';
 export class HomeComponent implements OnInit {
 	private readonly animeService = inject(AnimeService);
 
-	/** A list all anime. */
+	/** All Anime kit stores loading status, error and data of fetching all anime. */
 	public readonly allAnimeKit = this.animeService.allAnimeKit;
 
 	/** On init. */
