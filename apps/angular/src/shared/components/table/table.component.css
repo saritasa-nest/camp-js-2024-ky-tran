@@ -28,3 +28,12 @@ img {
 	aspect-ratio: 1;
 	object-fit: contain;
 }
+
+.mat-mdc-header-cell,
+.mat-mdc-cell {
+	text-align: center;
+}
+
+[class*="mat-column-title_"] {
+	width: 20%;
+}
