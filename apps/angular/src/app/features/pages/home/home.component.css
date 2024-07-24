@@ -1,0 +1,11 @@
+.home-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: var(--gap-medium);
+	height: 100%;
+}
+
+.home-content {
+	flex-grow: 1;
+	flex-basis: 0;
+}

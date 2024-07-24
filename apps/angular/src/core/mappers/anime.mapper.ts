@@ -40,7 +40,10 @@ export class AnimeMapper {
 			titleEng: anime.title_eng,
 			titleJpn: anime.title_jpn,
 			image: anime.image,
-			aired: anime.aired,
+			aired: {
+				startAt: new Date(anime.aired.start),
+				endAt: new Date(anime.aired.end),
+			},
 			type: typeMapping[anime.type],
 			status: statusMapping[anime.status],
 			score: anime.score,

@@ -3,11 +3,11 @@ import { Immerable, OmitImmerable } from '@js-camp/core/models/immerable';
 /** Date range. */
 type DateRange = {
 
-	/** Start date in ISO format. */
-	readonly start: string;
+	/** Start date. */
+	readonly startAt: Date;
 
-	/** End date in ISO format. */
-	readonly end: string;
+	/** End date. */
+	readonly endAt: Date;
 };
 
 /** Anime type. */

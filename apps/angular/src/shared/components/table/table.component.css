@@ -1,0 +1,30 @@
+.table {
+	background-color: var(--background-color-primary-bright);
+}
+
+.table th,
+.table td {
+	color: var(--text-color-main);
+	line-height: 1.6;
+}
+
+.table th {
+	padding-block: var(--gap-extra-small);
+	font-size: 1.6em;
+}
+
+.table td {
+	font-size: 1.4rem;
+}
+
+.image-container {
+	height: var(--height-image-main);
+	margin-block: var(--gap-extra-small);
+}
+
+img {
+	display: block;
+	height: 100%;
+	aspect-ratio: 1;
+	object-fit: contain;
+}

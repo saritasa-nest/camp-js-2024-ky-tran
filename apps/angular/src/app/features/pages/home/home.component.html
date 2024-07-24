@@ -1,5 +1,27 @@
-@if (allAnimeKit().isLoading) {
-	<p>Loading...</p>
-}
+<div class="home-wrapper">
+	<header class="home-header">
+		<h2 class="home-header__title">All anime</h2>
+	</header>
 
-<p>Anime works</p>
+	<div class="home-content">
+		@if (allAnimeKit().isLoading) {
+			<p>Anime loading...</p>
+		}
+
+		@if (allAnimeKit().error) {
+			<p>{{ allAnimeKit().error }}</p>
+		}
+
+		@if (!allAnimeKit().isLoading && !allAnimeKit().error) {
+			@if (allAnimeKit().results.length === 0) {
+				<p>There is no anime to display.</p>
+			}
+
+			@if (allAnimeKit().results.length > 0) {
+				<camp-table [allAnime]="allAnimeKit().results" />
+			}
+		}
+
+
+	</div>
+</div>

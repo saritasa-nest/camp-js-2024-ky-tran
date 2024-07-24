@@ -1,0 +1,42 @@
+.main {
+	display: flex;
+	max-width: var(--width-layout-main);
+	min-height: var(--height-layout-main);
+	background-color: var(--background-color-primary-light);
+	margin-inline: auto;
+}
+
+.side-bar {
+	width: 216px;
+	border-right: 2px solid var(--border-color-main);
+}
+
+.content {
+	flex-grow: 1;
+	flex-basis: 0;
+	padding: 20px;
+}
+
+.list {
+	list-style: none;
+}
+
+.link:link,
+.link:visited {
+	display: block;
+	color: inherit;
+	font-size: 1.4rem;
+	text-decoration: none;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	padding: 16px 30px;
+}
+
+.link.active {
+	background-color: var(--background-color-primary-bright);
+}
+
+.link.disable {
+	cursor: not-allowed;
+	text-decoration: line-through;
+}

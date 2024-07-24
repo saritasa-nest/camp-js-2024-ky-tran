@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { MainLayoutComponent } from '@js-camp/angular/app/features/layouts/main-layout/main-layout.component';
 
 /** App component. */
 @Component({
 	selector: 'camp-root',
 	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.css'],
+	styleUrl: './app.component.css',
 	standalone: true,
-	imports: [RouterModule],
+	imports: [MainLayoutComponent],
 })
 export class AppComponent {}
