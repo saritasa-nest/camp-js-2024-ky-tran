@@ -1,14 +1,14 @@
 import { Immerable, OmitImmerable } from '@js-camp/core/models/immerable';
 
 /** Date range. */
-type DateRange = {
+type DateRange = Readonly<{
 
 	/** Start date. */
-	readonly startAt: Date;
+	startAt: Date;
 
 	/** End date. */
-	readonly endAt: Date;
-};
+	endAt: Date;
+}>;
 
 /** Anime type. */
 export enum AnimeType {

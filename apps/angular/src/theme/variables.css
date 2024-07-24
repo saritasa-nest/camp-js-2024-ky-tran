@@ -9,8 +9,11 @@
 	/* Layout */
 	--height-layout-main: 640px;
 	--width-layout-main: 1280px;
-	--width-layout-sub: 160px;
+	--width-layout-sub: 220px;
 	--height-image-main: 150px;
 	--gap-extra-small: 8px;
+	--gap-small: 16px;
 	--gap-medium: 20px;
+	--gap-large: 30px;
+	--gap-extra-large: 40px;
 }

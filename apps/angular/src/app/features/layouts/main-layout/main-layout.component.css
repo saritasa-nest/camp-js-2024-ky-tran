@@ -7,14 +7,14 @@
 }
 
 .side-bar {
-	width: 216px;
+	width: var(--width-layout-sub);
 	border-right: 2px solid var(--border-color-main);
 }
 
 .content {
 	flex-grow: 1;
 	flex-basis: 0;
-	padding: 20px;
+	padding: var(--gap-medium) var(--gap-medium) var(--gap-extra-large);
 }
 
 .list {
@@ -29,7 +29,7 @@
 	text-decoration: none;
 	text-transform: uppercase;
 	letter-spacing: 1px;
-	padding: 16px 30px;
+	padding: var(--gap-small) var(--gap-large);
 }
 
 .link.active {

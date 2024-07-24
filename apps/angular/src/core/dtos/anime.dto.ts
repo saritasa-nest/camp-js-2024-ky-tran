@@ -1,12 +1,12 @@
 /** Date Range DTO. */
-type DateRangeDto = {
+type DateRangeDto = Readonly<{
 
 	/** Start date in ISO format. */
-	readonly start: string;
+	start: string;
 
 	/** End date in ISO format. */
-	readonly end: string;
-};
+	end: string;
+}>;
 
 /** Anime Type DTO. */
 export enum AnimeTypeDto {
@@ -28,44 +28,44 @@ export enum AnimeStatusDto {
 }
 
 /** Anime DTO. */
-export type AnimeDto = {
+export type AnimeDto = Readonly<{
 
 	/** The unique identifier of the anime. */
-	readonly id: number;
+	id: number;
 
 	/** The creation date of the anime record in ISO format. */
-	readonly created: string;
+	created: string;
 
 	/** The last modified date of the anime record in ISO format. */
-	readonly modified: string;
+	modified: string;
 
 	/** The English title of the anime. */
-	readonly title_eng: string;
+	title_eng: string;
 
 	/** The Japanese title of the anime. */
-	readonly title_jpn: string;
+	title_jpn: string;
 
 	/** The URL of the anime's image. */
-	readonly image: string;
+	image: string;
 
 	/** The airing date range of the anime. */
-	readonly aired: DateRangeDto;
+	aired: DateRangeDto;
 
 	/** The type of the anime (e.g., TV). */
-	readonly type: AnimeTypeDto;
+	type: AnimeTypeDto;
 
 	/** The current status of the anime (e.g., AIRING). */
-	readonly status: AnimeStatusDto;
+	status: AnimeStatusDto;
 
 	/** The average score of the anime. */
-	readonly score: number;
+	score: number;
 
 	/** The user's score for the anime. */
-	readonly user_score: number;
+	user_score: number;
 
 	/** An array of IDs representing the studios that produced the anime. */
-	readonly studios: readonly number[];
+	studios: readonly number[];
 
 	/** An array of IDs representing the genres of the anime. */
-	readonly genres: readonly number[];
-};
+	genres: readonly number[];
+}>;
