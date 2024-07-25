@@ -2,11 +2,13 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import { animeUrl } from './common';
+import { animeBaseUrl, animeUrl, baseUrl } from './common';
 
 /** Default environment configuration. */
 export const environment = {
 	production: false,
+	baseUrl,
+	animeBaseUrl,
 	animeUrl,
 };
 
