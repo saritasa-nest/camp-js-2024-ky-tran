@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { CommonModule } from '@angular/common';
 
 import { AnimeService } from '@js-camp/angular/core/services/anime.service';
-import { TableComponent } from '@js-camp/angular/shared/components/table/table.component';
+import { AnimeTableComponent } from '@js-camp/angular/app/features/components/anime-table.component';
 
 /** Home page. */
 @Component({
 	selector: 'camp-home',
 	standalone: true,
-	imports: [CommonModule, TableComponent],
+	imports: [CommonModule, AnimeTableComponent],
 	templateUrl: './home.component.html',
 	styleUrl: './home.component.css',
 	changeDetection: ChangeDetectionStrategy.OnPush,

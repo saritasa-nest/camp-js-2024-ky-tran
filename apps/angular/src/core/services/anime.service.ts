@@ -43,9 +43,9 @@ export class AnimeService {
 						console.error(error);
 					}
 
-					this.updateAllAnimeKit({ error: 'Something went wrong fetching all anime. Please try again later.' });
+					this.updateAllAnimeKit({ error: 'Something went wrong fetching anime. Please try again.' });
 				},
-				complete: () => this.updateAllAnimeKit({ isLoading: false }),
+				finalize: () => this.updateAllAnimeKit({ isLoading: false }),
 			}),
 		);
 	}

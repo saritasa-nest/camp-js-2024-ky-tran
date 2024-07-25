@@ -5,6 +5,7 @@
 	--background-color-primary-light: #333;
 	--background-color-primary-bright: #444;
 	--border-color-main: #222;
+	--error-color-main: #e41e1e;
 
 	/* Layout */
 	--height-layout-main: 640px;
@@ -16,4 +17,9 @@
 	--gap-medium: 20px;
 	--gap-large: 30px;
 	--gap-extra-large: 40px;
+
+	/* Font-size */
+	--font-size-medium: 1.4rem;
+	--font-size-extra-medium: 1.6rem;
+	--font-size-extra-large: 2.4rem;
 }

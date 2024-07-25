@@ -9,7 +9,7 @@
 		}
 
 		@if (allAnimeKit().error) {
-			<p>{{ allAnimeKit().error }}</p>
+			<p class="error-message">{{ allAnimeKit().error }}</p>
 		}
 
 		@if (!allAnimeKit().isLoading && !allAnimeKit().error) {
@@ -18,7 +18,7 @@
 			}
 
 			@if (allAnimeKit().results.length > 0) {
-				<camp-table [allAnime]="allAnimeKit().results" />
+				<camp-anime-table [allAnime]="allAnimeKit().results" />
 			}
 		}
 	</div>
