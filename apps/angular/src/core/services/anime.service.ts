@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, map, Observable, tap, throwError } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 
 import { AppConfig } from '@js-camp/angular/config/app-config';
 import { AnimeMapper } from '@js-camp/angular/core/mappers/anime.mapper';
@@ -34,14 +34,14 @@ export class AnimeService {
 			.get<PaginationDto<AnimeDto>>(animeUrl)
 			.pipe(
 				map(responseDto => mapPaginationFromDto(responseDto, mapAnimeFromDto)),
-				catchError((error) => {
+				catchError((error: unknown) => {
 					if (!isProduction) {
 						console.error({ error });
 					}
 
 					const newError = new Error('Failed to fetch all anime. Please try again.');
 					return throwError(() => newError);
-				})
+				}),
 			);
 	}
 }
