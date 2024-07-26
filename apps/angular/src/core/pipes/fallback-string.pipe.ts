@@ -4,10 +4,10 @@ const FALL_BACK_VALUE = '--';
 
 /** Pipe that returns a fallback value if the input is null or empty. */
 @Pipe({
-	name: 'noEmpty',
+	name: 'fallbackString',
 	standalone: true,
 })
-export class NoEmpty implements PipeTransform {
+export class FallbackString implements PipeTransform {
 	/**
 	 * Transforms the given value by returning a fallback value if the input is null or empty.
 	 * @param value - The value to be transformed.
