@@ -6,7 +6,6 @@ import { Anime } from '@js-camp/angular/core/models/anime';
 import { AnimeService } from '@js-camp/angular/core/services/anime.service';
 import { AnimeTableComponent } from '@js-camp/angular/app/features/components/anime-table/anime-table.component';
 import { Pagination } from '@js-camp/core/models/pagination';
-import { HttpErrorResponse } from '@angular/common/http';
 
 /** Home page. */
 @Component({
@@ -39,11 +38,9 @@ export class HomeComponent {
 
 		this.allAnime$ = this.animeService.getAllAnime().pipe(
 			catchError((error: unknown) => {
-				if (error instanceof HttpErrorResponse) {
-					this.error$.next(error.message);
-				}
+				const errorMessage = error instanceof Error ? error.message : 'Something went wrong!';
+				this.error$.next(errorMessage);
 
-				this.error$.next('Something went wrong!');
 				return throwError(() => error);
 			}),
 			finalize(() => this.isLoading$.next(false)),
