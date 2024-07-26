@@ -1,6 +1,6 @@
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
 import { AnimeDto } from '@js-camp/angular/core/dtos/anime.dto';
-import { Anime } from '@js-camp/angular/core/models/anime.model';
+import { Anime } from '@js-camp/angular/core/models/anime';
 
 /** Paginated Anime Dto. */
 export type PaginatedAnimeDto = PaginationDto<AnimeDto>;

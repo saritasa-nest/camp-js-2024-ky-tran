@@ -1,0 +1,23 @@
+<div class="home-wrapper">
+	<header class="home-header">
+		<h2 class="home-header__title">All anime</h2>
+	</header>
+
+	<div class="home-content">
+		@if (isLoading$ | async) {
+			<p>Anime loading...</p>
+		}
+
+		@if (error$ | async; as errorMessage) {
+			<p class="error-message">{{ errorMessage }}</p>
+		}
+
+		@if(allAnime$ | async; as allAnime) {
+			@if (allAnime.results.length) {
+				<camp-anime-table [allAnime]="allAnime.results" />
+			} @else {
+				<p>There is no anime to display.</p>
+			}
+		}
+	</div>
+</div>

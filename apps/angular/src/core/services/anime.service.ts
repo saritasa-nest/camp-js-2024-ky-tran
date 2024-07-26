@@ -1,11 +1,14 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
-import { map, Observable, tap } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { catchError, map, Observable, tap, throwError } from 'rxjs';
 
-import { AllAnimeKit, PaginatedAnimeDto } from '@js-camp/angular/core/types/anime.type';
-import { AnimeMapper } from '@js-camp/angular/core/mappers/anime.mapper';
-import { PaginationMapper } from '@js-camp/core/mappers/pagination.mapper';
 import { AppConfig } from '@js-camp/angular/config/app-config';
+import { AnimeMapper } from '@js-camp/angular/core/mappers/anime.mapper';
+import { Anime } from '@js-camp/angular/core/models/anime';
+import { AnimeDto } from '@js-camp/angular/core/dtos/anime.dto';
+import { PaginationMapper } from '@js-camp/core/mappers/pagination.mapper';
+import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
+import { Pagination } from '@js-camp/core/models/pagination';
 
 /** Anime service. */
 @Injectable({
@@ -20,33 +23,25 @@ export class AnimeService {
 
 	private readonly paginationMapper = inject(PaginationMapper);
 
-	private allAnimeKit_ = signal<AllAnimeKit>({ isLoading: false, error: '', results: [] });
-
-	/** All Anime kit stores loading status, error and data of fetching all anime. */
-	public readonly allAnimeKit = this.allAnimeKit_.asReadonly();
-
-	private updateAllAnimeKit(modifier: Partial<AllAnimeKit>): void {
-		this.allAnimeKit_.update(prev => ({ ...prev, ...modifier }));
-	}
-
 	/** Get all anime service. */
-	public getAllAnime(): Observable<unknown> {
-		this.updateAllAnimeKit({ isLoading: true });
-		this.updateAllAnimeKit({ error: '' });
+	public getAllAnime(): Observable<Pagination<Anime>> {
+		const { isProduction } = this.appConfig;
+		const { animeUrl } = this.appConfig;
+		const { mapPaginationFromDto } = this.paginationMapper;
+		const mapAnimeFromDto = this.animeMapper.fromDto;
 
-		return this.httpClient.get<PaginatedAnimeDto>(this.appConfig.animeUrl).pipe(
-			map(responseDto => this.paginationMapper.mapPaginationFromDto(responseDto, this.animeMapper.fromDto)),
-			tap({
-				next: response => this.updateAllAnimeKit({ results: [...response.results] }),
-				error: (error: unknown) => {
-					if (!this.appConfig.isProduction) {
-						console.error(error);
+		return this.httpClient
+			.get<PaginationDto<AnimeDto>>(animeUrl)
+			.pipe(
+				map(responseDto => mapPaginationFromDto(responseDto, mapAnimeFromDto)),
+				catchError((error) => {
+					if (!isProduction) {
+						console.error({ error });
 					}
 
-					this.updateAllAnimeKit({ error: 'Something went wrong fetching anime. Please try again.' });
-				},
-				finalize: () => this.updateAllAnimeKit({ isLoading: false }),
-			}),
-		);
+					const newError = new Error('Failed to fetch all anime. Please try again.');
+					return throwError(() => newError);
+				})
+			);
 	}
 }

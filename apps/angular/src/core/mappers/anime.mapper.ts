@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 
 import { AnimeDto, AnimeStatusDto, AnimeTypeDto } from '../dtos/anime.dto';
-import { Anime, AnimeBluePrint, AnimeStatus, AnimeType } from '../models/anime.model';
+import { Anime, AnimeBluePrint, AnimeStatus, AnimeType } from '../models/anime';
 
 /** Map AnimeStatusDto to AnimeStatus. */
-const statusMapping: Record<AnimeStatusDto, AnimeStatus> = {
+const statusMappingFromDto: Record<AnimeStatusDto, AnimeStatus> = {
 	[AnimeStatusDto.Airing]: AnimeStatus.Airing,
 	[AnimeStatusDto.Finished]: AnimeStatus.Finished,
 	[AnimeStatusDto.NotYetAired]: AnimeStatus.NotYetAired,
 };
 
 /** Record for mapping AnimeTypeDto to AnimeType. */
-const typeMapping: Record<AnimeTypeDto, AnimeType> = {
+const typeMappingFromDto: Record<AnimeTypeDto, AnimeType> = {
 	[AnimeTypeDto.Tv]: AnimeType.Tv,
 	[AnimeTypeDto.Ova]: AnimeType.Ova,
 	[AnimeTypeDto.Movie]: AnimeType.Movie,
@@ -44,8 +44,8 @@ export class AnimeMapper {
 				startAt: new Date(anime.aired.start),
 				endAt: new Date(anime.aired.end),
 			},
-			type: typeMapping[anime.type],
-			status: statusMapping[anime.status],
+			type: typeMappingFromDto[anime.type],
+			status: statusMappingFromDto[anime.status],
 			score: anime.score,
 			userScore: anime.user_score,
 			studios: anime.studios,

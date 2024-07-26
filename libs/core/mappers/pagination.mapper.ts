@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Pagination, PaginationBluePrint } from '../models/pagination.model';
+import { Pagination, PaginationBluePrint } from '../models/pagination';
 
 /** PaginationMapper. */
 @Injectable({

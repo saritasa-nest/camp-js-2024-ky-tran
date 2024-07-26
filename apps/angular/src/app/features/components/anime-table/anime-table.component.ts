@@ -1,8 +1,8 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 
-import { Anime } from '@js-camp/angular/core/models/anime.model';
+import { Anime } from '@js-camp/angular/core/models/anime';
 import { NoEmpty } from '@js-camp/angular/core/pipes/no-empty.pipe';
 
 /** Anime Table component. */
@@ -12,6 +12,7 @@ import { NoEmpty } from '@js-camp/angular/core/pipes/no-empty.pipe';
 	imports: [CommonModule, MatTableModule, NoEmpty],
 	templateUrl: './anime-table.component.html',
 	styleUrl: './anime-table.component.css',
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimeTableComponent {
 	/** A list of all anime. */

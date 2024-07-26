@@ -11,14 +11,16 @@
 	--height-layout-main: 640px;
 	--width-layout-main: 1280px;
 	--width-layout-sub: 220px;
-	--height-image-main: 150px;
+	--width-image-main: 150px;
 	--gap-extra-small: 8px;
 	--gap-small: 16px;
 	--gap-medium: 20px;
 	--gap-large: 30px;
 	--gap-extra-large: 40px;
+	--gap-huge: 60px;
 
 	/* Font-size */
+	--font-size-root: 10px;
 	--font-size-medium: 1.4rem;
 	--font-size-extra-medium: 1.6rem;
 	--font-size-extra-large: 2.4rem;

@@ -7,7 +7,7 @@
 }
 
 html {
-	font-size: 10px;
+	font-size: var(--font-size-root);
 	box-sizing: border-box;
 }
 
@@ -16,7 +16,7 @@ body {
 	color: var(--text-color-main);
 	background-color: var(--background-color-primary);
 	font-family: Roboto, "Helvetica Neue", sans-serif;
-	font-size: 1.6rem;
+	font-size: var(--font-size-extra-medium);
 	line-height: 1.5;
-	padding: 6rem 2rem;
+	padding: var(--gap-huge) var(--gap-medium);
 }

@@ -1,0 +1,38 @@
+<table mat-table [dataSource]="allAnime()" class="table" [trackBy]="trackAnimeById">
+	<ng-container matColumnDef="image">
+		<th class="table-cell" mat-header-cell *matHeaderCellDef>Image</th>
+		<td class="table-cell" mat-cell *matCellDef="let anime">
+			<div class="image-container">
+				<img class="main-image" [src]="anime.image" [alt]="anime.titleJpn || 'Anime image'">
+			</div>
+		</td>
+	</ng-container>
+
+	<ng-container matColumnDef="title_eng">
+		<th class="table-cell column-wide" mat-header-cell *matHeaderCellDef>English Title</th>
+		<td class="table-cell column-wide" mat-cell *matCellDef="let anime">{{ anime.titleEng | noEmpty }}</td>
+	</ng-container>
+
+	<ng-container matColumnDef="title_jpn">
+		<th class="table-cell column-wide" mat-header-cell *matHeaderCellDef>Japanese Title</th>
+		<td class="table-cell column-wide" mat-cell *matCellDef="let anime">{{ anime.titleJpn | noEmpty }}</td>
+	</ng-container>
+
+	<ng-container matColumnDef="aired.start">
+		<th class="table-cell" mat-header-cell *matHeaderCellDef>Start Date</th>
+		<td class="table-cell" mat-cell *matCellDef="let anime">{{ anime.aired.startAt | date:'MMM d, y' | noEmpty }}</td>
+	</ng-container>
+
+	<ng-container matColumnDef="type">
+		<th class="table-cell" mat-header-cell *matHeaderCellDef>Type</th>
+		<td class="table-cell" mat-cell *matCellDef="let anime">{{ anime.type | noEmpty }}</td>
+	</ng-container>
+
+	<ng-container matColumnDef="status">
+		<th class="table-cell" mat-header-cell *matHeaderCellDef>Status</th>
+		<td class="table-cell" mat-cell *matCellDef="let anime">{{ anime.status | noEmpty }}</td>
+	</ng-container>
+
+	<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+	<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

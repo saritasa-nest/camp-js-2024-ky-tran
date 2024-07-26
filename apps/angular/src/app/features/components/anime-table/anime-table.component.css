@@ -18,22 +18,21 @@
 }
 
 .image-container {
-	height: var(--height-image-main);
+	width: var(--width-image-main);
 	margin-block: var(--gap-extra-small);
 }
 
-img {
+.main-image {
 	display: block;
-	height: 100%;
+	width: 100%;
 	aspect-ratio: 1;
 	object-fit: contain;
 }
 
-.mat-mdc-header-cell,
-.mat-mdc-cell {
+.table-cell {
 	text-align: center;
 }
 
-[class*="mat-column-title_"] {
+.column-wide {
 	width: 20%;
 }
