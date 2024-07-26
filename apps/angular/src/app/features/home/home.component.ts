@@ -43,6 +43,7 @@ export class HomeComponent {
 					this.error$.next(error.message);
 				}
 
+				this.error$.next('Something went wrong!');
 				return throwError(() => error);
 			}),
 			finalize(() => this.isLoading$.next(false)),
