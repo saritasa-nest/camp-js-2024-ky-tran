@@ -5,11 +5,16 @@ import { BehaviorSubject, catchError, finalize, Observable, throwError } from 'r
 
 import { Anime } from '@js-camp/angular/core/models/anime';
 import { FallbackString } from '@js-camp/angular/core/pipes/fallback-string.pipe';
-import { TableColumns } from '@js-camp/angular/core/types/table.type';
 import { ProgressSpinnerComponent } from '@js-camp/angular/shared/components/progress-spinner/progress-spinner.component';
 import { ErrorMessageComponent } from '@js-camp/angular/shared/components/error-message/error-message.component';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { AnimeService } from '@js-camp/angular/core/services/anime.service';
+import { TableGeneric } from '@js-camp/angular/core/types/table-generic';
+import { AnimeTableColumns } from '@js-camp/angular/core/enums/anime-table-columns';
+
+const tableGeneric: TableGeneric = {
+	columnKeys: AnimeTableColumns,
+};
 
 /** Anime Table component. */
 @Component({
@@ -23,11 +28,11 @@ import { AnimeService } from '@js-camp/angular/core/services/anime.service';
 export class AnimeTableComponent {
 	private readonly animeService = inject(AnimeService);
 
-	/** Column titles of the table in an object. */
-	protected readonly displayedColumnsObj: TableColumns;
+	/** Anime table column names. */
+	protected readonly animeColumns = tableGeneric.columnKeys;
 
 	/** Column titles of the table. */
-	protected readonly displayedColumns: readonly string[];
+	protected readonly displayedColumns = Object.values(this.animeColumns);
 
 	/** Stream of anime list. */
 	protected animeList$!: Observable<Pagination<Anime>>;
@@ -39,17 +44,6 @@ export class AnimeTableComponent {
 	protected readonly error$ = new BehaviorSubject<string>('');
 
 	public constructor() {
-		this.displayedColumnsObj = {
-			image: 'Image',
-			englishTitle: 'English Title',
-			japaneseTitle: 'Japanese Title',
-			airedStart: 'Start Date',
-			type: 'Type',
-			status: 'Status',
-		};
-
-		this.displayedColumns = Object.values(this.displayedColumnsObj);
-
 		this.loadAnimeList();
 	}
 

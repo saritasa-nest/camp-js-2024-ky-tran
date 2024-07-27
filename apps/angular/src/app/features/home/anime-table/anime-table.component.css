@@ -20,27 +20,27 @@
 	font-size: var(--font-size-medium);
 }
 
-.image-container {
-	width: var(--width-image-main);
-	margin-block: var(--gap-extra-small);
+.table-cell {
+	text-align: center;
 }
 
-.main-image {
+.table__column_wide {
+	width: 20%;
+}
+
+.table__row-image-container {
+	width: var(--width-image-main);
+	padding-block: var(--gap-medium);
+}
+
+.table__row-image {
 	display: block;
 	width: 100%;
 	aspect-ratio: 1;
 	object-fit: contain;
 }
 
-.table-cell {
-	text-align: center;
-}
-
-.column-wide {
-	width: 20%;
-}
-
-.skeleton {
+.table__skeleton {
 	display: flex;
 	align-items: center;
 	justify-content: center;
