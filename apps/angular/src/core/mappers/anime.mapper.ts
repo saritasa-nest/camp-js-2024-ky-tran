@@ -1,26 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { AnimeDto, AnimeStatusDto, AnimeTypeDto } from '../dtos/anime.dto';
-import { Anime, AnimeBluePrint, AnimeStatus, AnimeType } from '../models/anime';
-
-/** Map AnimeStatusDto to AnimeStatus. */
-const statusMappingFromDto: Record<AnimeStatusDto, AnimeStatus> = {
-	[AnimeStatusDto.Airing]: AnimeStatus.Airing,
-	[AnimeStatusDto.Finished]: AnimeStatus.Finished,
-	[AnimeStatusDto.NotYetAired]: AnimeStatus.NotYetAired,
-};
-
-/** Record for mapping AnimeTypeDto to AnimeType. */
-const typeMappingFromDto: Record<AnimeTypeDto, AnimeType> = {
-	[AnimeTypeDto.Tv]: AnimeType.Tv,
-	[AnimeTypeDto.Ova]: AnimeType.Ova,
-	[AnimeTypeDto.Movie]: AnimeType.Movie,
-	[AnimeTypeDto.Special]: AnimeType.Special,
-	[AnimeTypeDto.Ona]: AnimeType.Ona,
-	[AnimeTypeDto.Music]: AnimeType.Music,
-	[AnimeTypeDto.PromotionalVideos]: AnimeType.PromotionalVideos,
-	[AnimeTypeDto.Unknown]: AnimeType.Unknown,
-};
+import { typeMappingFromDto } from '@js-camp/angular/core/records/type-from-dto';
+import { statusMappingFromDto } from '@js-camp/angular/core/records/status-from-dto';
+import { AnimeDto } from '@js-camp/angular/core/dtos/anime.dto';
+import { Anime, AnimeBluePrint } from '@js-camp/angular/core/models/anime';
 
 /** Anime mapper. */
 @Injectable({
@@ -40,10 +23,7 @@ export class AnimeMapper {
 			titleEng: anime.title_eng,
 			titleJpn: anime.title_jpn,
 			image: anime.image,
-			aired: {
-				startAt: new Date(anime.aired.start),
-				endAt: new Date(anime.aired.end),
-			},
+			aired: { startAt: new Date(anime.aired.start), endAt: new Date(anime.aired.end) },
 			type: typeMappingFromDto[anime.type],
 			status: statusMappingFromDto[anime.status],
 			score: anime.score,

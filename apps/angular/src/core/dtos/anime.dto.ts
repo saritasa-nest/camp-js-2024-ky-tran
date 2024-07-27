@@ -1,31 +1,6 @@
-/** Date Range DTO. */
-type DateRangeDto = Readonly<{
-
-	/** Start date in ISO format. */
-	start: string;
-
-	/** End date in ISO format. */
-	end: string;
-}>;
-
-/** Anime Type DTO. */
-export enum AnimeTypeDto {
-	Tv = 'TV',
-	Ova = 'OVA',
-	Movie = 'MOVIE',
-	Special = 'SPECIAL',
-	Ona = 'ONA',
-	Music = 'MUSIC',
-	PromotionalVideos = 'PROMOTIONAL_VIDEOS',
-	Unknown = 'UNKNOWN',
-}
-
-/** Anime Status DTO. */
-export enum AnimeStatusDto {
-	Airing = 'AIRING',
-	Finished = 'FINISHED',
-	NotYetAired = 'NOT_YET_AIRED',
-}
+import { AnimeTypeDto } from '@js-camp/angular/core/enums/anime-type';
+import { AnimeStatusDto } from '@js-camp/angular/core/enums/anime-status';
+import { DateRangeDto } from '@js-camp/angular/core/types/date-range';
 
 /** Anime DTO. */
 export type AnimeDto = Readonly<{

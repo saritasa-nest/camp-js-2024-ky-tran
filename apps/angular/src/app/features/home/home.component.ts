@@ -1,11 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { BehaviorSubject, catchError, finalize, Observable, throwError } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
-
-import { Anime } from '@js-camp/angular/core/models/anime';
-import { AnimeService } from '@js-camp/angular/core/services/anime.service';
-import { AnimeTableComponent } from '@js-camp/angular/app/features/components/anime-table/anime-table.component';
-import { Pagination } from '@js-camp/core/models/pagination';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { AnimeTableComponent } from '@js-camp/angular/app/features/home/anime-table/anime-table.component';
 
 /** Home page. */
 @Component({
@@ -13,37 +7,7 @@ import { Pagination } from '@js-camp/core/models/pagination';
 	standalone: true,
 	templateUrl: './home.component.html',
 	styleUrl: './home.component.css',
-	imports: [AnimeTableComponent, AsyncPipe],
+	imports: [AnimeTableComponent],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent {
-	private readonly animeService = inject(AnimeService);
-
-	/** Loading status. */
-	protected readonly isLoading$ = new BehaviorSubject<boolean>(false);
-
-	/** Error message if something went wrong. */
-	protected readonly error$ = new BehaviorSubject<string>('');
-
-	/** List of all anime stream. */
-	protected allAnime$!: Observable<Pagination<Anime>>;
-
-	public constructor() {
-		this.loadAllAnime();
-	}
-
-	private loadAllAnime(): void {
-		this.isLoading$.next(true);
-		this.error$.next('');
-
-		this.allAnime$ = this.animeService.getAllAnime().pipe(
-			catchError((error: unknown) => {
-				const errorMessage = error instanceof Error ? error.message : 'Something went wrong!';
-				this.error$.next(errorMessage);
-
-				return throwError(() => error);
-			}),
-			finalize(() => this.isLoading$.next(false)),
-		);
-	}
-}
+export class HomeComponent {}

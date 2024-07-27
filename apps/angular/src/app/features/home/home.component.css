@@ -1,19 +1,30 @@
-.home-wrapper {
+:host {
 	display: flex;
 	flex-direction: column;
 	gap: var(--gap-medium);
 	height: 100%;
 }
 
-.home-header__title {
+.header__title {
 	font-size: var(--font-size-extra-large);
+	line-height: 1;
 }
 
-.home-content {
+.content {
 	flex-grow: 1;
 	flex-basis: 0;
+	overflow-y: scroll;
 }
 
-.error-message {
-	color: var(--error-color-main);
+.content::-webkit-scrollbar {
+	width: 10px;
+}
+
+.content::-webkit-scrollbar-track {
+	background-color: var(--background-color-primary-subtle);
+}
+
+.content::-webkit-scrollbar-thumb {
+	background-color: var(--background-color-primary);
+	box-shadow: var(--box-shadow-scrollbar);
 }

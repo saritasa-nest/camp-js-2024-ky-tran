@@ -1,0 +1,28 @@
+<nav class="sidebar">
+	<ul class="sidebar__list">
+		<li>
+			<a
+				title="Home page"
+				routerLink="/home"
+				routerLinkActive="active"
+				class="sidebar__link"
+			>
+				Home
+			</a>
+		</li>
+		<li>
+			<a
+				title="Settings page"
+				routerLink="/settings"
+				routerLinkActive="active"
+				class="sidebar__link disable"
+			>
+				Settings
+			</a>
+		</li>
+	</ul>
+</nav>
+
+<main class="main">
+	<router-outlet />
+</main>

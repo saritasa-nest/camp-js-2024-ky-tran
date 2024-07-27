@@ -1,33 +1,7 @@
 import { Immerable, OmitImmerable } from '@js-camp/core/models/immerable';
-
-/** Date range. */
-type DateRange = Readonly<{
-
-	/** Start date. */
-	startAt: Date;
-
-	/** End date. */
-	endAt: Date;
-}>;
-
-/** Anime type. */
-export enum AnimeType {
-	Tv = 'TV',
-	Ova = 'OVA',
-	Movie = 'Movie',
-	Special = 'Special',
-	Ona = 'ONA',
-	Music = 'Music',
-	PromotionalVideos = 'Promotional Videos',
-	Unknown = 'Unknown',
-}
-
-/** Anime status. */
-export enum AnimeStatus {
-	Airing = 'Currently Airing',
-	Finished = 'Finished Airing',
-	NotYetAired = 'Not Yet Aired',
-}
+import { AnimeType } from '@js-camp/angular/core/enums/anime-type';
+import { AnimeStatus } from '@js-camp/angular/core/enums/anime-status';
+import { DateRange } from '@js-camp/angular/core/types/date-range';
 
 /** Anime blue print. */
 export class AnimeBluePrint extends Immerable {

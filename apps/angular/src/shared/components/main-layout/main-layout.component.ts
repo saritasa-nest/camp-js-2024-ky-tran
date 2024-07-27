@@ -5,9 +5,9 @@ import { RouterModule } from '@angular/router';
 @Component({
 	selector: 'camp-main-layout',
 	standalone: true,
-	imports: [RouterModule],
 	templateUrl: './main-layout.component.html',
 	styleUrl: './main-layout.component.css',
+	imports: [RouterModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainLayoutComponent {}

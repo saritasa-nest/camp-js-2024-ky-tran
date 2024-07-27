@@ -11,9 +11,7 @@ import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
 import { Pagination } from '@js-camp/core/models/pagination';
 
 /** Anime service. */
-@Injectable({
-	providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class AnimeService {
 	private readonly appConfig = inject(AppConfig);
 
@@ -23,23 +21,24 @@ export class AnimeService {
 
 	private readonly paginationMapper = inject(PaginationMapper);
 
-	/** Get all anime service. */
-	public getAllAnime(): Observable<Pagination<Anime>> {
-		const { isProduction } = this.appConfig;
-		const { animeUrl } = this.appConfig;
+	/**
+	 * Get anime list.
+	 * @returns Observable of anime list with pagination data.
+	 */
+	public getAll(): Observable<Pagination<Anime>> {
 		const { mapPaginationFromDto } = this.paginationMapper;
 		const mapAnimeFromDto = this.animeMapper.fromDto;
 
 		return this.httpClient
-			.get<PaginationDto<AnimeDto>>(animeUrl)
+			.get<PaginationDto<AnimeDto>>(this.appConfig.animeUrl)
 			.pipe(
 				map(responseDto => mapPaginationFromDto(responseDto, mapAnimeFromDto)),
 				catchError((error: unknown) => {
-					if (!isProduction) {
+					if (!this.appConfig.isProduction) {
 						console.error({ error });
 					}
 
-					const newError = new Error('Failed to fetch all anime. Please try again.');
+					const newError = new Error('Failed to fetch anime. Please try again.');
 					return throwError(() => newError);
 				}),
 			);

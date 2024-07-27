@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 /** Not Found component. */
 @Component({
@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
 	standalone: true,
 	templateUrl: './not-found.component.html',
 	styleUrl: './not-found.component.css',
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotFoundComponent {}

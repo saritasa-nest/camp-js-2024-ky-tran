@@ -1,0 +1,10 @@
+.spinner {
+	--spinner-dimension: 50px;
+
+	/* Dimension of the spinner. Need to use !important here to override the style. */
+	width: var(--spinner-dimension) !important;
+	height: var(--spinner-dimension) !important;
+
+	/* Color of the spinner. (https://stackoverflow.com/questions/48786027/angular-material-mat-spinner-custom-color) */
+	--mdc-circular-progress-active-indicator-color: var(--text-color-main);
+}
