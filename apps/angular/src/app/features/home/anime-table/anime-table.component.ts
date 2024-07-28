@@ -3,14 +3,15 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { BehaviorSubject, catchError, finalize, Observable, throwError } from 'rxjs';
 
-import { Anime } from '@js-camp/angular/core/models/anime';
+import { Anime } from '@js-camp/core/models/anime';
 import { FallbackString } from '@js-camp/angular/core/pipes/fallback-string.pipe';
 import { ProgressSpinnerComponent } from '@js-camp/angular/shared/components/progress-spinner/progress-spinner.component';
 import { ErrorMessageComponent } from '@js-camp/angular/shared/components/error-message/error-message.component';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { AnimeService } from '@js-camp/angular/core/services/anime.service';
 import { TableGeneric } from '@js-camp/angular/core/types/table-generic';
-import { AnimeTableColumns } from '@js-camp/angular/core/enums/anime-table-columns';
+import { AnimeTableColumns } from '@js-camp/core/enums/anime-table-columns';
+import { DATE_FORMAT } from '@js-camp/angular/shared/constants';
 
 const tableGeneric: TableGeneric = {
 	columnKeys: AnimeTableColumns,
@@ -34,6 +35,9 @@ export class AnimeTableComponent {
 	/** Column titles of the table. */
 	protected readonly displayedColumns = Object.values(this.animeColumns);
 
+	/** Date format. */
+	protected readonly dateFormat = DATE_FORMAT;
+
 	/** Stream of anime list. */
 	protected animeList$!: Observable<Pagination<Anime>>;
 
@@ -44,11 +48,6 @@ export class AnimeTableComponent {
 	protected readonly error$ = new BehaviorSubject<string>('');
 
 	public constructor() {
-		this.loadAnimeList();
-	}
-
-	private loadAnimeList(): void {
-		// Reset loading and error status before fetching anime list.
 		this.isLoading$.next(true);
 		this.error$.next('');
 

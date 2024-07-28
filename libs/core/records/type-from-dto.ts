@@ -1,7 +1,7 @@
-import { AnimeType, AnimeTypeDto } from '@js-camp/angular/core/enums/anime-type';
+import { AnimeType, AnimeTypeDto } from '../enums/anime-type';
 
-/** Record for mapping AnimeTypeDto to AnimeType. */
-export const typeMappingFromDto: Record<AnimeTypeDto, AnimeType> = {
+/** Mapping from DTO to Domain model. */
+export const TYPE_MAPPING_FROM_DTO: Record<AnimeTypeDto, AnimeType> = {
 	[AnimeTypeDto.Tv]: AnimeType.Tv,
 	[AnimeTypeDto.Ova]: AnimeType.Ova,
 	[AnimeTypeDto.Movie]: AnimeType.Movie,

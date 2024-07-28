@@ -4,24 +4,24 @@
 			<th class="table-cell" mat-header-cell *matHeaderCellDef>Image</th>
 			<td class="table-cell" mat-cell *matCellDef="let anime">
 				<div class="table__row-image-container">
-					<img class="table__row-image" [src]="anime.image" [alt]="anime.titleEng || anime.titleJpn || 'Anime image'">
+					<img class="table__row-image" [src]="anime.imageUrl" [alt]="anime.englishTitle || anime.japaneseTitle || 'Anime image'">
 				</div>
 			</td>
 		</ng-container>
 
 		<ng-container [matColumnDef]="animeColumns.EnglishTitle">
 			<th class="table-cell table__column_wide" mat-header-cell *matHeaderCellDef>English Title</th>
-			<td class="table-cell table__column_wide" mat-cell *matCellDef="let anime">{{ anime.titleEng | fallbackString }}</td>
+			<td class="table-cell table__column_wide" mat-cell *matCellDef="let anime">{{ anime.englishTitle | fallbackString }}</td>
 		</ng-container>
 
 		<ng-container [matColumnDef]="animeColumns.JapaneseTitle">
 			<th class="table-cell table__column_wide" mat-header-cell *matHeaderCellDef>Japanese Title</th>
-			<td class="table-cell table__column_wide" mat-cell *matCellDef="let anime">{{ anime.titleJpn | fallbackString }}</td>
+			<td class="table-cell table__column_wide" mat-cell *matCellDef="let anime">{{ anime.japaneseTitle | fallbackString }}</td>
 		</ng-container>
 
 		<ng-container [matColumnDef]="animeColumns.AiredStart">
 			<th class="table-cell" mat-header-cell *matHeaderCellDef>Start Date</th>
-			<td class="table-cell" mat-cell *matCellDef="let anime">{{ anime.aired.startAt | date:'MMM d, y' | fallbackString }}</td>
+			<td class="table-cell" mat-cell *matCellDef="let anime">{{ anime.aired.startAt | date:dateFormat | fallbackString }}</td>
 		</ng-container>
 
 		<ng-container [matColumnDef]="animeColumns.Type">

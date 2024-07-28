@@ -15,7 +15,7 @@ export const appRoutes: Routes = [
 	{
 		path: '**',
 		loadComponent: () => import('@js-camp/angular/app/features/not-found/not-found.component').then(
-			module => module.NotFoundComponent,
+			c => c.NotFoundComponent,
 		),
 	},
 ];

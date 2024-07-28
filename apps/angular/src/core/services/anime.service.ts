@@ -3,11 +3,11 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 
 import { AppConfig } from '@js-camp/angular/config/app-config';
-import { AnimeMapper } from '@js-camp/angular/core/mappers/anime.mapper';
-import { Anime } from '@js-camp/angular/core/models/anime';
-import { AnimeDto } from '@js-camp/angular/core/dtos/anime.dto';
-import { PaginationMapper } from '@js-camp/core/mappers/pagination.mapper';
-import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
+import { AnimeMapper } from '@js-camp/angular/core/mappers/anime';
+import { Anime } from '@js-camp/core/models/anime';
+import { AnimeDto } from '@js-camp/core/dtos/anime';
+import { PaginationMapper } from '@js-camp/angular/core/mappers/pagination';
+import { PaginationDto } from '@js-camp/core/dtos/pagination';
 import { Pagination } from '@js-camp/core/models/pagination';
 
 /** Anime service. */
@@ -38,8 +38,7 @@ export class AnimeService {
 						console.error({ error });
 					}
 
-					const newError = new Error('Failed to fetch anime. Please try again.');
-					return throwError(() => newError);
+					return throwError(() => new Error('Failed to fetch anime. Please try again.'));
 				}),
 			);
 	}

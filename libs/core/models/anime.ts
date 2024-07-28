@@ -1,7 +1,7 @@
 import { Immerable, OmitImmerable } from '@js-camp/core/models/immerable';
-import { AnimeType } from '@js-camp/angular/core/enums/anime-type';
-import { AnimeStatus } from '@js-camp/angular/core/enums/anime-status';
-import { DateRange } from '@js-camp/angular/core/types/date-range';
+import { AnimeType } from '@js-camp/core/enums/anime-type';
+import { AnimeStatus } from '@js-camp/core/enums/anime-status';
+import { DateRange } from '@js-camp/core/types/date-range';
 
 /** Anime blue print. */
 export class AnimeBluePrint extends Immerable {
@@ -15,13 +15,13 @@ export class AnimeBluePrint extends Immerable {
 	public readonly modifiedAt: Date;
 
 	/** The English title of the anime. */
-	public readonly titleEng: string;
+	public readonly englishTitle: string;
 
 	/** The Japanese title of the anime. */
-	public readonly titleJpn: string;
+	public readonly japaneseTitle: string;
 
 	/** The URL of the anime's image. */
-	public readonly image: string;
+	public readonly imageUrl: string;
 
 	/** The airing date range of the anime. */
 	public readonly aired: DateRange;
@@ -33,10 +33,10 @@ export class AnimeBluePrint extends Immerable {
 	public readonly status: AnimeStatus;
 
 	/** The average score of the anime. */
-	public readonly score: number;
+	public readonly averageScore: number | null;
 
 	/** The user's score for the anime. */
-	public readonly userScore: number;
+	public readonly userScore: number | null;
 
 	/** An array of IDs representing the studios that produced the anime. */
 	public readonly studios: readonly number[];
@@ -50,13 +50,13 @@ export class AnimeBluePrint extends Immerable {
 		this.id = data.id;
 		this.createdAt = data.createdAt;
 		this.modifiedAt = data.modifiedAt;
-		this.titleEng = data.titleEng;
-		this.titleJpn = data.titleJpn;
-		this.image = data.image;
+		this.englishTitle = data.englishTitle;
+		this.japaneseTitle = data.japaneseTitle;
+		this.imageUrl = data.imageUrl;
 		this.aired = data.aired;
 		this.type = data.type;
 		this.status = data.status;
-		this.score = data.score;
+		this.averageScore = data.averageScore;
 		this.userScore = data.userScore;
 		this.studios = data.studios;
 		this.genres = data.genres;

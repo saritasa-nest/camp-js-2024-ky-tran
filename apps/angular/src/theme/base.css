@@ -15,6 +15,7 @@ html {
 	-ms-overflow-style: none;
 }
 
+/* Hide scrollbar on Google Chrome. */
 html::-webkit-scrollbar {
 	display: none;
 }

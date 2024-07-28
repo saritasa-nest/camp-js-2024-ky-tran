@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '@js-camp/angular/environments/environment';
 
 /** App Config. */
-@Injectable({
-	providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class AppConfig {
 	/** Boolean value indicating if it is in production mode or not. */
 	public readonly isProduction = environment.production;
@@ -16,5 +14,13 @@ export class AppConfig {
 	public readonly animeBaseUrl = environment.animeBaseUrl;
 
 	/** Anime URL. */
-	public readonly animeUrl = environment.animeUrl;
+	public readonly animeUrl: string;
+
+	public constructor() {
+		this.animeUrl = this.toAnimeBaseUrl('/anime/');
+	}
+
+	private toAnimeBaseUrl(path: string): string {
+		return `${this.animeBaseUrl}${path}`;
+	}
 }

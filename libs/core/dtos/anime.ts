@@ -1,14 +1,20 @@
-import { AnimeTypeDto } from '@js-camp/angular/core/enums/anime-type';
-import { AnimeStatusDto } from '@js-camp/angular/core/enums/anime-status';
-import { DateRangeDto } from '@js-camp/angular/core/types/date-range';
+import { AnimeStatusDto } from '../enums/anime-status';
+import { AnimeTypeDto } from '../enums/anime-type';
+import { DateRangeDto } from '../types/date-range';
 
 /** Anime DTO. */
 export type AnimeDto = Readonly<{
 
-	/** The unique identifier of the anime. */
+	/**
+	 * The unique identifier of the anime.
+	 * @example 2024-07-28T04:43:27.035Z
+	 */
 	id: number;
 
-	/** The creation date of the anime record in ISO format. */
+	/**
+	 * The creation date of the anime record in ISO format.
+	 * @example 2024-07-28T04:43:27.035Z
+	 */
 	created: string;
 
 	/** The last modified date of the anime record in ISO format. */
@@ -33,10 +39,10 @@ export type AnimeDto = Readonly<{
 	status: AnimeStatusDto;
 
 	/** The average score of the anime. */
-	score: number;
+	score: number | null;
 
 	/** The user's score for the anime. */
-	user_score: number;
+	user_score: number | null;
 
 	/** An array of IDs representing the studios that produced the anime. */
 	studios: readonly number[];
