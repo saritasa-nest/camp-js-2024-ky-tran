@@ -1,7 +1,8 @@
-import { Immerable, OmitImmerable } from '@js-camp/core/models/immerable';
-import { AnimeType } from '@js-camp/core/enums/anime-type';
-import { AnimeStatus } from '@js-camp/core/enums/anime-status';
-import { DateRange } from '@js-camp/core/types/date-range';
+import { AnimeType } from '../enums/anime-type';
+import { AnimeStatus } from '../enums/anime-status';
+import { DateRange } from '../types/date-range';
+
+import { Immerable, OmitImmerable } from './immerable';
 
 /** Anime blue print. */
 export class AnimeBluePrint extends Immerable {
