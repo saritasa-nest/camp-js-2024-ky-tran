@@ -1,6 +1,6 @@
 .table {
 	background-color: var(--background-color-primary-bright);
-	border: 4px solid var(--background-color-primary-bright);
+	border-inline: var(--width-border-medium) solid var(--background-color-primary-bright);
 }
 
 .table th,
@@ -43,12 +43,4 @@
 	width: 100%;
 	aspect-ratio: 1;
 	object-fit: contain;
-}
-
-.table__skeleton {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: calc(100% - var(--height-table-header));
-	background-color: var(--background-color-primary-bright);
 }

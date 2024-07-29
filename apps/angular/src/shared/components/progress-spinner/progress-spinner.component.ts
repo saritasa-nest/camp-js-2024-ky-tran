@@ -15,6 +15,9 @@ export class ProgressSpinnerComponent {
 	/** Running mode of progress spinner. */
 	protected readonly mode: ProgressSpinnerMode = 'indeterminate';
 
+	/** The diameter of the progress spinner (will set width and height of svg). */
+	protected readonly diameter = 50;
+
 	/** Length of the progress bar. */
 	protected readonly value = 50;
 }

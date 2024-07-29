@@ -4,7 +4,7 @@ import { MatTableModule } from '@angular/material/table';
 import { BehaviorSubject, catchError, finalize, Observable, throwError } from 'rxjs';
 
 import { Anime } from '@js-camp/core/models/anime';
-import { FallbackString } from '@js-camp/angular/core/pipes/fallback-string.pipe';
+import { NullablePipe } from '@js-camp/angular/core/pipes/nullable-pipe';
 import { ProgressSpinnerComponent } from '@js-camp/angular/shared/components/progress-spinner/progress-spinner.component';
 import { ErrorMessageComponent } from '@js-camp/angular/shared/components/error-message/error-message.component';
 import { Pagination } from '@js-camp/core/models/pagination';
@@ -12,6 +12,7 @@ import { AnimeService } from '@js-camp/angular/core/services/anime.service';
 import { TableGeneric } from '@js-camp/angular/core/types/table-generic';
 import { AnimeTableColumns } from '@js-camp/core/enums/anime-table-columns';
 import { DATE_FORMAT } from '@js-camp/angular/shared/constants';
+import { TableSkeletonComponent } from '@js-camp/angular/app/features/home/anime-table/table-skeleton/table-skeleton.component';
 
 const tableGeneric: TableGeneric = {
 	columnKeys: AnimeTableColumns,
@@ -23,7 +24,15 @@ const tableGeneric: TableGeneric = {
 	standalone: true,
 	templateUrl: './anime-table.component.html',
 	styleUrl: './anime-table.component.css',
-	imports: [CommonModule, AsyncPipe, MatTableModule, FallbackString, ProgressSpinnerComponent, ErrorMessageComponent],
+	imports: [
+		CommonModule,
+		AsyncPipe,
+		MatTableModule,
+		TableSkeletonComponent,
+		ProgressSpinnerComponent,
+		ErrorMessageComponent,
+		NullablePipe,
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimeTableComponent {

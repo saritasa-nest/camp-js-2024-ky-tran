@@ -11,10 +11,12 @@
 	/* Layout */
 	--height-layout-main: 640px;
 	--width-layout-main: 1280px;
-	--width-layout-sub: 216px;
+	--width-layout-sub: 180px;
 	--width-image-main: 150px;
 	--height-table-header: 56px;
 	--width-table-scrollbar: 8px;
+	--width-border-small: 2px;
+	--width-border-medium: 4px;
 	--gap-extra-small: 8px;
 	--gap-small: 16px;
 	--gap-medium: 20px;

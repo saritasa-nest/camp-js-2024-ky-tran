@@ -1,37 +1,44 @@
+<!-- { results: [] } to keep table header displayed. -->
 @if ((animeList$ | async) || { results: [] }; as animeList) {
 	<table mat-table [dataSource]="animeList.results" class="table" [trackBy]="trackAnimeById">
+		<ng-container [matColumnDef]="animeColumns.Index">
+			<th class="table-cell" mat-header-cell *matHeaderCellDef>#</th>
+			<td class="table-cell" mat-cell *matCellDef="let anime; let i = index">{{ i + 1 }}</td>
+		</ng-container>
+
 		<ng-container [matColumnDef]="animeColumns.Image">
 			<th class="table-cell" mat-header-cell *matHeaderCellDef>Image</th>
 			<td class="table-cell" mat-cell *matCellDef="let anime">
 				<div class="table__row-image-container">
-					<img class="table__row-image" [src]="anime.imageUrl" [alt]="anime.englishTitle || anime.japaneseTitle || 'Anime image'">
+					<img class="table__row-image" [src]="anime.imageUrl"
+						[alt]="anime.englishTitle || anime.japaneseTitle || 'Anime image'">
 				</div>
 			</td>
 		</ng-container>
 
 		<ng-container [matColumnDef]="animeColumns.EnglishTitle">
 			<th class="table-cell table__column_wide" mat-header-cell *matHeaderCellDef>English Title</th>
-			<td class="table-cell table__column_wide" mat-cell *matCellDef="let anime">{{ anime.englishTitle | fallbackString }}</td>
+			<td class="table-cell table__column_wide" mat-cell *matCellDef="let anime">{{ anime.englishTitle | appNullable }}</td>
 		</ng-container>
 
 		<ng-container [matColumnDef]="animeColumns.JapaneseTitle">
 			<th class="table-cell table__column_wide" mat-header-cell *matHeaderCellDef>Japanese Title</th>
-			<td class="table-cell table__column_wide" mat-cell *matCellDef="let anime">{{ anime.japaneseTitle | fallbackString }}</td>
+			<td class="table-cell table__column_wide" mat-cell *matCellDef="let anime">{{ anime.japaneseTitle | appNullable }}</td>
 		</ng-container>
 
 		<ng-container [matColumnDef]="animeColumns.AiredStart">
 			<th class="table-cell" mat-header-cell *matHeaderCellDef>Start Date</th>
-			<td class="table-cell" mat-cell *matCellDef="let anime">{{ anime.aired.startAt | date:dateFormat | fallbackString }}</td>
+			<td class="table-cell" mat-cell *matCellDef="let anime">{{ anime.aired.startAt | date:dateFormat | appNullable }}</td>
 		</ng-container>
 
 		<ng-container [matColumnDef]="animeColumns.Type">
 			<th class="table-cell" mat-header-cell *matHeaderCellDef>Type</th>
-			<td class="table-cell" mat-cell *matCellDef="let anime">{{ anime.type | fallbackString }}</td>
+			<td class="table-cell" mat-cell *matCellDef="let anime">{{ anime.type | appNullable }}</td>
 		</ng-container>
 
 		<ng-container [matColumnDef]="animeColumns.Status">
 			<th class="table-cell" mat-header-cell *matHeaderCellDef>Status</th>
-			<td class="table-cell" mat-cell *matCellDef="let anime">{{ anime.status | fallbackString }}</td>
+			<td class="table-cell" mat-cell *matCellDef="let anime">{{ anime.status | appNullable }}</td>
 		</ng-container>
 
 		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -39,20 +46,20 @@
 	</table>
 
 	@if ((isLoading$ | async) === false && (error$ | async) === '' && !animeList.results.length) {
-		<div class="table__skeleton">
-			<p>There is no anime to display.</p>
-		</div>
+		<camp-table-skeleton>
+			<p slot="table-skeleton-content">There is no anime to display.</p>
+		</camp-table-skeleton>
 	}
 }
 
 @if (isLoading$ | async) {
-	<div class="table__skeleton">
-		<camp-progress-spinner />
-	</div>
+	<camp-table-skeleton>
+		<camp-progress-spinner slot="table-skeleton-content" />
+	</camp-table-skeleton>
 }
 
 @if (error$ | async; as errorMessage) {
-	<div class="table__skeleton">
-		<camp-error-message [errorMessage]="errorMessage" />
-	</div>
+	<camp-table-skeleton>
+		<camp-error-message slot="table-skeleton-content" [errorMessage]="errorMessage" />
+	</camp-table-skeleton>
 }

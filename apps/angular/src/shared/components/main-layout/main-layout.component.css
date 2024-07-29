@@ -8,7 +8,7 @@
 
 .sidebar {
 	width: var(--width-layout-sub);
-	border-right: 2px solid var(--border-color-main);
+	border-right: var(--width-border-small) solid var(--border-color-main);
 }
 
 .sidebar__list {

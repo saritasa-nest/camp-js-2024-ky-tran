@@ -1,0 +1,7 @@
+.table__skeleton {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: calc(100% - var(--height-table-header));
+	background-color: var(--background-color-primary-bright);
+}
