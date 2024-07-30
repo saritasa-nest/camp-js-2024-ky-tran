@@ -1,7 +1,8 @@
-import { AnimeType, AnimeTypeDto } from '../enums/anime-type';
+import { AnimeTypeDto } from '../dtos/anime';
+import { AnimeType } from '../models/anime';
 
 /** Mapping from DTO to Domain model. */
-export const TYPE_MAPPING_FROM_DTO: Record<AnimeTypeDto, AnimeType> = {
+export const TYPE_MAPPING_FROM_DTO: Readonly<Record<AnimeTypeDto, AnimeType>> = {
 	[AnimeTypeDto.Tv]: AnimeType.Tv,
 	[AnimeTypeDto.Ova]: AnimeType.Ova,
 	[AnimeTypeDto.Movie]: AnimeType.Movie,

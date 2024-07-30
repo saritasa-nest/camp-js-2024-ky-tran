@@ -1,4 +1,5 @@
 .table {
+	height: 100%;
 	background-color: var(--background-color-primary-bright);
 	border-inline: var(--width-border-medium) solid var(--background-color-primary-bright);
 }
@@ -43,4 +44,10 @@
 	width: 100%;
 	aspect-ratio: 1;
 	object-fit: contain;
+}
+
+.table__no-data-row {
+	height: calc(100% - var(--height-table-header));
+	background-color: var(--background-color-primary-bright);
+	text-align: center;
 }

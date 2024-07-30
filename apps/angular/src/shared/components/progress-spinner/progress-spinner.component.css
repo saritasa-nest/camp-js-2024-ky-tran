@@ -1,3 +1,8 @@
+:host {
+	display: flex;
+	justify-content: center;
+}
+
 .spinner {
 	/* Color of the spinner. (https://stackoverflow.com/questions/48786027/angular-material-mat-spinner-custom-color) */
 	--mdc-circular-progress-active-indicator-color: var(--text-color-main);

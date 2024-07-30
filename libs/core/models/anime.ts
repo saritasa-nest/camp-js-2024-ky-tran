@@ -1,8 +1,33 @@
-import { AnimeType } from '../enums/anime-type';
-import { AnimeStatus } from '../enums/anime-status';
-import { DateRange } from '../types/date-range';
-
 import { Immerable, OmitImmerable } from './immerable';
+
+/** Date range. */
+export type DateRange = Readonly<{
+
+	/** Start date. */
+	startAt: Date | null;
+
+	/** End date. */
+	endAt: Date | null;
+}>;
+
+/** Anime type. */
+export enum AnimeType {
+	Tv = 'TV',
+	Ova = 'OVA',
+	Movie = 'Movie',
+	Special = 'Special',
+	Ona = 'ONA',
+	Music = 'Music',
+	PromotionalVideos = 'Promotional Videos',
+	Unknown = 'Unknown',
+}
+
+/** Anime status. */
+export enum AnimeStatus {
+	Airing = 'Currently Airing',
+	Finished = 'Finished Airing',
+	NotYetAired = 'Not Yet Aired',
+}
 
 /** Anime blue print. */
 export class AnimeBluePrint extends Immerable {
@@ -40,10 +65,10 @@ export class AnimeBluePrint extends Immerable {
 	public readonly userScore: number | null;
 
 	/** An array of IDs representing the studios that produced the anime. */
-	public readonly studios: readonly number[];
+	public readonly studioIds: readonly number[];
 
 	/** An array of IDs representing the genres of the anime. */
-	public readonly genres: readonly number[];
+	public readonly genreIds: readonly number[];
 
 	public constructor(data: Anime) {
 		super();
@@ -59,8 +84,8 @@ export class AnimeBluePrint extends Immerable {
 		this.status = data.status;
 		this.averageScore = data.averageScore;
 		this.userScore = data.userScore;
-		this.studios = data.studios;
-		this.genres = data.genres;
+		this.studioIds = data.studioIds;
+		this.genreIds = data.genreIds;
 	}
 }
 

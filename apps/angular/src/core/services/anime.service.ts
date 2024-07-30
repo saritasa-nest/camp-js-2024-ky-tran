@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 
 import { AppConfig } from '@js-camp/angular/config/app-config';
+import { UrlConfig } from '@js-camp/angular/config/url-config';
 import { AnimeMapper } from '@js-camp/angular/core/mappers/anime';
 import { Anime } from '@js-camp/core/models/anime';
 import { AnimeDto } from '@js-camp/core/dtos/anime';
@@ -14,6 +15,8 @@ import { Pagination } from '@js-camp/core/models/pagination';
 @Injectable({ providedIn: 'root' })
 export class AnimeService {
 	private readonly appConfig = inject(AppConfig);
+
+	private readonly urlConfig = inject(UrlConfig);
 
 	private readonly httpClient = inject(HttpClient);
 
@@ -30,7 +33,7 @@ export class AnimeService {
 		const mapAnimeFromDto = this.animeMapper.fromDto;
 
 		return this.httpClient
-			.get<PaginationDto<AnimeDto>>(this.appConfig.animeUrl)
+			.get<PaginationDto<AnimeDto>>(this.urlConfig.animeUrl)
 			.pipe(
 				map(responseDto => mapPaginationFromDto(responseDto, mapAnimeFromDto)),
 				catchError((error: unknown) => {

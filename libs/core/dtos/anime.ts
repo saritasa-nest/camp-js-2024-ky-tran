@@ -1,6 +1,37 @@
-import { AnimeStatusDto } from '../enums/anime-status';
-import { AnimeTypeDto } from '../enums/anime-type';
-import { DateRangeDto } from '../types/date-range';
+/** Date Range DTO. */
+export type DateRangeDto = Readonly<{
+
+	/**
+	 * Start date in ISO format.
+	 * @example 2024-07-28T04:43:27.035Z
+	 */
+	start: string | null;
+
+	/**
+	 * End date in ISO format.
+	 * @example 2024-07-28T04:43:27.035Z
+	 */
+	end: string | null;
+}>;
+
+/** Anime Type DTO. */
+export enum AnimeTypeDto {
+	Tv = 'TV',
+	Ova = 'OVA',
+	Movie = 'MOVIE',
+	Special = 'SPECIAL',
+	Ona = 'ONA',
+	Music = 'MUSIC',
+	PromotionalVideos = 'PROMOTIONAL_VIDEOS',
+	Unknown = 'UNKNOWN',
+}
+
+/** Anime Status DTO. */
+export enum AnimeStatusDto {
+	Airing = 'AIRING',
+	Finished = 'FINISHED',
+	NotYetAired = 'NOT_YET_AIRED',
+}
 
 /** Anime DTO. */
 export type AnimeDto = Readonly<{

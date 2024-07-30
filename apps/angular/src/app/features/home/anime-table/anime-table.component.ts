@@ -12,7 +12,6 @@ import { AnimeService } from '@js-camp/angular/core/services/anime.service';
 import { TableGeneric } from '@js-camp/angular/core/types/table-generic';
 import { AnimeTableColumns } from '@js-camp/core/enums/anime-table-columns';
 import { DATE_FORMAT } from '@js-camp/angular/shared/constants';
-import { TableSkeletonComponent } from '@js-camp/angular/app/features/home/anime-table/table-skeleton/table-skeleton.component';
 
 const tableGeneric: TableGeneric = {
 	columnKeys: AnimeTableColumns,
@@ -24,15 +23,7 @@ const tableGeneric: TableGeneric = {
 	standalone: true,
 	templateUrl: './anime-table.component.html',
 	styleUrl: './anime-table.component.css',
-	imports: [
-		CommonModule,
-		AsyncPipe,
-		MatTableModule,
-		TableSkeletonComponent,
-		ProgressSpinnerComponent,
-		ErrorMessageComponent,
-		NullablePipe,
-	],
+	imports: [CommonModule, AsyncPipe, MatTableModule, ProgressSpinnerComponent, ErrorMessageComponent, NullablePipe],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimeTableComponent {
@@ -48,7 +39,7 @@ export class AnimeTableComponent {
 	protected readonly dateFormat = DATE_FORMAT;
 
 	/** Stream of anime list. */
-	protected animeList$!: Observable<Pagination<Anime>>;
+	protected readonly animeList$: Observable<Pagination<Anime>>;
 
 	/** Loading status of fetching anime list. */
 	protected readonly isLoading$ = new BehaviorSubject<boolean>(false);
@@ -73,11 +64,11 @@ export class AnimeTableComponent {
 
 	/**
 	 * Tracks anime by its unique identifier.
-	 * @param index - The index of the anime in the list.
+	 * @param _ - The index of the anime in the list.
 	 * @param anime - The anime object.
 	 * @returns The unique identifier of the anime.
 	 */
-	protected trackAnimeById(index: number, anime: Anime): Anime['id'] {
+	protected trackAnimeById(_: number, anime: Anime): Anime['id'] {
 		return anime.id;
 	}
 }
