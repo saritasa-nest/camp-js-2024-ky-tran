@@ -5,6 +5,7 @@
 	--background-color-primary-subtle: #222;
 	--background-color-primary-light: #333;
 	--background-color-primary-bright: #444;
+	--background-color-primary-extra-bright: #555;
 	--border-color-main: #222;
 	--error-color-main: #e41e1e;
 
@@ -17,6 +18,7 @@
 	--width-table-scrollbar: 8px;
 	--width-border-small: 2px;
 	--width-border-medium: 4px;
+	--width-paginator-arrow: 24px;
 	--gap-extra-small: 8px;
 	--gap-small: 16px;
 	--gap-medium: 20px;
@@ -26,6 +28,7 @@
 
 	/* Font-size */
 	--font-size-root: 10px;
+	--font-size-small: 1.2rem;
 	--font-size-medium: 1.4rem;
 	--font-size-extra-medium: 1.6rem;
 	--font-size-extra-large: 2.4rem;
