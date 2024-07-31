@@ -1,4 +1,4 @@
-import { booleanAttribute, ChangeDetectionStrategy, Component, Input, numberAttribute, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, booleanAttribute, ChangeDetectionStrategy, Component, Input, numberAttribute, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 /** PaginatorComponent. */
@@ -10,8 +10,8 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
 	imports: [MatPaginatorModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PaginatorComponent implements OnInit {
-	@ViewChild(MatPaginator, { static: true }) private readonly paginator!: MatPaginator;
+export class PaginatorComponent implements AfterViewInit {
+	@ViewChild(MatPaginator) private readonly paginator!: MatPaginator;
 
 	/** The length of the total number of items that are being paginated. */
 	@Input({ transform: numberAttribute }) protected readonly length = 100;
@@ -25,8 +25,8 @@ export class PaginatorComponent implements OnInit {
 	/** Whether to show the first/last buttons UI to the user. */
 	@Input({ transform: booleanAttribute }) protected readonly showFirstLastButtons = true;
 
-	/** On Init. */
-	public ngOnInit(): void {
+	/** After View Init. */
+	public ngAfterViewInit(): void {
 		this.paginator._intl.itemsPerPageLabel = 'Anime per page:';
 	}
 
