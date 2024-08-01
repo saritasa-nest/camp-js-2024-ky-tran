@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
 
 import { AppConfig } from '@js-camp/angular/config/app-config';
 import { UrlConfig } from '@js-camp/angular/config/url-config';
@@ -36,6 +36,7 @@ export class AnimeService {
 			.get<PaginationDto<AnimeDto>>(this.urlConfig.animeUrl)
 			.pipe(
 				map(responseDto => mapPaginationFromDto(responseDto, mapAnimeFromDto)),
+				shareReplay({ refCount: true, bufferSize: 1 }),
 				catchError((error: unknown) => {
 					if (!this.appConfig.isProduction) {
 						console.error({ error });

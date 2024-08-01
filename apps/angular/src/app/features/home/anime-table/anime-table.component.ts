@@ -13,9 +13,7 @@ import { TableGeneric } from '@js-camp/angular/core/types/table-generic';
 import { AnimeTableColumns } from '@js-camp/core/enums/anime-table-columns';
 import { DATE_FORMAT } from '@js-camp/angular/shared/constants';
 
-const tableGeneric: TableGeneric = {
-	columnKeys: AnimeTableColumns,
-};
+const tableGeneric: TableGeneric = { columnKeys: AnimeTableColumns };
 
 /** Anime Table component. */
 @Component({

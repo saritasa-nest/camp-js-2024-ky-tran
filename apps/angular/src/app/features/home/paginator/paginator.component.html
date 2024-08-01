@@ -4,6 +4,7 @@
 	[pageSize]="pageSize"
   [pageSizeOptions]="pageSizeOptions"
 	[showFirstLastButtons]="showFirstLastButtons"
+	[disabled]="isLoading$ | async"
 	(page)="onPageChange($event)"
   aria-label="Select anime page">
 </mat-paginator>
