@@ -5,11 +5,15 @@
 <section class="content">
 	<camp-anime-table
 		[animeList]="(animeList$ | async)?.results || []"
-		[isLoading]="(isLoading$ | async) || false"
-		[error]="(error$ | async) || ''"
+		[isLoading]="isLoading$ | async"
+		[error]="error$ | async"
 	/>
 </section>
 
 <footer>
-	<camp-paginator />
+	<camp-paginator
+		[length]="(animeList$ | async)?.count"
+		[disabled]="isLoading$ | async"
+		(pageChange)="onPageChange($event)"
+	/>
 </footer>

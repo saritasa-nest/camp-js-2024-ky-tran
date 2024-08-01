@@ -26,10 +26,10 @@ export class AnimeTableComponent {
 	@Input({ required: true }) public animeList!: readonly Anime[];
 
 	/** Loading status of fetching anime list. */
-	@Input({ required: true }) public isLoading!: boolean;
+	@Input({ required: true }) public isLoading: boolean | null = null;
 
 	/** Error message if something went wrong fetching anime list. */
-	@Input({ required: true }) public error!: string;
+	@Input({ required: true }) public error: string | null = null;
 
 	/** Anime table column names. */
 	protected readonly animeColumns = tableGeneric.columnKeys;
