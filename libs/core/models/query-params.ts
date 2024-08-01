@@ -1,35 +1,33 @@
 import { AnimeType } from './anime';
+import { Immerable, OmitImmerable } from './immerable';
 
-/** Paginator. */
-export type Paginator = {
-
+/** Query Params Blue Print. */
+export class QueryParamsBluePrint extends Immerable {
 	/** Page number. */
-	pageNumber: number | null;
+	public readonly pageNumber: number | null;
 
 	/** Page size. */
-	pageSize: number | null;
-};
-
-/** Sort. */
-export type Sort = {
+	public readonly pageSize: number | null;
 
 	/** Sort fields. */
-	sortFields: string[] | null;
-};
-
-/** Filter. */
-export type Filter = {
+	public readonly sortFields: string[] | null;
 
 	/** Filter type. */
-	type: AnimeType | null;
-};
-
-/** Search. */
-export type Search = {
+	public readonly type: AnimeType | null;
 
 	/** Search query. */
-	search: string | null;
-};
+	public readonly search: string | null;
+
+	public constructor(data: QueryParams) {
+		super();
+
+		this.pageNumber = data.pageNumber;
+		this.pageSize = data.pageSize;
+		this.sortFields = data.sortFields;
+		this.type = data.type;
+		this.search = data.search;
+	}
+}
 
 /** Query params. */
-export type QueryParams = Paginator & Sort & Filter & Search;
+export type QueryParams = OmitImmerable<QueryParamsBluePrint>;

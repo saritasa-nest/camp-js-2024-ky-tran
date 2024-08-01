@@ -1,12 +1,12 @@
 import { AnimeDto } from '../dtos/anime';
 import { Anime, AnimeBluePrint } from '../models/anime';
 import { STATUS_MAPPING_FROM_DTO } from '../records/status-from-dto';
-import { TYPE_MAPPING_FROM_DTO } from '../records/type-from-dto';
+import { TYPE_MAPPING_FROM_DTO } from '../records/type-mapping';
 
 /**
  * Mapping from DTO to Domain model.
  * @param anime - The AnimeDto object to be converted.
- * @returns The converted object.
+ * @returns The converted object - Domain model.
  */
 export function animeFromDto(anime: AnimeDto): Anime {
 	return new AnimeBluePrint({

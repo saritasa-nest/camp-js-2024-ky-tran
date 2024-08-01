@@ -10,7 +10,7 @@ import { UrlService } from '@js-camp/angular/core/services/url.service';
 import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { toggleExecutionState } from '@js-camp/angular/shared/utils/rxjs/toggleExecutionState';
-import { UpdateUrlParamsType } from '@js-camp/core/enums/update-url-params-type';
+import { UpdateQueryParamsType } from '@js-camp/core/enums/update-query-params-type';
 
 /** Home page. */
 @Component({
@@ -57,11 +57,9 @@ export class HomeComponent {
 	 * @param pageEvent Page event.
 	 */
 	protected onPageChange(pageEvent: PageEvent): void {
-		this.urlService.updateParams(UpdateUrlParamsType.Paginator, {
-			paginator: {
-				pageNumber: pageEvent.pageIndex + 1,
-				pageSize: pageEvent.pageSize,
-			},
+		this.urlService.updateQueryParams(UpdateQueryParamsType.Paginator, {
+			pageNumber: pageEvent.pageIndex + 1,
+			pageSize: pageEvent.pageSize,
 		});
 	}
 }

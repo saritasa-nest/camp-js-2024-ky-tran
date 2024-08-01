@@ -1,5 +1,5 @@
 /** Representing different URL type parameters for updating. */
-export enum UpdateUrlParamsType {
+export enum UpdateQueryParamsType {
 
 	/** Type for pagination. */
 	Paginator = 'paginator',
