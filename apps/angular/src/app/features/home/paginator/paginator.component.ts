@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 import { AnimeService } from '@js-camp/angular/core/services/anime.service';
-import { Anime } from '@js-camp/core/models/anime';
-import { Pagination } from '@js-camp/core/models/pagination';
 
 /** PaginatorComponent. */
 @Component({
@@ -33,21 +31,21 @@ export class PaginatorComponent implements AfterViewInit {
 	private readonly animeService = inject(AnimeService);
 
 	/** Loading status of fetching anime list. */
-	protected readonly isLoading$ = new Subject<boolean>();
+	// protected readonly isLoading$ = new Subject<boolean>();
 
 	/** Stream of anime list. */
 	// protected readonly animeList$: Observable<Pagination<Anime>>;
 
 	public constructor() {
-		const animeList$ = this.animeService.getAll().pipe(toggleExecutionState(this.isLoading$));
+		// const animeList$ = this.animeService.getAll().pipe(toggleExecutionState(this.isLoading$));
 
-		this.isLoading$.subscribe(isLoading => {
-			console.log('-->', isLoading);
-		});
+		// this.isLoading$.subscribe(isLoading => {
+		// 	console.log('-->', isLoading);
+		// });
 
-		animeList$.subscribe({
-			next: data => console.log(data),
-		});
+		// animeList$.subscribe({
+		// 	next: data => console.log(data),
+		// });
 	}
 
 	/** After View Init. */

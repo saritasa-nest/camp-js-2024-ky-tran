@@ -3,7 +3,11 @@
 </header>
 
 <section class="content">
-	<camp-anime-table />
+	<camp-anime-table
+		[animeList]="(animeList$ | async)?.results || []"
+		[isLoading]="(isLoading$ | async) || false"
+		[error]="(error$ | async) || ''"
+	/>
 </section>
 
 <footer>

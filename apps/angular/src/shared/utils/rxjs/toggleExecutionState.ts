@@ -2,13 +2,13 @@ import { defer, EMPTY, finalize, ignoreElements, merge, MonoTypeOperatorFunction
 
 /**
  * Toggles loading subject when observable execution starts and ends.
- * @param subject$ Execution state subject. Will accept `true` when execution started and `false` when it's finalized.
+ * @param loadingSubject$ Execution state subject. Will accept `true` when execution started and `false` when it's finalized.
  */
 export function toggleExecutionState<T>(
-	subject$: Subject<boolean>,
+	loadingSubject$: Subject<boolean>,
 ): MonoTypeOperatorFunction<T> {
 	const startLoadingSideEffect$ = defer(() => {
-		subject$.next(true);
+		loadingSubject$.next(true);
 		return EMPTY;
 	});
 
@@ -19,7 +19,7 @@ export function toggleExecutionState<T>(
 
 		const finishLoadingSideEffect$ = sharedSource$.pipe(
 			ignoreElements(),
-			finalize(() => subject$.next(false)),
+			finalize(() => loadingSubject$.next(false)),
 		);
 
 		return merge(startLoadingSideEffect$, finishLoadingSideEffect$, source$);
