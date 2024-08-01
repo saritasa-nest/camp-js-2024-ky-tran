@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BehaviorSubject, catchError, Observable, Subject, throwError } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
+import { BehaviorSubject, catchError, Observable, Subject, throwError } from 'rxjs';
 
 import { AnimeTableComponent } from '@js-camp/angular/app/features/home/anime-table/anime-table.component';
 import { PaginatorComponent } from '@js-camp/angular/app/features/home/paginator/paginator.component';
@@ -50,6 +50,10 @@ export class HomeComponent {
 		);
 
 		this.isLoadingSubject$.subscribe(isLoading => this.isLoading$.next(isLoading));
+
+		this.urlService.getQueryParams().subscribe(data => {
+			console.log(data);
+		});
 	}
 
 	/**

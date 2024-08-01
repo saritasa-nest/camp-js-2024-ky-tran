@@ -30,7 +30,7 @@ export class AnimeService {
 		const mapAnimeFromDto = this.animeMapper.fromDto;
 
 		return this.httpClient
-			.get<PaginationDto<AnimeDto>>(this.urlConfig.animeUrl)
+			.get<PaginationDto<AnimeDto>>(this.urlConfig.animeUrl, { params: { offset: 0, limit: 3 } })
 			.pipe(
 				map(responseDto => mapPaginationFromDto(responseDto, mapAnimeFromDto)),
 				shareReplay({ refCount: true, bufferSize: 1 }),
