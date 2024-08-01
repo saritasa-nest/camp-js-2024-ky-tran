@@ -8,6 +8,7 @@ import { AnimeService } from '@js-camp/angular/core/services/anime.service';
 import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { toggleExecutionState } from '@js-camp/angular/shared/utils/rxjs/toggleExecutionState';
+import { PageEvent } from '@angular/material/paginator';
 
 /** Home page. */
 @Component({
@@ -30,9 +31,6 @@ export class HomeComponent {
 	/** Loading status of fetching anime list. */
 	protected readonly isLoading$ = new BehaviorSubject<boolean>(false);
 
-	/** Error message if something went wrong fetching anime list - Subject. */
-	protected readonly errorSubject$ = new Subject<string>();
-
 	/** Error message if something went wrong fetching anime list. */
 	protected readonly error$ = new BehaviorSubject<string>('');
 
@@ -48,5 +46,13 @@ export class HomeComponent {
 		);
 
 		this.isLoadingSubject$.subscribe(isLoading => this.isLoading$.next(isLoading));
+	}
+
+	/**
+	 * Page change event handler.
+	 * @param pageEvent Page event.
+	 */
+	protected onPageChange(pageEvent: PageEvent): void {
+		console.log('-->', pageEvent);
 	}
 }

@@ -1,10 +1,8 @@
-import { AfterViewInit, booleanAttribute, ChangeDetectionStrategy, Component, inject, Input, numberAttribute, ViewChild } from '@angular/core';
+import { AfterViewInit, booleanAttribute, ChangeDetectionStrategy, Component, EventEmitter, Input, numberAttribute, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
-import { AnimeService } from '@js-camp/angular/core/services/anime.service';
-
-/** PaginatorComponent. */
+/** Paginator Component. */
 @Component({
 	selector: 'camp-paginator',
 	standalone: true,
@@ -28,25 +26,8 @@ export class PaginatorComponent implements AfterViewInit {
 	/** Whether to show the first/last buttons UI to the user. */
 	@Input({ transform: booleanAttribute }) protected readonly showFirstLastButtons = true;
 
-	private readonly animeService = inject(AnimeService);
-
-	/** Loading status of fetching anime list. */
-	// protected readonly isLoading$ = new Subject<boolean>();
-
-	/** Stream of anime list. */
-	// protected readonly animeList$: Observable<Pagination<Anime>>;
-
-	public constructor() {
-		// const animeList$ = this.animeService.getAll().pipe(toggleExecutionState(this.isLoading$));
-
-		// this.isLoading$.subscribe(isLoading => {
-		// 	console.log('-->', isLoading);
-		// });
-
-		// animeList$.subscribe({
-		// 	next: data => console.log(data),
-		// });
-	}
+	/** Page change event emitter. */
+	@Output() public readonly pageChange = new EventEmitter<PageEvent>();
 
 	/** After View Init. */
 	public ngAfterViewInit(): void {
@@ -58,6 +39,6 @@ export class PaginatorComponent implements AfterViewInit {
 	 * @param pageEvent Page event.
 	 */
 	protected onPageChange(pageEvent: PageEvent): void {
-		console.log(pageEvent);
+		this.pageChange.emit(pageEvent);
 	}
 }
