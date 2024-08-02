@@ -1,5 +1,3 @@
-import { Immerable, OmitImmerable } from './immerable';
-
 /** Date range. */
 export type DateRange = Readonly<{
 
@@ -29,65 +27,45 @@ export enum AnimeStatus {
 	NotYetAired = 'Not Yet Aired',
 }
 
-/** Anime blue print. */
-export class AnimeBluePrint extends Immerable {
+/** Anime. */
+export type Anime = {
+
 	/** The unique identifier of the anime. */
-	public readonly id: number;
+	id: number;
 
 	/** The creation date of the anime. */
-	public readonly createdAt: Date;
+	createdAt: Date;
 
 	/** The last modified date of the anime. */
-	public readonly modifiedAt: Date;
+	modifiedAt: Date;
 
 	/** The English title of the anime. */
-	public readonly englishTitle: string;
+	englishTitle: string;
 
 	/** The Japanese title of the anime. */
-	public readonly japaneseTitle: string;
+	japaneseTitle: string;
 
 	/** The URL of the anime's image. */
-	public readonly imageUrl: string;
+	imageUrl: string;
 
 	/** The airing date range of the anime. */
-	public readonly aired: DateRange;
+	aired: DateRange;
 
 	/** The type of the anime (e.g., TV). */
-	public readonly type: AnimeType;
+	type: AnimeType;
 
 	/** The current status of the anime (e.g., AIRING). */
-	public readonly status: AnimeStatus;
+	status: AnimeStatus;
 
 	/** The average score of the anime. */
-	public readonly averageScore: number | null;
+	averageScore: number | null;
 
 	/** The user's score for the anime. */
-	public readonly userScore: number | null;
+	userScore: number | null;
 
 	/** An array of IDs representing the studios that produced the anime. */
-	public readonly studioIds: readonly number[];
+	studioIds: readonly number[];
 
 	/** An array of IDs representing the genres of the anime. */
-	public readonly genreIds: readonly number[];
-
-	public constructor(data: Anime) {
-		super();
-
-		this.id = data.id;
-		this.createdAt = data.createdAt;
-		this.modifiedAt = data.modifiedAt;
-		this.englishTitle = data.englishTitle;
-		this.japaneseTitle = data.japaneseTitle;
-		this.imageUrl = data.imageUrl;
-		this.aired = data.aired;
-		this.type = data.type;
-		this.status = data.status;
-		this.averageScore = data.averageScore;
-		this.userScore = data.userScore;
-		this.studioIds = data.studioIds;
-		this.genreIds = data.genreIds;
-	}
-}
-
-/** Type of Anime. */
-export type Anime = OmitImmerable<AnimeBluePrint>;
+	genreIds: readonly number[];
+};

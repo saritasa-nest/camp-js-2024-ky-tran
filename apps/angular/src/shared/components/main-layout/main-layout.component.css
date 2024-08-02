@@ -1,7 +1,7 @@
 :host {
 	display: flex;
 	max-width: var(--width-layout-main);
-	height: calc(100vh - 2 * var(--gap-huge));
+	height: calc(100vh - 2 * var(--gap-large));
 	background-color: var(--background-color-primary-light);
 	margin-inline: auto;
 }

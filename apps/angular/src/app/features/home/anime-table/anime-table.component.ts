@@ -66,7 +66,6 @@ export class AnimeTableComponent {
 	 * Tracks anime by its unique identifier.
 	 * @param _ - The index of the anime in the list.
 	 * @param anime - The anime object.
-	 * @returns The unique identifier of the anime.
 	 */
 	protected trackAnimeById(_: number, anime: Anime): Anime['id'] {
 		return anime.id;

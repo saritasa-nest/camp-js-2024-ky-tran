@@ -24,10 +24,7 @@ export class AnimeService {
 
 	private readonly paginationMapper = inject(PaginationMapper);
 
-	/**
-	 * Get anime list.
-	 * @returns Observable of anime list with pagination data.
-	 */
+	/** Get anime list. */
 	public getAll(): Observable<Pagination<Anime>> {
 		const { mapPaginationFromDto } = this.paginationMapper;
 		const mapAnimeFromDto = this.animeMapper.fromDto;
