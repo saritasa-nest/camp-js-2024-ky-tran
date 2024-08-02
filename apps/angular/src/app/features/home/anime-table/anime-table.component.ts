@@ -8,7 +8,8 @@ import { ProgressSpinnerComponent } from '@js-camp/angular/shared/components/pro
 import { ErrorMessageComponent } from '@js-camp/angular/shared/components/error-message/error-message.component';
 import { TableGeneric } from '@js-camp/angular/core/types/table-generic';
 import { AnimeTableColumns } from '@js-camp/core/enums/anime-table-columns';
-import { DATE_FORMAT } from '@js-camp/angular/shared/constants';
+import { DATE_FORMAT, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
+import { PaginatorQueryParams } from '@js-camp/core/models/query-params';
 
 const tableGeneric: TableGeneric = { columnKeys: AnimeTableColumns };
 
@@ -31,6 +32,9 @@ export class AnimeTableComponent {
 	/** Error message if something went wrong fetching anime list. */
 	@Input({ required: true }) public error: string | null = null;
 
+	/** Page query params for calculating the order of anime in table. */
+	@Input({ required: true }) public paginatorQueryParams!: PaginatorQueryParams | null;
+
 	/** Anime table column names. */
 	protected readonly animeColumns = tableGeneric.columnKeys;
 
@@ -39,6 +43,12 @@ export class AnimeTableComponent {
 
 	/** Date format. */
 	protected readonly dateFormat = DATE_FORMAT;
+
+	public constructor() {
+		if (this.paginatorQueryParams == null) {
+			this.paginatorQueryParams = { pageNumber: DEFAULT_PAGE_NUMBER, pageSize: DEFAULT_PAGE_SIZE };
+		}
+	}
 
 	/**
 	 * Tracks anime by its unique identifier.

@@ -2,7 +2,7 @@ import { AfterViewInit, booleanAttribute, ChangeDetectionStrategy, Component, Ev
 import { CommonModule } from '@angular/common';
 
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { DEFAULT_PAGE_SIZE, DEFAULT_PAGE_SIZE_OPTIONS } from '@js-camp/angular/shared/constants';
+import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE, DEFAULT_PAGE_SIZE_OPTIONS } from '@js-camp/angular/shared/constants';
 
 /** Paginator Component. */
 @Component({
@@ -20,27 +20,36 @@ export class PaginatorComponent implements AfterViewInit {
 	@Input({ transform: numberAttribute }) protected readonly length: number | null = null;
 
 	/** The zero-based page index of the displayed list of items. */
-	@Input({ transform: numberAttribute }) protected readonly pageIndex: number | null = 0;
+	@Input({ required: true, transform: numberAttribute }) protected readonly pageIndex: number | null = null;
 
 	/** Number of items to display on a page. */
-	@Input({ transform: numberAttribute }) protected readonly pageSize: number | null = DEFAULT_PAGE_SIZE;
+	@Input({ required: true, transform: numberAttribute }) protected readonly pageSize: number | null = null;
 
 	/** The set of provided page size options to display to the user. */
-	@Input() protected readonly pageSizeOptions = DEFAULT_PAGE_SIZE_OPTIONS;
+	@Input() protected readonly pageSizeOptions: number[] = DEFAULT_PAGE_SIZE_OPTIONS;
 
 	/** Whether to show the first/last buttons UI to the user. */
-	@Input({ transform: booleanAttribute }) protected readonly showFirstLastButtons = true;
+	@Input({ transform: booleanAttribute }) protected readonly showFirstLastButtons: boolean = true;
 
 	/** Whether the paginator is disabled. */
-	@Input({ transform: booleanAttribute }) protected readonly disabled: boolean = false;
+	@Input({ transform: booleanAttribute }) protected readonly disabled = false;
 
 	/** Page change event emitter. */
 	@Output() public readonly pageChange = new EventEmitter<PageEvent>();
 
+	public constructor() {
+		if (this.pageIndex == null) {
+			this.pageIndex = DEFAULT_PAGE_NUMBER - 1;
+		}
+		if (this.pageSize == null) {
+			this.pageSize = DEFAULT_PAGE_SIZE;
+		}
+		console.log(this.pageIndex, this.pageSize)
+	}
+
 	/** After View Init. */
 	public ngAfterViewInit(): void {
 		this.paginator._intl.itemsPerPageLabel = 'Anime per page:';
-
 	}
 
 	/**

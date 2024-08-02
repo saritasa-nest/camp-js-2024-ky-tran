@@ -31,3 +31,6 @@ export class QueryParamsBluePrint extends Immerable {
 
 /** Query params. */
 export type QueryParams = OmitImmerable<QueryParamsBluePrint>;
+
+/** Paginator query params. */
+export type PaginatorQueryParams = Pick<QueryParams, 'pageNumber' | 'pageSize'>;

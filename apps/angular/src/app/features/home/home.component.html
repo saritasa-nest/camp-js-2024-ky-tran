@@ -7,14 +7,17 @@
 		[animeList]="(isLoading$ | async) ? [] : (animeList$ | async)?.results || []"
 		[isLoading]="isLoading$ | async"
 		[error]="error$ | async"
+		[paginatorQueryParams]="paginatorQueryParams$ | async"
 	/>
 </section>
+
+<!-- [pageQueryParam]="pageQueryParams$ | async" -->
 
 <footer>
 	<camp-paginator
 		[length]="(animeList$ | async)?.count"
-		[pageIndex]="((pageQueryParams$ | async)?.pageNumber || 1) - 1"
-		[pageSize]="(pageQueryParams$ | async)?.pageSize"
+		[pageIndex]="((initialPaginatorQueryParams$ | async)?.pageNumber || defaultPageNumber) - 1"
+		[pageSize]="(initialPaginatorQueryParams$ | async)?.pageSize"
 		[disabled]="isLoading$ | async"
 		(pageChange)="onPageChange($event)"
 	/>
