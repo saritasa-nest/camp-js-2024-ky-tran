@@ -8,11 +8,13 @@ import { TYPE_MAPPING_TO_DTO } from '../records/type-mapping';
  * @returns The converted object - DTO.
  */
 export function queryParamsToDto(queryParams: QueryParams): QueryParamsDto {
+	const { pageNumber, pageSize, sortFields, type, search } = queryParams;
+
 	return new QueryParamsDtoBluePrint({
-		offset: queryParams.pageNumber,
-		limit: queryParams.pageSize,
-		ordering: queryParams.sortFields,
-		type: queryParams.type && TYPE_MAPPING_TO_DTO[queryParams.type],
-		search: queryParams.search,
+		offset: (pageNumber && pageSize) ? (pageNumber - 1) * pageSize : null,
+		limit: pageSize,
+		ordering: sortFields?.length ? sortFields.join(',') : null,
+		type: type && TYPE_MAPPING_TO_DTO[type],
+		search,
 	});
 }

@@ -50,10 +50,6 @@ export class HomeComponent {
 		);
 
 		this.isLoadingSubject$.subscribe(isLoading => this.isLoading$.next(isLoading));
-
-		this.urlService.getQueryParams().subscribe(data => {
-			console.log(data);
-		});
 	}
 
 	/**

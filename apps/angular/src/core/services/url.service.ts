@@ -7,6 +7,8 @@ import { QueryParamsMapper } from '@js-camp/angular/core/mappers/query-params';
 import { map, Observable } from 'rxjs';
 import { DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
 import { AnimeType } from '@js-camp/core/models/anime';
+import { QueryParamsDto } from '@js-camp/core/dtos/query-params';
+import { HttpParams } from '@angular/common/http';
 
 /** Url Service. */
 @Injectable({ providedIn: 'root' })
@@ -19,12 +21,11 @@ export class UrlService {
 
 	private removeUndefinedFields<T extends Record<string, unknown>>(obj: T): Partial<T> {
 		return Object.fromEntries(
-			Object.entries(obj).filter(([_, value]) => value !== undefined),
+			Object.entries(obj).filter(([_, value]) => value != null),
 		) as Partial<T>;
 	}
 
-	/** Get query params from the URL. */
-	public getQueryParams(): Observable<Partial<QueryParams>> {
+	private getQueryParams(): Observable<Partial<QueryParams>> {
 		return this.activatedRoute.queryParamMap.pipe(
 			map(params => {
 				const newParams: Partial<QueryParams> = {
@@ -36,6 +37,24 @@ export class UrlService {
 				};
 
 				return this.removeUndefinedFields(newParams);
+			}),
+		);
+	}
+
+	private getQueryParamsDto(queryPrams: Partial<QueryParams>): Partial<QueryParamsDto> {
+		const mapQueryParamsToDto = this.queryParamsMapper.toDto;
+		return this.removeUndefinedFields(mapQueryParamsToDto(queryPrams as QueryParams));
+	}
+
+	/** Create Http query params for pagination, sort, filter and search. */
+	public createHttpQueryParams(): Observable<HttpParams> {
+		return this.getQueryParams().pipe(
+			map(queryParams => {
+				const queryPramsDto = this.getQueryParamsDto(queryParams);
+
+				return Object.entries(queryPramsDto).reduce((httpPrams, [key, value]) =>
+					value != null ? httpPrams.set(key, value.toString()) : httpPrams
+				, new HttpParams());
 			}),
 		);
 	}

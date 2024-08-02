@@ -11,7 +11,7 @@ export class QueryParamsDtoBluePrint extends Immerable {
 	public readonly limit: number | null;
 
 	/** Sort fields. */
-	public readonly ordering: string[] | null;
+	public readonly ordering: string | null;
 
 	/** Filter type. */
 	public readonly type: AnimeTypeDto | null;
