@@ -9,7 +9,6 @@ import { AnimeDto } from '@js-camp/core/dtos/anime';
 import { PaginationMapper } from '@js-camp/angular/core/mappers/pagination';
 import { PaginationDto } from '@js-camp/core/dtos/pagination';
 import { Pagination } from '@js-camp/core/models/pagination';
-import { UrlService } from '@js-camp/angular/core/services/url.service';
 
 /** Anime service. */
 @Injectable({ providedIn: 'root' })
@@ -17,8 +16,6 @@ export class AnimeService {
 	private readonly httpClient = inject(HttpClient);
 
 	private readonly urlConfig = inject(UrlConfig);
-
-	private readonly urlService = inject(UrlService);
 
 	private readonly animeMapper = inject(AnimeMapper);
 

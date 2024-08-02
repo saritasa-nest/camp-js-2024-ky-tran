@@ -25,7 +25,8 @@ export class UrlService {
 		) as Partial<T>;
 	}
 
-	private getQueryParams(): Observable<Partial<QueryParams>> {
+	/** Get query params from URL. */
+	public getQueryParams(): Observable<Partial<QueryParams>> {
 		return this.activatedRoute.queryParamMap.pipe(
 			map(params => {
 				const newParams: Partial<QueryParams> = {

@@ -19,8 +19,11 @@ export class PaginatorComponent implements AfterViewInit {
 	/** The length of the total number of items that are being paginated. */
 	@Input({ transform: numberAttribute }) protected readonly length: number | null = null;
 
+	/** The zero-based page index of the displayed list of items. */
+	@Input({ transform: numberAttribute }) protected readonly pageIndex: number | null = 0;
+
 	/** Number of items to display on a page. */
-	@Input({ transform: numberAttribute }) protected readonly pageSize = DEFAULT_PAGE_SIZE;
+	@Input({ transform: numberAttribute }) protected readonly pageSize: number | null = DEFAULT_PAGE_SIZE;
 
 	/** The set of provided page size options to display to the user. */
 	@Input() protected readonly pageSizeOptions = DEFAULT_PAGE_SIZE_OPTIONS;
@@ -37,6 +40,7 @@ export class PaginatorComponent implements AfterViewInit {
 	/** After View Init. */
 	public ngAfterViewInit(): void {
 		this.paginator._intl.itemsPerPageLabel = 'Anime per page:';
+
 	}
 
 	/**

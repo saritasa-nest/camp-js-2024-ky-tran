@@ -13,6 +13,8 @@
 <footer>
 	<camp-paginator
 		[length]="(animeList$ | async)?.count"
+		[pageIndex]="((pageQueryParams$ | async)?.pageNumber || 1) - 1"
+		[pageSize]="(pageQueryParams$ | async)?.pageSize"
 		[disabled]="isLoading$ | async"
 		(pageChange)="onPageChange($event)"
 	/>
