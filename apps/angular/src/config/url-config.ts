@@ -11,13 +11,5 @@ export class UrlConfig {
 	public readonly animeBaseUrl = `${environment.baseUrl}/anime`;
 
 	/** Anime URL. */
-	public readonly animeUrl: string;
-
-	public constructor() {
-		this.animeUrl = this.toAnimeBaseUrl('/anime/');
-	}
-
-	private toAnimeBaseUrl(path: string): string {
-		return `${this.animeBaseUrl}${path}`;
-	}
+	public readonly animeUrl = `${this.animeBaseUrl}/anime/`;
 }
