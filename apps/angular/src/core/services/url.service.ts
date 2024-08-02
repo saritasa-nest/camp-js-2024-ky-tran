@@ -42,8 +42,9 @@ export class UrlService {
 	}
 
 	private getQueryParamsDto(queryPrams: Partial<QueryParams>): Partial<QueryParamsDto> {
-		const mapQueryParamsToDto = this.queryParamsMapper.toDto;
-		return this.removeUndefinedFields(mapQueryParamsToDto(queryPrams as QueryParams));
+		return this.removeUndefinedFields(
+			this.queryParamsMapper.toDto(queryPrams as QueryParams),
+		);
 	}
 
 	/** Create Http query params for pagination, sort, filter and search. */

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PageEvent } from '@angular/material/paginator';
-import { BehaviorSubject, catchError, Observable, Subject, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, Subject, switchMap, throwError } from 'rxjs';
 
 import { AnimeTableComponent } from '@js-camp/angular/app/features/home/anime-table/anime-table.component';
 import { PaginatorComponent } from '@js-camp/angular/app/features/home/paginator/paginator.component';
@@ -29,27 +29,23 @@ export class HomeComponent {
 	/** Stream of anime list. */
 	protected readonly animeList$: Observable<Pagination<Anime>>;
 
-	/** Loading status of fetching anime list - Subject. */
-	protected readonly isLoadingSubject$ = new Subject<boolean>();
-
 	/** Loading status of fetching anime list. */
-	protected readonly isLoading$ = new BehaviorSubject<boolean>(false);
+	protected readonly isLoading$ = new Subject<boolean>();
 
 	/** Error message if something went wrong fetching anime list. */
 	protected readonly error$ = new BehaviorSubject<string>('');
 
 	public constructor() {
-		this.animeList$ = this.animeService.getAll().pipe(
-			toggleExecutionState(this.isLoadingSubject$),
-			catchError((error: unknown) => throwError(() => {
-				const errorMessage = error instanceof Error ? error.message : 'Something went wrong!';
-				this.error$.next(errorMessage);
-
-				return error;
-			})),
+		this.animeList$ = this.urlService.createHttpQueryParams().pipe(
+			switchMap(httpParams => this.animeService.getAll(httpParams).pipe(
+				toggleExecutionState(this.isLoading$),
+				catchError((error: unknown) => throwError(() => {
+					const errorMessage = error instanceof Error ? error.message : 'Something went wrong!';
+					this.error$.next(errorMessage);
+					return error;
+				})),
+			)),
 		);
-
-		this.isLoadingSubject$.subscribe(isLoading => this.isLoading$.next(isLoading));
 	}
 
 	/**

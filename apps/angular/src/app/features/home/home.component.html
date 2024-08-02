@@ -4,7 +4,7 @@
 
 <section class="content">
 	<camp-anime-table
-		[animeList]="(animeList$ | async)?.results || []"
+		[animeList]="(isLoading$ | async) ? [] : (animeList$ | async)?.results || []"
 		[isLoading]="isLoading$ | async"
 		[error]="error$ | async"
 	/>

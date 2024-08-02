@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, map, Observable, shareReplay, switchMap, throwError } from 'rxjs';
+import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
 
 import { UrlConfig } from '@js-camp/angular/config/url-config';
 import { AnimeMapper } from '@js-camp/angular/core/mappers/anime';
@@ -26,20 +26,17 @@ export class AnimeService {
 
 	/**
 	 * Get anime list.
-	 * @returns Observable of anime list with pagination data.
+	 * @param httpParams HttpParams.
 	 */
-	public getAll(): Observable<Pagination<Anime>> {
+	public getAll(httpParams: HttpParams): Observable<Pagination<Anime>> {
 		const { mapPaginationFromDto } = this.paginationMapper;
 		const mapAnimeFromDto = this.animeMapper.fromDto;
 
-		return this.urlService.createHttpQueryParams().pipe(
-			switchMap(httpParams =>
-				this.httpClient.get<PaginationDto<AnimeDto>>(this.urlConfig.animeUrl, { params: httpParams })
-					.pipe(
-						map(responseDto => mapPaginationFromDto(responseDto, mapAnimeFromDto)),
-						shareReplay({ refCount: true, bufferSize: 1 }),
-						catchError((_: unknown) => throwError(() => new Error('Failed to fetch anime. Please try again.'))),
-					)),
-		);
+		return this.httpClient.get<PaginationDto<AnimeDto>>(this.urlConfig.animeUrl, { params: httpParams })
+			.pipe(
+				map(responseDto => mapPaginationFromDto(responseDto, mapAnimeFromDto)),
+				shareReplay({ refCount: true, bufferSize: 1 }),
+				catchError((_: unknown) => throwError(() => new Error('Failed to fetch anime. Please try again.'))),
+			);
 	}
 }
