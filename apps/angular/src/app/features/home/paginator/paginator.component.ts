@@ -44,7 +44,6 @@ export class PaginatorComponent implements AfterViewInit {
 		if (this.pageSize == null) {
 			this.pageSize = DEFAULT_PAGE_SIZE;
 		}
-		console.log(this.pageIndex, this.pageSize)
 	}
 
 	/** After View Init. */
