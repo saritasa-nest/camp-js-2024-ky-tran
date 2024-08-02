@@ -1,9 +1,9 @@
 import { AnimeDto } from '../dtos/anime';
 import { Anime } from '../models/anime';
 import { STATUS_MAPPING_FROM_DTO } from '../records/status-from-dto';
-import { TYPE_MAPPING_FROM_DTO } from '../records/type-from-dto';
+import { TYPE_MAPPING_FROM_DTO } from '../records/type-mapping';
 
-/** Namespace for Anime mappers. */
+/** Anime mappers namespace. */
 export namespace AnimeMappers {
 
 	/**

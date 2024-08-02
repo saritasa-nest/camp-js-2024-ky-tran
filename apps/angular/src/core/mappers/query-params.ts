@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { QueryParamsDto } from '@js-camp/core/dtos/query-params';
-import { queryParamsToDto } from '@js-camp/core/mappers/query-params-to-dto';
+import { QueryParamsMappers } from '@js-camp/core/mappers/query-params-to-dto';
 import { QueryParams } from '@js-camp/core/models/query-params';
 
 /** Query Params mapper. */
@@ -13,6 +13,6 @@ export class QueryParamsMapper {
 	 * @returns The converted object.
 	 */
 	public toDto(queryParams: QueryParams): QueryParamsDto {
-		return queryParamsToDto(queryParams);
+		return QueryParamsMappers.queryParamsToDto(queryParams);
 	}
 }
