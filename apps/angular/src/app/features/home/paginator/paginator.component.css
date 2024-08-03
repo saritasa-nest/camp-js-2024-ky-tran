@@ -2,4 +2,5 @@
 	color: var(--text-color-main);
 	background-color: var(--background-color-primary-bright);
 	font-size: 1.4rem;
+	padding: var(--gap-tiny) var(--gap-extra-small);
 }
