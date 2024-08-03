@@ -27,14 +27,14 @@ export class UrlService {
 
 	/** Get query params from URL. */
 	public getQueryParams(): Observable<Partial<QueryParams>> {
-		return this.activatedRoute.queryParamMap.pipe(
+		return this.activatedRoute.queryParams.pipe(
 			map(params => {
 				const newParams: Partial<QueryParams> = {
-					pageNumber: Number(params.get('pageNumber')) || 1,
-					pageSize: Number(params.get('pageSize')) || DEFAULT_PAGE_SIZE,
-					sortFields: params.has('sortFields') ? params.getAll('sortFields') : undefined,
-					type: params.has('type') ? params.get('type') as AnimeType : undefined,
-					search: params.has('search') ? params.get('search') : undefined,
+					pageNumber: Number(params['pageNumber']) || 1,
+					pageSize: Number(params['pageSize']) || DEFAULT_PAGE_SIZE,
+					sortFields: params['sortFields'] ? params['sortFields'].split(',') : undefined,
+					type: params['type'] as AnimeType,
+					search: params['search'],
 				};
 
 				return this.removeUndefinedFields(newParams);
