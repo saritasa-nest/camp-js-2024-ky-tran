@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
-import { QueryParamsDto } from '@js-camp/core/dtos/query-params';
-import { QueryParamsMappers } from '@js-camp/core/mappers/query-params-to-dto';
-import { QueryParams } from '@js-camp/core/models/query-params';
+import { QueryParamsDto } from '@js-camp/core/dtos/query-params.dto';
+import { QueryParamsMappers } from '@js-camp/core/mappers/query-params-to-dto.mapper';
+import { QueryParams } from '@js-camp/core/models/query-params.model';
 
 /** Query Params mapper. */
 @Injectable({ providedIn: 'root' })

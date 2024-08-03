@@ -1,4 +1,4 @@
-import { AnimeType } from './anime';
+import { AnimeType } from './anime.model';
 
 /** Query params. */
 export type QueryParams = Readonly<{

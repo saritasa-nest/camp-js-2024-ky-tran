@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Pagination } from '@js-camp/core/models/pagination';
+import { Pagination } from '@js-camp/core/models/pagination.model';
 
 /** PaginationMapper. */
 @Injectable({ providedIn: 'root' })

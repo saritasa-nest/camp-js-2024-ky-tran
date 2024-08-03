@@ -7,11 +7,11 @@ import { AnimeTableComponent } from '@js-camp/angular/app/features/home/anime-ta
 import { PaginatorComponent } from '@js-camp/angular/app/features/home/paginator/paginator.component';
 import { AnimeService } from '@js-camp/angular/core/services/anime.service';
 import { UrlService } from '@js-camp/angular/core/services/url.service';
-import { Anime } from '@js-camp/core/models/anime';
-import { Pagination } from '@js-camp/core/models/pagination';
+import { Anime } from '@js-camp/core/models/anime.model';
+import { Pagination } from '@js-camp/core/models/pagination.model';
 import { toggleExecutionState } from '@js-camp/angular/shared/utils/rxjs/toggleExecutionState';
-import { UpdateQueryParamsType } from '@js-camp/core/enums/update-query-params-type';
-import { PaginatorQueryParams, QueryParams } from '@js-camp/core/models/query-params';
+import { UpdateQueryParamsType } from '@js-camp/core/enums/update-query-params-type.enum';
+import { PaginatorQueryParams, QueryParams } from '@js-camp/core/models/query-params.model';
 import { DEFAULT_PAGE_NUMBER } from '@js-camp/angular/shared/constants';
 
 /** Home page. */

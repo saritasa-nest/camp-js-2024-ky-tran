@@ -2,14 +2,14 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 
-import { Anime } from '@js-camp/core/models/anime';
-import { NullablePipe } from '@js-camp/angular/core/pipes/nullable-pipe';
+import { Anime } from '@js-camp/core/models/anime.model';
+import { NullablePipe } from '@js-camp/angular/core/pipes/nullable.pipe';
 import { ProgressSpinnerComponent } from '@js-camp/angular/shared/components/progress-spinner/progress-spinner.component';
 import { ErrorMessageComponent } from '@js-camp/angular/shared/components/error-message/error-message.component';
-import { TableGeneric } from '@js-camp/angular/core/types/table-generic';
-import { AnimeTableColumns } from '@js-camp/core/enums/anime-table-columns';
+import { TableGeneric } from '@js-camp/angular/core/types/table-generic.type';
+import { AnimeTableColumns } from '@js-camp/core/enums/anime-table-columns.enum';
 import { DATE_FORMAT, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
-import { PaginatorQueryParams } from '@js-camp/core/models/query-params';
+import { PaginatorQueryParams } from '@js-camp/core/models/query-params.model';
 
 const tableGeneric: TableGeneric = { columnKeys: AnimeTableColumns };
 

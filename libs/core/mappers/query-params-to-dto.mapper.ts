@@ -1,6 +1,6 @@
-import { QueryParamsDto } from '../dtos/query-params';
-import { QueryParams } from '../models/query-params';
-import { TYPE_MAPPING_TO_DTO } from '../records/type-mapping';
+import { QueryParamsDto } from '../dtos/query-params.dto';
+import { QueryParams } from '../models/query-params.model';
+import { TYPE_MAPPING_TO_DTO } from '../records/type-mapping.record';
 
 /** Query Params mapper namespace. */
 export namespace QueryParamsMappers {

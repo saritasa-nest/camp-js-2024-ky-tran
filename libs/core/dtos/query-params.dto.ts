@@ -1,4 +1,4 @@
-import { AnimeTypeDto } from './anime';
+import { AnimeTypeDto } from './anime.dto';
 
 /** Query params DTO. */
 export type QueryParamsDto = Readonly<{

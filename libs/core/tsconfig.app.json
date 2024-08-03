@@ -5,5 +5,5 @@
     "outDir": "../../dist/out-tsc",
     "types": ["node"]
   },
-  "include": ["**/*.ts", "../../apps/angular/src/core/mappers/pagination.ts"]
+  "include": ["**/*.ts", "../../apps/angular/src/core/mappers/pagination.mapper.ts"]
 }

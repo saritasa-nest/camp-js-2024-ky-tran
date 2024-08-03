@@ -1,13 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { UpdateQueryParamsType } from '@js-camp/core/enums/update-query-params-type';
-import { QueryParams } from '@js-camp/core/models/query-params';
-import { QueryParamsMapper } from '@js-camp/angular/core/mappers/query-params';
+import { UpdateQueryParamsType } from '@js-camp/core/enums/update-query-params-type.enum';
+import { QueryParams } from '@js-camp/core/models/query-params.model';
+import { QueryParamsMapper } from '@js-camp/angular/core/mappers/query-params.mapper';
 import { map, Observable } from 'rxjs';
 import { DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
-import { AnimeType } from '@js-camp/core/models/anime';
-import { QueryParamsDto } from '@js-camp/core/dtos/query-params';
+import { AnimeType } from '@js-camp/core/models/anime.model';
+import { QueryParamsDto } from '@js-camp/core/dtos/query-params.dto';
 import { HttpParams } from '@angular/common/http';
 
 /** Url Service. */

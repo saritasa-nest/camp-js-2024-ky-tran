@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
-import { AnimeDto } from '@js-camp/core/dtos/anime';
-import { Anime } from '@js-camp/core/models/anime';
-import { AnimeMappers } from '@js-camp/core/mappers/anime';
+import { AnimeDto } from '@js-camp/core/dtos/anime.dto';
+import { Anime } from '@js-camp/core/models/anime.model';
+import { AnimeMappers } from '@js-camp/core/mappers/anime.mapper';
 
 /** Anime mapper. */
 @Injectable({ providedIn: 'root' })
