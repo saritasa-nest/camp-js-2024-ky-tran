@@ -1,12 +1,4 @@
-/** Date range. */
-export type DateRange = Readonly<{
-
-	/** Start date. */
-	startAt: Date | null;
-
-	/** End date. */
-	endAt: Date | null;
-}>;
+import { DateRange } from './date-range';
 
 /** Anime type. */
 export enum AnimeType {
