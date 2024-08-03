@@ -30,8 +30,25 @@
 	text-align: center;
 }
 
-.table__column_wide {
+.table__column_order {
+	width: 5%;
+}
+
+.table__column_title,
+.table__column_image {
 	width: 20%;
+}
+
+.table__column_start-date {
+	width: 12.5%;
+}
+
+.table__column_type {
+	width: 8.5%;
+}
+
+.table__column_status {
+	width: 14%;
 }
 
 .table__row-image-container {
