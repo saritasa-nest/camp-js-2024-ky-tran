@@ -1,4 +1,7 @@
+import { SortDirection } from '../enums/sort-direction.enum';
+
 import { AnimeType } from './anime.model';
+import { SortFields } from './sort-fields.model';
 
 /** Query params. */
 export type QueryParams = Readonly<{
@@ -9,8 +12,11 @@ export type QueryParams = Readonly<{
 	/** Page size. */
 	pageSize: number | null;
 
-	/** Sort fields. */
-	sortFields: string[] | null;
+	/** Field. */
+	sortField: SortFields | null;
+
+	/** Direction. */
+	sortDirection: SortDirection | null;
 
 	/** Filter type. */
 	type: AnimeType | null;
