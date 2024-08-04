@@ -1,6 +1,8 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { BehaviorSubject } from 'rxjs';
 
 import { Anime } from '@js-camp/core/models/anime.model';
 import { NullablePipe } from '@js-camp/angular/core/pipes/nullable.pipe';
@@ -9,7 +11,7 @@ import { ErrorMessageComponent } from '@js-camp/angular/shared/components/error-
 import { TableGeneric } from '@js-camp/angular/core/types/table-generic.type';
 import { AnimeTableColumns } from '@js-camp/core/enums/anime-table-columns.enum';
 import { DATE_FORMAT, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
-import { PaginatorQueryParams } from '@js-camp/core/models/query-params.model';
+import { QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
 
 const tableGeneric: TableGeneric = { columnKeys: AnimeTableColumns };
 
@@ -19,7 +21,15 @@ const tableGeneric: TableGeneric = { columnKeys: AnimeTableColumns };
 	standalone: true,
 	templateUrl: './anime-table.component.html',
 	styleUrl: './anime-table.component.css',
-	imports: [CommonModule, AsyncPipe, MatTableModule, ProgressSpinnerComponent, ErrorMessageComponent, NullablePipe],
+	imports: [
+		CommonModule,
+		AsyncPipe,
+		MatTableModule,
+		MatSortModule,
+		ProgressSpinnerComponent,
+		ErrorMessageComponent,
+		NullablePipe,
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimeTableComponent {
@@ -32,8 +42,7 @@ export class AnimeTableComponent {
 	/** Error message if something went wrong fetching anime list. */
 	@Input({ required: true }) public error: string | null = null;
 
-	/** Page query params for calculating the order of anime in table. */
-	@Input() public paginatorQueryParams: PaginatorQueryParams | null = null;
+	private readonly queryParamsProvider$ = inject(QUERY_PARAMS_TOKEN);
 
 	/** Anime table column names. */
 	protected readonly animeColumns = tableGeneric.columnKeys;
@@ -44,10 +53,24 @@ export class AnimeTableComponent {
 	/** Date format. */
 	protected readonly dateFormat = DATE_FORMAT;
 
+	/** The zero-based page index of the displayed list of items. */
+	protected readonly pageIndex$ = new BehaviorSubject<number>(DEFAULT_PAGE_NUMBER - 1);
+
+	/** Number of items to display on a page. */
+	protected readonly pageSize$ = new BehaviorSubject<number>(DEFAULT_PAGE_SIZE);
+
 	public constructor() {
-		if (this.paginatorQueryParams == null) {
-			this.paginatorQueryParams = { pageNumber: DEFAULT_PAGE_NUMBER, pageSize: DEFAULT_PAGE_SIZE };
-		}
+		this.queryParamsProvider$.pipe().subscribe(params => {
+			const { pageNumber, pageSize } = params;
+
+			if (pageNumber) {
+				this.pageIndex$.next(pageNumber - 1);
+			}
+
+			if (pageSize) {
+				this.pageSize$.next(pageSize);
+			}
+		});
 	}
 
 	/**

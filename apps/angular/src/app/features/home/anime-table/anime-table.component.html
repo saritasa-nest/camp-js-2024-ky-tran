@@ -1,12 +1,8 @@
-<table mat-table [dataSource]="animeList" class="table" [trackBy]="trackAnimeById">
+<table mat-table matSort [dataSource]="animeList" class="table" [trackBy]="trackAnimeById">
 	<ng-container [matColumnDef]="animeColumns.Index">
 		<th class="table-cell table__column_order" mat-header-cell *matHeaderCellDef>#</th>
-		<td
-			class="table-cell table__column_order"
-			mat-cell
-			*matCellDef="let anime; let i = index"
-		>
-			{{ (paginatorQueryParams?.pageNumber! - 1) * paginatorQueryParams?.pageSize! + i + 1 }}
+		<td class="table-cell table__column_order" mat-cell *matCellDef="let anime; let i = index">
+			{{ (pageIndex$ | async)! * (pageSize$ | async)! + i + 1 }}
 		</td>
 	</ng-container>
 
@@ -21,7 +17,7 @@
 	</ng-container>
 
 	<ng-container [matColumnDef]="animeColumns.EnglishTitle">
-		<th class="table-cell table__column_title" mat-header-cell *matHeaderCellDef>English Title</th>
+		<th class="table-cell table__column_title" mat-header-cell *matHeaderCellDef mat-sort-header>English Title</th>
 		<td class="table-cell table__column_title" mat-cell *matCellDef="let anime">{{ anime.englishTitle | appNullable }}</td>
 	</ng-container>
 
@@ -31,7 +27,7 @@
 	</ng-container>
 
 	<ng-container [matColumnDef]="animeColumns.AiredStart">
-		<th class="table-cell table__column_start-date" mat-header-cell *matHeaderCellDef>Start Date</th>
+		<th class="table-cell table__column_start-date" mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</th>
 		<td class="table-cell table__column_start-date" mat-cell *matCellDef="let anime">{{ anime.aired.startAt | date:dateFormat | appNullable }}</td>
 	</ng-container>
 
@@ -41,7 +37,7 @@
 	</ng-container>
 
 	<ng-container [matColumnDef]="animeColumns.Status">
-		<th class="table-cell table__column_status" mat-header-cell *matHeaderCellDef>Status</th>
+		<th class="table-cell table__column_status" mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
 		<td class="table-cell table__column_status" mat-cell *matCellDef="let anime">{{ anime.status | appNullable }}</td>
 	</ng-container>
 
