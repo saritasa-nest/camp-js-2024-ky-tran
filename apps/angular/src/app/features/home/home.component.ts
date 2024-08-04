@@ -81,6 +81,9 @@ export class HomeComponent {
 	 * @param selectEvent - Select Change event.
 	 */
 	protected onSelectionChange(selectEvent: MatSelectChange): void {
-		console.log(selectEvent);
+		this.urlService.updateQueryParams(
+			{ type: selectEvent.value ? selectEvent.value : null },
+			{ pageNumber: DEFAULT_PAGE_NUMBER },
+		);
 	}
 }
