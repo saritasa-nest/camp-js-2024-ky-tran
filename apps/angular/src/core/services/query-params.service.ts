@@ -18,7 +18,7 @@ export class QueryParamsService {
 
 	/**
 	 * Merge provided query params to the URL.
-	 * @param queryParams Provided query params.
+	 * @param queryParams The provided query params.
 	 */
 	public append(queryParams: Record<string, unknown>): void {
 		this.router.navigate([], { queryParams, relativeTo: this.activatedRoute, queryParamsHandling: 'merge' });
@@ -26,8 +26,8 @@ export class QueryParamsService {
 
 	/**
 	 * Merge provided query params to the URL and reset provided query params.
-	 * @param queryParams Provided query params.
-	 * @param resetQueryParams Provided reset query params.
+	 * @param queryParams The provided query params.
+	 * @param resetQueryParams The provided reset query params.
 	 */
 	public appendAndReset(queryParams: Record<string, unknown>, resetQueryParams: Record<string, unknown>): void {
 		this.append({ ...queryParams, ...resetQueryParams });
@@ -35,7 +35,7 @@ export class QueryParamsService {
 
 	/**
 	 * Remove provided query params from the URL.
-	 * @param removedQueryParams Provided query params.
+	 * @param removedQueryParams The provided query params.
 	 */
 	public remove(removedQueryParams: Record<string, unknown>): void {
 		const queryParams = Object.keys(removedQueryParams).reduce((acc, key) => {

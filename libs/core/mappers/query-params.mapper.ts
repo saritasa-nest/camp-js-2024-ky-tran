@@ -8,16 +8,29 @@ import { TYPE_MAPPING_FROM_DTO, TYPE_MAPPING_TO_DTO } from '../records/type-mapp
 export namespace QueryParamsMappers {
 
 	/**
+	 * Create query params with the provided query params and all left query params with the default value null.
+	 * @param params - The provided query params.
+	 */
+	export function createDefault(params: Partial<QueryParams>): QueryParams {
+		const defaultQueryParams: QueryParams = {
+			pageNumber: null,
+			pageSize: null,
+			sortField: null,
+			sortDirection: null,
+			type: null,
+			search: null,
+		};
+
+		return { ...defaultQueryParams, ...params };
+	}
+
+	/**
 	 * Mapping from Domain model to DTO (to Url).
 	 * @param model - The Query Params Domain model object to be converted.
 	 * @param defaultPageNumber - Default page number.
 	 * @param defaultPageSize - Default page size.
 	 */
-	export function toUrlDto(
-		model: QueryParams,
-		defaultPageNumber: number,
-		defaultPageSize: number,
-	): QueryParamsUrlDto {
+	export function toUrlDto(model: QueryParams, defaultPageNumber: number, defaultPageSize: number): QueryParamsUrlDto {
 		const { pageNumber, pageSize, sortField, sortDirection, type, search } = model;
 
 		return {
@@ -36,11 +49,7 @@ export namespace QueryParamsMappers {
 	 * @param defaultPageNumber - Default page number.
 	 * @param defaultPageSize - Default page size.
 	 */
-	export function fromUrlDto(
-		dto: QueryParamsUrlDto,
-		defaultPageNumber: number,
-		defaultPageSize: number,
-	): QueryParams {
+	export function fromUrlDto(dto: QueryParamsUrlDto, defaultPageNumber: number, defaultPageSize: number): QueryParams {
 		const { pageNumber, pageSize, sortField, sortDirection, type, search } = dto;
 
 		return {
@@ -59,11 +68,7 @@ export namespace QueryParamsMappers {
 	 * @param defaultPageNumber - Default page number.
 	 * @param defaultPageSize - Default page size.
 	 */
-	export function toDto(
-		model: QueryParams,
-		defaultPageNumber: number,
-		defaultPageSize: number,
-	): QueryParamsDto {
+	export function toDto(model: QueryParams, defaultPageNumber: number, defaultPageSize: number): QueryParamsDto {
 		const { pageNumber, pageSize, sortField, sortDirection, type, search } = model;
 
 		let ordering: string | null = null;

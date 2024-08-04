@@ -1,14 +1,14 @@
 import { inject, Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
 
-import { UpdateQueryParamsType } from '@js-camp/core/enums/update-query-params-type.enum';
 import { QueryParams } from '@js-camp/core/models/query-params.model';
 import { QueryParamsMapper } from '@js-camp/angular/core/mappers/query-params.mapper';
 import { map, Observable } from 'rxjs';
 import { DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
 import { AnimeType } from '@js-camp/core/models/anime.model';
 import { QueryParamsDto } from '@js-camp/core/dtos/query-params.dto';
-import { HttpParams } from '@angular/common/http';
+import { QueryParamsService } from '@js-camp/angular/core/services/query-params.service';
 
 /** Url Service. */
 @Injectable({ providedIn: 'root' })
@@ -18,6 +18,8 @@ export class UrlService {
 	private readonly activatedRoute = inject(ActivatedRoute);
 
 	private readonly queryParamsMapper = inject(QueryParamsMapper);
+
+	private readonly queryParamsService = inject(QueryParamsService);
 
 	private removeUndefinedFields<T extends Record<string, unknown>>(obj: T): Partial<T> {
 		return Object.fromEntries(
@@ -32,7 +34,8 @@ export class UrlService {
 				const newParams: Partial<QueryParams> = {
 					pageNumber: Number(params['pageNumber']) || 1,
 					pageSize: Number(params['pageSize']) || DEFAULT_PAGE_SIZE,
-					sortFields: params['sortFields'] ? params['sortFields'].split(',') : undefined,
+					sortField: undefined,
+					sortDirection: undefined,
 					type: params['type'] as AnimeType,
 					search: params['search'],
 				};
@@ -62,24 +65,11 @@ export class UrlService {
 	}
 
 	/**
-	 * Updates the URL query parameters based on the provided type and options.
-	 *
-	 * @param type - The type of URL parameter to update (e.g., Paginator, Sort, Filter, Search).
-	 * @param options - The options containing the new values for the query parameters.
+	 * Updates the URL query params.
+	 * @param params - The provided query params.
 	 */
-	public updateQueryParams(type: UpdateQueryParamsType, options: Partial<QueryParams>): void {
-		const currentParams = this.activatedRoute.snapshot.queryParams as QueryParams;
-		const { pageNumber, pageSize } = options;
-		let newParams: Partial<QueryParams> = {};
-
-		if (type === UpdateQueryParamsType.Paginator && pageNumber != null && pageSize != null) {
-			newParams = { pageNumber, pageSize };
-		}
-
-		this.router.navigate([], {
-			relativeTo: this.activatedRoute,
-			queryParams: { ...currentParams, ...newParams },
-			queryParamsHandling: 'merge',
-		});
+	public updateQueryParams(params: Partial<QueryParams>): void {
+		const { createDefault, toUrlDto } = this.queryParamsMapper;
+		this.queryParamsService.append(toUrlDto(createDefault(params)));
 	}
 }

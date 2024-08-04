@@ -9,6 +9,14 @@ import { QueryParams } from '@js-camp/core/models/query-params.model';
 @Injectable({ providedIn: 'root' })
 export class QueryParamsMapper {
 	/**
+	 * Create query params with the provided query params and all left query params with the default value null.
+	 * @param params - The provided query params.
+	 */
+	public createDefault(params: Partial<QueryParams>): QueryParams {
+		return QueryParamsMappers.createDefault(params);
+	}
+
+	/**
 	 * Mapping from Domain model to DTO (to Url).
 	 * @param model - The Query Params Domain model object to be converted.
 	 */
