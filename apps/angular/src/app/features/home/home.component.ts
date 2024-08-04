@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PageEvent } from '@angular/material/paginator';
-import { BehaviorSubject, catchError, Observable, shareReplay, Subject, switchMap, take, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, Subject, switchMap, take, throwError } from 'rxjs';
 
 import { AnimeTableComponent } from '@js-camp/angular/app/features/home/anime-table/anime-table.component';
 import { PaginatorComponent } from '@js-camp/angular/app/features/home/paginator/paginator.component';
@@ -10,8 +10,11 @@ import { UrlService } from '@js-camp/angular/core/services/url.service';
 import { Anime } from '@js-camp/core/models/anime.model';
 import { Pagination } from '@js-camp/core/models/pagination.model';
 import { toggleExecutionState } from '@js-camp/angular/shared/utils/rxjs/toggleExecutionState';
-import { PaginatorQueryParams, QueryParams } from '@js-camp/core/models/query-params.model';
-import { DEFAULT_PAGE_NUMBER } from '@js-camp/angular/shared/constants';
+import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
+import { QUERY_PARAMS_PROVIDER, QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
+import { QueryParams } from '@js-camp/core/models/query-params.model';
+
+// import { PaginatorQueryParams, QueryParams } from '@js-camp/core/models/query-params.model';
 
 /** Home page. */
 @Component({
@@ -20,12 +23,15 @@ import { DEFAULT_PAGE_NUMBER } from '@js-camp/angular/shared/constants';
 	templateUrl: './home.component.html',
 	styleUrl: './home.component.css',
 	imports: [CommonModule, AnimeTableComponent, PaginatorComponent],
+	providers: [...QUERY_PARAMS_PROVIDER],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
 	private readonly animeService = inject(AnimeService);
 
 	private readonly urlService = inject(UrlService);
+
+	private readonly queryParamsProvider$ = inject(QUERY_PARAMS_TOKEN);
 
 	/** Stream of anime list. */
 	protected readonly animeList$: Observable<Pagination<Anime>>;
@@ -45,8 +51,12 @@ export class HomeComponent {
 	/** Default page number. */
 	protected readonly defaultPageNumber = DEFAULT_PAGE_NUMBER;
 
+	/** Default page size. */
+	protected readonly defaultPageSize = DEFAULT_PAGE_SIZE;
+
 	public constructor() {
-		this.animeList$ = this.urlService.createHttpQueryParams().pipe(
+		this.animeList$ = this.queryParamsProvider$.pipe(
+			map(params => this.urlService.createHttpQueryParams(params)),
 			switchMap(httpParams => this.animeService.getAll(httpParams).pipe(
 				toggleExecutionState(this.isLoading$),
 				catchError((error: unknown) => throwError(() => {
@@ -57,13 +67,9 @@ export class HomeComponent {
 			)),
 		);
 
-		this.paginatorQueryParams$ = this.urlService.getQueryParams() as Observable<PaginatorQueryParams>;
-
-		this.initialPaginatorQueryParams$ = this.urlService.getQueryParams()
-			.pipe(
-				take(1),
-				shareReplay({ bufferSize: 1, refCount: true }),
-			) as Observable<PaginatorQueryParams>;
+		const paginatorQueryParamsMap = map((params: QueryParams) => ({ pageNumber: params.pageNumber, pageSize: params.pageSize }));
+		this.initialPaginatorQueryParams$ = this.queryParamsProvider$.pipe(take(1), paginatorQueryParamsMap);
+		this.paginatorQueryParams$ = this.queryParamsProvider$.pipe(paginatorQueryParamsMap);
 	}
 
 	/**

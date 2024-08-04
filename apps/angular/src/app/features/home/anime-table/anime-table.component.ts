@@ -33,7 +33,7 @@ export class AnimeTableComponent {
 	@Input({ required: true }) public error: string | null = null;
 
 	/** Page query params for calculating the order of anime in table. */
-	@Input({ required: true }) public paginatorQueryParams!: PaginatorQueryParams | null;
+	@Input() public paginatorQueryParams: PaginatorQueryParams | null = null;
 
 	/** Anime table column names. */
 	protected readonly animeColumns = tableGeneric.columnKeys;

@@ -78,7 +78,7 @@ export namespace QueryParamsMappers {
 		}
 
 		return {
-			offset: (pageNumber ?? defaultPageNumber - 1) * (pageSize ?? defaultPageSize),
+			offset: ((pageNumber ?? defaultPageNumber) - 1) * (pageSize ?? defaultPageSize),
 			limit: pageSize ?? defaultPageSize,
 			ordering,
 			type: type ? TYPE_MAPPING_TO_DTO[type] : null,
