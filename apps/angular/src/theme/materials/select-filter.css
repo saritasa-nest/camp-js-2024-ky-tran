@@ -1,0 +1,39 @@
+html {
+	--mdc-filled-text-field-focus-label-text-color: var(--text-main-color);
+	--mdc-filled-text-field-label-text-color: var(--text-main-color);
+	--mdc-filled-text-field-hover-label-text-color: var(--text-main-color);
+	--mdc-filled-text-field-label-text-size: var(--font-size-medium);
+	--mat-select-trigger-text-size: var(--font-size-medium);
+	--mat-select-enabled-arrow-color: var(--background-color-primary-bright);
+	--mdc-filled-text-field-hover-active-indicator-color: var(--background-color-primary-bright);
+	--mdc-filled-text-field-focus-active-indicator-color: var(--text-main-color);
+}
+
+.mat-mdc-text-field-wrapper.mdc-text-field.mdc-text-field--filled {
+	background-color: var(--background-color-primary-bright);
+	color: var(--text-color-main);
+	font-size: var(--font-size-medium);
+	border-radius: unset;
+}
+
+.mdc-text-field--filled .mdc-floating-label {
+	text-transform: uppercase;
+}
+
+.mat-mdc-select-panel.mdc-menu-surface.mdc-menu-surface--open::-webkit-scrollbar {
+	width: var(--width-table-scrollbar);
+}
+
+.mat-mdc-select-panel.mdc-menu-surface.mdc-menu-surface--open::-webkit-scrollbar-track {
+	background-color: var(--background-color-primary-subtle);
+}
+
+.mat-mdc-select-panel.mdc-menu-surface.mdc-menu-surface--open::-webkit-scrollbar-thumb {
+	background-color: var(--background-color-primary);
+	box-shadow: var(--box-shadow-scrollbar);
+}
+
+/* Hide bottom space. */
+.mat-mdc-form-field-subscript-wrapper {
+	height: 0;
+}

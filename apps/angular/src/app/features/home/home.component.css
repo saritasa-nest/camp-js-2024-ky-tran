@@ -5,6 +5,12 @@
 	height: 100%;
 }
 
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
 .header__title {
 	font-size: var(--font-size-extra-large);
 	line-height: 1;

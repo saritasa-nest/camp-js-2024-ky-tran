@@ -1,18 +1,20 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PageEvent } from '@angular/material/paginator';
+import { MatSelectChange } from '@angular/material/select';
 import { BehaviorSubject, catchError, map, Observable, Subject, switchMap, throwError } from 'rxjs';
 
+import { QUERY_PARAMS_PROVIDER, QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
+import { DEFAULT_PAGE_NUMBER } from '@js-camp/angular/shared/constants';
 import { AnimeTableComponent } from '@js-camp/angular/app/features/home/anime-table/anime-table.component';
 import { PaginatorComponent } from '@js-camp/angular/app/features/home/paginator/paginator.component';
+import { FilterComponent } from '@js-camp/angular/app/features/home/filter/filter.component';
 import { AnimeService } from '@js-camp/angular/core/services/anime.service';
 import { UrlService } from '@js-camp/angular/core/services/url.service';
 import { Anime } from '@js-camp/core/models/anime.model';
 import { Pagination } from '@js-camp/core/models/pagination.model';
 import { toggleExecutionState } from '@js-camp/angular/shared/utils/rxjs/toggleExecutionState';
-import { QUERY_PARAMS_PROVIDER, QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
 import { Sort } from '@angular/material/sort';
-import { DEFAULT_PAGE_NUMBER } from '@js-camp/angular/shared/constants';
 
 // import { PaginatorQueryParams, QueryParams } from '@js-camp/core/models/query-params.model';
 
@@ -22,7 +24,7 @@ import { DEFAULT_PAGE_NUMBER } from '@js-camp/angular/shared/constants';
 	standalone: true,
 	templateUrl: './home.component.html',
 	styleUrl: './home.component.css',
-	imports: [CommonModule, AnimeTableComponent, PaginatorComponent],
+	imports: [CommonModule, AnimeTableComponent, PaginatorComponent, FilterComponent],
 	providers: [...QUERY_PARAMS_PROVIDER],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -72,5 +74,13 @@ export class HomeComponent {
 	protected onSortChange(sortEvent: Sort): void {
 		const sortChangeData = this.urlService.prepareSortChangeData(sortEvent);
 		this.urlService.updateQueryParams(sortChangeData, { pageNumber: DEFAULT_PAGE_NUMBER });
+	}
+
+	/**
+	 * Selection change event handler.
+	 * @param selectEvent - Select Change event.
+	 */
+	protected onSelectionChange(selectEvent: MatSelectChange): void {
+		console.log(selectEvent);
 	}
 }
