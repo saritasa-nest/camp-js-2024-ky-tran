@@ -70,17 +70,13 @@ export namespace QueryParamsMappers {
 	 */
 	export function toDto(model: QueryParams, defaultPageNumber: number, defaultPageSize: number): QueryParamsDto {
 		const { pageNumber, pageSize, sortField, sortDirection, type, search } = model;
-
-		let ordering: string | null = null;
-
-		if (sortField && sortDirection) {
-			ordering = `${sortDirection === SortDirection.Ascending ? '' : '-'}${SORT_FIELDS_MAPPING_TO_DTO[sortField]}`;
-		}
+		const hasSorting = sortField && sortDirection;
+		const sortingSideCharacter = sortDirection === SortDirection.Ascending ? '' : '-';
 
 		return {
 			offset: ((pageNumber ?? defaultPageNumber) - 1) * (pageSize ?? defaultPageSize),
 			limit: pageSize ?? defaultPageSize,
-			ordering,
+			ordering: hasSorting ? `${sortingSideCharacter}${SORT_FIELDS_MAPPING_TO_DTO[sortField]}` : null,
 			type: type ? TYPE_MAPPING_TO_DTO[type] : null,
 			search,
 		};
