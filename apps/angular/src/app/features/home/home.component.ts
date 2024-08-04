@@ -12,6 +12,7 @@ import { Pagination } from '@js-camp/core/models/pagination.model';
 import { toggleExecutionState } from '@js-camp/angular/shared/utils/rxjs/toggleExecutionState';
 import { QUERY_PARAMS_PROVIDER, QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
 import { Sort } from '@angular/material/sort';
+import { DEFAULT_PAGE_NUMBER } from '@js-camp/angular/shared/constants';
 
 // import { PaginatorQueryParams, QueryParams } from '@js-camp/core/models/query-params.model';
 
@@ -69,6 +70,7 @@ export class HomeComponent {
 	 * @param sortEvent - Sort event.
 	 */
 	protected onSortChange(sortEvent: Sort): void {
-		console.log(sortEvent);
+		const sortChangeData = this.urlService.prepareSortChangeData(sortEvent);
+		this.urlService.updateQueryParams(sortChangeData, { pageNumber: DEFAULT_PAGE_NUMBER });
 	}
 }

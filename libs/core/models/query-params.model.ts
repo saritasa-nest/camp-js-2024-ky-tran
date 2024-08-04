@@ -1,4 +1,4 @@
-import { SortDirection } from '../enums/sort-direction.enum';
+import { SortDirection } from './sort-direction.model';
 
 import { AnimeType } from './anime.model';
 import { SortFields } from './sort-fields.model';
@@ -24,6 +24,9 @@ export type QueryParams = Readonly<{
 	/** Search query. */
 	search: string | null;
 }>;
+
+/** Query Params Sort. */
+export type QueryParamsSort = Pick<QueryParams, 'sortField' | 'sortDirection'>;
 
 /** Paginator query params. */
 export type PaginatorQueryParams = Pick<QueryParams, 'pageNumber' | 'pageSize'>;

@@ -1,6 +1,6 @@
 /** Anime sort fields. */
 export enum SortFields {
 	EnglishTitle = 'englishTitle',
-	AiredStartDate = 'airedStartDate',
+	AiredStartDate = 'startDate',
 	Status = 'status',
 }

@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
 import { QueryParamsDto, QueryParamsUrlDto } from '@js-camp/core/dtos/query-params.dto';
+import { SortEventDto } from '@js-camp/core/dtos/sort-event.dto';
 import { QueryParamsMappers } from '@js-camp/core/mappers/query-params.mapper';
-import { QueryParams } from '@js-camp/core/models/query-params.model';
+import { QueryParams, QueryParamsSort } from '@js-camp/core/models/query-params.model';
 
 /** Query Params mapper. */
 @Injectable({ providedIn: 'root' })
@@ -32,5 +33,21 @@ export class QueryParamsMapper {
 	 */
 	public toDto(model: QueryParams): QueryParamsDto {
 		return QueryParamsMappers.toDto(model, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE);
+	}
+
+	/**
+	 * Sort from event DTO to Domain model.
+	 * @param dto - Sort from event dto.
+	 */
+	public sortEventFromDto(dto: SortEventDto): QueryParamsSort {
+		return QueryParamsMappers.sortEventFromDto(dto);
+	}
+
+	/**
+	 * Sort from event Domain model to DTO.
+	 * @param model - Sort from event domain model.
+	 */
+	public sortEventToDto(model: QueryParamsSort): SortEventDto {
+		return QueryParamsMappers.sortEventToDto(model);
 	}
 }

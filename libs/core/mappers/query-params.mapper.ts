@@ -1,8 +1,10 @@
 import { QueryParamsDto, QueryParamsUrlDto } from '../dtos/query-params.dto';
-import { SortDirection } from '../enums/sort-direction.enum';
-import { QueryParams } from '../models/query-params.model';
+import { SortDirection } from '../models/sort-direction.model';
+import { QueryParams, QueryParamsSort } from '../models/query-params.model';
 import { SORT_FIELDS_MAPPING_TO_DTO } from '../records/sort-fields-mapping.record';
 import { TYPE_MAPPING_FROM_DTO, TYPE_MAPPING_TO_DTO } from '../records/type-mapping.record';
+import { SortEventDirectionDto, SortEventDto } from '../dtos/sort-event.dto';
+import { SortFields } from '../models/sort-fields.model';
 
 /** Query Params mapper namespace. */
 export namespace QueryParamsMappers {
@@ -80,5 +82,53 @@ export namespace QueryParamsMappers {
 			type: type ? TYPE_MAPPING_TO_DTO[type] : null,
 			search,
 		};
+	}
+
+	/**
+	 * Sort from event DTO to Domain model.
+	 * @param dto - Sort from event dto.
+	 */
+	export function sortEventFromDto(dto: SortEventDto): QueryParamsSort {
+		const { active, direction } = dto;
+
+		let sortDirection: SortDirection | null = null;
+
+		if (direction === 'asc') {
+			sortDirection = SortDirection.Ascending;
+		}
+		if (direction === 'desc') {
+			sortDirection = SortDirection.Descending;
+		}
+		if (direction === '') {
+			sortDirection = null;
+		}
+
+		if (sortDirection === null) {
+			return { sortField: null, sortDirection: null };
+		}
+
+		return { sortField: active, sortDirection };
+	}
+
+	/**
+	 * Sort from event Domain model to DTO.
+	 * @param model - Sort from event domain model.
+	 */
+	export function sortEventToDto(model: QueryParamsSort): SortEventDto {
+		const { sortField, sortDirection } = model;
+
+		let direction: SortEventDirectionDto = '';
+
+		if (sortDirection === SortDirection.Ascending) {
+			direction = 'asc';
+		}
+		if (sortDirection === SortDirection.Descending) {
+			direction = 'desc';
+		}
+		if (sortDirection === null) {
+			direction = '';
+		}
+
+		return { active: sortField as SortFields, direction };
 	}
 }

@@ -1,0 +1,20 @@
+button.main-button {
+	background-color: transparent;
+	padding: var(--gap-medium) var(--gap-huge);
+	border: none;
+	border-radius: var(--border-radius-small);
+	cursor: pointer;
+}
+
+button.main-button_action {
+	color: var(--text-light-color);
+	background-color: var(--button-main-color);
+}
+
+button.main-button_action:hover {
+	filter: brightness(1.1);
+}
+
+button.main-button_action:active {
+	filter: unset;
+}

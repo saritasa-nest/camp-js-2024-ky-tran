@@ -12,6 +12,9 @@ import { TableGeneric } from '@js-camp/angular/core/types/table-generic.type';
 import { AnimeTableColumns } from '@js-camp/core/enums/anime-table-columns.enum';
 import { DATE_FORMAT, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
 import { QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
+import { QueryParamsMapper } from '@js-camp/angular/core/mappers/query-params.mapper';
+import { SortEventDirectionDto } from '@js-camp/core/dtos/sort-event.dto';
+import { SortFields } from '@js-camp/core/models/sort-fields.model';
 
 const tableGeneric: TableGeneric = { columnKeys: AnimeTableColumns };
 
@@ -49,6 +52,8 @@ export class AnimeTableComponent implements AfterViewInit, OnChanges {
 
 	private readonly queryParamsProvider$ = inject(QUERY_PARAMS_TOKEN);
 
+	private readonly queryParamsMapper = inject(QueryParamsMapper);
+
 	/** Convert the list to MatTableDataSource to use MatSort. */
 	protected readonly dataSource = new MatTableDataSource<Anime>();
 
@@ -57,6 +62,12 @@ export class AnimeTableComponent implements AfterViewInit, OnChanges {
 
 	/** Number of items to display on a page. */
 	protected readonly pageSize$ = new BehaviorSubject<number>(DEFAULT_PAGE_SIZE);
+
+	/** Sort field. */
+	protected readonly sortField$ = new BehaviorSubject<typeof SortFields[keyof typeof SortFields] | ''>('');
+
+	/** Sort direction. */
+	protected readonly sortDirection$ = new BehaviorSubject<SortEventDirectionDto>('');
 
 	/** Anime table column names. */
 	protected readonly animeColumns = tableGeneric.columnKeys;
@@ -69,14 +80,19 @@ export class AnimeTableComponent implements AfterViewInit, OnChanges {
 
 	public constructor() {
 		this.queryParamsProvider$.pipe().subscribe(params => {
-			const { pageNumber, pageSize } = params;
+			const { pageNumber, pageSize, sortField, sortDirection } = params;
 
 			if (pageNumber) {
 				this.pageIndex$.next(pageNumber - 1);
 			}
-
 			if (pageSize) {
 				this.pageSize$.next(pageSize);
+			}
+
+			if (sortField && sortDirection) {
+				const { active, direction } = this.queryParamsMapper.sortEventToDto({ sortField, sortDirection });
+				this.sortField$.next(active);
+				this.sortDirection$.next(direction);
 			}
 		});
 	}

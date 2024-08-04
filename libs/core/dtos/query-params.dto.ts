@@ -1,4 +1,4 @@
-import { SortDirection } from '../enums/sort-direction.enum';
+import { SortDirection } from '../models/sort-direction.model';
 import { SortFields } from '../models/sort-fields.model';
 
 import { AnimeTypeDto } from './anime.dto';
