@@ -69,7 +69,6 @@ export class UrlService {
 	 * @param params - The provided query params.
 	 */
 	public updateQueryParams(params: Partial<QueryParams>): void {
-		const { createDefault, toUrlDto } = this.queryParamsMapper;
-		this.queryParamsService.append(toUrlDto(createDefault(params)));
+		this.queryParamsService.append(this.queryParamsMapper.toUrlDto(params));
 	}
 }

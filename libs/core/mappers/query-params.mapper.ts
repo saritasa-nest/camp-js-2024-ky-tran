@@ -11,15 +11,15 @@ export namespace QueryParamsMappers {
 	 * Create query params with the provided query params and all left query params with the default value null.
 	 * @param params - The provided query params.
 	 */
-	export function createDefault(params: Partial<QueryParams>): QueryParams {
-		const defaultQueryParams: QueryParams = {
+	export function createQueryPramsUrl<T>(params: Partial<T>): T {
+		const defaultQueryParams = {
 			pageNumber: null,
 			pageSize: null,
 			sortField: null,
 			sortDirection: null,
 			type: null,
 			search: null,
-		};
+		} as T;
 
 		return { ...defaultQueryParams, ...params };
 	}

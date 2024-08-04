@@ -9,27 +9,21 @@ import { QueryParams } from '@js-camp/core/models/query-params.model';
 @Injectable({ providedIn: 'root' })
 export class QueryParamsMapper {
 	/**
-	 * Create query params with the provided query params and all left query params with the default value null.
-	 * @param params - The provided query params.
-	 */
-	public createDefault(params: Partial<QueryParams>): QueryParams {
-		return QueryParamsMappers.createDefault(params);
-	}
-
-	/**
 	 * Mapping from Domain model to DTO (to Url).
 	 * @param model - The Query Params Domain model object to be converted.
 	 */
-	public toUrlDto(model: QueryParams): QueryParamsUrlDto {
-		return QueryParamsMappers.toUrlDto(model, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE);
+	public toUrlDto(model: QueryParams | Partial<QueryParams>): QueryParamsUrlDto {
+		const params = QueryParamsMappers.createQueryPramsUrl<QueryParams>(model);
+		return QueryParamsMappers.toUrlDto(params, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE);
 	}
 
 	/**
 	 * Mapping from DTO to Domain model (from Url).
 	 * @param dto - The DTO to be converted.
 	 */
-	public fromUrlDto(dto: QueryParamsUrlDto): QueryParams {
-		return QueryParamsMappers.fromUrlDto(dto, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE);
+	public fromUrlDto(dto: QueryParamsUrlDto | Partial<QueryParamsUrlDto>): QueryParams {
+		const params = QueryParamsMappers.createQueryPramsUrl<QueryParamsUrlDto>(dto);
+		return QueryParamsMappers.fromUrlDto(params, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE);
 	}
 
 	/**
