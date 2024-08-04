@@ -1,4 +1,4 @@
-<table mat-table matSort [dataSource]="animeList" class="table" [trackBy]="trackAnimeById">
+<table mat-table matSort (matSortChange)="onSortChange($event)" [dataSource]="dataSource" class="table" [trackBy]="trackAnimeById">
 	<ng-container [matColumnDef]="animeColumns.Index">
 		<th class="table-cell table__column_order" mat-header-cell *matHeaderCellDef>#</th>
 		<td class="table-cell table__column_order" mat-cell *matCellDef="let anime; let i = index">

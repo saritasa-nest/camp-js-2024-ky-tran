@@ -7,6 +7,7 @@
 		[animeList]="(isLoading$ | async) ? [] : (animeList$ | async)?.results || []"
 		[isLoading]="isLoading$ | async"
 		[error]="error$ | async"
+		(sortChange)="onSortChange($event)"
 		/>
 	</section>
 

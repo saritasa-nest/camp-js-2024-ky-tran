@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { MatTableModule } from '@angular/material/table';
-import { MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { BehaviorSubject } from 'rxjs';
 
 import { Anime } from '@js-camp/core/models/anime.model';
@@ -32,9 +32,11 @@ const tableGeneric: TableGeneric = { columnKeys: AnimeTableColumns };
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AnimeTableComponent {
+export class AnimeTableComponent implements AfterViewInit, OnChanges {
+	@ViewChild(MatSort) private readonly sort!: MatSort;
+
 	/** Anime list. */
-	@Input({ required: true }) public animeList!: readonly Anime[];
+	@Input({ required: true }) public animeList: readonly Anime[] = [];
 
 	/** Loading status of fetching anime list. */
 	@Input({ required: true }) public isLoading: boolean | null = null;
@@ -42,7 +44,19 @@ export class AnimeTableComponent {
 	/** Error message if something went wrong fetching anime list. */
 	@Input({ required: true }) public error: string | null = null;
 
+	/** Sort change event emitter. */
+	@Output() public readonly sortChange = new EventEmitter<Sort>();
+
 	private readonly queryParamsProvider$ = inject(QUERY_PARAMS_TOKEN);
+
+	/** Convert the list to MatTableDataSource to use MatSort. */
+	protected readonly dataSource = new MatTableDataSource<Anime>();
+
+	/** The zero-based page index of the displayed list of items. */
+	protected readonly pageIndex$ = new BehaviorSubject<number>(DEFAULT_PAGE_NUMBER - 1);
+
+	/** Number of items to display on a page. */
+	protected readonly pageSize$ = new BehaviorSubject<number>(DEFAULT_PAGE_SIZE);
 
 	/** Anime table column names. */
 	protected readonly animeColumns = tableGeneric.columnKeys;
@@ -52,12 +66,6 @@ export class AnimeTableComponent {
 
 	/** Date format. */
 	protected readonly dateFormat = DATE_FORMAT;
-
-	/** The zero-based page index of the displayed list of items. */
-	protected readonly pageIndex$ = new BehaviorSubject<number>(DEFAULT_PAGE_NUMBER - 1);
-
-	/** Number of items to display on a page. */
-	protected readonly pageSize$ = new BehaviorSubject<number>(DEFAULT_PAGE_SIZE);
 
 	public constructor() {
 		this.queryParamsProvider$.pipe().subscribe(params => {
@@ -71,6 +79,28 @@ export class AnimeTableComponent {
 				this.pageSize$.next(pageSize);
 			}
 		});
+	}
+
+	/** After View Init. */
+	public ngAfterViewInit(): void {
+		this.dataSource.sort = this.sort;
+	}
+
+	/** On Changes.
+	 * @param changes - SimpleChanges.
+	 */
+	public ngOnChanges(changes: SimpleChanges): void {
+		if (changes['animeList']) {
+			this.dataSource.data = [...this.animeList];
+		}
+	}
+
+	/**
+	 * Sort change event handler.
+	 * @param sortEvent - Sort event.
+	 */
+	protected onSortChange(sortEvent: Sort): void {
+		this.sortChange.emit(sortEvent);
 	}
 
 	/**

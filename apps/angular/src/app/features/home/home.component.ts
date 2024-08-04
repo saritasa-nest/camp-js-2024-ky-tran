@@ -11,6 +11,7 @@ import { Anime } from '@js-camp/core/models/anime.model';
 import { Pagination } from '@js-camp/core/models/pagination.model';
 import { toggleExecutionState } from '@js-camp/angular/shared/utils/rxjs/toggleExecutionState';
 import { QUERY_PARAMS_PROVIDER, QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
+import { Sort } from '@angular/material/sort';
 
 // import { PaginatorQueryParams, QueryParams } from '@js-camp/core/models/query-params.model';
 
@@ -56,10 +57,18 @@ export class HomeComponent {
 
 	/**
 	 * Page change event handler.
-	 * @param pageEvent Page event.
+	 * @param pageEvent - Page event.
 	 */
 	protected onPageChange(pageEvent: PageEvent): void {
 		const { pageIndex, pageSize } = pageEvent;
 		this.urlService.updateQueryParams({ pageNumber: pageIndex + 1, pageSize });
+	}
+
+	/**
+	 * Sort change event handler.
+	 * @param sortEvent - Sort event.
+	 */
+	protected onSortChange(sortEvent: Sort): void {
+		console.log(sortEvent);
 	}
 }
