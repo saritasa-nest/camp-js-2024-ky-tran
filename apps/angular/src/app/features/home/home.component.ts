@@ -87,7 +87,7 @@ export class HomeComponent {
 	 * @param sortEvent - Sort event.
 	 */
 	protected onSortChange(sortEvent: Sort): void {
-		const sortChangeData = this.urlService.prepareSortChangeData(sortEvent);
+		const sortChangeData = this.urlService.prepareSortChangeFromTable(sortEvent);
 		this.urlService.updateQueryParams(sortChangeData, { pageNumber: DEFAULT_PAGE_NUMBER });
 	}
 

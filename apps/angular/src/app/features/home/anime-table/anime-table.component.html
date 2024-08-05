@@ -5,8 +5,8 @@
 	(matSortChange)="onSortChange($event)"
 	[dataSource]="dataSource"
 	[trackBy]="trackAnimeById"
-	[matSortActive]="(sortField$ | async)!"
-	[matSortDirection]="(sortDirection$ | async)!"
+	[matSortActive]="(pageSorter$ | async)!.active"
+	[matSortDirection]="(pageSorter$ | async)!.direction"
 >
 	<ng-container [matColumnDef]="animeColumns.Index">
 		<th class="table-cell table__column_order" mat-header-cell *matHeaderCellDef>#</th>

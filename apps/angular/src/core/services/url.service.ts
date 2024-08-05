@@ -7,6 +7,7 @@ import { QueryParams, QueryParamsSort } from '@js-camp/core/models/query-params.
 import { QueryParamsMapper } from '@js-camp/angular/core/mappers/query-params.mapper';
 import { QueryParamsService } from '@js-camp/angular/core/services/query-params.service';
 import { SortFields } from '@js-camp/core/models/sort-fields.model';
+import { SortEventDto } from '@js-camp/core/dtos/sort-event.dto';
 
 /** Url Service. */
 @Injectable({ providedIn: 'root' })
@@ -36,15 +37,22 @@ export class UrlService {
 	}
 
 	/**
-	 * Prepare sort change data from Dto.
+	 * Prepare sort change data from table.
 	 * @param sortEvent - Sort event.
-	 * @param reverse - If true, sort event to dto.
 	 */
-	public prepareSortChangeData(sortEvent: Sort): QueryParamsSort {
+	public prepareSortChangeFromTable(sortEvent: Sort): QueryParamsSort {
 		return this.queryParamsMapper.sortEventFromDto({
 			active: sortEvent.active as SortFields,
 			direction: sortEvent.direction,
 		});
+	}
+
+	/**
+	 * Prepare sort change data to table.
+	 * @param sortData - Sort data.
+	 */
+	public prepareSortChangeToTable(sortData: QueryParamsSort): SortEventDto {
+		return this.queryParamsMapper.sortEventToDto(sortData);
 	}
 
 	/**

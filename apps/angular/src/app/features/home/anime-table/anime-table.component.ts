@@ -25,13 +25,13 @@ import { ErrorMessageComponent } from '@js-camp/angular/shared/components/error-
 import { TableGeneric } from '@js-camp/angular/core/types/table-generic.type';
 import { AnimeTableColumns } from '@js-camp/core/enums/anime-table-columns.enum';
 import { QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
-import { QueryParamsMapper } from '@js-camp/angular/core/mappers/query-params.mapper';
-import { SortEventDirectionDto } from '@js-camp/core/dtos/sort-event.dto';
+import { SortEventDto } from '@js-camp/core/dtos/sort-event.dto';
 import { SortFields } from '@js-camp/core/models/sort-fields.model';
 import { paginatorAttribute } from '@js-camp/angular/shared/attributes/paginator-attribute';
 import { QueryParamsPaginator } from '@js-camp/core/models/query-params.model';
 import { emptyStringAttribute } from '@js-camp/angular/shared/attributes/empty-string-attribute';
 import { animeListAttribute } from '@js-camp/angular/shared/attributes/anime-list-attribute';
+import { UrlService } from '@js-camp/angular/core/services/url.service';
 
 const tableGeneric: TableGeneric = { columnKeys: AnimeTableColumns };
 
@@ -76,16 +76,17 @@ export class AnimeTableComponent implements AfterViewInit, OnChanges {
 
 	private readonly queryParamsProvider$ = inject(QUERY_PARAMS_TOKEN);
 
-	private readonly queryParamsMapper = inject(QueryParamsMapper);
+	private readonly urlService = inject(UrlService);
 
 	/** Convert the list to MatTableDataSource to use MatSort. */
 	protected readonly dataSource = new MatTableDataSource<Anime>();
 
-	/** Sort field. */
-	protected readonly sortField$ = new BehaviorSubject<typeof SortFields[keyof typeof SortFields] | ''>('');
-
-	/** Sort direction. */
-	protected readonly sortDirection$ = new BehaviorSubject<SortEventDirectionDto>('');
+	/**
+	 * Page paginator to store page index and page number.
+	 * Page index: The zero-based page index of the displayed list of items.
+	 * Page number: Number of items to display on a page.
+	 */
+	protected readonly pageSorter$ = new BehaviorSubject<SortEventDto>({ active: '' as SortFields, direction: '' });
 
 	/** Anime table column names. */
 	protected readonly animeColumns = tableGeneric.columnKeys;
@@ -97,14 +98,10 @@ export class AnimeTableComponent implements AfterViewInit, OnChanges {
 	protected readonly dateFormat = DATE_FORMAT;
 
 	public constructor() {
-		this.queryParamsProvider$.subscribe(params => {
-			const { sortField, sortDirection } = params;
-
+		this.queryParamsProvider$.subscribe(({ sortField, sortDirection }) => {
 			if (sortField && sortDirection) {
-				const { active, direction } = this.queryParamsMapper.sortEventToDto({ sortField, sortDirection });
-
-				this.sortField$.next(active);
-				this.sortDirection$.next(direction);
+				const { active, direction } = this.urlService.prepareSortChangeToTable({ sortField, sortDirection });
+				this.pageSorter$.next({ active, direction });
 			}
 		});
 	}
