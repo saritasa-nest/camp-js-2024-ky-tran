@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 
@@ -14,6 +14,9 @@ import { AnimeType } from '@js-camp/core/models/anime.model';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilterComponent {
+	/** Whether the paginator is disabled. */
+	@Input({ transform: booleanAttribute }) protected readonly disabled = false;
+
 	/** Selection change event emitter. */
 	@Output() public readonly selectionChange = new EventEmitter<MatSelectChange>();
 

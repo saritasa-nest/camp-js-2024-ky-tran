@@ -1,6 +1,6 @@
 <mat-form-field>
   <mat-label>Select Anime Type</mat-label>
-  <mat-select [(value)]="selectedType" (selectionChange)="onSelectionChange($event)">
+  <mat-select [disabled]="disabled" [(value)]="selectedType" (selectionChange)="onSelectionChange($event)">
     <mat-option>All</mat-option>
 		@for (animeType of animeTypes; track $index) {
 			<mat-option [value]="animeType">{{ animeType }}</mat-option>
