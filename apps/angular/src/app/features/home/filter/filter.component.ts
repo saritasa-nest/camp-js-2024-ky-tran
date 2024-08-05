@@ -14,7 +14,7 @@ import { AnimeType } from '@js-camp/core/models/anime.model';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilterComponent {
-	/** Whether the paginator is disabled. */
+	/** Whether the filter select is disabled. */
 	@Input({ transform: booleanAttribute }) protected readonly disabled = false;
 
 	/** Selection change event emitter. */

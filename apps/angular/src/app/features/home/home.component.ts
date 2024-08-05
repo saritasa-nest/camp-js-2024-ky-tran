@@ -1,22 +1,21 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PageEvent } from '@angular/material/paginator';
+import { Sort } from '@angular/material/sort';
 import { MatSelectChange } from '@angular/material/select';
 import { BehaviorSubject, catchError, map, Observable, Subject, switchMap, throwError } from 'rxjs';
 
 import { QUERY_PARAMS_PROVIDER, QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
 import { DEFAULT_PAGE_NUMBER } from '@js-camp/angular/shared/constants';
 import { AnimeTableComponent } from '@js-camp/angular/app/features/home/anime-table/anime-table.component';
-import { PaginatorComponent } from '@js-camp/angular/app/features/home/paginator/paginator.component';
 import { FilterComponent } from '@js-camp/angular/app/features/home/filter/filter.component';
+import { SearchComponent } from '@js-camp/angular/app/features/home/search/search.component';
+import { PaginatorComponent } from '@js-camp/angular/app/features/home/paginator/paginator.component';
 import { AnimeService } from '@js-camp/angular/core/services/anime.service';
 import { UrlService } from '@js-camp/angular/core/services/url.service';
 import { Anime } from '@js-camp/core/models/anime.model';
 import { Pagination } from '@js-camp/core/models/pagination.model';
 import { toggleExecutionState } from '@js-camp/angular/shared/utils/rxjs/toggleExecutionState';
-import { Sort } from '@angular/material/sort';
-
-// import { PaginatorQueryParams, QueryParams } from '@js-camp/core/models/query-params.model';
 
 /** Home page. */
 @Component({
@@ -24,7 +23,7 @@ import { Sort } from '@angular/material/sort';
 	standalone: true,
 	templateUrl: './home.component.html',
 	styleUrl: './home.component.css',
-	imports: [CommonModule, AnimeTableComponent, PaginatorComponent, FilterComponent],
+	imports: [CommonModule, AnimeTableComponent, FilterComponent, SearchComponent, PaginatorComponent],
 	providers: [...QUERY_PARAMS_PROVIDER],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -85,5 +84,13 @@ export class HomeComponent {
 			{ type: selectEvent.value ? selectEvent.value : null },
 			{ pageNumber: DEFAULT_PAGE_NUMBER },
 		);
+	}
+
+	/**
+	 * Search change fired when enter is hit to emit search value event.
+	 * @param searchTerm - Search term.
+	 */
+	protected onSearchChange(searchTerm: string): void {
+		this.urlService.updateQueryParams({ search: searchTerm || null }, { pageNumber: DEFAULT_PAGE_NUMBER });
 	}
 }

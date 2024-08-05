@@ -12,8 +12,15 @@
 }
 
 .header__title {
-	font-size: var(--font-size-extra-large);
+	font-size: var(--font-size-large);
 	line-height: 1;
+}
+
+.header__actions {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--gap-small);
 }
 
 .content {

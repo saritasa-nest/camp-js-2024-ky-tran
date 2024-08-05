@@ -1,6 +1,10 @@
 <header class="header">
-	<h2 class="header__title">All anime</h2>
-	<camp-filter [disabled]="isLoading$ | async" (selectionChange)="onSelectionChange($event)" />
+	<h2 class="header__title">Onii&dash;Chan Baka Hentai</h2>
+
+	<div class="header__actions">
+		<camp-filter [disabled]="isLoading$ | async" (selectionChange)="onSelectionChange($event)" />
+		<camp-search [disabled]="isLoading$ | async" (searchChange)="onSearchChange($event)" />
+	</div>
 </header>
 
 <section class="content">

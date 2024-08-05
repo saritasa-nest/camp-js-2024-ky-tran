@@ -1,0 +1,8 @@
+html {
+	--mdc-filled-text-field-input-text-color: var(--text-color-main);
+	--mdc-filled-text-field-caret-color: var(--text-color-main);
+}
+
+.mat-mdc-text-field-wrapper.mdc-text-field.mdc-text-field--filled {
+	padding-right: var(--gap-extra-large);
+}

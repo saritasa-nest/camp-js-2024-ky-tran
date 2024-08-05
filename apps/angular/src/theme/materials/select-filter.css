@@ -2,7 +2,7 @@ html {
 	--mdc-filled-text-field-focus-label-text-color: var(--text-main-color);
 	--mdc-filled-text-field-label-text-color: var(--text-main-color);
 	--mdc-filled-text-field-hover-label-text-color: var(--text-main-color);
-	--mdc-filled-text-field-label-text-size: var(--font-size-medium);
+	--mdc-filled-text-field-label-text-size: var(--font-size-small);
 	--mat-select-trigger-text-size: var(--font-size-medium);
 	--mat-select-enabled-arrow-color: var(--background-color-primary-bright);
 	--mdc-filled-text-field-hover-active-indicator-color: var(--background-color-primary-bright);

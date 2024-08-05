@@ -1,0 +1,11 @@
+.enter-icon {
+	display: none;
+	position: absolute;
+	top: 50%;
+	right: calc(var(--gap-extra-medium) * -1);
+	transform: translateY(-50%);
+}
+
+.search-form-field:focus-within .enter-icon {
+	display: block;
+}

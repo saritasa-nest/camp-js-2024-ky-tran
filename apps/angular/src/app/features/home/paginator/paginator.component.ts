@@ -42,7 +42,7 @@ export class PaginatorComponent implements AfterViewInit {
 	protected readonly pageSize$ = new BehaviorSubject<number>(DEFAULT_PAGE_SIZE);
 
 	public constructor() {
-		this.queryParamsProvider$.pipe().subscribe(params => {
+		this.queryParamsProvider$.subscribe(params => {
 			const { pageNumber, pageSize } = params;
 
 			if (pageNumber) {
