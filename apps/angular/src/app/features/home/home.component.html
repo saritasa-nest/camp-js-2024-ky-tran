@@ -9,13 +9,13 @@
 
 <section class="content">
 	<camp-anime-table
-		[animeList]="(isLoading$ | async) ? [] : (animeList$ | async)?.results || []"
 		[isLoading]="isLoading$ | async"
+		[animeList]="(isLoading$ | async) ? [] : (animeList$ | async)?.results || []"
 		[error]="error$ | async"
 		[pagePaginator]="(pagePaginator$ | async)!"
 		(sortChange)="onSortChange($event)"
-		/>
-	</section>
+	/>
+</section>
 
 <footer>
 	<camp-paginator

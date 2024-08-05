@@ -30,9 +30,9 @@ export class FilterComponent {
 	protected readonly animeTypes = Object.values(AnimeType);
 
 	public constructor() {
-		this.queryParamsProvider$.subscribe(params => {
-			if (params.type) {
-				this.selectedType = params.type;
+		this.queryParamsProvider$.subscribe(({ type }) => {
+			if (type) {
+				this.selectedType = type;
 			}
 		});
 	}

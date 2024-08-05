@@ -106,11 +106,6 @@ export class AnimeTableComponent implements AfterViewInit, OnChanges {
 		});
 	}
 
-	/** After View Init. */
-	public ngAfterViewInit(): void {
-		this.dataSource.sort = this.sort;
-	}
-
 	/** On Changes.
 	 * @param changes - SimpleChanges.
 	 */
@@ -118,6 +113,11 @@ export class AnimeTableComponent implements AfterViewInit, OnChanges {
 		if (changes['animeList']) {
 			this.dataSource.data = [...this.animeList];
 		}
+	}
+
+	/** After View Init. */
+	public ngAfterViewInit(): void {
+		this.dataSource.sort = this.sort;
 	}
 
 	/**
