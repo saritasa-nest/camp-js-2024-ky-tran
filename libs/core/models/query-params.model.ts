@@ -25,6 +25,9 @@ export type QueryParams = Readonly<{
 	search: string | null;
 }>;
 
+/** Query Params Paginator. */
+export type QueryParamsPaginator = Pick<QueryParams, 'pageNumber' | 'pageSize'>;
+
 /** Query Params Sort. */
 export type QueryParamsSort = Pick<QueryParams, 'sortField' | 'sortDirection'>;
 

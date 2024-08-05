@@ -12,6 +12,7 @@
 		[animeList]="(isLoading$ | async) ? [] : (animeList$ | async)?.results || []"
 		[isLoading]="isLoading$ | async"
 		[error]="error$ | async"
+		[pagePaginator]="(pagePaginator$ | async)!"
 		(sortChange)="onSortChange($event)"
 		/>
 	</section>
@@ -19,6 +20,7 @@
 <footer>
 	<camp-paginator
 		[length]="(animeList$ | async)?.count"
+		[pagePaginator]="(pagePaginator$ | async)!"
 		[disabled]="isLoading$ | async"
 		(pageChange)="onPageChange($event)"
 	/>

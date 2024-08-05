@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { MatSelectChange } from '@angular/material/select';
-import { BehaviorSubject, catchError, map, Observable, Subject, switchMap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, shareReplay, Subject, switchMap, tap, throwError } from 'rxjs';
 
 import { QUERY_PARAMS_PROVIDER, QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
-import { DEFAULT_PAGE_NUMBER } from '@js-camp/angular/shared/constants';
+import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
 import { AnimeTableComponent } from '@js-camp/angular/app/features/home/anime-table/anime-table.component';
 import { FilterComponent } from '@js-camp/angular/app/features/home/filter/filter.component';
 import { SearchComponent } from '@js-camp/angular/app/features/home/search/search.component';
@@ -16,6 +16,7 @@ import { UrlService } from '@js-camp/angular/core/services/url.service';
 import { Anime } from '@js-camp/core/models/anime.model';
 import { Pagination } from '@js-camp/core/models/pagination.model';
 import { toggleExecutionState } from '@js-camp/angular/shared/utils/rxjs/toggleExecutionState';
+import { QueryParamsPaginator } from '@js-camp/core/models/query-params.model';
 
 /** Home page. */
 @Component({
@@ -43,8 +44,22 @@ export class HomeComponent {
 	/** Error message if something went wrong fetching anime list. */
 	protected readonly error$ = new BehaviorSubject<string>('');
 
+	/**
+	 * Page paginator to store page index and page number.
+	 * Page index: The zero-based page index of the displayed list of items.
+	 * Page number: Number of items to display on a page.
+	 */
+	protected readonly pagePaginator$ = new BehaviorSubject<QueryParamsPaginator>({
+		pageNumber: DEFAULT_PAGE_NUMBER - 1,
+		pageSize: DEFAULT_PAGE_SIZE,
+	});
+
 	public constructor() {
 		this.animeList$ = this.queryParamsProvider$.pipe(
+			tap(params => {
+				const pagePaginator = { pageNumber: Number(params.pageNumber), pageSize: Number(params.pageSize) };
+				this.pagePaginator$.next(pagePaginator);
+			}),
 			map(params => this.urlService.createHttpQueryParams(params)),
 			switchMap(httpParams => this.animeService.getAll(httpParams).pipe(
 				toggleExecutionState(this.isLoading$),
@@ -54,6 +69,7 @@ export class HomeComponent {
 					return error;
 				})),
 			)),
+			shareReplay({ refCount: true, bufferSize: 1 }),
 		);
 	}
 

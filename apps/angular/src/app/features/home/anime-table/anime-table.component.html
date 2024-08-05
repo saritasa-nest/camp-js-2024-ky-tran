@@ -11,7 +11,7 @@
 	<ng-container [matColumnDef]="animeColumns.Index">
 		<th class="table-cell table__column_order" mat-header-cell *matHeaderCellDef>#</th>
 		<td class="table-cell table__column_order" mat-cell *matCellDef="let anime; let i = index">
-			{{ (pageIndex$ | async)! * (pageSize$ | async)! + i + 1 }}
+			{{ (pagePaginator.pageNumber! - 1) * pagePaginator.pageSize! + i + 1 }}
 		</td>
 	</ng-container>
 

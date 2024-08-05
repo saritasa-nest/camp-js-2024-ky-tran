@@ -1,8 +1,8 @@
 <mat-paginator
 	class="paginator"
 	[length]="length"
-	[pageIndex]="pageIndex$ | async"
-	[pageSize]="pageSize$ | async"
+	[pageIndex]="pagePaginator.pageNumber! - 1"
+	[pageSize]="pagePaginator.pageSize"
   [pageSizeOptions]="pageSizeOptions"
 	[showFirstLastButtons]="showFirstLastButtons"
 	[disabled]="disabled"

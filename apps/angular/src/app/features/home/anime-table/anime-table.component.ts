@@ -1,20 +1,37 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import {
+	AfterViewInit,
+	booleanAttribute,
+	ChangeDetectionStrategy,
+	Component,
+	EventEmitter,
+	inject,
+	Input,
+	OnChanges,
+	Output,
+	SimpleChanges,
+	ViewChild,
+} from '@angular/core';
+
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { BehaviorSubject } from 'rxjs';
 
+import { DATE_FORMAT } from '@js-camp/angular/shared/constants';
 import { Anime } from '@js-camp/core/models/anime.model';
 import { NullablePipe } from '@js-camp/angular/core/pipes/nullable.pipe';
 import { ProgressSpinnerComponent } from '@js-camp/angular/shared/components/progress-spinner/progress-spinner.component';
 import { ErrorMessageComponent } from '@js-camp/angular/shared/components/error-message/error-message.component';
 import { TableGeneric } from '@js-camp/angular/core/types/table-generic.type';
 import { AnimeTableColumns } from '@js-camp/core/enums/anime-table-columns.enum';
-import { DATE_FORMAT, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
 import { QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
 import { QueryParamsMapper } from '@js-camp/angular/core/mappers/query-params.mapper';
 import { SortEventDirectionDto } from '@js-camp/core/dtos/sort-event.dto';
 import { SortFields } from '@js-camp/core/models/sort-fields.model';
+import { paginatorAttribute } from '@js-camp/angular/shared/attributes/paginator-attribute';
+import { QueryParamsPaginator } from '@js-camp/core/models/query-params.model';
+import { emptyStringAttribute } from '@js-camp/angular/shared/attributes/empty-string-attribute';
+import { animeListAttribute } from '@js-camp/angular/shared/attributes/anime-list-attribute';
 
 const tableGeneric: TableGeneric = { columnKeys: AnimeTableColumns };
 
@@ -39,13 +56,20 @@ export class AnimeTableComponent implements AfterViewInit, OnChanges {
 	@ViewChild(MatSort) private readonly sort!: MatSort;
 
 	/** Anime list. */
-	@Input({ required: true }) public animeList: readonly Anime[] = [];
+	@Input({ required: true, transform: animeListAttribute }) public animeList!: readonly Anime[];
 
 	/** Loading status of fetching anime list. */
-	@Input({ required: true }) public isLoading: boolean | null = null;
+	@Input({ required: true, transform: booleanAttribute }) public isLoading!: boolean;
 
 	/** Error message if something went wrong fetching anime list. */
-	@Input({ required: true }) public error: string | null = null;
+	@Input({ required: true, transform: emptyStringAttribute }) public error!: string;
+
+	/**
+	 * Page paginator to store page index and page number.
+	 * Page index: The zero-based page index of the displayed list of items.
+	 * Page number: Number of items to display on a page.
+	 */
+	@Input({ required: true, transform: paginatorAttribute }) protected readonly pagePaginator!: QueryParamsPaginator;
 
 	/** Sort change event emitter. */
 	@Output() public readonly sortChange = new EventEmitter<Sort>();
@@ -56,12 +80,6 @@ export class AnimeTableComponent implements AfterViewInit, OnChanges {
 
 	/** Convert the list to MatTableDataSource to use MatSort. */
 	protected readonly dataSource = new MatTableDataSource<Anime>();
-
-	/** The zero-based page index of the displayed list of items. */
-	protected readonly pageIndex$ = new BehaviorSubject<number>(DEFAULT_PAGE_NUMBER - 1);
-
-	/** Number of items to display on a page. */
-	protected readonly pageSize$ = new BehaviorSubject<number>(DEFAULT_PAGE_SIZE);
 
 	/** Sort field. */
 	protected readonly sortField$ = new BehaviorSubject<typeof SortFields[keyof typeof SortFields] | ''>('');
@@ -79,18 +97,12 @@ export class AnimeTableComponent implements AfterViewInit, OnChanges {
 	protected readonly dateFormat = DATE_FORMAT;
 
 	public constructor() {
-		this.queryParamsProvider$.pipe().subscribe(params => {
-			const { pageNumber, pageSize, sortField, sortDirection } = params;
-
-			if (pageNumber) {
-				this.pageIndex$.next(pageNumber - 1);
-			}
-			if (pageSize) {
-				this.pageSize$.next(pageSize);
-			}
+		this.queryParamsProvider$.subscribe(params => {
+			const { sortField, sortDirection } = params;
 
 			if (sortField && sortDirection) {
 				const { active, direction } = this.queryParamsMapper.sortEventToDto({ sortField, sortDirection });
+
 				this.sortField$.next(active);
 				this.sortDirection$.next(direction);
 			}
