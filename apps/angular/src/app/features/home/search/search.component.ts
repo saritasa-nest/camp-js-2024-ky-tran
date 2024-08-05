@@ -1,4 +1,17 @@
-import { booleanAttribute, ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {
+	booleanAttribute,
+	ChangeDetectionStrategy,
+	Component,
+	DestroyRef,
+	EventEmitter,
+	inject,
+	Input,
+	OnChanges,
+	OnInit,
+	Output,
+	SimpleChanges,
+} from '@angular/core';
+
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -14,7 +27,7 @@ import { QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params
 	imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchComponent implements OnChanges {
+export class SearchComponent implements OnInit, OnChanges {
 	/** Whether the filter select is disabled. */
 	@Input({ transform: booleanAttribute }) protected readonly disabled = false;
 
@@ -23,13 +36,18 @@ export class SearchComponent implements OnChanges {
 
 	private readonly queryParamsProvider$ = inject(QUERY_PARAMS_TOKEN);
 
+	private readonly destroyRef = inject(DestroyRef);
+
 	/** Search control. */
 	protected searchControl = new FormControl<string>({ value: '', disabled: false });
 
-	public constructor() {
-		this.queryParamsProvider$.subscribe(({ search }) => {
+	/** On Init. */
+	public ngOnInit(): void {
+		const subscription = this.queryParamsProvider$.subscribe(({ search }) => {
 			this.searchControl = new FormControl<string>({ value: search ? search.trim() : '', disabled: false });
 		});
+
+		this.destroyRef.onDestroy(() => subscription.unsubscribe());
 	}
 
 	/**

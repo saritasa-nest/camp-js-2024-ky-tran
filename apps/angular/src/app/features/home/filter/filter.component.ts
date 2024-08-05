@@ -1,4 +1,15 @@
-import { booleanAttribute, ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import {
+	booleanAttribute,
+	ChangeDetectionStrategy,
+	Component,
+	DestroyRef,
+	EventEmitter,
+	inject,
+	Input,
+	OnInit,
+	Output,
+} from '@angular/core';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 
@@ -14,7 +25,7 @@ import { AnimeType } from '@js-camp/core/models/anime.model';
 	imports: [MatFormFieldModule, MatSelectModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FilterComponent {
+export class FilterComponent implements OnInit {
 	/** Whether the filter select is disabled. */
 	@Input({ transform: booleanAttribute }) protected readonly disabled = false;
 
@@ -23,18 +34,23 @@ export class FilterComponent {
 
 	private readonly queryParamsProvider$ = inject(QUERY_PARAMS_TOKEN);
 
+	private readonly destroyRef = inject(DestroyRef);
+
 	/** Selected anime type. */
 	protected selectedType: AnimeType | null = null;
 
 	/** Anime types. */
 	protected readonly animeTypes = Object.values(AnimeType);
 
-	public constructor() {
-		this.queryParamsProvider$.subscribe(({ type }) => {
+	/** On Init. */
+	public ngOnInit(): void {
+		const subscription = this.queryParamsProvider$.subscribe(({ type }) => {
 			if (type) {
 				this.selectedType = type;
 			}
 		});
+
+		this.destroyRef.onDestroy(() => subscription.unsubscribe());
 	}
 
 	/**

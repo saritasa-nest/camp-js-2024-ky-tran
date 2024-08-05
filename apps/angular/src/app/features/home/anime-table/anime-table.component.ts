@@ -3,10 +3,12 @@ import {
 	booleanAttribute,
 	ChangeDetectionStrategy,
 	Component,
+	DestroyRef,
 	EventEmitter,
 	inject,
 	Input,
 	OnChanges,
+	OnInit,
 	Output,
 	SimpleChanges,
 	ViewChild,
@@ -52,7 +54,7 @@ const tableGeneric: TableGeneric = { columnKeys: AnimeTableColumns };
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AnimeTableComponent implements AfterViewInit, OnChanges {
+export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
 	@ViewChild(MatSort) private readonly sort!: MatSort;
 
 	/** Anime list. */
@@ -76,6 +78,8 @@ export class AnimeTableComponent implements AfterViewInit, OnChanges {
 
 	private readonly queryParamsProvider$ = inject(QUERY_PARAMS_TOKEN);
 
+	private readonly destroyRef = inject(DestroyRef);
+
 	private readonly urlService = inject(UrlService);
 
 	/** Convert the list to MatTableDataSource to use MatSort. */
@@ -97,13 +101,16 @@ export class AnimeTableComponent implements AfterViewInit, OnChanges {
 	/** Date format. */
 	protected readonly dateFormat = DATE_FORMAT;
 
-	public constructor() {
-		this.queryParamsProvider$.subscribe(({ sortField, sortDirection }) => {
+	/** On Init. */
+	public ngOnInit(): void {
+		const subscription = this.queryParamsProvider$.subscribe(({ sortField, sortDirection }) => {
 			if (sortField && sortDirection) {
 				const { active, direction } = this.urlService.prepareSortChangeToTable({ sortField, sortDirection });
 				this.pageSorter$.next({ active, direction });
 			}
 		});
+
+		this.destroyRef.onDestroy(() => subscription.unsubscribe());
 	}
 
 	/** On Changes.
