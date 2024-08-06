@@ -19,8 +19,7 @@
 		<th class="table-cell table__column_image" mat-header-cell *matHeaderCellDef>Image</th>
 		<td class="table-cell table__column_image" mat-cell *matCellDef="let anime">
 			<div class="table__row-image-container">
-				<img class="table__row-image" [src]="anime.imageUrl"
-					[alt]="anime.englishTitle || anime.japaneseTitle || 'Anime image'">
+				<img class="table__row-image" [appLazyLoadImage]="anime.imageUrl" src="/assets/lazy-load-image.jpg" [alt]="anime.englishTitle || anime.japaneseTitle || 'Anime image'">
 			</div>
 		</td>
 	</ng-container>

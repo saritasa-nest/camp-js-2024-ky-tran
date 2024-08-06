@@ -36,6 +36,7 @@ import { emptyStringAttribute } from '@js-camp/angular/shared/attributes/empty-s
 import { animeListAttribute } from '@js-camp/angular/shared/attributes/anime-list-attribute';
 import { UrlService } from '@js-camp/angular/core/services/url.service';
 import { SnackbarComponent } from '@js-camp/angular/shared/components/error-snack-bar/error-snack-bar.component';
+import { LazyLoadImageDirective } from '@js-camp/angular/shared/directives/lazy-load-image.directive';
 
 const tableGeneric: TableGeneric = { columnKeys: AnimeTableColumns };
 
@@ -45,7 +46,15 @@ const tableGeneric: TableGeneric = { columnKeys: AnimeTableColumns };
 	standalone: true,
 	templateUrl: './anime-table.component.html',
 	styleUrl: './anime-table.component.css',
-	imports: [CommonModule, AsyncPipe, MatTableModule, MatSortModule, ProgressSpinnerComponent, NullablePipe],
+	imports: [
+		CommonModule,
+		AsyncPipe,
+		MatTableModule,
+		MatSortModule,
+		ProgressSpinnerComponent,
+		NullablePipe,
+		LazyLoadImageDirective,
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
