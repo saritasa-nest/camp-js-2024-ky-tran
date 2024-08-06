@@ -18,12 +18,12 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { BehaviorSubject } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { DATE_FORMAT } from '@js-camp/angular/shared/constants';
 import { Anime } from '@js-camp/core/models/anime.model';
 import { NullablePipe } from '@js-camp/angular/core/pipes/nullable.pipe';
 import { ProgressSpinnerComponent } from '@js-camp/angular/shared/components/progress-spinner/progress-spinner.component';
-import { ErrorMessageComponent } from '@js-camp/angular/shared/components/error-message/error-message.component';
 import { TableGeneric } from '@js-camp/angular/core/types/table-generic.type';
 import { AnimeTableColumns } from '@js-camp/core/enums/anime-table-columns.enum';
 import { QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
@@ -34,6 +34,7 @@ import { QueryParamsPaginator } from '@js-camp/core/models/query-params.model';
 import { emptyStringAttribute } from '@js-camp/angular/shared/attributes/empty-string-attribute';
 import { animeListAttribute } from '@js-camp/angular/shared/attributes/anime-list-attribute';
 import { UrlService } from '@js-camp/angular/core/services/url.service';
+import { SnackbarComponent } from '@js-camp/angular/shared/components/error-snack-bar/error-snack-bar.component';
 
 const tableGeneric: TableGeneric = { columnKeys: AnimeTableColumns };
 
@@ -43,15 +44,7 @@ const tableGeneric: TableGeneric = { columnKeys: AnimeTableColumns };
 	standalone: true,
 	templateUrl: './anime-table.component.html',
 	styleUrl: './anime-table.component.css',
-	imports: [
-		CommonModule,
-		AsyncPipe,
-		MatTableModule,
-		MatSortModule,
-		ProgressSpinnerComponent,
-		ErrorMessageComponent,
-		NullablePipe,
-	],
+	imports: [CommonModule, AsyncPipe, MatTableModule, MatSortModule, ProgressSpinnerComponent, NullablePipe],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
@@ -81,6 +74,8 @@ export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
 	private readonly destroyRef = inject(DestroyRef);
 
 	private readonly urlService = inject(UrlService);
+
+	private readonly snackBar = inject(MatSnackBar);
 
 	/** Convert the list to MatTableDataSource to use MatSort. */
 	protected readonly dataSource = new MatTableDataSource<Anime>();
@@ -119,6 +114,14 @@ export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
 	public ngOnChanges(changes: SimpleChanges): void {
 		if (changes['animeList']) {
 			this.dataSource.data = [...this.animeList];
+		}
+
+		if (changes['error']?.currentValue) {
+			this.snackBar.openFromComponent(SnackbarComponent, {
+				verticalPosition: 'top',
+				horizontalPosition: 'right',
+				data: { errorMessage: changes['error'].currentValue },
+			});
 		}
 	}
 

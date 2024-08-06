@@ -1,0 +1,8 @@
+:host {
+	display: flex;
+}
+
+.error-message {
+	color: var(--error-color-main);
+	font-size: var(--font-size-medium);
+}

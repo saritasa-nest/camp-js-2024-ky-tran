@@ -19,9 +19,7 @@ export class UrlService {
 	private readonly queryParamsService = inject(QueryParamsService);
 
 	private removeNullFields<O extends { [key: string]: unknown; }>(obj: O): Partial<O> {
-		return Object.fromEntries(Object.entries(obj).filter(
-			([_, value]) => value !== null,
-		)) as Partial<O>;
+		return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null)) as Partial<O>;
 	}
 
 	/**

@@ -58,10 +58,7 @@
 			@if (isLoading) {
 				<camp-progress-spinner />
 			}
-			@if (error) {
-				<camp-error-message [errorMessage]="error" />
-			}
-			@if (!isLoading && !error && !animeList.length) {
+			@if (error || (!isLoading && !animeList.length)) {
 				<p slot="table-skeleton-content">There is no anime to display.</p>
 			}
 		</td>

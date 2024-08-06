@@ -33,7 +33,7 @@ export class AnimeService {
 			.pipe(
 				map(responseDto => mapPaginationFromDto(responseDto, mapAnimeFromDto)),
 				shareReplay({ refCount: true, bufferSize: 1 }),
-				catchError((_: unknown) => throwError(() => new Error('Failed to fetch anime. Please try again.'))),
+				catchError((_: unknown) => throwError(() => new Error('Something went wrong. Please try again.'))),
 			);
 	}
 }
