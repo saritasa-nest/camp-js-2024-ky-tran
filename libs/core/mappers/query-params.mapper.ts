@@ -2,7 +2,7 @@ import { QueryParamsDto, QueryParamsUrlDto } from '../dtos/query-params.dto';
 import { SortDirection } from '../models/sort-direction.model';
 import { QueryParams, QueryParamsSort } from '../models/query-params.model';
 import { SORT_FIELDS_MAPPING_TO_DTO, SORT_FIELDS_URL_MAPPING_FROM_DTO, SORT_FIELDS_URL_MAPPING_TO_DTO } from '../records/sort-fields-mapping.record';
-import { TYPE_MAPPING_FROM_DTO, TYPE_MAPPING_TO_DTO } from '../records/type-mapping.record';
+import { TYPE_MAPPING_TO_DTO, TYPE_URL_MAPPING_FROM_DTO, TYPE_URL_MAPPING_TO_DTO } from '../records/type-mapping.record';
 import { SortEventDirectionDto, SortEventDto } from '../dtos/sort-event.dto';
 import { SortFields } from '../models/sort-fields.model';
 import { SORT_DIRECTION_URL_MAPPING_FROM_DTO, SORT_DIRECTION_URL_MAPPING_TO_DTO } from '../records/sort-direction-mapping.record';
@@ -41,7 +41,7 @@ export namespace QueryParamsMappers {
 			pageSize: pageSize ?? defaultPageSize,
 			sortField: sortField ? SORT_FIELDS_URL_MAPPING_TO_DTO[sortField] : null,
 			sortDirection: sortDirection ? SORT_DIRECTION_URL_MAPPING_TO_DTO[sortDirection] : null,
-			type: type ? TYPE_MAPPING_TO_DTO[type] : null,
+			type: type ? TYPE_URL_MAPPING_TO_DTO[type] : null,
 			search,
 		};
 	}
@@ -60,7 +60,7 @@ export namespace QueryParamsMappers {
 			pageSize: pageSize ?? defaultPageSize,
 			sortField: sortField ? SORT_FIELDS_URL_MAPPING_FROM_DTO[sortField] : null,
 			sortDirection: sortDirection ? SORT_DIRECTION_URL_MAPPING_FROM_DTO[sortDirection] : null,
-			type: type ? TYPE_MAPPING_FROM_DTO[type] : null,
+			type: type ? TYPE_URL_MAPPING_FROM_DTO[type] : null,
 			search,
 		};
 	}
