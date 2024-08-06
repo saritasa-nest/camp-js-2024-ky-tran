@@ -58,14 +58,9 @@ export class UrlService {
 	 * @param params - The provided query params.
 	 * @param resetParams The provided reset params.
 	 */
-	public updateQueryParams(params: Partial<QueryParams>, resetParams?: Partial<QueryParams>): void {
+	public updateQueryParams(params: Partial<QueryParams>, resetParams: Partial<QueryParams> = {}): void {
 		const queryParams =	this.removeNullFields({ ...this.activatedRoute.snapshot.queryParams, ...params });
-		const queryParamsToUrlDto = this.queryParamsMapper.toUrlDto(queryParams);
-
-		if (resetParams == null) {
-			this.queryParamsService.append(queryParamsToUrlDto);
-		} else {
-			this.queryParamsService.appendAndReset(queryParamsToUrlDto, resetParams);
-		}
+		const queryParamsToUrlDto = this.queryParamsMapper.toUrlDto({ ...queryParams, ...resetParams });
+		this.queryParamsService.append(queryParamsToUrlDto);
 	}
 }

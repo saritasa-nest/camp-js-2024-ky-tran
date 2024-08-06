@@ -25,15 +25,6 @@ export class QueryParamsService {
 	}
 
 	/**
-	 * Merge provided query params to the URL and reset provided query params.
-	 * @param queryParams The provided query params.
-	 * @param resetQueryParams The provided reset query params.
-	 */
-	public appendAndReset(queryParams: Record<string, unknown>, resetQueryParams: Record<string, unknown>): void {
-		this.append({ ...queryParams, ...resetQueryParams });
-	}
-
-	/**
 	 * Remove provided query params from the URL.
 	 * @param removedQueryParams The provided query params.
 	 */

@@ -1,7 +1,6 @@
-import { SortDirection } from '../models/sort-direction.model';
-import { SortFields } from '../models/sort-fields.model';
-
 import { AnimeTypeDto } from './anime.dto';
+import { SortDirectionUrlDto } from './sort-direction-url.dto';
+import { SortFieldsUrlDto } from './sort-fields-url.dto';
 
 export type QueryParamsCommonDto = Readonly<{
 
@@ -22,10 +21,10 @@ export type QueryParamsUrlDto = QueryParamsCommonDto & Readonly<{
 	pageSize: number | null;
 
 	/** Field. */
-	sortField: SortFields | null;
+	sortField: SortFieldsUrlDto | null;
 
 	/** Direction. */
-	sortDirection: SortDirection | null;
+	sortDirection: SortDirectionUrlDto | null;
 }>;
 
 /** Query params DTO (to Back-end). */
