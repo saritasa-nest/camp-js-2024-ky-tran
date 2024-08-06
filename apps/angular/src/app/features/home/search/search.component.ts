@@ -12,6 +12,7 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -43,11 +44,9 @@ export class SearchComponent implements OnInit, OnChanges {
 
 	/** On Init. */
 	public ngOnInit(): void {
-		const subscription = this.queryParamsProvider$.subscribe(({ search }) => {
+		this.queryParamsProvider$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(({ search }) => {
 			this.searchControl = new FormControl<string>({ value: search ? search.trim() : '', disabled: false });
 		});
-
-		this.destroyRef.onDestroy(() => subscription.unsubscribe());
 	}
 
 	/**

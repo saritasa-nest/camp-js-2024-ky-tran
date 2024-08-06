@@ -17,8 +17,9 @@ import {
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
-import { BehaviorSubject } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BehaviorSubject } from 'rxjs';
 
 import { DATE_FORMAT } from '@js-camp/angular/shared/constants';
 import { Anime } from '@js-camp/core/models/anime.model';
@@ -98,14 +99,10 @@ export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
 
 	/** On Init. */
 	public ngOnInit(): void {
-		const subscription = this.queryParamsProvider$.subscribe(({ sortField, sortDirection }) => {
-			if (sortField && sortDirection) {
-				const { active, direction } = this.urlService.prepareSortChangeToTable({ sortField, sortDirection });
-				this.pageSorter$.next({ active, direction });
-			}
+		this.queryParamsProvider$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(({ sortField, sortDirection }) => {
+			const { active, direction } = this.urlService.prepareSortChangeToTable({ sortField, sortDirection });
+			this.pageSorter$.next({ active, direction });
 		});
-
-		this.destroyRef.onDestroy(() => subscription.unsubscribe());
 	}
 
 	/** On Changes.

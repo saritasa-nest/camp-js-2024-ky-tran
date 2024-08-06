@@ -12,6 +12,7 @@ import {
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
 import { AnimeType } from '@js-camp/core/models/anime.model';
@@ -44,13 +45,9 @@ export class FilterComponent implements OnInit {
 
 	/** On Init. */
 	public ngOnInit(): void {
-		const subscription = this.queryParamsProvider$.subscribe(({ type }) => {
-			if (type) {
-				this.selectedType = type;
-			}
+		this.queryParamsProvider$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(({ type }) => {
+			this.selectedType = type;
 		});
-
-		this.destroyRef.onDestroy(() => subscription.unsubscribe());
 	}
 
 	/**
