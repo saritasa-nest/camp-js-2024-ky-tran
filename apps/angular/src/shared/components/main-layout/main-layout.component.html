@@ -40,5 +40,12 @@
 </nav>
 
 <main class="main">
-	<router-outlet />
+	<!-- <router-outlet /> -->
+	@defer {
+		<router-outlet />
+	} @placeholder {
+		<camp-progress-spinner />
+	} @error {
+		<camp-error-message />
+	}
 </main>

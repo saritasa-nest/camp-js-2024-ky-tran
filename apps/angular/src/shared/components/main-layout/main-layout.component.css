@@ -53,6 +53,9 @@
 .main {
 	flex-grow: 1;
 	flex-basis: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	padding: var(--gap-medium) var(--gap-medium);
 }
 
