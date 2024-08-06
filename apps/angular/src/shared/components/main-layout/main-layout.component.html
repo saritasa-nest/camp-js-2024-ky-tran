@@ -1,26 +1,42 @@
 <nav class="sidebar">
-	<ul class="sidebar__list">
-		<li>
+	<div>
+		<header class="sidebar__header">
 			<a
 				title="Home page"
 				routerLink="/home"
 				routerLinkActive="active"
-				class="sidebar__link"
 			>
-				Home
+				<img class="sidebar__header-logo" src="/assets/saritasa-logo.png" alt="Saritasa Logo">
 			</a>
-		</li>
-		<li>
-			<a
-				title="Settings page"
-				routerLink="/settings"
-				routerLinkActive="active"
-				class="sidebar__link disable"
-			>
-				Settings
-			</a>
-		</li>
-	</ul>
+		</header>
+
+		<ul class="sidebar__list">
+			<li>
+				<a
+					title="Home page"
+					routerLink="/home"
+					routerLinkActive="active"
+					class="sidebar__link"
+				>
+					Home
+				</a>
+			</li>
+			<li>
+				<a
+					title="Settings page"
+					routerLink="/auth"
+					routerLinkActive="active"
+					class="sidebar__link"
+				>
+					Auth
+				</a>
+			</li>
+		</ul>
+	</div>
+
+	<footer class="sidebar__footer">
+		<p class="sidebar__footer-text">Builders of Better</p>
+	</footer>
 </nav>
 
 <main class="main">
