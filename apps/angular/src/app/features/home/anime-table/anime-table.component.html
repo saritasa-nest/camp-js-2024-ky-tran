@@ -3,7 +3,7 @@
 	mat-table
 	matSort
 	(matSortChange)="onSortChange($event)"
-	[dataSource]="dataSource"
+	[dataSource]="isLoading ? (skeletonAnimeSource$ | async)! : dataSource"
 	[trackBy]="trackAnimeById"
 	[matSortActive]="(pageSorter$ | async)!.active"
 	[matSortDirection]="(pageSorter$ | async)!.direction"
@@ -54,9 +54,9 @@
 
 	<tr class="mat-row test" *matNoDataRow>
 		<td class="mat-cell table__no-data-row" colspan="7">
-			@if (isLoading) {
+			<!-- @if (isLoading) {
 				<camp-progress-spinner />
-			}
+			} -->
 			@if (error || (!isLoading && !animeList.length)) {
 				<p slot="table-skeleton-content">There is no anime to display.</p>
 			}

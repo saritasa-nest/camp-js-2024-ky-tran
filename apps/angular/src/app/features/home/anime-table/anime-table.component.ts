@@ -21,7 +21,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject } from 'rxjs';
 
-import { DATE_FORMAT } from '@js-camp/angular/shared/constants';
+import { DATE_FORMAT, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
 import { Anime } from '@js-camp/core/models/anime.model';
 import { NullablePipe } from '@js-camp/angular/core/pipes/nullable.pipe';
 import { ProgressSpinnerComponent } from '@js-camp/angular/shared/components/progress-spinner/progress-spinner.component';
@@ -103,6 +103,11 @@ export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
 	 */
 	protected readonly pageSorter$ = new BehaviorSubject<SortEventDto>({ active: '' as SortFields, direction: '' });
 
+	/** A skeleton template for a table while loading. */
+	protected readonly skeletonAnimeSource$ = new BehaviorSubject<Anime[]>(
+		this.createSkeletonAnimeSource(DEFAULT_PAGE_SIZE),
+	);
+
 	/** Anime table column names. */
 	protected readonly animeColumns = tableGeneric.columnKeys;
 
@@ -114,10 +119,12 @@ export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
 
 	/** On Init. */
 	public ngOnInit(): void {
-		this.queryParamsProvider$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(({ sortField, sortDirection }) => {
-			const { active, direction } = this.urlService.prepareSortChangeToTable({ sortField, sortDirection });
-			this.pageSorter$.next({ active, direction });
-		});
+		this.queryParamsProvider$
+			.pipe(takeUntilDestroyed(this.destroyRef))
+			.subscribe(({ pageSize, sortField, sortDirection }) => {
+				this.pageSorter$.next(this.urlService.prepareSortChangeToTable({ sortField, sortDirection }));
+				this.skeletonAnimeSource$.next(this.createSkeletonAnimeSource(pageSize || DEFAULT_PAGE_SIZE));
+			});
 	}
 
 	/** On Changes.
@@ -157,5 +164,13 @@ export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
 	 */
 	protected trackAnimeById(_: number, anime: Anime): Anime['id'] {
 		return anime.id;
+	}
+
+	/**
+	 * Create a skeleton template for a table while loading.
+	 * @param pageSize - Page size.
+	 */
+	protected createSkeletonAnimeSource(pageSize: number): Anime[] {
+		return Array.from({ length: pageSize }).map((_, index) => ({ id: index } as Anime));
 	}
 }
