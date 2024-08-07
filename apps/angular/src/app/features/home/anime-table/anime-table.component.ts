@@ -37,6 +37,7 @@ import { UrlService } from '@js-camp/angular/core/services/url.service';
 import { SnackbarComponent } from '@js-camp/angular/shared/components/error-snack-bar/error-snack-bar.component';
 import { LazyLoadImageDirective } from '@js-camp/angular/shared/directives/lazy-load-image.directive';
 import { BaseQueryParams } from '@js-camp/core/models/base-query-params.model';
+import { SkeletonCellComponent } from '@js-camp/angular/app/features/home/anime-table/skeleton-cell/skeleton-cell.component';
 
 const tableGeneric: TableGeneric = { columnKeys: AnimeTableColumns };
 
@@ -54,6 +55,7 @@ const tableGeneric: TableGeneric = { columnKeys: AnimeTableColumns };
 		ProgressSpinnerComponent,
 		NullablePipe,
 		LazyLoadImageDirective,
+		SkeletonCellComponent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -123,7 +125,7 @@ export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
 			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe(({ pageSize, sortField, sortDirection }) => {
 				this.pageSorter$.next(this.urlService.prepareSortChangeToTable({ sortField, sortDirection }));
-				this.skeletonAnimeSource$.next(this.createSkeletonAnimeSource(pageSize || DEFAULT_PAGE_SIZE));
+				this.skeletonAnimeSource$.next(this.createSkeletonAnimeSource(pageSize ?? DEFAULT_PAGE_SIZE));
 			});
 	}
 
