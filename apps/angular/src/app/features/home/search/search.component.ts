@@ -30,10 +30,12 @@ import { QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params
 })
 export class SearchComponent implements OnInit, OnChanges {
 	/** Whether the filter select is disabled. */
-	@Input({ transform: booleanAttribute }) protected readonly disabled = false;
+	@Input({ transform: booleanAttribute })
+	protected readonly disabled = false;
 
 	/** Search change event emitter. */
-	@Output() public readonly searchChange = new EventEmitter<string>();
+	@Output()
+	public readonly searchChange = new EventEmitter<string>();
 
 	private readonly queryParamsProvider$ = inject(QUERY_PARAMS_TOKEN);
 

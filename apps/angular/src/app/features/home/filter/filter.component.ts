@@ -28,10 +28,12 @@ import { AnimeType } from '@js-camp/core/models/anime.model';
 })
 export class FilterComponent implements OnInit {
 	/** Whether the filter select is disabled. */
-	@Input({ transform: booleanAttribute }) protected readonly disabled = false;
+	@Input({ transform: booleanAttribute })
+	protected readonly disabled = false;
 
 	/** Selection change event emitter. */
-	@Output() public readonly selectionChange = new EventEmitter<MatSelectChange>();
+	@Output()
+	public readonly selectionChange = new EventEmitter<MatSelectChange>();
 
 	private readonly queryParamsProvider$ = inject(QUERY_PARAMS_TOKEN);
 

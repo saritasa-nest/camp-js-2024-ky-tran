@@ -10,5 +10,6 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 })
 export class ErrorMessageComponent {
 	/** Error message. */
-	@Input() protected readonly errorMessage: string = 'Some thing went wrong! Please try again.';
+	@Input()
+	protected readonly errorMessage: string = 'Some thing went wrong! Please try again.';
 }

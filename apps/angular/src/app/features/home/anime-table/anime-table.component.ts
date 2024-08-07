@@ -58,26 +58,32 @@ const tableGeneric: TableGeneric = { columnKeys: AnimeTableColumns };
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
-	@ViewChild(MatSort) private readonly sort!: MatSort;
+	@ViewChild(MatSort)
+	private readonly sort!: MatSort;
 
 	/** Anime list. */
-	@Input({ required: true, transform: animeListAttribute }) public animeList!: readonly Anime[];
+	@Input({ required: true, transform: animeListAttribute })
+	public animeList!: readonly Anime[];
 
 	/** Loading status of fetching anime list. */
-	@Input({ required: true, transform: booleanAttribute }) public isLoading!: boolean;
+	@Input({ required: true, transform: booleanAttribute })
+	public isLoading!: boolean;
 
 	/** Error message if something went wrong fetching anime list. */
-	@Input({ required: true, transform: emptyStringAttribute }) public error!: string;
+	@Input({ required: true, transform: emptyStringAttribute })
+	public error!: string;
 
 	/**
 	 * Page paginator to store page index and page number.
 	 * Page index: The zero-based page index of the displayed list of items.
 	 * Page number: Number of items to display on a page.
 	 */
-	@Input({ required: true, transform: paginatorAttribute }) protected readonly pagePaginator!: BaseQueryParams.Paginator;
+	@Input({ required: true, transform: paginatorAttribute })
+	protected readonly pagePaginator!: BaseQueryParams.Paginator;
 
 	/** Sort change event emitter. */
-	@Output() public readonly sortChange = new EventEmitter<Sort>();
+	@Output()
+	public readonly sortChange = new EventEmitter<Sort>();
 
 	private readonly queryParamsProvider$ = inject(QUERY_PARAMS_TOKEN);
 

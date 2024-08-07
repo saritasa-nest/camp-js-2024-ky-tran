@@ -27,29 +27,36 @@ import { BaseQueryParams } from '@js-camp/core/models/base-query-params.model';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaginatorComponent implements AfterViewInit {
-	@ViewChild(MatPaginator) private readonly paginator!: MatPaginator;
+	@ViewChild(MatPaginator)
+	private readonly paginator!: MatPaginator;
 
 	/** The length of the total number of items that are being paginated. */
-	@Input({ required: true, transform: numberAttribute }) protected readonly length!: number;
+	@Input({ required: true, transform: numberAttribute })
+	protected readonly length!: number;
 
 	/**
 	 * Page paginator to store page index and page number.
 	 * Page index: The zero-based page index of the displayed list of items.
 	 * Page number: Number of items to display on a page.
 	 */
-	@Input({ required: true, transform: paginatorAttribute }) protected readonly pagePaginator!: BaseQueryParams.Paginator;
+	@Input({ required: true, transform: paginatorAttribute })
+	protected readonly pagePaginator!: BaseQueryParams.Paginator;
 
 	/** The set of provided page size options to display to the user. */
-	@Input() protected readonly pageSizeOptions: number[] = DEFAULT_PAGE_SIZE_OPTIONS;
+	@Input()
+	protected readonly pageSizeOptions: number[] = DEFAULT_PAGE_SIZE_OPTIONS;
 
 	/** Whether to show the first/last buttons UI to the user. */
-	@Input({ transform: booleanAttribute }) protected readonly showFirstLastButtons: boolean = true;
+	@Input({ transform: booleanAttribute })
+	protected readonly showFirstLastButtons: boolean = true;
 
 	/** Whether the paginator is disabled. */
-	@Input({ transform: booleanAttribute }) protected readonly disabled = false;
+	@Input({ transform: booleanAttribute })
+	protected readonly disabled = false;
 
 	/** Page change event emitter. */
-	@Output() public readonly pageChange = new EventEmitter<PageEvent>();
+	@Output()
+	public readonly pageChange = new EventEmitter<PageEvent>();
 
 	/** After View Init. */
 	public ngAfterViewInit(): void {
