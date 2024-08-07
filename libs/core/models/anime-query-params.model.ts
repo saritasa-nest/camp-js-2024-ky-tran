@@ -3,6 +3,7 @@ import { AnimeType } from './anime.model';
 import { SortFields } from './sort-fields.model';
 import { BaseQueryParams } from './base-query-params.model';
 
+/** Anime query params domain model. */
 export namespace AnimeQueryParams {
 
 	/** Sort. */

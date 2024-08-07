@@ -1,5 +1,5 @@
-/** Base query params domain model. */
-export namespace BaseQueryParams {
+/** Base query params URL DTO. */
+export namespace BaseQueryParamsUrlDto {
 
 	/** Paginator. */
 	export type Paginator = {

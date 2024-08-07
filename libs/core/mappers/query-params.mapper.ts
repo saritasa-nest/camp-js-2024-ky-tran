@@ -1,4 +1,4 @@
-import { QueryParamsDto, QueryParamsUrlDto } from '../dtos/query-params.dto';
+import { QueryParamsDto } from '../dtos/query-params.dto';
 import { SortDirection } from '../models/sort-direction.model';
 import { SORT_FIELDS_MAPPING_TO_DTO, SORT_FIELDS_URL_MAPPING_FROM_DTO, SORT_FIELDS_URL_MAPPING_TO_DTO } from '../records/sort-fields-mapping.record';
 import { TYPE_MAPPING_TO_DTO, TYPE_URL_MAPPING_FROM_DTO, TYPE_URL_MAPPING_TO_DTO } from '../records/type-mapping.record';
@@ -6,6 +6,7 @@ import { SortEventDirectionDto, SortEventDto } from '../dtos/sort-event.dto';
 import { SortFields } from '../models/sort-fields.model';
 import { SORT_DIRECTION_URL_MAPPING_FROM_DTO, SORT_DIRECTION_URL_MAPPING_TO_DTO } from '../records/sort-direction-mapping.record';
 import { AnimeQueryParams } from '../models/anime-query-params.model';
+import { AnimeQueryParamsUrlDto } from '../dtos/anime-query-params-url.dto';
 
 /** Query Params mapper namespace. */
 export namespace QueryParamsMappers {
@@ -37,7 +38,7 @@ export namespace QueryParamsMappers {
 		model: AnimeQueryParams.Combined,
 		defaultPageNumber: number,
 		defaultPageSize: number,
-	): QueryParamsUrlDto {
+	): AnimeQueryParamsUrlDto.Combined {
 		const { pageNumber, pageSize, sortField, sortDirection, type, search } = model;
 
 		return {
@@ -57,7 +58,7 @@ export namespace QueryParamsMappers {
 	 * @param defaultPageSize - Default page size.
 	 */
 	export function fromUrlDto(
-		dto: QueryParamsUrlDto,
+		dto: AnimeQueryParamsUrlDto.Combined,
 		defaultPageNumber: number,
 		defaultPageSize: number,
 	): AnimeQueryParams.Combined {

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
-import { QueryParamsDto, QueryParamsUrlDto } from '@js-camp/core/dtos/query-params.dto';
+import { AnimeQueryParamsUrlDto } from '@js-camp/core/dtos/anime-query-params-url.dto';
+import { QueryParamsDto } from '@js-camp/core/dtos/query-params.dto';
 import { SortEventDto } from '@js-camp/core/dtos/sort-event.dto';
 import { QueryParamsMappers } from '@js-camp/core/mappers/query-params.mapper';
 import { AnimeQueryParams } from '@js-camp/core/models/anime-query-params.model';
@@ -13,7 +14,9 @@ export class QueryParamsMapper {
 	 * Mapping from Domain model to DTO (to Url).
 	 * @param model - The Query Params Domain model object to be converted.
 	 */
-	public toUrlDto(model: AnimeQueryParams.Combined | Partial<AnimeQueryParams.Combined>): QueryParamsUrlDto {
+	public toUrlDto(
+		model: AnimeQueryParams.Combined | Partial<AnimeQueryParams.Combined>,
+	): AnimeQueryParamsUrlDto.Combined {
 		const params = QueryParamsMappers.createQueryPramsUrl<AnimeQueryParams.Combined>(model);
 		return QueryParamsMappers.toUrlDto(params, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE);
 	}
@@ -22,8 +25,10 @@ export class QueryParamsMapper {
 	 * Mapping from DTO to Domain model (from Url).
 	 * @param dto - The DTO to be converted.
 	 */
-	public fromUrlDto(dto: QueryParamsUrlDto | Partial<QueryParamsUrlDto>): AnimeQueryParams.Combined {
-		const params = QueryParamsMappers.createQueryPramsUrl<QueryParamsUrlDto>(dto);
+	public fromUrlDto(
+		dto: AnimeQueryParamsUrlDto.Combined | Partial<AnimeQueryParamsUrlDto.Combined>,
+	): AnimeQueryParams.Combined {
+		const params = QueryParamsMappers.createQueryPramsUrl<AnimeQueryParamsUrlDto.Combined>(dto);
 		return QueryParamsMappers.fromUrlDto(params, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE);
 	}
 

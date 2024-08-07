@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { map, Observable, shareReplay } from 'rxjs';
 
 import { QueryParamsMapper } from '@js-camp/angular/core/mappers/query-params.mapper';
-import { QueryParamsUrlDto } from '@js-camp/core/dtos/query-params.dto';
 import { AnimeQueryParams } from '@js-camp/core/models/anime-query-params.model';
+import { AnimeQueryParamsUrlDto } from '@js-camp/core/dtos/anime-query-params-url.dto';
 
 /** Query params token. */
 export const QUERY_PARAMS_TOKEN = new InjectionToken<Observable<AnimeQueryParams.Combined>>('QUERY_PRAMS_TOKEN');
@@ -26,7 +26,8 @@ function queryParamsFactory(activatedRoute: ActivatedRoute): Observable<AnimeQue
 	const queryParamsMapper = inject(QueryParamsMapper);
 
 	return activatedRoute.queryParams.pipe(
-		map((params: QueryParamsUrlDto | Partial<QueryParamsUrlDto>) => queryParamsMapper.fromUrlDto(params)),
+		map((params: AnimeQueryParamsUrlDto.Combined | Partial<AnimeQueryParamsUrlDto.Combined>) =>
+			queryParamsMapper.fromUrlDto(params)),
 		shareReplay({ refCount: true, bufferSize: 1 }),
 	);
 }
