@@ -68,12 +68,7 @@
 
 	<tr class="mat-row test" *matNoDataRow>
 		<td class="mat-cell table__no-data-row" colspan="7">
-			<!-- @if (isLoading) {
-				<camp-progress-spinner />
-			} -->
-			@if (error || (!isLoading && !animeList.length)) {
-				<p slot="table-skeleton-content">There is no anime to display.</p>
-			}
+			<p slot="table-skeleton-content">There is no anime to display.</p>
 		</td>
 	</tr>
 </table>
