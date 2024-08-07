@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
 import { AnimeQueryParamsUrlDto } from '@js-camp/core/dtos/anime-query-params-url.dto';
-import { QueryParamsDto } from '@js-camp/core/dtos/query-params.dto';
+import { AnimeQueryParamsDto } from '@js-camp/core/dtos/anime-query-params.dto';
 import { SortEventDto } from '@js-camp/core/dtos/sort-event.dto';
 import { QueryParamsMappers } from '@js-camp/core/mappers/query-params.mapper';
 import { AnimeQueryParams } from '@js-camp/core/models/anime-query-params.model';
@@ -36,7 +36,7 @@ export class QueryParamsMapper {
 	 * Mapping from Domain model to DTO.
 	 * @param model - The Query Params Domain model object to be converted.
 	 */
-	public toDto(model: AnimeQueryParams.Combined): QueryParamsDto {
+	public toDto(model: AnimeQueryParams.Combined): AnimeQueryParamsDto.Combined {
 		return QueryParamsMappers.toDto(model, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE);
 	}
 

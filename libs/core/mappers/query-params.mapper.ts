@@ -1,4 +1,3 @@
-import { QueryParamsDto } from '../dtos/query-params.dto';
 import { SortDirection } from '../models/sort-direction.model';
 import { SORT_FIELDS_MAPPING_TO_DTO, SORT_FIELDS_URL_MAPPING_FROM_DTO, SORT_FIELDS_URL_MAPPING_TO_DTO } from '../records/sort-fields-mapping.record';
 import { TYPE_MAPPING_TO_DTO, TYPE_URL_MAPPING_FROM_DTO, TYPE_URL_MAPPING_TO_DTO } from '../records/type-mapping.record';
@@ -7,6 +6,7 @@ import { SortFields } from '../models/sort-fields.model';
 import { SORT_DIRECTION_URL_MAPPING_FROM_DTO, SORT_DIRECTION_URL_MAPPING_TO_DTO } from '../records/sort-direction-mapping.record';
 import { AnimeQueryParams } from '../models/anime-query-params.model';
 import { AnimeQueryParamsUrlDto } from '../dtos/anime-query-params-url.dto';
+import { AnimeQueryParamsDto } from '../dtos/anime-query-params.dto';
 
 /** Query Params mapper namespace. */
 export namespace QueryParamsMappers {
@@ -84,7 +84,7 @@ export namespace QueryParamsMappers {
 		model: AnimeQueryParams.Combined,
 		defaultPageNumber: number,
 		defaultPageSize: number,
-	): QueryParamsDto {
+	): AnimeQueryParamsDto.Combined {
 		const { pageNumber, pageSize, sortField, sortDirection, type, search } = model;
 		const hasSorting = sortField && sortDirection;
 		const sortingSideCharacter = sortDirection === SortDirection.Ascending ? '' : '-';
