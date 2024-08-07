@@ -31,12 +31,12 @@ import { QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params
 import { SortEventDto } from '@js-camp/core/dtos/sort-event.dto';
 import { SortFields } from '@js-camp/core/models/sort-fields.model';
 import { paginatorAttribute } from '@js-camp/angular/shared/attributes/paginator-attribute';
-import { QueryParamsPaginator } from '@js-camp/core/models/query-params.model';
 import { emptyStringAttribute } from '@js-camp/angular/shared/attributes/empty-string-attribute';
 import { animeListAttribute } from '@js-camp/angular/shared/attributes/anime-list-attribute';
 import { UrlService } from '@js-camp/angular/core/services/url.service';
 import { SnackbarComponent } from '@js-camp/angular/shared/components/error-snack-bar/error-snack-bar.component';
 import { LazyLoadImageDirective } from '@js-camp/angular/shared/directives/lazy-load-image.directive';
+import { BaseQueryParams } from '@js-camp/core/models/base-query-params.model';
 
 const tableGeneric: TableGeneric = { columnKeys: AnimeTableColumns };
 
@@ -74,7 +74,7 @@ export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
 	 * Page index: The zero-based page index of the displayed list of items.
 	 * Page number: Number of items to display on a page.
 	 */
-	@Input({ required: true, transform: paginatorAttribute }) protected readonly pagePaginator!: QueryParamsPaginator;
+	@Input({ required: true, transform: paginatorAttribute }) protected readonly pagePaginator!: BaseQueryParams.Paginator;
 
 	/** Sort change event emitter. */
 	@Output() public readonly sortChange = new EventEmitter<Sort>();

@@ -14,8 +14,8 @@ import { CommonModule } from '@angular/common';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@js-camp/angular/shared/constants';
-import { QueryParamsPaginator } from '@js-camp/core/models/query-params.model';
 import { paginatorAttribute } from '@js-camp/angular/shared/attributes/paginator-attribute';
+import { BaseQueryParams } from '@js-camp/core/models/base-query-params.model';
 
 /** Paginator Component. */
 @Component({
@@ -37,7 +37,7 @@ export class PaginatorComponent implements AfterViewInit {
 	 * Page index: The zero-based page index of the displayed list of items.
 	 * Page number: Number of items to display on a page.
 	 */
-	@Input({ required: true, transform: paginatorAttribute }) protected readonly pagePaginator!: QueryParamsPaginator;
+	@Input({ required: true, transform: paginatorAttribute }) protected readonly pagePaginator!: BaseQueryParams.Paginator;
 
 	/** The set of provided page size options to display to the user. */
 	@Input() protected readonly pageSizeOptions: number[] = DEFAULT_PAGE_SIZE_OPTIONS;

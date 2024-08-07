@@ -22,7 +22,7 @@ export class LazyLoadImageDirective implements OnInit {
 					observer.disconnect();
 				}
 			});
-		}, { threshold: 0.7 });
+		}, { threshold: 0.5 });
 
 		observer.observe(this.element.nativeElement);
 	}

@@ -2,12 +2,12 @@ import { inject, InjectionToken, Provider } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, Observable, shareReplay } from 'rxjs';
 
-import { QueryParams } from '@js-camp/core/models/query-params.model';
 import { QueryParamsMapper } from '@js-camp/angular/core/mappers/query-params.mapper';
 import { QueryParamsUrlDto } from '@js-camp/core/dtos/query-params.dto';
+import { AnimeQueryParams } from '@js-camp/core/models/anime-query-params.model';
 
 /** Query params token. */
-export const QUERY_PARAMS_TOKEN = new InjectionToken<Observable<QueryParams>>('QUERY_PRAMS_TOKEN');
+export const QUERY_PARAMS_TOKEN = new InjectionToken<Observable<AnimeQueryParams.Combined>>('QUERY_PRAMS_TOKEN');
 
 /** Query params provider. */
 export const QUERY_PARAMS_PROVIDER: readonly Provider[] = [
@@ -22,7 +22,7 @@ export const QUERY_PARAMS_PROVIDER: readonly Provider[] = [
  * Query params factory.
  * @param activatedRoute - Activated route.
  */
-function queryParamsFactory(activatedRoute: ActivatedRoute): Observable<QueryParams> {
+function queryParamsFactory(activatedRoute: ActivatedRoute): Observable<AnimeQueryParams.Combined> {
 	const queryParamsMapper = inject(QueryParamsMapper);
 
 	return activatedRoute.queryParams.pipe(

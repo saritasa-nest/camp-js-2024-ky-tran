@@ -16,7 +16,7 @@ import { UrlService } from '@js-camp/angular/core/services/url.service';
 import { Anime } from '@js-camp/core/models/anime.model';
 import { Pagination } from '@js-camp/core/models/pagination.model';
 import { toggleExecutionState } from '@js-camp/angular/shared/utils/rxjs/toggleExecutionState';
-import { QueryParamsPaginator } from '@js-camp/core/models/query-params.model';
+import { BaseQueryParams } from '@js-camp/core/models/base-query-params.model';
 
 /** Home page. */
 @Component({
@@ -49,7 +49,7 @@ export class HomeComponent {
 	 * Page index: The zero-based page index of the displayed list of items.
 	 * Page number: Number of items to display on a page.
 	 */
-	protected readonly pagePaginator$ = new BehaviorSubject<QueryParamsPaginator>({
+	protected readonly pagePaginator$ = new BehaviorSubject<BaseQueryParams.Paginator>({
 		pageNumber: DEFAULT_PAGE_NUMBER - 1,
 		pageSize: DEFAULT_PAGE_SIZE,
 	});

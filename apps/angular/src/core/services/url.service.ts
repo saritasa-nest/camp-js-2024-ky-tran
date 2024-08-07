@@ -3,7 +3,7 @@ import { HttpParams } from '@angular/common/http';
 import { Sort } from '@angular/material/sort';
 import { ActivatedRoute } from '@angular/router';
 
-import { QueryParams, QueryParamsSort } from '@js-camp/core/models/query-params.model';
+import { AnimeQueryParams } from '@js-camp/core/models/anime-query-params.model';
 import { QueryParamsMapper } from '@js-camp/angular/core/mappers/query-params.mapper';
 import { QueryParamsService } from '@js-camp/angular/core/services/query-params.service';
 import { SortFields } from '@js-camp/core/models/sort-fields.model';
@@ -26,7 +26,7 @@ export class UrlService {
 	 * Create Http query params.
 	 * @param params - Query params.
 	 */
-	public createHttpQueryParams(params: QueryParams): HttpParams {
+	public createHttpQueryParams(params: AnimeQueryParams.Combined): HttpParams {
 		const paramsDto = this.queryParamsMapper.toDto(params);
 
 		return Object.entries(paramsDto).reduce((httpPrams, [key, value]) =>
@@ -38,7 +38,7 @@ export class UrlService {
 	 * Prepare sort change data from table.
 	 * @param sortEvent - Sort event.
 	 */
-	public prepareSortChangeFromTable(sortEvent: Sort): QueryParamsSort {
+	public prepareSortChangeFromTable(sortEvent: Sort): AnimeQueryParams.Sort {
 		return this.queryParamsMapper.sortEventFromDto({
 			active: sortEvent.active as SortFields,
 			direction: sortEvent.direction,
@@ -49,7 +49,7 @@ export class UrlService {
 	 * Prepare sort change data to table.
 	 * @param sortData - Sort data.
 	 */
-	public prepareSortChangeToTable(sortData: QueryParamsSort): SortEventDto {
+	public prepareSortChangeToTable(sortData: AnimeQueryParams.Sort): SortEventDto {
 		return this.queryParamsMapper.sortEventToDto(sortData);
 	}
 
@@ -58,7 +58,7 @@ export class UrlService {
 	 * @param params - The provided query params.
 	 * @param resetParams The provided reset params.
 	 */
-	public updateQueryParams(params: Partial<QueryParams>, resetParams: Partial<QueryParams> = {}): void {
+	public updateQueryParams(params: Partial<AnimeQueryParams.Combined>, resetParams: Partial<AnimeQueryParams.Combined> = {}): void {
 		const queryParamsFromUrl = this.queryParamsMapper.fromUrlDto(
 			this.removeNullFields(this.activatedRoute.snapshot.queryParams),
 		);

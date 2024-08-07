@@ -4,7 +4,7 @@ import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/
 import { QueryParamsDto, QueryParamsUrlDto } from '@js-camp/core/dtos/query-params.dto';
 import { SortEventDto } from '@js-camp/core/dtos/sort-event.dto';
 import { QueryParamsMappers } from '@js-camp/core/mappers/query-params.mapper';
-import { QueryParams, QueryParamsSort } from '@js-camp/core/models/query-params.model';
+import { AnimeQueryParams } from '@js-camp/core/models/anime-query-params.model';
 
 /** Query Params mapper. */
 @Injectable({ providedIn: 'root' })
@@ -13,8 +13,8 @@ export class QueryParamsMapper {
 	 * Mapping from Domain model to DTO (to Url).
 	 * @param model - The Query Params Domain model object to be converted.
 	 */
-	public toUrlDto(model: QueryParams | Partial<QueryParams>): QueryParamsUrlDto {
-		const params = QueryParamsMappers.createQueryPramsUrl<QueryParams>(model);
+	public toUrlDto(model: AnimeQueryParams.Combined | Partial<AnimeQueryParams.Combined>): QueryParamsUrlDto {
+		const params = QueryParamsMappers.createQueryPramsUrl<AnimeQueryParams.Combined>(model);
 		return QueryParamsMappers.toUrlDto(params, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE);
 	}
 
@@ -22,7 +22,7 @@ export class QueryParamsMapper {
 	 * Mapping from DTO to Domain model (from Url).
 	 * @param dto - The DTO to be converted.
 	 */
-	public fromUrlDto(dto: QueryParamsUrlDto | Partial<QueryParamsUrlDto>): QueryParams {
+	public fromUrlDto(dto: QueryParamsUrlDto | Partial<QueryParamsUrlDto>): AnimeQueryParams.Combined {
 		const params = QueryParamsMappers.createQueryPramsUrl<QueryParamsUrlDto>(dto);
 		return QueryParamsMappers.fromUrlDto(params, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE);
 	}
@@ -31,7 +31,7 @@ export class QueryParamsMapper {
 	 * Mapping from Domain model to DTO.
 	 * @param model - The Query Params Domain model object to be converted.
 	 */
-	public toDto(model: QueryParams): QueryParamsDto {
+	public toDto(model: AnimeQueryParams.Combined): QueryParamsDto {
 		return QueryParamsMappers.toDto(model, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE);
 	}
 
@@ -39,7 +39,7 @@ export class QueryParamsMapper {
 	 * Sort from event DTO to Domain model.
 	 * @param dto - Sort from event dto.
 	 */
-	public sortEventFromDto(dto: SortEventDto): QueryParamsSort {
+	public sortEventFromDto(dto: SortEventDto): AnimeQueryParams.Sort {
 		return QueryParamsMappers.sortEventFromDto(dto);
 	}
 
@@ -47,7 +47,7 @@ export class QueryParamsMapper {
 	 * Sort from event Domain model to DTO.
 	 * @param model - Sort from event domain model.
 	 */
-	public sortEventToDto(model: QueryParamsSort): SortEventDto {
+	public sortEventToDto(model: AnimeQueryParams.Sort): SortEventDto {
 		return QueryParamsMappers.sortEventToDto(model);
 	}
 }
