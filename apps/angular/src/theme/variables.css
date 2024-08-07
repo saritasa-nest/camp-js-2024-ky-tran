@@ -6,7 +6,6 @@
 	--background-color-primary-light: #333;
 	--background-color-primary-bright: #444;
 	--background-color-primary-extra-bright: #555;
-	--border-color-main: #222;
 	--error-color-main: #e41e1e;
 
 	/* Layout */
@@ -14,6 +13,7 @@
 	--width-layout-main: 1280px;
 	--width-layout-sub: 180px;
 	--width-image-main: 150px;
+	--height-skeleton-cell: 24px;
 	--height-table-header: 56px;
 	--width-table-scrollbar: 8px;
 	--width-border-small: 2px;

@@ -11,7 +11,7 @@
 	flex-direction: column;
 	justify-content: space-between;
 	width: var(--width-layout-sub);
-	border-right: var(--width-border-small) solid var(--border-color-main);
+	border-right: var(--width-border-small) solid var(--background-color-primary-subtle);
 }
 
 .sidebar__header {

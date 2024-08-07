@@ -20,6 +20,7 @@
 
 .table td {
 	font-size: var(--font-size-medium);
+	padding-block: var(--gap-medium);
 }
 
 .table tr:nth-child(even) {
@@ -53,7 +54,6 @@
 
 .table__row-image-container {
 	width: var(--width-image-main);
-	padding-block: var(--gap-medium);
 }
 
 .table__row-image {
