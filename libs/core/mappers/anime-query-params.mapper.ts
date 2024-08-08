@@ -1,13 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 
 import { SortDirection } from '../models/sort-direction.model';
-import { SORT_FIELDS_MAPPING_TO_DTO } from '../records/sort-fields-mapping.record';
-import { TYPE_MAPPING_TO_DTO } from '../records/type-mapping.record';
 import { SortEventDirectionDto, SortEventDto } from '../dtos/sort-event.dto';
 import { AnimeQueryParams } from '../models/anime-query-params.model';
 import { AnimeQueryParamsDto } from '../dtos/anime-query-params.dto';
 
 import { BaseQueryParamsMapper } from './base-query-params.mapper';
+import { SORT_FIELDS_MAPPING_TO_DTO } from './sort-fields-mapping.record';
+import { TYPE_MAPPING_TO_DTO } from './type-mapping.record';
 
 /** Anime query params mappers. */
 @Injectable({ providedIn: 'root' })

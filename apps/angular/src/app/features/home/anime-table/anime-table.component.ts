@@ -159,6 +159,24 @@ export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
 	}
 
 	/**
+	 * Get description of an anime image.
+	 * @param anime - Anime.
+	 */
+	protected animeImageDescription(anime: Anime): string {
+		return anime.englishTitle || anime.japaneseTitle || 'Anime image';
+	}
+
+	/**
+	 * Check if list of anime is empty after fetching data.
+	 * @param isLoading - Loading status.
+	 * @param error - Error message.
+	 * @param anime - List of anime.
+	 */
+	protected isNoData(isLoading: boolean | null, error: string | null, anime: readonly Anime[]): boolean {
+		return isLoading === false && error === '' && anime.length === 0;
+	}
+
+	/**
 	 * Tracks anime by its unique identifier.
 	 * @param _ - The index of the anime in the list.
 	 * @param anime - The anime object.

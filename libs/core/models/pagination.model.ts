@@ -1,4 +1,4 @@
-/** Pagination Type. */
+/** Pagination type. */
 export type Pagination<T> = Readonly<{
 
 	/** Total number of results. */

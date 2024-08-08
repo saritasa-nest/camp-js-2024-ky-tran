@@ -21,14 +21,8 @@ html::-webkit-scrollbar {
 }
 
 body {
-	min-height: 100vh;
-	color: var(--text-color-main);
-	background-color: var(--background-color-primary);
 	font-family: Roboto, "Helvetica Neue", sans-serif;
-	-webkit-font-smoothing: antialiased;
 	font-size: var(--font-size-extra-medium);
-	line-height: 1.5;
-	padding: var(--gap-large) var(--gap-medium);
 }
 
 @media only screen and (max-width: 1320px) {

@@ -74,7 +74,7 @@ export class HomeComponent {
 				this.pagePaginator$.next(pagePaginator);
 			}),
 			map(params => this.urlService.createHttpQueryParams(params)),
-			switchMap(httpParams => this.animeService.getAll(httpParams).pipe(
+			switchMap(httpParams => this.animeService.getAnimeList(httpParams).pipe(
 				toggleExecutionState(this.isLoading$),
 				catchError((error: unknown) => throwError(() => {
 					const errorMessage = error instanceof Error ? error.message : 'Something went wrong!';

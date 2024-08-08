@@ -1,6 +1,6 @@
 import { DateRangeDto } from './date-range.dto';
 
-/** Anime Type DTO. */
+/** Anime type DTO. */
 export enum AnimeTypeDto {
 	Tv = 'TV',
 	Ova = 'OVA',
@@ -12,7 +12,7 @@ export enum AnimeTypeDto {
 	Unknown = 'UNKNOWN',
 }
 
-/** Anime Status DTO. */
+/** Anime status DTO. */
 export enum AnimeStatusDto {
 	Airing = 'AIRING',
 	Finished = 'FINISHED',
@@ -22,10 +22,7 @@ export enum AnimeStatusDto {
 /** Anime DTO. */
 export type AnimeDto = Readonly<{
 
-	/**
-	 * The unique identifier of the anime.
-	 * @example 2024-07-28T04:43:27.035Z
-	 */
+	/** The unique identifier of the anime. */
 	id: number;
 
 	/**
@@ -34,7 +31,10 @@ export type AnimeDto = Readonly<{
 	 */
 	created: string;
 
-	/** The last modified date of the anime record in ISO format. */
+	/**
+	 * The last modified date of the anime record in ISO format.
+	 * @example 2024-07-28T04:43:27.035Z
+	 */
 	modified: string;
 
 	/** The English title of the anime. */

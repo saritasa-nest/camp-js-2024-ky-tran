@@ -28,7 +28,7 @@
 .content {
 	flex-grow: 1;
 	flex-basis: 0;
-	overflow-y: scroll;
+	overflow-y: auto;
 	border-bottom: var(--width-border-medium) solid var(--background-color-primary-bright);
 }
 

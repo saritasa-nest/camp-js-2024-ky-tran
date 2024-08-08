@@ -20,7 +20,7 @@ export enum AnimeStatus {
 }
 
 /** Anime. */
-export type Anime = {
+export type Anime = Readonly<{
 
 	/** The unique identifier of the anime. */
 	id: number;
@@ -60,4 +60,4 @@ export type Anime = {
 
 	/** An array of IDs representing the genres of the anime. */
 	genreIds: readonly number[];
-};
+}>;

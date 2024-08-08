@@ -2,11 +2,11 @@ import { inject, Injectable } from '@angular/core';
 
 import { AnimeQueryParamsUrlDto } from '../dtos/anime-query-params-url.dto';
 import { AnimeQueryParams } from '../models/anime-query-params.model';
-import { SORT_DIRECTION_URL_MAPPING_FROM_DTO, SORT_DIRECTION_URL_MAPPING_TO_DTO } from '../records/sort-direction-mapping.record';
-import { SORT_FIELDS_URL_MAPPING_FROM_DTO, SORT_FIELDS_URL_MAPPING_TO_DTO } from '../records/sort-fields-mapping.record';
-import { TYPE_URL_MAPPING_FROM_DTO, TYPE_URL_MAPPING_TO_DTO } from '../records/type-mapping.record';
 
 import { BaseQueryParamsMapper } from './base-query-params.mapper';
+import { SORT_FIELDS_URL_MAPPING_FROM_DTO, SORT_FIELDS_URL_MAPPING_TO_DTO } from './sort-fields-mapping.record';
+import { SORT_DIRECTION_URL_MAPPING_FROM_DTO, SORT_DIRECTION_URL_MAPPING_TO_DTO } from './sort-direction-mapping.record';
+import { TYPE_URL_MAPPING_FROM_DTO, TYPE_URL_MAPPING_TO_DTO } from './type-mapping.record';
 
 /** Anime query params Url mappers. */
 @Injectable({ providedIn: 'root' })

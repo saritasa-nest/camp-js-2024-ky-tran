@@ -4,12 +4,12 @@ import { Sort } from '@angular/material/sort';
 import { ActivatedRoute } from '@angular/router';
 
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
-import { AnimeQueryParams } from '@js-camp/core/models/anime-query-params.model';
 import { QueryParamsService } from '@js-camp/angular/core/services/query-params.service';
 import { SortEventDto, SortEventFieldsDto } from '@js-camp/core/dtos/sort-event.dto';
+import { AnimeQueryParams } from '@js-camp/core/models/anime-query-params.model';
 import { AnimeQueryParamsMapper } from '@js-camp/core/mappers/anime-query-params.mapper';
-import { AnimeQueryParamsUrlMapper } from '@js-camp/core/mappers/anime-query-params-url.mapper';
 import { AnimeQueryParamsUrlDto } from '@js-camp/core/dtos/anime-query-params-url.dto';
+import { AnimeQueryParamsUrlMapper } from '@js-camp/core/mappers/anime-query-params-url.mapper';
 
 /** Url Service. */
 @Injectable({ providedIn: 'root' })
