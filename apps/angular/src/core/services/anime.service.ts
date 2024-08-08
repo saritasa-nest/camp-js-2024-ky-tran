@@ -9,7 +9,7 @@ import { AnimeDto } from '@js-camp/core/dtos/anime';
 import { PaginationMapper } from '@js-camp/angular/core/mappers/pagination';
 import { PaginationDto } from '@js-camp/core/dtos/pagination';
 import { Pagination } from '@js-camp/core/models/pagination';
-import { AnimeMapper } from '@js-camp/core/mappers/anime';
+import { AnimeMapper } from '@js-camp/angular/core/mappers/anime.mapper';
 
 /** Anime service. */
 @Injectable({ providedIn: 'root' })
@@ -29,7 +29,7 @@ export class AnimeService {
 		return this.httpClient
 			.get<PaginationDto<AnimeDto>>(this.urlConfig.animeUrl)
 			.pipe(
-				map(responseDto => this.paginationMapper.fromDto(responseDto, this.animeMapper.fromDto.bind(this.animeMapper))),
+				map(responseDto => this.paginationMapper.fromDto(responseDto, this.animeMapper.fromDto)),
 				catchError((error: unknown) => {
 					if (!this.appConfig.isProduction) {
 						console.error({ error });

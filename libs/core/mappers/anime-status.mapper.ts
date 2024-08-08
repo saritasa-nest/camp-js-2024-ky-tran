@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 import { AnimeStatusDto } from '../dtos/anime';
 import { AnimeStatus } from '../models/anime';
 
@@ -11,13 +9,13 @@ export const STATUS_MAPPING_FROM_DTO: Readonly<Record<AnimeStatusDto, AnimeStatu
 };
 
 /** Anime Status mapper. */
-@Injectable({ providedIn: 'root' })
-export class AnimeStatusMapper {
+export namespace AnimeStatusMapper {
+
 	/**
 	 * Mapping from DTO to Domain model.
 	 * @param statusDto - Anime status dto.
 	 */
-	public fromDto(statusDto: AnimeStatusDto): AnimeStatus {
+	export function fromDto(statusDto: AnimeStatusDto): AnimeStatus {
 		return STATUS_MAPPING_FROM_DTO[statusDto];
 	}
 }
