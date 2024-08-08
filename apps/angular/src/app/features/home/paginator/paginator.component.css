@@ -1,6 +1,6 @@
 .paginator {
 	color: var(--text-color-main);
 	background-color: var(--background-color-primary-bright);
-	font-size: 1.4rem;
+	font-size: var(--font-size-medium);
 	padding: var(--gap-tiny) var(--gap-extra-small);
 }

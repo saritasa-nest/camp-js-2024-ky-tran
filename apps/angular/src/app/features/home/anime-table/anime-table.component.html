@@ -3,10 +3,10 @@
 	mat-table
 	matSort
 	(matSortChange)="onSortChange($event)"
-	[dataSource]="isLoading ? (skeletonAnimeSource$ | async)! : dataSource"
+	[dataSource]="isLoading ? (skeletonAnimeSource$ | async) || [] : dataSource"
 	[trackBy]="trackAnimeById"
-	[matSortActive]="(pageSorter$ | async)!.active"
-	[matSortDirection]="(pageSorter$ | async)!.direction"
+	[matSortActive]="(pageSorter$ | async)?.active || ''"
+	[matSortDirection]="(pageSorter$ | async)?.direction || ''"
 >
 	<ng-container [matColumnDef]="animeColumns.Index">
 		<th class="table-cell table__column_order" mat-header-cell *matHeaderCellDef>#</th>

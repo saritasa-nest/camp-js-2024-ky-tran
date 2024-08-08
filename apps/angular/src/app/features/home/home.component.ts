@@ -54,7 +54,7 @@ export class HomeComponent {
 	protected readonly isLoading$ = new Subject<boolean>();
 
 	/** Error message if something went wrong fetching anime list. */
-	protected readonly error$ = new BehaviorSubject<string>('');
+	protected readonly error$ = new BehaviorSubject('');
 
 	/**
 	 * Page paginator to store page index and page number.
@@ -62,7 +62,7 @@ export class HomeComponent {
 	 * Page number: Number of items to display on a page.
 	 */
 	protected readonly pagePaginator$ = new BehaviorSubject<BaseQueryParams.Paginator>({
-		pageNumber: DEFAULT_PAGE_NUMBER - 1,
+		pageNumber: DEFAULT_PAGE_NUMBER,
 		pageSize: DEFAULT_PAGE_SIZE,
 	});
 

@@ -10,9 +10,11 @@
 <section class="content">
 	<camp-anime-table
 		[isLoading]="isLoading$ | async"
-		[animeList]="(isLoading$ | async) ? [] : (animeList$ | async)?.results || []"
+		[animeList]="(isLoading$ | async)
+			? []
+			: (animeList$ | async)?.results || []"
 		[error]="error$ | async"
-		[pagePaginator]="(pagePaginator$ | async)!"
+		[pagePaginator]="pagePaginator$ | async"
 		(sortChange)="onSortChange($event)"
 	/>
 </section>
@@ -20,7 +22,7 @@
 <footer>
 	<camp-paginator
 		[length]="(animeList$ | async)?.count"
-		[pagePaginator]="(pagePaginator$ | async)!"
+		[pagePaginator]="pagePaginator$ | async"
 		[disabled]="isLoading$ | async"
 		(pageChange)="onPageChange($event)"
 	/>

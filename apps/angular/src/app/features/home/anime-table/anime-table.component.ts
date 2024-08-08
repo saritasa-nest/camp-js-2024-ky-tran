@@ -76,8 +76,8 @@ export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
 
 	/**
 	 * Page paginator to store page index and page number.
-	 * Page index: The zero-based page index of the displayed list of items.
-	 * Page number: Number of items to display on a page.
+	 * Property - pageNumber: Will be converted to the zero-based page index of the displayed list of items.
+	 * Property - pageSize: Number of items to display on a page.
 	 */
 	@Input({ required: true, transform: paginatorAttribute })
 	protected readonly pagePaginator!: BaseQueryParams.Paginator;
@@ -98,9 +98,9 @@ export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
 	protected readonly dataSource = new MatTableDataSource<Anime>();
 
 	/**
-	 * Page paginator to store page index and page number.
-	 * Page index: The zero-based page index of the displayed list of items.
-	 * Page number: Number of items to display on a page.
+	 * Page sorter to store sort field and sort direction dto.
+	 * Property - active: Sort field.
+	 * Property - direction: Sort direction.
 	 */
 	protected readonly pageSorter$ = new BehaviorSubject<SortEventDto>({ active: '', direction: '' });
 
