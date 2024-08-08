@@ -1,3 +1,7 @@
+html {
+	--mat-minimal-pseudo-checkbox-selected-checkmark-color: var(--text-color-main);
+}
+
 .mat-sort-header-container {
 	display: flex;
 	align-items: center;

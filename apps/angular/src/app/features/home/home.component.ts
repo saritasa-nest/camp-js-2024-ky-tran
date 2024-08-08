@@ -3,7 +3,19 @@ import { CommonModule } from '@angular/common';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { MatSelectChange } from '@angular/material/select';
-import { BehaviorSubject, catchError, map, Observable, shareReplay, Subject, switchMap, tap, throwError } from 'rxjs';
+
+import {
+	BehaviorSubject,
+	catchError,
+	map,
+	Observable,
+	shareReplay,
+	Subject,
+	switchMap,
+	tap,
+	throttleTime,
+	throwError,
+} from 'rxjs';
 
 import { QUERY_PARAMS_PROVIDER, QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
@@ -56,6 +68,7 @@ export class HomeComponent {
 
 	public constructor() {
 		this.animeList$ = this.queryParamsProvider$.pipe(
+			throttleTime(500, undefined, { leading: true, trailing: true }),
 			tap(params => {
 				const pagePaginator = { pageNumber: Number(params.pageNumber), pageSize: Number(params.pageSize) };
 				this.pagePaginator$.next(pagePaginator);
