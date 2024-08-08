@@ -4,12 +4,12 @@ import { catchError, map, Observable, throwError } from 'rxjs';
 
 import { AppConfig } from '@js-camp/angular/config/app-config';
 import { UrlConfig } from '@js-camp/angular/config/url-config';
-import { AnimeMapper } from '@js-camp/angular/core/mappers/anime';
 import { Anime } from '@js-camp/core/models/anime';
 import { AnimeDto } from '@js-camp/core/dtos/anime';
 import { PaginationMapper } from '@js-camp/angular/core/mappers/pagination';
 import { PaginationDto } from '@js-camp/core/dtos/pagination';
 import { Pagination } from '@js-camp/core/models/pagination';
+import { AnimeMapper } from '@js-camp/core/mappers/anime';
 
 /** Anime service. */
 @Injectable({ providedIn: 'root' })
@@ -25,14 +25,11 @@ export class AnimeService {
 	private readonly paginationMapper = inject(PaginationMapper);
 
 	/** Get anime list. */
-	public getAll(): Observable<Pagination<Anime>> {
-		const { mapPaginationFromDto } = this.paginationMapper;
-		const mapAnimeFromDto = this.animeMapper.fromDto;
-
+	public getAnimeList(): Observable<Pagination<Anime>> {
 		return this.httpClient
 			.get<PaginationDto<AnimeDto>>(this.urlConfig.animeUrl)
 			.pipe(
-				map(responseDto => mapPaginationFromDto(responseDto, mapAnimeFromDto)),
+				map(responseDto => this.paginationMapper.fromDto(responseDto, this.animeMapper.fromDto.bind(this.animeMapper))),
 				catchError((error: unknown) => {
 					if (!this.appConfig.isProduction) {
 						console.error({ error });

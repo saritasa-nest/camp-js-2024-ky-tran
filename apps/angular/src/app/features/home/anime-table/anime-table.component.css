@@ -8,6 +8,7 @@
 .table td {
 	color: var(--text-color-main);
 	line-height: 1.6;
+	text-align: center;
 }
 
 .table th {

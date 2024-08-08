@@ -1,4 +1,4 @@
-/** Date Range DTO. */
+/** Date range DTO. */
 export type DateRangeDto = Readonly<{
 
 	/**

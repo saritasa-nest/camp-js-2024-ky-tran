@@ -1,3 +1,9 @@
 :host {
 	display: block;
+	min-height: 100vh;
+	color: var(--text-color-main);
+	background-color: var(--background-color-primary);
+	-webkit-font-smoothing: antialiased;
+	line-height: 1.5;
+	padding: var(--gap-large) var(--gap-medium);
 }

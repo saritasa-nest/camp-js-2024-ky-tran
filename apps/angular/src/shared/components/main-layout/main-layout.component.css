@@ -26,11 +26,11 @@
 	padding: var(--gap-small) var(--gap-large);
 }
 
-.sidebar__link.active {
+.sidebar__link.sidebar__link_active {
 	background-color: var(--background-color-primary-bright);
 }
 
-.sidebar__link.disable {
+.sidebar__link.sidebar__link_disable {
 	cursor: not-allowed;
 	text-decoration: line-through;
 }

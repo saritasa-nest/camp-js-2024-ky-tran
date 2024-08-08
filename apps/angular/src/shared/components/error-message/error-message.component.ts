@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
-/** Error Message component. */
+/** Error message component. */
 @Component({
 	selector: 'camp-error-message',
 	standalone: true,

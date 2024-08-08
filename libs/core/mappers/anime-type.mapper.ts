@@ -1,3 +1,5 @@
+import { Injectable } from '@angular/core';
+
 import { AnimeTypeDto } from '../dtos/anime';
 import { AnimeType } from '../models/anime';
 
@@ -12,3 +14,15 @@ export const TYPE_MAPPING_FROM_DTO: Readonly<Record<AnimeTypeDto, AnimeType>> = 
 	[AnimeTypeDto.PromotionalVideos]: AnimeType.PromotionalVideos,
 	[AnimeTypeDto.Unknown]: AnimeType.Unknown,
 };
+
+/** Anime Type mapper. */
+@Injectable({ providedIn: 'root' })
+export class AnimeTypeMapper {
+	/**
+	 * Mapping from dto to domain model.
+	 * @param typeDto - Anime type dto.
+	 */
+	public fromDto(typeDto: AnimeTypeDto): AnimeType {
+		return TYPE_MAPPING_FROM_DTO[typeDto];
+	}
+}

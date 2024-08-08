@@ -13,9 +13,7 @@ import { TableGeneric } from '@js-camp/angular/core/types/table-generic';
 import { AnimeTableColumns } from '@js-camp/core/enums/anime-table-columns';
 import { DATE_FORMAT } from '@js-camp/angular/shared/constants';
 
-const tableGeneric: TableGeneric = {
-	columnKeys: AnimeTableColumns,
-};
+const tableGeneric: TableGeneric = { columnKeys: AnimeTableColumns };
 
 /** Anime Table component. */
 @Component({
@@ -42,16 +40,16 @@ export class AnimeTableComponent {
 	protected readonly animeList$: Observable<Pagination<Anime>>;
 
 	/** Loading status of fetching anime list. */
-	protected readonly isLoading$ = new BehaviorSubject<boolean>(false);
+	protected readonly isLoading$ = new BehaviorSubject(false);
 
 	/** Error message if something went wrong fetching anime list. */
-	protected readonly error$ = new BehaviorSubject<string>('');
+	protected readonly error$ = new BehaviorSubject('');
 
 	public constructor() {
 		this.isLoading$.next(true);
 		this.error$.next('');
 
-		this.animeList$ = this.animeService.getAll().pipe(
+		this.animeList$ = this.animeService.getAnimeList().pipe(
 			catchError((error: unknown) => {
 				const errorMessage = error instanceof Error ? error.message : 'Something went wrong!';
 				this.error$.next(errorMessage);
@@ -60,6 +58,24 @@ export class AnimeTableComponent {
 			}),
 			finalize(() => this.isLoading$.next(false)),
 		);
+	}
+
+	/**
+	 * Get description of an anime image.
+	 * @param anime - Anime.
+	 */
+	protected animeImageDescription(anime: Anime): string {
+		return Anime.getAnimeImageDescription(anime);
+	}
+
+	/**
+	 * Check if list of anime is empty after fetching data.
+	 * @param isLoading - Loading status.
+	 * @param error - Error message.
+	 * @param anime - List of anime.
+	 */
+	protected isNoData(isLoading: boolean | null, error: string | null, anime: readonly Anime[]): boolean {
+		return isLoading === false && error === '' && anime.length === 0;
 	}
 
 	/**
