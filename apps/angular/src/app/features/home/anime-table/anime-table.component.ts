@@ -29,7 +29,6 @@ import { TableGeneric } from '@js-camp/angular/core/types/table-generic.type';
 import { AnimeTableColumns } from '@js-camp/core/enums/anime-table-columns.enum';
 import { QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
 import { SortEventDto } from '@js-camp/core/dtos/sort-event.dto';
-import { SortFields } from '@js-camp/core/models/sort-fields.model';
 import { paginatorAttribute } from '@js-camp/angular/shared/attributes/paginator-attribute';
 import { emptyStringAttribute } from '@js-camp/angular/shared/attributes/empty-string-attribute';
 import { animeListAttribute } from '@js-camp/angular/shared/attributes/anime-list-attribute';
@@ -103,7 +102,7 @@ export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
 	 * Page index: The zero-based page index of the displayed list of items.
 	 * Page number: Number of items to display on a page.
 	 */
-	protected readonly pageSorter$ = new BehaviorSubject<SortEventDto>({ active: '' as SortFields, direction: '' });
+	protected readonly pageSorter$ = new BehaviorSubject<SortEventDto>({ active: '', direction: '' });
 
 	/** A skeleton template for a table while loading. */
 	protected readonly skeletonAnimeSource$ = new BehaviorSubject<Anime[]>(
@@ -173,6 +172,8 @@ export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
 	 * @param pageSize - Page size.
 	 */
 	protected createSkeletonAnimeSource(pageSize: number): Anime[] {
+		// Use 'as Anime' here because we only need id for trackBy function works
+		// All the field with no value will be replaced by skeleton loading
 		return Array.from({ length: pageSize }).map((_, index) => ({ id: index } as Anime));
 	}
 }

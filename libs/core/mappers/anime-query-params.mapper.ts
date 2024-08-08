@@ -4,7 +4,6 @@ import { SortDirection } from '../models/sort-direction.model';
 import { SORT_FIELDS_MAPPING_TO_DTO } from '../records/sort-fields-mapping.record';
 import { TYPE_MAPPING_TO_DTO } from '../records/type-mapping.record';
 import { SortEventDirectionDto, SortEventDto } from '../dtos/sort-event.dto';
-import { SortFields } from '../models/sort-fields.model';
 import { AnimeQueryParams } from '../models/anime-query-params.model';
 import { AnimeQueryParamsDto } from '../dtos/anime-query-params.dto';
 
@@ -65,7 +64,7 @@ export class AnimeQueryParamsMapper {
 			return { sortField: null, sortDirection: null };
 		}
 
-		return { sortField: active, sortDirection };
+		return { sortField: active ? active : null, sortDirection };
 	}
 
 	/**
@@ -87,6 +86,6 @@ export class AnimeQueryParamsMapper {
 			direction = '';
 		}
 
-		return { active: sortField as SortFields, direction };
+		return { active: sortField ? sortField : '', direction };
 	}
 }
