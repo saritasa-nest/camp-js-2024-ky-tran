@@ -10,5 +10,5 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 })
 export class ErrorMessageComponent {
 	/** Error message. */
-	public readonly errorMessage = input<string>('Some thing went wrong! Please try again.');
+	public readonly errorMessage = input('Some thing went wrong! Please try again.');
 }

@@ -9,11 +9,8 @@ import { ProgressSpinnerComponent } from '@js-camp/angular/shared/components/pro
 import { ErrorMessageComponent } from '@js-camp/angular/shared/components/error-message/error-message.component';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { AnimeService } from '@js-camp/angular/core/services/anime.service';
-import { TableGeneric } from '@js-camp/angular/core/types/table-generic';
 import { AnimeTableColumns } from '@js-camp/core/enums/anime-table-columns';
 import { DATE_FORMAT } from '@js-camp/angular/shared/constants';
-
-const tableGeneric: TableGeneric = { columnKeys: AnimeTableColumns };
 
 /** Anime Table component. */
 @Component({
@@ -28,7 +25,7 @@ export class AnimeTableComponent {
 	private readonly animeService = inject(AnimeService);
 
 	/** Anime table column names. */
-	protected readonly animeColumns = tableGeneric.columnKeys;
+	protected readonly animeColumns = AnimeTableColumns;
 
 	/** Column titles of the table. */
 	protected readonly displayedColumns = Object.values(this.animeColumns);
@@ -47,7 +44,6 @@ export class AnimeTableComponent {
 
 	public constructor() {
 		this.isLoading$.next(true);
-		this.error$.next('');
 
 		this.animeList$ = this.animeService.getAnimeList().pipe(
 			catchError((error: unknown) => {
@@ -65,7 +61,7 @@ export class AnimeTableComponent {
 	 * @param anime - Anime.
 	 */
 	protected animeImageDescription(anime: Anime): string {
-		return Anime.getAnimeImageDescription(anime);
+		return anime.englishTitle || anime.japaneseTitle || 'Anime image';
 	}
 
 	/**

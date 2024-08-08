@@ -7,7 +7,7 @@
 .table th,
 .table td {
 	color: var(--text-color-main);
-	line-height: 1.6;
+	line-height: var(--line-height-table);
 	text-align: center;
 }
 
@@ -25,10 +25,6 @@
 
 .table tr:nth-child(even) {
 	background-color: var(--background-color-primary-light);
-}
-
-.table-cell {
-	text-align: center;
 }
 
 .table__column_wide {

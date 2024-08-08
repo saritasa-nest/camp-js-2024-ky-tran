@@ -6,6 +6,12 @@
 	margin-inline: auto;
 }
 
+@media only screen and (max-width: 1320px) {
+	:host {
+		height: calc(100vh - 2 * var(--gap-medium));
+	}
+}
+
 .sidebar {
 	width: var(--width-layout-sub);
 	border-right: var(--width-border-small) solid var(--border-color-main);
@@ -39,10 +45,4 @@
 	flex-grow: 1;
 	flex-basis: 0;
 	padding: var(--gap-medium) var(--gap-medium);
-}
-
-@media only screen and (max-width: 1320px) {
-	:host {
-		height: calc(100vh - 2 * var(--gap-medium));
-	}
 }

@@ -1,5 +1,5 @@
 @if ({
-	results: (animeList$ | async)?.results || []
+	results: (animeList$ | async)?.results ?? []
 }; as animeList) {
 	<table mat-table [dataSource]="animeList.results" class="table" [trackBy]="trackAnimeById">
 		<ng-container [matColumnDef]="animeColumns.Index">
@@ -46,14 +46,19 @@
 
 		<tr class="mat-row" *matNoDataRow>
 			<td class="mat-cell table__no-data-row" colspan="7">
-				@if (isLoading$ | async) {
-					<camp-progress-spinner />
-				}
-				@if (error$ | async; as errorMessage) {
-					<camp-error-message [errorMessage]="errorMessage" />
-				}
-				@if (isNoData(isLoading$ | async, error$ | async, animeList.results)) {
-					<p slot="table-skeleton-content">There is no anime to display.</p>
+				@if ({
+					errorMessage: error$ | async,
+					isLoading: isLoading$ | async,
+				}; as data) {e
+					@if (data.isLoading) {
+						<camp-progress-spinner />
+					}
+					@if (data.errorMessage) {
+						<camp-error-message [errorMessage]="data.errorMessage" />
+					}
+					@if (isNoData(data.isLoading, data.errorMessage, animeList.results)) {
+						<p slot="table-skeleton-content">There is no anime to display.</p>
+					}
 				}
 			</td>
 		</tr>

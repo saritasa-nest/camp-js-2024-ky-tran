@@ -61,15 +61,3 @@ export type Anime = Readonly<{
 	/** An array of IDs representing the genres of the anime. */
 	genreIds: readonly number[];
 }>;
-
-/** Anim namespace. */
-export namespace Anime {
-
-	/**
-	 * Get description of an anime image.
-	 * @param anime - Anime.
-	 */
-	export function getAnimeImageDescription(anime: Anime): string {
-		return anime.englishTitle || anime.japaneseTitle || 'Anime image';
-	}
-}

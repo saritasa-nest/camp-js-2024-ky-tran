@@ -31,5 +31,8 @@
 	--font-size-extra-large: 2.4rem;
 
 	/* Util */
+	--line-height-title: 1;
+	--line-height-body: 1.5;
+	--line-height-table: 1.6;
 	--box-shadow-scrollbar: 0 3px 13px 1px #0000001f;
 }

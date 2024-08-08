@@ -7,7 +7,7 @@
 
 .header__title {
 	font-size: var(--font-size-extra-large);
-	line-height: 1;
+	line-height: var(--line-height-title);
 }
 
 .content {
