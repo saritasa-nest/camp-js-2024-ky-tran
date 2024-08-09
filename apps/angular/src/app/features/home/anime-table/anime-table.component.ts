@@ -57,21 +57,28 @@ import { SortEventMapper } from '@js-camp/core/mappers/sort-event.mapper';
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
-	@ViewChild(MatSort)
-	private readonly sort!: MatSort;
+export class AnimeTableComponent  {
 
+	// TODO (Ky Tran): Check this article:
 	/** Anime list. */
 	@Input({ required: true, transform: animeListAttribute })
-	public animeList!: readonly Anime[];
+	public set animeList(values: readonly Anime[]) {
+		this.dataSource.data = [...values];
+	};
 
 	/** Loading status of fetching anime list. */
 	@Input({ required: true, transform: booleanAttribute })
-	public isLoading!: boolean;
+	public isLoading = false;
 
 	/** Error message if something went wrong fetching anime list. */
 	@Input({ required: true, transform: emptyStringAttribute })
-	public error!: string;
+	public error(value: string){
+		this.snackBar.openFromComponent(SnackbarComponent, {
+			verticalPosition: 'top',
+			horizontalPosition: 'right',
+			data: { errorMessage: value },
+		});
+	};
 
 	/**
 	 * Page paginator to store page index and page number.
@@ -117,7 +124,7 @@ export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
 	/** Date format. */
 	protected readonly dateFormat = DATE_FORMAT;
 
-	/** On Init. */
+	/** @inheritdoc */
 	public ngOnInit(): void {
 		this.queryParamsProvider$
 			.pipe(takeUntilDestroyed(this.destroyRef))
@@ -127,28 +134,7 @@ export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
 			});
 	}
 
-	/** On Changes.
-	 * @param changes SimpleChanges.
-	 */
-	public ngOnChanges(changes: SimpleChanges): void {
-		if (changes['animeList']) {
-			this.dataSource.data = [...this.animeList];
-		}
-
-		if (changes['error']?.currentValue) {
-			this.snackBar.openFromComponent(SnackbarComponent, {
-				verticalPosition: 'top',
-				horizontalPosition: 'right',
-				data: { errorMessage: changes['error'].currentValue },
-			});
-		}
-	}
-
-	/** After View Init. */
-	public ngAfterViewInit(): void {
-		this.dataSource.sort = this.sort;
-	}
-
+	// TODO (Ky Tran): Use matSortMapper here
 	/**
 	 * Sort change event handler.
 	 * @param sortEvent Sort event.

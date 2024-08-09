@@ -8,7 +8,7 @@ import { AnimeQueryParams } from '@js-camp/core/models/anime-query-params';
 import { AnimeQueryParamsUrlDto } from '@js-camp/core/dtos/anime-query-params-url.dto';
 import { AnimeQueryParamsMapper } from '@js-camp/core/mappers/anime-query-params.mapper';
 import { AnimeQueryParamsUrlMapper } from '@js-camp/core/mappers/anime-query-params-url.mapper';
-
+// TODO (Ky Tran): File name should be match with its functions.
 /** Url Service. */
 @Injectable({ providedIn: 'root' })
 export class UrlService {
@@ -32,6 +32,7 @@ export class UrlService {
 		, new HttpParams());
 	}
 
+	// TODO (Ky Tran): Only need to use params
 	/**
 	 * Updates the URL query params.
 	 * @param params The provided query params.

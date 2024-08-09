@@ -1,6 +1,8 @@
 import { SortFieldsUrlDto } from '../dtos/sort-fields-url.dto';
 import { SortFields } from '../models/sort-fields';
 
+// TODO (Ky Tran): Update Url to Query param
+
 /** Mapping from DTO to Domain model. */
 export const SORT_FIELDS_URL_MAPPING_FROM_DTO: Readonly<Record<SortFieldsUrlDto, SortFields>> = {
 	[SortFieldsUrlDto.EnglishTitle]: SortFields.EnglishTitle,

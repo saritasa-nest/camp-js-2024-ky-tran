@@ -5,5 +5,6 @@ import { Anime } from '@js-camp/core/models/anime';
  * @param animeList List of anime.
  */
 export function animeListAttribute(animeList: readonly Anime[] | null): readonly Anime[] {
+	// TODO (Ky Tran): Use typeguard
 	return animeList ? animeList : [] as readonly Anime[];
 }

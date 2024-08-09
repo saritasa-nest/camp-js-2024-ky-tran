@@ -1,6 +1,6 @@
 <header class="header">
 	<h2 class="header__title">Onii-Chan Baka Hentai</h2>
-
+	<!-- TODO (Ky Tran): Use @if or ngIf for isLoading -->
 	<div class="header__actions">
 		<camp-filter [disabled]="isLoading$ | async" (selectionChange)="onSelectionChange($event)" />
 		<camp-search [disabled]="isLoading$ | async" (searchChange)="onSearchChange($event)" />

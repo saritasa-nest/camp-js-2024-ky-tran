@@ -9,13 +9,12 @@ import {
 	OnInit,
 	Output,
 } from '@angular/core';
-
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-
 import { QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
 import { AnimeType } from '@js-camp/core/models/anime';
+import { AsyncPipe } from '@angular/common';
 
 /** Filter component. */
 @Component({
@@ -23,34 +22,35 @@ import { AnimeType } from '@js-camp/core/models/anime';
 	standalone: true,
 	templateUrl: './filter.component.html',
 	styleUrl: './filter.component.css',
-	imports: [MatFormFieldModule, MatSelectModule],
+	imports: [MatFormFieldModule, MatSelectModule, AsyncPipe],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FilterComponent implements OnInit {
+export class FilterComponent  {
 	/** Whether the filter select is disabled. */
 	@Input({ transform: booleanAttribute })
 	protected readonly disabled = false;
 
+	// TODO (Ky Tran): Emit filter
 	/** Selection change event emitter. */
 	@Output()
 	public readonly selectionChange = new EventEmitter<MatSelectChange>();
 
-	private readonly queryParamsProvider$ = inject(QUERY_PARAMS_TOKEN);
+	protected readonly queryParamsProvider$ = inject(QUERY_PARAMS_TOKEN);
 
 	private readonly destroyRef = inject(DestroyRef);
 
 	/** Selected anime type. */
-	protected selectedType: AnimeType | null = null;
+	// protected selectedType: AnimeType | null = null;
 
 	/** Anime types. */
 	protected readonly animeTypes = Object.values(AnimeType);
 
-	/** On Init. */
-	public ngOnInit(): void {
-		this.queryParamsProvider$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(({ type }) => {
-			this.selectedType = type;
-		});
-	}
+	// /** On Init. */
+	// public ngOnInit(): void {
+	// 	this.queryParamsProvider$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(({ type }) => {
+	// 		this.selectedType = type;
+	// 	});
+	// }
 
 	/**
 	 * Selection change event handler.

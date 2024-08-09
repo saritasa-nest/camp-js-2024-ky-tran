@@ -18,6 +18,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 import { QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
+import { distinctUntilChanged } from 'rxjs';
 
 /** Search component. */
 @Component({
@@ -49,7 +50,14 @@ export class SearchComponent implements OnInit, OnChanges {
 		this.queryParamsProvider$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(({ search }) => {
 			this.searchControl = new FormControl<string>({ value: search ? search.trim() : '', disabled: false });
 		});
+		// const searchResults$ = this.searchControl.valueChanges.pipe(
+		// 	distinctUntilChanged()
+		// )
+		// TODO Tao mot cai observable o day
+		// searchResult$ = this.searchControl.valueChanages
 	}
+
+	// private initializeSearchControlSideEffect
 
 	/**
 	 * On Changes.
@@ -58,9 +66,16 @@ export class SearchComponent implements OnInit, OnChanges {
 	public ngOnChanges(changes: SimpleChanges): void {
 		if (changes['disabled']) {
 			const { currentValue: isDisabled } = changes['disabled'];
+			// TODO Use this.searchControl.disable();
 			this.searchControl[isDisabled ? 'disable' : 'enable']();
 		}
 	}
+
+	// public onSearchClick() {
+	// 	searchResults$.subscribe()
+	// }
+
+	// TODO Research https://rxjs.dev/api/operators/distinctUntilChanged
 
 	/** Search change fired when enter is hit to emit search value event. */
 	protected onSearchChange = this.onSearchChangeCache(this);

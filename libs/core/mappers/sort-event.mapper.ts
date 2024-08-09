@@ -5,6 +5,7 @@ import { SortDirection } from '../models/sort-direction';
 /** Sort event mapper. */
 export namespace SortEventMapper {
 
+	// TODO (Ky Tran): Enhance below logic
 	/**
 	 * Sort event from DTO to domain model.
 	 * @param dto DTO.

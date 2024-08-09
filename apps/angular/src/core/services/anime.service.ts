@@ -17,11 +17,13 @@ export class AnimeService {
 
 	private readonly urlConfig = inject(UrlConfig);
 
+	// TODO (Ky Tran): Use FilterParams instead of HttpParams
 	/**
 	 * Get anime list.
 	 * @param httpParams HttpParams.
 	 */
 	public getAnimeList(httpParams: HttpParams): Observable<Pagination<Anime>> {
+
 		return this.httpClient.get<PaginationDto<AnimeDto>>(this.urlConfig.animeUrl, { params: httpParams })
 			.pipe(
 				map(responseDto => PaginationMapper.fromDto(responseDto, AnimeMapper.fromDto)),

@@ -1,3 +1,4 @@
+// TODO (Ky Tran): Use 1 approach
 /** Pagination type. */
 export type Pagination<T> = Readonly<{
 
