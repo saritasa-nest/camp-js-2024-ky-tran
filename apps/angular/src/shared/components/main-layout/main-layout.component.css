@@ -6,6 +6,12 @@
 	margin-inline: auto;
 }
 
+@media only screen and (max-width: 1320px) {
+	:host {
+		height: calc(100vh - 2 * var(--gap-medium));
+	}
+}
+
 .sidebar {
 	display: flex;
 	flex-direction: column;

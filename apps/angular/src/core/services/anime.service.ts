@@ -8,7 +8,7 @@ import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
 import { PaginationMapper } from '@js-camp/angular/core/mappers/pagination.mapper';
 import { Anime } from '@js-camp/core/models/anime.model';
 import { AnimeDto } from '@js-camp/core/dtos/anime.dto';
-import { AnimeMapper } from '@js-camp/angular/core/mappers/anime.mapper';
+import { AnimeMapper } from '@js-camp/core/mappers/anime.mapper';
 
 /** Anime service. */
 @Injectable({ providedIn: 'root' })
@@ -16,8 +16,6 @@ export class AnimeService {
 	private readonly httpClient = inject(HttpClient);
 
 	private readonly urlConfig = inject(UrlConfig);
-
-	private readonly animeMapper = inject(AnimeMapper);
 
 	private readonly paginationMapper = inject(PaginationMapper);
 
@@ -28,7 +26,7 @@ export class AnimeService {
 	public getAnimeList(httpParams: HttpParams): Observable<Pagination<Anime>> {
 		return this.httpClient.get<PaginationDto<AnimeDto>>(this.urlConfig.animeUrl, { params: httpParams })
 			.pipe(
-				map(responseDto => this.paginationMapper.fromDto(responseDto, this.animeMapper.fromDto)),
+				map(responseDto => this.paginationMapper.fromDto(responseDto, AnimeMapper.fromDto)),
 				shareReplay({ refCount: true, bufferSize: 1 }),
 				catchError((_: unknown) => throwError(() => new Error('Something went wrong. Please try again.'))),
 			);

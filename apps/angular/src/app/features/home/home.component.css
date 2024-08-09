@@ -14,8 +14,8 @@
 }
 
 .header__title {
-	font-size: var(--font-size-large);
-	line-height: 1;
+	font-size: var(--font-size-extra-large);
+	line-height: var(--line-height-title);
 }
 
 .header__actions {

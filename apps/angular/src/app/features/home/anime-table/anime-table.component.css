@@ -7,7 +7,7 @@
 .table th,
 .table td {
 	color: var(--text-color-main);
-	line-height: 1.6;
+	line-height: var(--line-height-table);
 	text-align: center;
 }
 

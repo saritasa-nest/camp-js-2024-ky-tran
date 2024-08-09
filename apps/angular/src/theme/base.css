@@ -9,24 +9,9 @@
 html {
 	box-sizing: border-box;
 	font-size: var(--font-size-root);
-
-	/* Hide scrollbar on Firefox, Safari */
-	scrollbar-width: none;
-	-ms-overflow-style: none;
-}
-
-/* Hide scrollbar on Google Chrome. */
-html::-webkit-scrollbar {
-	display: none;
 }
 
 body {
 	font-family: Roboto, "Helvetica Neue", sans-serif;
 	font-size: var(--font-size-extra-medium);
-}
-
-@media only screen and (max-width: 1320px) {
-	body {
-		padding: var(--gap-medium);
-	}
 }

@@ -25,7 +25,6 @@ import { DATE_FORMAT, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constant
 import { Anime } from '@js-camp/core/models/anime.model';
 import { NullablePipe } from '@js-camp/angular/core/pipes/nullable.pipe';
 import { ProgressSpinnerComponent } from '@js-camp/angular/shared/components/progress-spinner/progress-spinner.component';
-import { TableGeneric } from '@js-camp/angular/core/types/table-generic.type';
 import { AnimeTableColumns } from '@js-camp/core/enums/anime-table-columns.enum';
 import { QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
 import { SortEventDto } from '@js-camp/core/dtos/sort-event.dto';
@@ -37,8 +36,6 @@ import { SnackbarComponent } from '@js-camp/angular/shared/components/error-snac
 import { LazyLoadImageDirective } from '@js-camp/angular/shared/directives/lazy-load-image.directive';
 import { BaseQueryParams } from '@js-camp/core/models/base-query-params.model';
 import { SkeletonCellComponent } from '@js-camp/angular/app/features/home/anime-table/skeleton-cell/skeleton-cell.component';
-
-const tableGeneric: TableGeneric = { columnKeys: AnimeTableColumns };
 
 /** Anime Table component. */
 @Component({
@@ -110,7 +107,7 @@ export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
 	);
 
 	/** Anime table column names. */
-	protected readonly animeColumns = tableGeneric.columnKeys;
+	protected readonly animeColumns = AnimeTableColumns;
 
 	/** Column titles of the table. */
 	protected readonly displayedColumns = Object.values(this.animeColumns);
