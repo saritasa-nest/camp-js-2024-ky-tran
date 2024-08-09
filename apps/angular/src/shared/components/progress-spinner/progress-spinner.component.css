@@ -1,0 +1,8 @@
+:host {
+	display: flex;
+	justify-content: center;
+}
+
+.spinner {
+	--mdc-circular-progress-active-indicator-color: var(--text-color-main);
+}

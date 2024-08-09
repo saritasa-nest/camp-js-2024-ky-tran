@@ -1,0 +1,7 @@
+:host {
+	text-align: center;
+}
+
+.error-message {
+	color: var(--error-color-main);
+}

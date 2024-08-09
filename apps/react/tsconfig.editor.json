@@ -3,5 +3,9 @@
   "include": ["**/*.ts", "../../libs"],
   "compilerOptions": {
     "types": ["node"]
+  },
+	"angularCompilerOptions": {
+    "strictTemplates": true,
+    "strictInjectionParameters": true
   }
 }
