@@ -15,7 +15,7 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@js-camp/angular/shared/constants';
 import { paginatorAttribute } from '@js-camp/angular/shared/attributes/paginator-attribute';
-import { BaseQueryParams } from '@js-camp/core/models/base-query-params.model';
+import { BaseQueryParams } from '@js-camp/core/models/base-query-params';
 import { NonNullableFields } from '@js-camp/core/types/non-nullable-fields';
 
 /** Paginator Component. */

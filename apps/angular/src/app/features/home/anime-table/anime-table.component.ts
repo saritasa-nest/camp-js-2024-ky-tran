@@ -22,7 +22,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject } from 'rxjs';
 
 import { DATE_FORMAT, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
-import { Anime } from '@js-camp/core/models/anime.model';
+import { Anime } from '@js-camp/core/models/anime';
 import { NullablePipe } from '@js-camp/angular/core/pipes/nullable.pipe';
 import { ProgressSpinnerComponent } from '@js-camp/angular/shared/components/progress-spinner/progress-spinner.component';
 import { AnimeTableColumns } from '@js-camp/core/enums/anime-table-columns.enum';
@@ -34,7 +34,7 @@ import { animeListAttribute } from '@js-camp/angular/shared/attributes/anime-lis
 import { UrlService } from '@js-camp/angular/core/services/url.service';
 import { SnackbarComponent } from '@js-camp/angular/shared/components/error-snack-bar/error-snack-bar.component';
 import { LazyLoadImageDirective } from '@js-camp/angular/shared/directives/lazy-load-image.directive';
-import { BaseQueryParams } from '@js-camp/core/models/base-query-params.model';
+import { BaseQueryParams } from '@js-camp/core/models/base-query-params';
 import { SkeletonCellComponent } from '@js-camp/angular/app/features/home/anime-table/skeleton-cell/skeleton-cell.component';
 import { NonNullableFields } from '@js-camp/core/types/non-nullable-fields';
 import { SortEventMapper } from '@js-camp/core/mappers/sort-event.mapper';

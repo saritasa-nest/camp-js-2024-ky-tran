@@ -1,5 +1,5 @@
 import { AnimeTypeDto } from '../dtos/anime.dto';
-import { AnimeType } from '../models/anime.model';
+import { AnimeType } from '../models/anime';
 
 /** Mapping from DTO to domain model. */
 export const TYPE_MAPPING_FROM_DTO: Readonly<Record<AnimeTypeDto, AnimeType>> = {

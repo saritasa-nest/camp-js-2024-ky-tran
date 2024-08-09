@@ -1,7 +1,7 @@
-import { SortDirection } from './sort-direction.model';
-import { AnimeType } from './anime.model';
-import { SortFields } from './sort-fields.model';
-import { BaseQueryParams } from './base-query-params.model';
+import { SortDirection } from './sort-direction';
+import { AnimeType } from './anime';
+import { SortFields } from './sort-fields';
+import { BaseQueryParams } from './base-query-params';
 
 /** Anime query params domain model. */
 export namespace AnimeQueryParams {

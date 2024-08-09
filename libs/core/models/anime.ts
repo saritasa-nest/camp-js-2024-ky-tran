@@ -1,4 +1,4 @@
-import { DateRange } from './date-range.model';
+import { DateRange } from './date-range';
 
 /** Anime type. */
 export enum AnimeType {

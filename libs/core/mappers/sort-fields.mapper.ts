@@ -1,4 +1,4 @@
-import { SortFields } from '../models/sort-fields.model';
+import { SortFields } from '../models/sort-fields';
 import { SortFieldsDto } from '../dtos/sort-fields.dto';
 
 /** Mapping from DTO to Domain model. */

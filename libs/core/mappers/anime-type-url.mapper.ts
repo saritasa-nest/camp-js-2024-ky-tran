@@ -1,4 +1,4 @@
-import { AnimeType } from '../models/anime.model';
+import { AnimeType } from '../models/anime';
 import { AnimeTypeUrlDto } from '../dtos/anime-type-url.dto';
 
 /** Mapping from DTO to domain model. */

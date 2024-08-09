@@ -2,7 +2,7 @@ import { InjectionToken, Provider } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, Observable, shareReplay } from 'rxjs';
 
-import { AnimeQueryParams } from '@js-camp/core/models/anime-query-params.model';
+import { AnimeQueryParams } from '@js-camp/core/models/anime-query-params';
 import { AnimeQueryParamsUrlDto } from '@js-camp/core/dtos/anime-query-params-url.dto';
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
 import { AnimeQueryParamsUrlMapper } from '@js-camp/core/mappers/anime-query-params-url.mapper';

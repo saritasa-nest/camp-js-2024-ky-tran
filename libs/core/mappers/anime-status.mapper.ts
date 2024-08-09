@@ -1,5 +1,5 @@
 import { AnimeStatusDto } from '../dtos/anime.dto';
-import { AnimeStatus } from '../models/anime.model';
+import { AnimeStatus } from '../models/anime';
 
 /** Mapping from dto to domain model. */
 export const STATUS_MAPPING_FROM_DTO: Readonly<Record<AnimeStatusDto, AnimeStatus>> = {

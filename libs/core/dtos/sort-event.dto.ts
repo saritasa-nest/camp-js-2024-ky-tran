@@ -1,4 +1,4 @@
-import { SortFields } from '../models/sort-fields.model';
+import { SortFields } from '../models/sort-fields';
 
 export type SortEventFieldsDto = SortFields.EnglishTitle | SortFields.AiredStartDate | SortFields.Status | '';
 

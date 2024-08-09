@@ -1,4 +1,4 @@
-import { SortDirection } from '../models/sort-direction.model';
+import { SortDirection } from '../models/sort-direction';
 import { SortDirectionUrlDto } from '../dtos/sort-direction-url.dto';
 
 /** Mapping from DTO to domain model. */

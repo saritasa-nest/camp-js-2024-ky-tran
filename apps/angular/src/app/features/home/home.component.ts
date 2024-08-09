@@ -25,10 +25,10 @@ import { SearchComponent } from '@js-camp/angular/app/features/home/search/searc
 import { PaginatorComponent } from '@js-camp/angular/app/features/home/paginator/paginator.component';
 import { AnimeService } from '@js-camp/angular/core/services/anime.service';
 import { UrlService } from '@js-camp/angular/core/services/url.service';
-import { Anime } from '@js-camp/core/models/anime.model';
-import { Pagination } from '@js-camp/core/models/pagination.model';
+import { Anime } from '@js-camp/core/models/anime';
+import { Pagination } from '@js-camp/core/models/pagination';
 import { toggleExecutionState } from '@js-camp/angular/shared/utils/rxjs/toggleExecutionState';
-import { BaseQueryParams } from '@js-camp/core/models/base-query-params.model';
+import { BaseQueryParams } from '@js-camp/core/models/base-query-params';
 import { SortEventMapper } from '@js-camp/core/mappers/sort-event.mapper';
 import { SortEventFieldsDto } from '@js-camp/core/dtos/sort-event.dto';
 

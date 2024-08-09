@@ -1,5 +1,5 @@
 import { AnimeDto } from '../dtos/anime.dto';
-import { Anime } from '../models/anime.model';
+import { Anime } from '../models/anime';
 
 import { AnimeStatusMapper } from './anime-status.mapper';
 import { AnimeTypeMapper } from './anime-type.mapper';

@@ -1,5 +1,5 @@
 import { AnimeQueryParamsUrlDto } from '../dtos/anime-query-params-url.dto';
-import { AnimeQueryParams } from '../models/anime-query-params.model';
+import { AnimeQueryParams } from '../models/anime-query-params';
 
 import { AnimeTypeUrlMapper } from './anime-type-url.mapper';
 import { SortFieldsUrlMapper } from './sort-fields-url.mapper';

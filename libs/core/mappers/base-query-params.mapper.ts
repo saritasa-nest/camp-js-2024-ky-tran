@@ -1,5 +1,5 @@
 import { BaseQueryParamsDto } from '../dtos/base-query-params.dto';
-import { BaseQueryParams } from '../models/base-query-params.model';
+import { BaseQueryParams } from '../models/base-query-params';
 import { BaseQueryParamsUrlDto } from '../dtos/base-query-params-url.dto';
 
 /** Base query params mapper. */

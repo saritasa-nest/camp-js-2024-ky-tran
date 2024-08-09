@@ -1,5 +1,5 @@
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
-import { BaseQueryParams } from '@js-camp/core/models/base-query-params.model';
+import { BaseQueryParams } from '@js-camp/core/models/base-query-params';
 import { NonNullableFields } from '@js-camp/core/types/non-nullable-fields';
 
 /**

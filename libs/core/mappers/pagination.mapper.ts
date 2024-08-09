@@ -1,4 +1,4 @@
-import { Pagination } from '../models/pagination.model';
+import { Pagination } from '../models/pagination';
 
 /** Pagination mapper. */
 export namespace PaginationMapper {

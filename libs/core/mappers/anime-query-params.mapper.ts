@@ -1,5 +1,5 @@
-import { SortDirection } from '../models/sort-direction.model';
-import { AnimeQueryParams } from '../models/anime-query-params.model';
+import { SortDirection } from '../models/sort-direction';
+import { AnimeQueryParams } from '../models/anime-query-params';
 import { AnimeQueryParamsDto } from '../dtos/anime-query-params.dto';
 
 import { BaseQueryParamsMapper } from './base-query-params.mapper';

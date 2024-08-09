@@ -1,6 +1,6 @@
 import { SortEventDirectionDto, SortEventDto } from '../dtos/sort-event.dto';
-import { AnimeQueryParams } from '../models/anime-query-params.model';
-import { SortDirection } from '../models/sort-direction.model';
+import { AnimeQueryParams } from '../models/anime-query-params';
+import { SortDirection } from '../models/sort-direction';
 
 /** Sort event mapper. */
 export namespace SortEventMapper {

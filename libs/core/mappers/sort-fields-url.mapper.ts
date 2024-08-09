@@ -1,5 +1,5 @@
 import { SortFieldsUrlDto } from '../dtos/sort-fields-url.dto';
-import { SortFields } from '../models/sort-fields.model';
+import { SortFields } from '../models/sort-fields';
 
 /** Mapping from DTO to Domain model. */
 export const SORT_FIELDS_URL_MAPPING_FROM_DTO: Readonly<Record<SortFieldsUrlDto, SortFields>> = {

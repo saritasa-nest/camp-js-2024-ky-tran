@@ -15,7 +15,7 @@ import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
-import { AnimeType } from '@js-camp/core/models/anime.model';
+import { AnimeType } from '@js-camp/core/models/anime';
 
 /** Filter component. */
 @Component({
