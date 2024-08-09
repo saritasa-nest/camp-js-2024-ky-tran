@@ -1,5 +1,5 @@
 import { booleanAttribute, ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
-import { AsyncPipe, CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSortModule, Sort } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -30,7 +30,6 @@ import { SortEventMapper } from '@js-camp/core/mappers/sort-event.mapper';
 	styleUrl: './anime-table.component.css',
 	imports: [
 		CommonModule,
-		AsyncPipe,
 		MatTableModule,
 		MatSortModule,
 		ProgressSpinnerComponent,

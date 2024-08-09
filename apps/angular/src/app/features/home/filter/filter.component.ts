@@ -1,20 +1,10 @@
-import {
-	booleanAttribute,
-	ChangeDetectionStrategy,
-	Component,
-	DestroyRef,
-	EventEmitter,
-	inject,
-	Input,
-	OnInit,
-	Output,
-} from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
 import { AnimeType } from '@js-camp/core/models/anime';
-import { AsyncPipe } from '@angular/common';
 
 /** Filter component. */
 @Component({
@@ -22,10 +12,10 @@ import { AsyncPipe } from '@angular/common';
 	standalone: true,
 	templateUrl: './filter.component.html',
 	styleUrl: './filter.component.css',
-	imports: [MatFormFieldModule, MatSelectModule, AsyncPipe],
+	imports: [CommonModule, MatFormFieldModule, MatSelectModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FilterComponent  {
+export class FilterComponent {
 	/** Whether the filter select is disabled. */
 	@Input({ transform: booleanAttribute })
 	protected readonly disabled = false;
