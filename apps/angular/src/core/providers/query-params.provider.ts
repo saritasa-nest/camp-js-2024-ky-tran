@@ -26,11 +26,7 @@ export const QUERY_PARAMS_PROVIDER: readonly Provider[] = [
 function queryParamsFactory(activatedRoute: ActivatedRoute): Observable<AnimeQueryParams.Combined> {
 	return activatedRoute.queryParams.pipe(
 		map((params: AnimeQueryParamsUrlDto.Combined | Partial<AnimeQueryParamsUrlDto.Combined>) =>
-			AnimeQueryParamsUrlMapper.fromUrlDto(
-				params as AnimeQueryParamsUrlDto.Combined,
-				DEFAULT_PAGE_NUMBER,
-				DEFAULT_PAGE_SIZE,
-			)),
+			AnimeQueryParamsUrlMapper.fromUrlDto(params as AnimeQueryParamsUrlDto.Combined, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE)),
 		shareReplay({ refCount: true, bufferSize: 1 }),
 	);
 }

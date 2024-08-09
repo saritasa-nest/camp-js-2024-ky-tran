@@ -1,26 +1,10 @@
-import {
-	AfterViewInit,
-	booleanAttribute,
-	ChangeDetectionStrategy,
-	Component,
-	DestroyRef,
-	EventEmitter,
-	inject,
-	Input,
-	OnChanges,
-	OnInit,
-	Output,
-	SimpleChanges,
-	ViewChild,
-} from '@angular/core';
-
+import { booleanAttribute, ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
+import { MatSortModule, Sort } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { BehaviorSubject } from 'rxjs';
-
+import { BehaviorSubject, tap } from 'rxjs';
 import { DATE_FORMAT, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
 import { Anime } from '@js-camp/core/models/anime';
 import { NullablePipe } from '@js-camp/angular/core/pipes/nullable.pipe';
@@ -31,7 +15,6 @@ import { SortEventDto } from '@js-camp/core/dtos/sort-event.dto';
 import { paginatorAttribute } from '@js-camp/angular/shared/attributes/paginator-attribute';
 import { emptyStringAttribute } from '@js-camp/angular/shared/attributes/empty-string-attribute';
 import { animeListAttribute } from '@js-camp/angular/shared/attributes/anime-list-attribute';
-import { UrlService } from '@js-camp/angular/core/services/url.service';
 import { SnackbarComponent } from '@js-camp/angular/shared/components/error-snack-bar/error-snack-bar.component';
 import { LazyLoadImageDirective } from '@js-camp/angular/shared/directives/lazy-load-image.directive';
 import { BaseQueryParams } from '@js-camp/core/models/base-query-params';
@@ -57,14 +40,12 @@ import { SortEventMapper } from '@js-camp/core/mappers/sort-event.mapper';
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AnimeTableComponent  {
-
-	// TODO (Ky Tran): Check this article:
+export class AnimeTableComponent implements OnInit {
 	/** Anime list. */
 	@Input({ required: true, transform: animeListAttribute })
 	public set animeList(values: readonly Anime[]) {
 		this.dataSource.data = [...values];
-	};
+	}
 
 	/** Loading status of fetching anime list. */
 	@Input({ required: true, transform: booleanAttribute })
@@ -72,13 +53,15 @@ export class AnimeTableComponent  {
 
 	/** Error message if something went wrong fetching anime list. */
 	@Input({ required: true, transform: emptyStringAttribute })
-	public error(value: string){
-		this.snackBar.openFromComponent(SnackbarComponent, {
-			verticalPosition: 'top',
-			horizontalPosition: 'right',
-			data: { errorMessage: value },
-		});
-	};
+	public set error(value: string) {
+		if (value !== '') {
+			this.snackBar.openFromComponent(SnackbarComponent, {
+				verticalPosition: 'top',
+				horizontalPosition: 'right',
+				data: { errorMessage: value },
+			});
+		}
+	}
 
 	/**
 	 * Page paginator to store page index and page number.
@@ -86,22 +69,20 @@ export class AnimeTableComponent  {
 	 * Property - pageSize: Number of items to display on a page.
 	 */
 	@Input({ required: true, transform: paginatorAttribute })
-	protected readonly pagePaginator!: NonNullableFields<BaseQueryParams.Paginator>;
+	protected readonly pagePaginator: NonNullableFields<BaseQueryParams.Paginator> | null = null;
 
 	/** Sort change event emitter. */
 	@Output()
 	public readonly sortChange = new EventEmitter<Sort>();
 
-	private readonly queryParamsProvider$ = inject(QUERY_PARAMS_TOKEN);
-
 	private readonly destroyRef = inject(DestroyRef);
-
-	private readonly urlService = inject(UrlService);
 
 	private readonly snackBar = inject(MatSnackBar);
 
 	/** Convert the list to MatTableDataSource to use MatSort. */
 	protected readonly dataSource = new MatTableDataSource<Anime>();
+
+	private readonly queryParamsProvider$ = inject(QUERY_PARAMS_TOKEN);
 
 	/**
 	 * Page sorter to store sort field and sort direction dto.
@@ -127,11 +108,14 @@ export class AnimeTableComponent  {
 	/** @inheritdoc */
 	public ngOnInit(): void {
 		this.queryParamsProvider$
-			.pipe(takeUntilDestroyed(this.destroyRef))
-			.subscribe(({ pageSize, sortField, sortDirection }) => {
-				this.pageSorter$.next(SortEventMapper.toDto({ sortField, sortDirection }));
-				this.skeletonAnimeSource$.next(this.createSkeletonAnimeSource(pageSize ?? DEFAULT_PAGE_SIZE));
-			});
+			.pipe(
+				takeUntilDestroyed(this.destroyRef),
+				tap(({ pageSize, sortField, sortDirection }) => {
+					this.pageSorter$.next(SortEventMapper.toDto({ sortField, sortDirection }));
+					this.skeletonAnimeSource$.next(this.createSkeletonAnimeSource(pageSize ?? DEFAULT_PAGE_SIZE));
+				}),
+			)
+			.subscribe();
 	}
 
 	// TODO (Ky Tran): Use matSortMapper here
@@ -144,21 +128,19 @@ export class AnimeTableComponent  {
 	}
 
 	/**
+	 * Calculate the order of a table row.
+	 * @param rowIndex The index of a table row.
+	 */
+	protected rowOrder(rowIndex: number): number | null {
+		return this.pagePaginator ? (this.pagePaginator.pageNumber - 1) * this.pagePaginator.pageSize + rowIndex + 1 : null;
+	}
+
+	/**
 	 * Get description of an anime image.
 	 * @param anime Anime.
 	 */
 	protected animeImageDescription(anime: Anime): string {
 		return anime.englishTitle ?? anime.japaneseTitle ?? 'Anime image';
-	}
-
-	/**
-	 * Check if list of anime is empty after fetching data.
-	 * @param isLoading Loading status.
-	 * @param error Error message.
-	 * @param anime List of anime.
-	 */
-	protected isNoData(isLoading: boolean | null, error: string | null, anime: readonly Anime[]): boolean {
-		return isLoading === false && error === '' && anime.length === 0;
 	}
 
 	/**
@@ -175,8 +157,7 @@ export class AnimeTableComponent  {
 	 * @param pageSize Page size.
 	 */
 	protected createSkeletonAnimeSource(pageSize: number): Anime[] {
-		// Use 'as Anime' here because we only need id for trackBy function works
-		// All the field with no value will be replaced by skeleton loading
+		// 'as Anime' -> only need id for trackBy function works, all the field with no value will be replaced by skeleton loading
 		return Array.from({ length: pageSize }).map((_, index) => ({ id: index } as Anime));
 	}
 }

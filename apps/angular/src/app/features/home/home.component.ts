@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { MatSelectChange } from '@angular/material/select';
-import { 	BehaviorSubject,	catchError,	debounceTime,	map,	Observable,	shareReplay,	switchMap,	tap,	throttleTime,	throwError } from 'rxjs';
+import { 	BehaviorSubject, catchError, map, Observable,	shareReplay, switchMap, tap, throwError } from 'rxjs';
 import { QUERY_PARAMS_PROVIDER, QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
 import { AnimeTableComponent } from '@js-camp/angular/app/features/home/anime-table/anime-table.component';
@@ -58,13 +58,12 @@ export class HomeComponent {
 	public constructor() {
 		this.animeList$ = this.queryParamsProvider$.pipe(
 			// throttleTime(500, undefined, { leading: true, trailing: true }),
-
 			tap(params => {
 				const pagePaginator = { pageNumber: Number(params.pageNumber), pageSize: Number(params.pageSize) };
 				this.pagePaginator$.next(pagePaginator);
 			}),
 			map(params => this.urlService.createHttpQueryParams(params)),
-			debounceTime(300),
+			// debounceTime(300),
 			switchMap(httpParams => this.animeService.getAnimeList(httpParams).pipe(
 				toggleExecutionState(this.isLoading$),
 				catchError((error: unknown) => throwError(() => {
