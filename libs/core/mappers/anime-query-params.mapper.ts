@@ -6,8 +6,8 @@ import { AnimeQueryParams } from '../models/anime-query-params.model';
 import { AnimeQueryParamsDto } from '../dtos/anime-query-params.dto';
 
 import { BaseQueryParamsMapper } from './base-query-params.mapper';
-import { SORT_FIELDS_MAPPING_TO_DTO } from './sort-fields-mapping.record';
 import { AnimeTypeMapper } from './anime-type.mapper';
+import { SortFieldsMapper } from './sort-fields.mapper';
 
 /** Anime query params mappers. */
 @Injectable({ providedIn: 'root' })
@@ -36,7 +36,7 @@ export class AnimeQueryParamsMapper {
 				defaultPageNumber,
 				defaultPageSize,
 			),
-			ordering: hasSorting ? `${sortingSideCharacter}${SORT_FIELDS_MAPPING_TO_DTO[sortField]}` : null,
+			ordering: hasSorting ? `${sortingSideCharacter}${SortFieldsMapper.toDto(sortField)}` : null,
 			type: type ? AnimeTypeMapper.toDto(type) : null,
 		};
 	}
