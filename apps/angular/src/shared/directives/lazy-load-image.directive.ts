@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, Input, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { emptyStringAttribute } from '@js-camp/angular/shared/attributes/empty-string-attribute';
 
 /** Lazy Load Image directive. */
@@ -6,28 +6,39 @@ import { emptyStringAttribute } from '@js-camp/angular/shared/attributes/empty-s
 	selector: 'img[appLazyLoadImage]',
 	standalone: true,
 })
-export class LazyLoadImageDirective implements OnInit {
+export class LazyLoadImageDirective implements OnInit, OnDestroy {
 	/** Image src. */
 	@Input({ alias: 'appLazyLoadImage', required: true, transform: emptyStringAttribute })
 	protected readonly src!: string;
+
+	private observer!: IntersectionObserver;
 
 	public constructor(private readonly element: ElementRef, private readonly renderer: Renderer2) {}
 
 	/** On Init. */
 	public ngOnInit(): void {
-		const observer = new IntersectionObserver(entries => {
+		this.observer = new IntersectionObserver(entries => {
 			entries.forEach(entry => {
 				if (entry.isIntersecting) {
 					this.loadImage();
-					observer.disconnect();
+					this.disconnectObserver();
 				}
 			});
 		}, { threshold: 0.5 });
 
-		observer.observe(this.element.nativeElement);
+		this.observer.observe(this.element.nativeElement);
+	}
+
+	/** On Destroy. */
+	public ngOnDestroy(): void {
+		this.disconnectObserver();
 	}
 
 	private loadImage(): void {
 		this.renderer.setAttribute(this.element.nativeElement, 'src', this.src);
+	}
+
+	private disconnectObserver(): void {
+		this.observer.disconnect();
 	}
 }
