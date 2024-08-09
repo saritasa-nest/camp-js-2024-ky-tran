@@ -4,9 +4,9 @@ import { AnimeQueryParamsUrlDto } from '../dtos/anime-query-params-url.dto';
 import { AnimeQueryParams } from '../models/anime-query-params.model';
 
 import { BaseQueryParamsMapper } from './base-query-params.mapper';
-import { SORT_DIRECTION_URL_MAPPING_FROM_DTO, SORT_DIRECTION_URL_MAPPING_TO_DTO } from './sort-direction-mapping.record';
 import { AnimeTypeUrlMapper } from './anime-type-url.mapper';
 import { SortFieldsUrlMapper } from './sort-fields-url.mapper';
+import { SortDirectionUrlMapper } from './sort-direction-url.mapper';
 
 /** Anime query params url mappers. */
 @Injectable({ providedIn: 'root' })
@@ -33,7 +33,7 @@ export class AnimeQueryParamsUrlMapper {
 				defaultPageSize,
 			),
 			sortField: sortField ? SortFieldsUrlMapper.fromDto(sortField) : null,
-			sortDirection: sortDirection ? SORT_DIRECTION_URL_MAPPING_FROM_DTO[sortDirection] : null,
+			sortDirection: sortDirection ? SortDirectionUrlMapper.fromDto(sortDirection) : null,
 			type: type ? AnimeTypeUrlMapper.fromDto(type) : null,
 		};
 	}
@@ -58,7 +58,7 @@ export class AnimeQueryParamsUrlMapper {
 				defaultPageSize,
 			),
 			sortField: sortField ? SortFieldsUrlMapper.toDto(sortField) : null,
-			sortDirection: sortDirection ? SORT_DIRECTION_URL_MAPPING_TO_DTO[sortDirection] : null,
+			sortDirection: sortDirection ? SortDirectionUrlMapper.toDto(sortDirection) : null,
 			type: type ? AnimeTypeUrlMapper.toDto(type) : null,
 		};
 	}
