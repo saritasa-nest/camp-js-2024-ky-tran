@@ -7,7 +7,7 @@ import { AnimeQueryParamsDto } from '../dtos/anime-query-params.dto';
 
 import { BaseQueryParamsMapper } from './base-query-params.mapper';
 import { SORT_FIELDS_MAPPING_TO_DTO } from './sort-fields-mapping.record';
-import { TYPE_MAPPING_TO_DTO } from './type-mapping.record';
+import { AnimeTypeMapper } from './anime-type.mapper';
 
 /** Anime query params mappers. */
 @Injectable({ providedIn: 'root' })
@@ -15,8 +15,8 @@ export class AnimeQueryParamsMapper {
 	private readonly baseQueryParamsMapper = inject(BaseQueryParamsMapper);
 
 	/**
-	 * Mapping from Domain model to DTO.
-	 * @param model - The Query Params Domain model object to be converted.
+	 * Mapping from domain model to DTO.
+	 * @param model - Domain model.
 	 * @param defaultPageNumber - Default page number.
 	 * @param defaultPageSize - Default page size.
 	 */
@@ -37,13 +37,13 @@ export class AnimeQueryParamsMapper {
 				defaultPageSize,
 			),
 			ordering: hasSorting ? `${sortingSideCharacter}${SORT_FIELDS_MAPPING_TO_DTO[sortField]}` : null,
-			type: type ? TYPE_MAPPING_TO_DTO[type] : null,
+			type: type ? AnimeTypeMapper.toDto(type) : null,
 		};
 	}
 
 	/**
-	 * Sort from event DTO to Domain model.
-	 * @param dto - Sort from event dto.
+	 * Sort from event DTO to domain model.
+	 * @param dto - DTO.
 	 */
 	public sortEventFromDto(dto: SortEventDto): AnimeQueryParams.Sort {
 		const { active, direction } = dto;
@@ -68,8 +68,8 @@ export class AnimeQueryParamsMapper {
 	}
 
 	/**
-	 * Sort from event Domain model to DTO.
-	 * @param model - Sort from event domain model.
+	 * Sort from event domain model to DTO.
+	 * @param model - Domain model.
 	 */
 	public sortEventToDto(model: AnimeQueryParams.Sort): SortEventDto {
 		const { sortField, sortDirection } = model;
