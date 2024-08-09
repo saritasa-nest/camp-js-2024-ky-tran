@@ -30,7 +30,7 @@ export namespace AnimeTypeMapper {
 
 	/**
 	 * Mapping from DTO to domain model.
-	 * @param typeDto - DTO.
+	 * @param typeDto DTO.
 	 */
 	export function fromDto(typeDto: AnimeTypeDto): AnimeType {
 		return TYPE_MAPPING_FROM_DTO[typeDto];

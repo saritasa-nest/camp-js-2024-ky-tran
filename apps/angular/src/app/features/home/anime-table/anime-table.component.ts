@@ -127,7 +127,7 @@ export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
 	}
 
 	/** On Changes.
-	 * @param changes - SimpleChanges.
+	 * @param changes SimpleChanges.
 	 */
 	public ngOnChanges(changes: SimpleChanges): void {
 		if (changes['animeList']) {
@@ -150,7 +150,7 @@ export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
 
 	/**
 	 * Sort change event handler.
-	 * @param sortEvent - Sort event.
+	 * @param sortEvent Sort event.
 	 */
 	protected onSortChange(sortEvent: Sort): void {
 		this.sortChange.emit(sortEvent);
@@ -158,7 +158,7 @@ export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
 
 	/**
 	 * Get description of an anime image.
-	 * @param anime - Anime.
+	 * @param anime Anime.
 	 */
 	protected animeImageDescription(anime: Anime): string {
 		return anime.englishTitle ?? anime.japaneseTitle ?? 'Anime image';
@@ -166,9 +166,9 @@ export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
 
 	/**
 	 * Check if list of anime is empty after fetching data.
-	 * @param isLoading - Loading status.
-	 * @param error - Error message.
-	 * @param anime - List of anime.
+	 * @param isLoading Loading status.
+	 * @param error Error message.
+	 * @param anime List of anime.
 	 */
 	protected isNoData(isLoading: boolean | null, error: string | null, anime: readonly Anime[]): boolean {
 		return isLoading === false && error === '' && anime.length === 0;
@@ -176,8 +176,8 @@ export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
 
 	/**
 	 * Tracks anime by its unique identifier.
-	 * @param _ - The index of the anime in the list.
-	 * @param anime - The anime object.
+	 * @param _ The index of the anime in the list.
+	 * @param anime The anime object.
 	 */
 	protected trackAnimeById(_: number, anime: Anime): Anime['id'] {
 		return anime.id;
@@ -185,7 +185,7 @@ export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
 
 	/**
 	 * Create a skeleton template for a table while loading.
-	 * @param pageSize - Page size.
+	 * @param pageSize Page size.
 	 */
 	protected createSkeletonAnimeSource(pageSize: number): Anime[] {
 		// Use 'as Anime' here because we only need id for trackBy function works

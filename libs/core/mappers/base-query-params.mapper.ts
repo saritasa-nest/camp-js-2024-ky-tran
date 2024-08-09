@@ -8,10 +8,10 @@ import { BaseQueryParamsUrlDto } from '../dtos/base-query-params-url.dto';
 @Injectable({ providedIn: 'root' })
 export class BaseQueryParamsMapper {
 	/**
-	 * Map Paginator from Domain model to DTO.
-	 * @param paginator - The Paginator Domain model object to be converted.
-	 * @param defaultPageNumber - Default page number.
-	 * @param defaultPageSize - Default page size.
+	 * Map paginator from domain model to DTO.
+	 * @param paginator Domain model.
+	 * @param defaultPageNumber Default page number.
+	 * @param defaultPageSize Default page size.
 	 */
 	public mapPaginatorToDto(
 		paginator: BaseQueryParams.Paginator,
@@ -27,18 +27,18 @@ export class BaseQueryParamsMapper {
 	}
 
 	/**
-	 * Map Search from Domain model to DTO.
-	 * @param search - The search domain to be converted.
+	 * Map Search from domain model to DTO.
+	 * @param search Domain model.
 	 */
 	public mapSearchToDto({ search }: BaseQueryParams.Search): BaseQueryParamsDto.Search {
 		return { search };
 	}
 
 	/**
-	 * Map Base combined from Domain model to DTO.
-	 * @param baseModel - The search domain to be converted.
-	 * @param defaultPageNumber - Default page number.
-	 * @param defaultPageSize - Default page size.
+	 * Map base combined from domain model to DTO.
+	 * @param baseModel Domain model.
+	 * @param defaultPageNumber Default page number.
+	 * @param defaultPageSize Default page size.
 	 */
 	public mapCombinedToDto(
 		baseModel: BaseQueryParams.Combined,
@@ -54,10 +54,10 @@ export class BaseQueryParamsMapper {
 	}
 
 	/**
-	 * Map Paginator from Domain model to DTO - URL.
-	 * @param paginator - The Paginator Domain model object to be converted.
-	 * @param defaultPageNumber - Default page number.
-	 * @param defaultPageSize - Default page size.
+	 * Map paginator url from domain model to DTO.
+	 * @param paginator Domain model.
+	 * @param defaultPageNumber Default page number.
+	 * @param defaultPageSize Default page size.
 	 */
 	public mapPaginatorUrlToDto(
 		paginator: BaseQueryParams.Paginator,
@@ -73,10 +73,10 @@ export class BaseQueryParamsMapper {
 	}
 
 	/**
-	 * Map Paginator from DTO to Domain model - URL.
-	 * @param paginator - The Paginator Domain model object to be converted.
-	 * @param defaultPageNumber - Default page number.
-	 * @param defaultPageSize - Default page size.
+	 * Map paginator url from DTO to domain model.
+	 * @param paginator DTO.
+	 * @param defaultPageNumber Default page number.
+	 * @param defaultPageSize Default page size.
 	 */
 	public mapPaginatorUrlFromDto(
 		paginator: BaseQueryParamsUrlDto.Paginator,
@@ -92,26 +92,26 @@ export class BaseQueryParamsMapper {
 	}
 
 	/**
-	 * Map Search from Domain model to DTO - URL.
-	 * @param search - The search domain to be converted.
+	 * Map search from domain model to DTO.
+	 * @param search Domain model.
 	 */
 	public mapSearchUrlToDto({ search }: BaseQueryParams.Search): BaseQueryParamsUrlDto.Search {
 		return { search };
 	}
 
 	/**
-	 * Map Search from DTO to Domain model - URL.
-	 * @param search - The search domain to be converted.
+	 * Map search from DTO to domain model.
+	 * @param search DTO.
 	 */
 	public mapSearchUrlFromDto({ search }: BaseQueryParamsUrlDto.Search): BaseQueryParams.Search {
 		return { search };
 	}
 
 	/**
-	 * Map Base combined from Domain model to DTO.
-	 * @param baseModel - The search domain to be converted.
-	 * @param defaultPageNumber - Default page number.
-	 * @param defaultPageSize - Default page size.
+	 * Map base combined from Domain model to DTO.
+	 * @param baseModel Domain model.
+	 * @param defaultPageNumber Default page number.
+	 * @param defaultPageSize Default page size.
 	 */
 	public mapCombinedUrlToDto(
 		baseModel: BaseQueryParams.Combined,
@@ -127,10 +127,10 @@ export class BaseQueryParamsMapper {
 	}
 
 	/**
-	 * Map Base combined from DTO to Domain model.
-	 * @param baseDto - The search domain to be converted.
-	 * @param defaultPageNumber - Default page number.
-	 * @param defaultPageSize - Default page size.
+	 * Map base combined from DTO to domain model.
+	 * @param baseDto DTO.
+	 * @param defaultPageNumber Default page number.
+	 * @param defaultPageSize Default page size.
 	 */
 	public mapCombinedUrlFromDto(
 		baseDto: BaseQueryParamsUrlDto.Combined,

@@ -8,8 +8,8 @@ import { ResultsDisplayer } from './results-displayers';
 export class ResultsPlayerDisplayer extends ResultsDisplayer implements Subscriber<PlayerResults> {
 	/**
 	 * Updates the player view with the latest dice results and the total result.
-	 * @param playerIndex - The index of the player whose results are being updated.
-	 * @param diceResults - Array of dice results to be displayed.
+	 * @param playerIndex The index of the player whose results are being updated.
+	 * @param diceResults Array of dice results to be displayed.
 	 */
 	public update({ playerIndex, diceResults }: PlayerResults): void {
 		const playerEl = selectAllElements('.user')[playerIndex];

@@ -20,7 +20,7 @@ export namespace SortFieldsUrlMapper {
 
 	/**
 	 * Mapping from DTO to domain model.
-	 * @param fieldDto - DTO.
+	 * @param fieldDto DTO.
 	 */
 	export function fromDto(fieldDto: SortFieldsUrlDto): SortFields {
 		return SORT_FIELDS_URL_MAPPING_FROM_DTO[fieldDto];

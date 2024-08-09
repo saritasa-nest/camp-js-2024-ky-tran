@@ -6,8 +6,8 @@ import { WinStatus } from '../types/player-types';
 export class WinStatusDisplayer implements Subscriber<WinStatus> {
 	/**
 	 * Updates the player view to indicate if the player has won.
-	 * @param playerIndex - The index of the player whose win status is being updated.
-	 * @param isWin - A boolean indicating if the player has won.
+	 * @param playerIndex The index of the player whose win status is being updated.
+	 * @param isWin A boolean indicating if the player has won.
 	 */
 	public update({ playerIndex, isWin }: WinStatus): void {
 		if (isWin) {

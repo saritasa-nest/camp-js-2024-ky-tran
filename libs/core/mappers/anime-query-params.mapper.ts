@@ -16,9 +16,9 @@ export class AnimeQueryParamsMapper {
 
 	/**
 	 * Mapping from domain model to DTO.
-	 * @param model - Domain model.
-	 * @param defaultPageNumber - Default page number.
-	 * @param defaultPageSize - Default page size.
+	 * @param model Domain model.
+	 * @param defaultPageNumber Default page number.
+	 * @param defaultPageSize Default page size.
 	 */
 	public toDto(
 		model: AnimeQueryParams.Combined,
@@ -43,7 +43,7 @@ export class AnimeQueryParamsMapper {
 
 	/**
 	 * Sort from event DTO to domain model.
-	 * @param dto - DTO.
+	 * @param dto DTO.
 	 */
 	public sortEventFromDto(dto: SortEventDto): AnimeQueryParams.Sort {
 		const { active, direction } = dto;
@@ -69,7 +69,7 @@ export class AnimeQueryParamsMapper {
 
 	/**
 	 * Sort from event domain model to DTO.
-	 * @param model - Domain model.
+	 * @param model Domain model.
 	 */
 	public sortEventToDto(model: AnimeQueryParams.Sort): SortEventDto {
 		const { sortField, sortDirection } = model;

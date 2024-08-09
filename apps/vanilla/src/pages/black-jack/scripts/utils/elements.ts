@@ -1,6 +1,6 @@
 /**
  * Ensures the provided element is not null, otherwise throws an error.
- * @param element - The HTMLElement to check.
+ * @param element The HTMLElement to check.
  * @throws Will throw an error if the element is null.
  */
 function scanElement(element: HTMLElement | null): HTMLElement {
@@ -13,7 +13,7 @@ function scanElement(element: HTMLElement | null): HTMLElement {
 
 /**
  * Selects a single HTMLElement based on the provided CSS selector.
- * @param selector - The CSS selector string.
+ * @param selector The CSS selector string.
  * @throws Will throw an error if the element is not found.
  */
 export function selectElement(selector: string): HTMLElement {
@@ -23,7 +23,7 @@ export function selectElement(selector: string): HTMLElement {
 
 /**
  * Selects all HTMLElements based on the provided CSS selector.
- * @param selector - The CSS selector string.
+ * @param selector The CSS selector string.
  */
 export function selectAllElements(selector: string): NodeListOf<HTMLElement> {
 	return document.querySelectorAll<HTMLElement>(selector);
@@ -31,8 +31,8 @@ export function selectAllElements(selector: string): NodeListOf<HTMLElement> {
 
 /**
  * Creates a function to select a single HTMLElement within a parent element.
- * @param parentNode - The parent HTMLElement to query within.
- * @param selector - The CSS selector string.
+ * @param parentNode The parent HTMLElement to query within.
+ * @param selector The CSS selector string.
  * @throws Will throw an error if the element is not found.
  */
 export function selectElementInParent(parentNode: HTMLElement, selector: string): HTMLElement {

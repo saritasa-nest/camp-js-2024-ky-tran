@@ -18,7 +18,7 @@ export namespace SortDirectionUrlMapper {
 
 	/**
 	 * Mapping from DTO to domain model.
-	 * @param directionDto - DTO.
+	 * @param directionDto DTO.
 	 */
 	export function fromDto(directionDto: SortDirectionUrlDto): SortDirection {
 		return SORT_DIRECTION_URL_MAPPING_FROM_DTO[directionDto];

@@ -28,7 +28,7 @@ export class UrlService {
 
 	/**
 	 * Create Http query params.
-	 * @param params - Query params.
+	 * @param params Query params.
 	 */
 	public createHttpQueryParams(params: AnimeQueryParams.Combined): HttpParams {
 		const paramsDto = this.animeQueryParamsMapper.toDto(params, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE);
@@ -40,7 +40,7 @@ export class UrlService {
 
 	/**
 	 * Prepare sort change data from table.
-	 * @param sortEvent - Sort event.
+	 * @param sortEvent Sort event.
 	 */
 	public prepareSortChangeFromTable(sortEvent: Sort): AnimeQueryParams.Sort {
 		return this.animeQueryParamsMapper.sortEventFromDto({
@@ -51,7 +51,7 @@ export class UrlService {
 
 	/**
 	 * Prepare sort change data to table.
-	 * @param sortData - Sort data.
+	 * @param sortData Sort data.
 	 */
 	public prepareSortChangeToTable(sortData: AnimeQueryParams.Sort): SortEventDto {
 		return this.animeQueryParamsMapper.sortEventToDto(sortData);
@@ -59,7 +59,7 @@ export class UrlService {
 
 	/**
 	 * Updates the URL query params.
-	 * @param params - The provided query params.
+	 * @param params The provided query params.
 	 * @param resetParams The provided reset params.
 	 */
 	public updateQueryParams(params: Partial<AnimeQueryParams.Combined>, resetParams: Partial<AnimeQueryParams.Combined> = {}): void {

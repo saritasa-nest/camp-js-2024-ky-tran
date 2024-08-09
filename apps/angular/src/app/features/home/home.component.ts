@@ -88,7 +88,7 @@ export class HomeComponent {
 
 	/**
 	 * Page change event handler.
-	 * @param pageEvent - Page event.
+	 * @param pageEvent Page event.
 	 */
 	protected onPageChange(pageEvent: PageEvent): void {
 		const { pageIndex, pageSize } = pageEvent;
@@ -97,7 +97,7 @@ export class HomeComponent {
 
 	/**
 	 * Sort change event handler.
-	 * @param sortEvent - Sort event.
+	 * @param sortEvent Sort event.
 	 */
 	protected onSortChange(sortEvent: Sort): void {
 		const sortChangeData = this.urlService.prepareSortChangeFromTable(sortEvent);
@@ -106,7 +106,7 @@ export class HomeComponent {
 
 	/**
 	 * Selection change event handler.
-	 * @param selectEvent - Select Change event.
+	 * @param selectEvent Select Change event.
 	 */
 	protected onSelectionChange(selectEvent: MatSelectChange): void {
 		this.urlService.updateQueryParams(
@@ -117,7 +117,7 @@ export class HomeComponent {
 
 	/**
 	 * Search change fired when enter is hit to emit search value event.
-	 * @param searchTerm - Search term.
+	 * @param searchTerm Search term.
 	 */
 	protected onSearchChange(searchTerm: string): void {
 		this.urlService.updateQueryParams({ search: searchTerm ?? null }, { pageNumber: DEFAULT_PAGE_NUMBER });

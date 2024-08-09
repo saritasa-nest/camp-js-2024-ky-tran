@@ -53,7 +53,7 @@ export class SearchComponent implements OnInit, OnChanges {
 
 	/**
 	 * On Changes.
-	 * @param changes - Simple changes.
+	 * @param changes Simple changes.
 	 */
 	public ngOnChanges(changes: SimpleChanges): void {
 		if (changes['disabled']) {

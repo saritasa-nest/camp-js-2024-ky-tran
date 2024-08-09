@@ -4,7 +4,7 @@ import { NonNullableFields } from '@js-camp/core/types/non-nullable-fields';
 
 /**
  * Paginator attribute transform.
- * @param paginator - Query params generator.
+ * @param paginator Query params generator.
  */
 export function paginatorAttribute(
 	paginator: BaseQueryParams.Paginator | null,

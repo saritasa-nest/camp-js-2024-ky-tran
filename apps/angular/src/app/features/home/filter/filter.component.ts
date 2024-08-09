@@ -54,7 +54,7 @@ export class FilterComponent implements OnInit {
 
 	/**
 	 * Selection change event handler.
-	 * @param selectEvent - Select Change event.
+	 * @param selectEvent Select Change event.
 	 */
 	protected onSelectionChange(selectEvent: MatSelectChange): void {
 		this.selectionChange.emit(selectEvent);

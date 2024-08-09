@@ -30,7 +30,7 @@ export namespace AnimeTypeUrlMapper {
 
 	/**
 	 * Mapping from DTO to domain model.
-	 * @param typeDto - DTO.
+	 * @param typeDto DTO.
 	 */
 	export function fromDto(typeDto: AnimeTypeUrlDto): AnimeType {
 		return TYPE_URL_MAPPING_FROM_DTO[typeDto];

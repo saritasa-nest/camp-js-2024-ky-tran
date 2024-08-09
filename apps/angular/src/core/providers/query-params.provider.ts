@@ -21,7 +21,7 @@ export const QUERY_PARAMS_PROVIDER: readonly Provider[] = [
 
 /**
  * Query params factory.
- * @param activatedRoute - Activated route.
+ * @param activatedRoute Activated route.
  */
 function queryParamsFactory(activatedRoute: ActivatedRoute): Observable<AnimeQueryParams.Combined> {
 

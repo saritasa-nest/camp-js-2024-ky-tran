@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Pagination } from '@js-camp/core/models/pagination.model';
 
-/** Pagination mapper - map data from domain model to dto and vice versa. */
+/** Pagination mapper. */
 @Injectable({ providedIn: 'root' })
 export class PaginationMapper {
 	/**
