@@ -1,11 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Sort } from '@angular/material/sort';
 import { ActivatedRoute } from '@angular/router';
 
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
 import { QueryParamsService } from '@js-camp/angular/core/services/query-params.service';
-import { SortEventDto, SortEventFieldsDto } from '@js-camp/core/dtos/sort-event.dto';
 import { AnimeQueryParams } from '@js-camp/core/models/anime-query-params.model';
 import { AnimeQueryParamsUrlDto } from '@js-camp/core/dtos/anime-query-params-url.dto';
 import { AnimeQueryParamsMapper } from '@js-camp/core/mappers/anime-query-params.mapper';
@@ -32,25 +30,6 @@ export class UrlService {
 		return Object.entries(paramsDto).reduce((httpPrams, [key, value]) =>
 			value != null ? httpPrams.set(key, value.toString()) : httpPrams
 		, new HttpParams());
-	}
-
-	/**
-	 * Prepare sort change data from table.
-	 * @param sortEvent Sort event.
-	 */
-	public prepareSortChangeFromTable(sortEvent: Sort): AnimeQueryParams.Sort {
-		return AnimeQueryParamsMapper.sortEventFromDto({
-			active: sortEvent.active as SortEventFieldsDto,
-			direction: sortEvent.direction,
-		});
-	}
-
-	/**
-	 * Prepare sort change data to table.
-	 * @param sortData Sort data.
-	 */
-	public prepareSortChangeToTable(sortData: AnimeQueryParams.Sort): SortEventDto {
-		return AnimeQueryParamsMapper.sortEventToDto(sortData);
 	}
 
 	/**

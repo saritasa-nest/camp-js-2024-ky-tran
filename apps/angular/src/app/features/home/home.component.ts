@@ -29,6 +29,8 @@ import { Anime } from '@js-camp/core/models/anime.model';
 import { Pagination } from '@js-camp/core/models/pagination.model';
 import { toggleExecutionState } from '@js-camp/angular/shared/utils/rxjs/toggleExecutionState';
 import { BaseQueryParams } from '@js-camp/core/models/base-query-params.model';
+import { SortEventMapper } from '@js-camp/core/mappers/sort-event.mapper';
+import { SortEventFieldsDto } from '@js-camp/core/dtos/sort-event.dto';
 
 /** Home page. */
 @Component({
@@ -100,8 +102,10 @@ export class HomeComponent {
 	 * @param sortEvent Sort event.
 	 */
 	protected onSortChange(sortEvent: Sort): void {
-		const sortChangeData = this.urlService.prepareSortChangeFromTable(sortEvent);
-		this.urlService.updateQueryParams(sortChangeData, { pageNumber: DEFAULT_PAGE_NUMBER });
+		this.urlService.updateQueryParams(
+			SortEventMapper.fromDto({ active: sortEvent.active as SortEventFieldsDto, direction: sortEvent.direction }),
+			{ pageNumber: DEFAULT_PAGE_NUMBER },
+		);
 	}
 
 	/**

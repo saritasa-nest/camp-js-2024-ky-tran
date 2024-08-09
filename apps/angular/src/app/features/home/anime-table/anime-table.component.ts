@@ -37,6 +37,7 @@ import { LazyLoadImageDirective } from '@js-camp/angular/shared/directives/lazy-
 import { BaseQueryParams } from '@js-camp/core/models/base-query-params.model';
 import { SkeletonCellComponent } from '@js-camp/angular/app/features/home/anime-table/skeleton-cell/skeleton-cell.component';
 import { NonNullableFields } from '@js-camp/core/types/non-nullable-fields';
+import { SortEventMapper } from '@js-camp/core/mappers/sort-event.mapper';
 
 /** Anime Table component. */
 @Component({
@@ -121,7 +122,7 @@ export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
 		this.queryParamsProvider$
 			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe(({ pageSize, sortField, sortDirection }) => {
-				this.pageSorter$.next(this.urlService.prepareSortChangeToTable({ sortField, sortDirection }));
+				this.pageSorter$.next(SortEventMapper.toDto({ sortField, sortDirection }));
 				this.skeletonAnimeSource$.next(this.createSkeletonAnimeSource(pageSize ?? DEFAULT_PAGE_SIZE));
 			});
 	}
