@@ -3,10 +3,10 @@
 	mat-table
 	matSort
 	(matSortChange)="onSortChange($event)"
-	[dataSource]="isLoading ? (skeletonAnimeSource$ | async) || [] : dataSource"
+	[dataSource]="isLoading ? (skeletonAnimeSource$ | async) ?? [] : dataSource"
 	[trackBy]="trackAnimeById"
-	[matSortActive]="(pageSorter$ | async)?.active || ''"
-	[matSortDirection]="(pageSorter$ | async)?.direction || ''"
+	[matSortActive]="(pageSorter$ | async)?.active ?? ''"
+	[matSortDirection]="(pageSorter$ | async)?.direction ?? ''"
 >
 	<ng-container [matColumnDef]="animeColumns.Index">
 		<th class="table__column_order" mat-header-cell *matHeaderCellDef>#</th>
@@ -22,7 +22,12 @@
 		<td class="table__column_image" mat-cell *matCellDef="let anime">
 			<camp-skeleton-cell [isLoading]="isLoading">
 				<div class="table__row-image-container">
-					<img class="table__row-image" [appLazyLoadImage]="anime.imageUrl" src="/assets/lazy-load-image.jpg" [alt]="anime.englishTitle || anime.japaneseTitle || 'Anime image'">
+					<img
+						class="table__row-image"
+						[appLazyLoadImage]="anime.imageUrl"
+						src="/assets/lazy-load-image.jpg"
+						[alt]="animeImageDescription(anime)"
+					>
 				</div>
 			</camp-skeleton-cell>
 		</td>

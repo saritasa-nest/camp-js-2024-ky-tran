@@ -12,7 +12,7 @@
 		[isLoading]="isLoading$ | async"
 		[animeList]="(isLoading$ | async)
 			? []
-			: (animeList$ | async)?.results || []"
+			: (animeList$ | async)?.results ?? []"
 		[error]="error$ | async"
 		[pagePaginator]="pagePaginator$ | async"
 		(sortChange)="onSortChange($event)"

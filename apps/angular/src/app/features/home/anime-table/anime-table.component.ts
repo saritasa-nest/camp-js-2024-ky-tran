@@ -160,7 +160,7 @@ export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
 	 * @param anime - Anime.
 	 */
 	protected animeImageDescription(anime: Anime): string {
-		return anime.englishTitle || anime.japaneseTitle || 'Anime image';
+		return anime.englishTitle ?? anime.japaneseTitle ?? 'Anime image';
 	}
 
 	/**

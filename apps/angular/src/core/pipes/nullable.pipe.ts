@@ -2,10 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { DEFAULT_PLACEHOLDER } from '@js-camp/angular/shared/constants';
 
 /** Sets a placeholder if value is null or an empty string. */
-@Pipe({
-	standalone: true,
-	name: 'appNullable',
-})
+@Pipe({ name: 'appNullable', standalone: true })
 export class NullablePipe implements PipeTransform {
 	/**
 	 * Transforms the given value by returning a fallback value if the input is null or empty.

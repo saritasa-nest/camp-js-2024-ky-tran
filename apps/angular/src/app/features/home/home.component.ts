@@ -120,6 +120,6 @@ export class HomeComponent {
 	 * @param searchTerm - Search term.
 	 */
 	protected onSearchChange(searchTerm: string): void {
-		this.urlService.updateQueryParams({ search: searchTerm || null }, { pageNumber: DEFAULT_PAGE_NUMBER });
+		this.urlService.updateQueryParams({ search: searchTerm ?? null }, { pageNumber: DEFAULT_PAGE_NUMBER });
 	}
 }
