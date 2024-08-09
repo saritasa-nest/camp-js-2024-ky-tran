@@ -49,7 +49,7 @@
 				@if ({
 					errorMessage: error$ | async,
 					isLoading: isLoading$ | async,
-				}; as data) {e
+				}; as data) {
 					@if (data.isLoading) {
 						<camp-progress-spinner />
 					}
