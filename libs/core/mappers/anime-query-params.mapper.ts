@@ -1,5 +1,3 @@
-import { inject, Injectable } from '@angular/core';
-
 import { SortDirection } from '../models/sort-direction.model';
 import { SortEventDirectionDto, SortEventDto } from '../dtos/sort-event.dto';
 import { AnimeQueryParams } from '../models/anime-query-params.model';
@@ -10,9 +8,7 @@ import { AnimeTypeMapper } from './anime-type.mapper';
 import { SortFieldsMapper } from './sort-fields.mapper';
 
 /** Anime query params mappers. */
-@Injectable({ providedIn: 'root' })
-export class AnimeQueryParamsMapper {
-	private readonly baseQueryParamsMapper = inject(BaseQueryParamsMapper);
+export namespace AnimeQueryParamsMapper {
 
 	/**
 	 * Mapping from domain model to DTO.
@@ -20,7 +16,7 @@ export class AnimeQueryParamsMapper {
 	 * @param defaultPageNumber Default page number.
 	 * @param defaultPageSize Default page size.
 	 */
-	public toDto(
+	export function toDto(
 		model: AnimeQueryParams.Combined,
 		defaultPageNumber: number,
 		defaultPageSize: number,
@@ -31,11 +27,7 @@ export class AnimeQueryParamsMapper {
 		const sortingSideCharacter = sortDirection === SortDirection.Ascending ? '' : '-';
 
 		return {
-			...this.baseQueryParamsMapper.mapCombinedToDto(
-				{ pageNumber, pageSize, search },
-				defaultPageNumber,
-				defaultPageSize,
-			),
+			...BaseQueryParamsMapper.mapCombinedToDto({ pageNumber, pageSize, search }, defaultPageNumber, defaultPageSize),
 			ordering: hasSorting ? `${sortingSideCharacter}${SortFieldsMapper.toDto(sortField)}` : null,
 			type: type ? AnimeTypeMapper.toDto(type) : null,
 		};
@@ -45,7 +37,7 @@ export class AnimeQueryParamsMapper {
 	 * Sort from event DTO to domain model.
 	 * @param dto DTO.
 	 */
-	public sortEventFromDto(dto: SortEventDto): AnimeQueryParams.Sort {
+	export function sortEventFromDto(dto: SortEventDto): AnimeQueryParams.Sort {
 		const { active, direction } = dto;
 
 		let sortDirection: SortDirection | null = null;
@@ -71,7 +63,7 @@ export class AnimeQueryParamsMapper {
 	 * Sort from event domain model to DTO.
 	 * @param model Domain model.
 	 */
-	public sortEventToDto(model: AnimeQueryParams.Sort): SortEventDto {
+	export function sortEventToDto(model: AnimeQueryParams.Sort): SortEventDto {
 		const { sortField, sortDirection } = model;
 
 		let direction: SortEventDirectionDto = '';

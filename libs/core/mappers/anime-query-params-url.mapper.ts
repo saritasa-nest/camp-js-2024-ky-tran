@@ -1,17 +1,13 @@
-import { inject, Injectable } from '@angular/core';
-
 import { AnimeQueryParamsUrlDto } from '../dtos/anime-query-params-url.dto';
 import { AnimeQueryParams } from '../models/anime-query-params.model';
 
-import { BaseQueryParamsMapper } from './base-query-params.mapper';
 import { AnimeTypeUrlMapper } from './anime-type-url.mapper';
 import { SortFieldsUrlMapper } from './sort-fields-url.mapper';
 import { SortDirectionUrlMapper } from './sort-direction-url.mapper';
+import { BaseQueryParamsMapper } from './base-query-params.mapper';
 
 /** Anime query params url mappers. */
-@Injectable({ providedIn: 'root' })
-export class AnimeQueryParamsUrlMapper {
-	private readonly baseQueryParamsMapper = inject(BaseQueryParamsMapper);
+export namespace AnimeQueryParamsUrlMapper {
 
 	/**
 	 * Mapping from DTO to domain model.
@@ -19,7 +15,7 @@ export class AnimeQueryParamsUrlMapper {
 	 * @param defaultPageNumber Default page number.
 	 * @param defaultPageSize Default page size.
 	 */
-	public fromUrlDto(
+	export function fromUrlDto(
 		dto: AnimeQueryParamsUrlDto.Combined,
 		defaultPageNumber: number,
 		defaultPageSize: number,
@@ -27,11 +23,7 @@ export class AnimeQueryParamsUrlMapper {
 		const { pageNumber, pageSize, sortField, sortDirection, type, search } = dto;
 
 		return {
-			...this.baseQueryParamsMapper.mapCombinedUrlFromDto(
-				{ pageNumber, pageSize, search },
-				defaultPageNumber,
-				defaultPageSize,
-			),
+			...BaseQueryParamsMapper.mapCombinedUrlFromDto({ pageNumber, pageSize, search }, defaultPageNumber, defaultPageSize),
 			sortField: sortField ? SortFieldsUrlMapper.fromDto(sortField) : null,
 			sortDirection: sortDirection ? SortDirectionUrlMapper.fromDto(sortDirection) : null,
 			type: type ? AnimeTypeUrlMapper.fromDto(type) : null,
@@ -44,7 +36,7 @@ export class AnimeQueryParamsUrlMapper {
 	 * @param defaultPageNumber Default page number.
 	 * @param defaultPageSize Default page size.
 	 */
-	public toUrlDto(
+	export function toUrlDto(
 		model: AnimeQueryParams.Combined,
 		defaultPageNumber: number,
 		defaultPageSize: number,
@@ -52,11 +44,7 @@ export class AnimeQueryParamsUrlMapper {
 		const { pageNumber, pageSize, sortField, sortDirection, type, search } = model;
 
 		return {
-			...this.baseQueryParamsMapper.mapCombinedUrlToDto(
-				{ pageNumber, pageSize, search },
-				defaultPageNumber,
-				defaultPageSize,
-			),
+			...BaseQueryParamsMapper.mapCombinedUrlToDto({ pageNumber, pageSize, search }, defaultPageNumber, defaultPageSize),
 			sortField: sortField ? SortFieldsUrlMapper.toDto(sortField) : null,
 			sortDirection: sortDirection ? SortDirectionUrlMapper.toDto(sortDirection) : null,
 			type: type ? AnimeTypeUrlMapper.toDto(type) : null,
