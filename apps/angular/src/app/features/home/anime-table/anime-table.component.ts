@@ -36,6 +36,7 @@ import { SnackbarComponent } from '@js-camp/angular/shared/components/error-snac
 import { LazyLoadImageDirective } from '@js-camp/angular/shared/directives/lazy-load-image.directive';
 import { BaseQueryParams } from '@js-camp/core/models/base-query-params.model';
 import { SkeletonCellComponent } from '@js-camp/angular/app/features/home/anime-table/skeleton-cell/skeleton-cell.component';
+import { NonNullableFields } from '@js-camp/core/types/non-nullable-fields';
 
 /** Anime Table component. */
 @Component({
@@ -77,7 +78,7 @@ export class AnimeTableComponent implements OnInit, AfterViewInit, OnChanges {
 	 * Property - pageSize: Number of items to display on a page.
 	 */
 	@Input({ required: true, transform: paginatorAttribute })
-	protected readonly pagePaginator!: BaseQueryParams.Paginator;
+	protected readonly pagePaginator!: NonNullableFields<BaseQueryParams.Paginator>;
 
 	/** Sort change event emitter. */
 	@Output()

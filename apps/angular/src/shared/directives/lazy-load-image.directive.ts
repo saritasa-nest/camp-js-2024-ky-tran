@@ -2,10 +2,7 @@ import { Directive, ElementRef, Input, OnDestroy, OnInit, Renderer2 } from '@ang
 import { emptyStringAttribute } from '@js-camp/angular/shared/attributes/empty-string-attribute';
 
 /** Lazy Load Image directive. */
-@Directive({
-	selector: 'img[appLazyLoadImage]',
-	standalone: true,
-})
+@Directive({ selector: 'img[appLazyLoadImage]', standalone: true })
 export class LazyLoadImageDirective implements OnInit, OnDestroy {
 	/** Image src. */
 	@Input({ alias: 'appLazyLoadImage', required: true, transform: emptyStringAttribute })

@@ -34,7 +34,7 @@ export class QueryParamsService {
 			return acc;
 		}, {} as Record<string, null>);
 
-		this.router.navigate([], { queryParams, relativeTo: this.activatedRoute, queryParamsHandling: 'merge' });
+		this.append(queryParams);
 	}
 
 	/** Reset query params. */
