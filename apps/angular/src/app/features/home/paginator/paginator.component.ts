@@ -1,29 +1,17 @@
-import {
-	AfterViewInit,
-	booleanAttribute,
-	ChangeDetectionStrategy,
-	Component,
-	EventEmitter,
-	Injectable,
-	Input,
-	numberAttribute,
-	Output,
-	ViewChild,
-} from '@angular/core';
-
+import { booleanAttribute, ChangeDetectionStrategy, Component, EventEmitter, Injectable, Input, numberAttribute, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatPaginator, MatPaginatorDefaultOptions, MatPaginatorIntl, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-
+import { MatPaginator, MatPaginatorIntl, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@js-camp/angular/shared/constants';
 import { paginatorAttribute } from '@js-camp/angular/shared/attributes/paginator-attribute';
 import { BaseQueryParams } from '@js-camp/core/models/base-query-params';
 import { NonNullableFields } from '@js-camp/core/types/non-nullable-fields';
 
-// TODO (Ky Tran): read https://stackoverflow.com/questions/46869616/how-to-use-matpaginatorintl
+/** MatPaginatorIntl for modifying the labels and text displayed. */
 @Injectable()
-export class MatPaginatorIntlCro extends MatPaginatorIntl {
-  public override itemsPerPageLabel = 'Stavki po stranici';
+class MatPaginatorIntlCro extends MatPaginatorIntl {
 
+	/** A label for the page size selector. */
+	public override itemsPerPageLabel = 'Anime per page:';
 }
 
 /** Paginator Component. */
@@ -34,7 +22,7 @@ export class MatPaginatorIntlCro extends MatPaginatorIntl {
 	styleUrl: './paginator.component.css',
 	imports: [CommonModule, MatPaginatorModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	providers: [{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro}],
+	providers: [{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro }],
 })
 export class PaginatorComponent {
 	@ViewChild(MatPaginator)

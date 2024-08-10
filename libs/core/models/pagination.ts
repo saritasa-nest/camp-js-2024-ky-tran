@@ -1,16 +1,15 @@
-// TODO (Ky Tran): Use 1 approach
 /** Pagination type. */
 export type Pagination<T> = Readonly<{
 
 	/** Total number of results. */
-	readonly count: number;
+	count: number;
 
 	/** The link of the next page. */
-	readonly next: string | null;
+	next: string | null;
 
 	/** The link of the previous page. */
-	readonly previous: string | null;
+	previous: string | null;
 
 	/** A list of results. */
-	readonly results: readonly T[];
+	results: readonly T[];
 }>;
