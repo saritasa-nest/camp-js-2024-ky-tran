@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { MatSelectChange } from '@angular/material/select';
-import { 	BehaviorSubject, catchError, map, Observable,	shareReplay, switchMap, tap, throwError } from 'rxjs';
+import { 	BehaviorSubject, catchError, Observable,	shareReplay, switchMap, tap, throwError } from 'rxjs';
 import { QUERY_PARAMS_PROVIDER, QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
 import { AnimeTableComponent } from '@js-camp/angular/app/features/home/anime-table/anime-table.component';
@@ -11,7 +11,7 @@ import { FilterComponent } from '@js-camp/angular/app/features/home/filter/filte
 import { SearchComponent } from '@js-camp/angular/app/features/home/search/search.component';
 import { PaginatorComponent } from '@js-camp/angular/app/features/home/paginator/paginator.component';
 import { AnimeService } from '@js-camp/angular/core/services/anime.service';
-import { UrlService } from '@js-camp/angular/core/services/url.service';
+import { AnimeUrlService } from '@js-camp/angular/core/services/anime-url.service';
 import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { toggleExecutionState } from '@js-camp/angular/shared/utils/rxjs/toggleExecutionState';
@@ -32,7 +32,7 @@ import { SortEventFieldsDto } from '@js-camp/core/dtos/sort-event.dto';
 export class HomeComponent {
 	private readonly animeService = inject(AnimeService);
 
-	private readonly urlService = inject(UrlService);
+	private readonly animeUrlService = inject(AnimeUrlService);
 
 	private readonly queryParamsProvider$ = inject(QUERY_PARAMS_TOKEN);
 
@@ -55,16 +55,11 @@ export class HomeComponent {
 		pageSize: DEFAULT_PAGE_SIZE,
 	});
 
+	// debounceTime(300), throttleTime(500, undefined, { leading: true, trailing: true })
 	public constructor() {
 		this.animeList$ = this.queryParamsProvider$.pipe(
-			// throttleTime(500, undefined, { leading: true, trailing: true }),
-			tap(params => {
-				const pagePaginator = { pageNumber: Number(params.pageNumber), pageSize: Number(params.pageSize) };
-				this.pagePaginator$.next(pagePaginator);
-			}),
-			map(params => this.urlService.createHttpQueryParams(params)),
-			// debounceTime(300),
-			switchMap(httpParams => this.animeService.getAnimeList(httpParams).pipe(
+			tap(filterParams => this.pagePaginator$.next({ pageNumber: filterParams.pageNumber, pageSize: filterParams.pageSize })),
+			switchMap(filterParams => this.animeService.getAnimeList(filterParams).pipe(
 				toggleExecutionState(this.isLoading$),
 				catchError((error: unknown) => throwError(() => {
 					const errorMessage = error instanceof Error ? error.message : 'Something went wrong!';
@@ -82,7 +77,7 @@ export class HomeComponent {
 	 */
 	protected onPageChange(pageEvent: PageEvent): void {
 		const { pageIndex, pageSize } = pageEvent;
-		this.urlService.updateQueryParams({ pageNumber: pageIndex + 1, pageSize });
+		this.animeUrlService.updateQueryParams({ pageNumber: pageIndex + 1, pageSize });
 	}
 
 	// TODO (Ky Tran) use FilterParam as arg here
@@ -91,7 +86,7 @@ export class HomeComponent {
 	 * @param sortEvent Sort event.
 	 */
 	protected onSortChange(sortEvent: Sort): void {
-		this.urlService.updateQueryParams({
+		this.animeUrlService.updateQueryParams({
 			...SortEventMapper.fromDto({ active: sortEvent.active as SortEventFieldsDto, direction: sortEvent.direction }),
 			pageNumber: DEFAULT_PAGE_NUMBER,
 		});
@@ -103,7 +98,7 @@ export class HomeComponent {
 	 * @param selectEvent Select Change event.
 	 */
 	protected onSelectionChange(selectEvent: MatSelectChange): void {
-		this.urlService.updateQueryParams({
+		this.animeUrlService.updateQueryParams({
 			type: selectEvent.value ? selectEvent.value : null,
 			pageNumber: DEFAULT_PAGE_NUMBER,
 		});
@@ -114,7 +109,7 @@ export class HomeComponent {
 	 * @param searchTerm Search term.
 	 */
 	protected onSearchChange(searchTerm: string): void {
-		this.urlService.updateQueryParams({
+		this.animeUrlService.updateQueryParams({
 			search: searchTerm ?? null,
 			pageNumber: DEFAULT_PAGE_NUMBER,
 		});
