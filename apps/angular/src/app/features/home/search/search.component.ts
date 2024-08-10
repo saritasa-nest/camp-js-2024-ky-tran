@@ -45,7 +45,7 @@ export class SearchComponent implements OnInit, OnChanges {
 	/** Search control. */
 	protected searchControl = new FormControl<string>({ value: '', disabled: false });
 
-	/** On Init. */
+	/** @inheritdoc */
 	public ngOnInit(): void {
 		this.queryParamsProvider$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(({ search }) => {
 			this.searchControl = new FormControl<string>({ value: search ? search.trim() : '', disabled: false });
@@ -59,10 +59,7 @@ export class SearchComponent implements OnInit, OnChanges {
 
 	// private initializeSearchControlSideEffect
 
-	/**
-	 * On Changes.
-	 * @param changes Simple changes.
-	 */
+	/** @inheritdoc */
 	public ngOnChanges(changes: SimpleChanges): void {
 		if (changes['disabled']) {
 			const { currentValue: isDisabled } = changes['disabled'];

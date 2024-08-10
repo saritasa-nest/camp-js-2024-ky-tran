@@ -1,8 +1,7 @@
-import { booleanAttribute, ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
 import { AnimeType } from '@js-camp/core/models/anime';
 
@@ -25,22 +24,11 @@ export class FilterComponent {
 	@Output()
 	public readonly selectionChange = new EventEmitter<MatSelectChange>();
 
+	/** Query params provider. */
 	protected readonly queryParamsProvider$ = inject(QUERY_PARAMS_TOKEN);
-
-	private readonly destroyRef = inject(DestroyRef);
-
-	/** Selected anime type. */
-	// protected selectedType: AnimeType | null = null;
 
 	/** Anime types. */
 	protected readonly animeTypes = Object.values(AnimeType);
-
-	// /** On Init. */
-	// public ngOnInit(): void {
-	// 	this.queryParamsProvider$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(({ type }) => {
-	// 		this.selectedType = type;
-	// 	});
-	// }
 
 	/**
 	 * Selection change event handler.
