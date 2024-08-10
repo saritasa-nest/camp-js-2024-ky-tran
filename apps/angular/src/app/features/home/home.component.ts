@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { MatSelectChange } from '@angular/material/select';
 import { 	BehaviorSubject, catchError, Observable,	shareReplay, switchMap, tap, throwError } from 'rxjs';
@@ -73,11 +72,10 @@ export class HomeComponent {
 
 	/**
 	 * Page change event handler.
-	 * @param pageEvent Page event.
+	 * @param paginator Page event.
 	 */
-	protected onPageChange(pageEvent: PageEvent): void {
-		const { pageIndex, pageSize } = pageEvent;
-		this.animeUrlService.updateQueryParams({ pageNumber: pageIndex + 1, pageSize });
+	protected onPageChange(paginator: BaseQueryParams.Paginator): void {
+		this.animeUrlService.updateQueryParams(paginator);
 	}
 
 	// TODO (Ky Tran) use FilterParam as arg here
