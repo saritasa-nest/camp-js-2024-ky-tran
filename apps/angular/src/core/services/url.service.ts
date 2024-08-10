@@ -32,24 +32,19 @@ export class UrlService {
 		, new HttpParams());
 	}
 
-	// TODO (Ky Tran): Only need to use params
 	/**
 	 * Updates the URL query params.
 	 * @param params The provided query params.
-	 * @param resetParams The provided reset params.
 	 */
-	public updateQueryParams(
-		params: Partial<AnimeQueryParams.Combined>,
-		resetParams: Partial<AnimeQueryParams.Combined> = {},
-	): void {
-		// Get existed query params from URL
+	public updateQueryParams(params: Partial<AnimeQueryParams.Combined>): void {
+		// Get existed query params
 		const queryParamsFromUrl = AnimeQueryParamsUrlMapper.fromUrlDto(
 			this.removeNullFields(this.activatedRoute.snapshot.queryParams) as AnimeQueryParamsUrlDto.Combined,
 			DEFAULT_PAGE_NUMBER,
 			DEFAULT_PAGE_SIZE,
 		);
 
-		const queryParams = { ...{ ...queryParamsFromUrl, ...params }, ...resetParams };
+		const queryParams = { ...queryParamsFromUrl, ...params };
 		const queryParamsToUrlDto = AnimeQueryParamsUrlMapper.toUrlDto(queryParams, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE);
 
 		this.queryParamsService.append(queryParamsToUrlDto);

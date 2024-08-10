@@ -91,10 +91,10 @@ export class HomeComponent {
 	 * @param sortEvent Sort event.
 	 */
 	protected onSortChange(sortEvent: Sort): void {
-		this.urlService.updateQueryParams(
-			SortEventMapper.fromDto({ active: sortEvent.active as SortEventFieldsDto, direction: sortEvent.direction }),
-			{ pageNumber: DEFAULT_PAGE_NUMBER },
-		);
+		this.urlService.updateQueryParams({
+			...SortEventMapper.fromDto({ active: sortEvent.active as SortEventFieldsDto, direction: sortEvent.direction }),
+			pageNumber: DEFAULT_PAGE_NUMBER,
+		});
 	}
 
 	// TODO (Ky Tran): Emit FilterParams instead of MatSelect
@@ -103,10 +103,10 @@ export class HomeComponent {
 	 * @param selectEvent Select Change event.
 	 */
 	protected onSelectionChange(selectEvent: MatSelectChange): void {
-		this.urlService.updateQueryParams(
-			{ type: selectEvent.value ? selectEvent.value : null },
-			{ pageNumber: DEFAULT_PAGE_NUMBER },
-		);
+		this.urlService.updateQueryParams({
+			type: selectEvent.value ? selectEvent.value : null,
+			pageNumber: DEFAULT_PAGE_NUMBER,
+		});
 	}
 
 	/**
@@ -114,6 +114,9 @@ export class HomeComponent {
 	 * @param searchTerm Search term.
 	 */
 	protected onSearchChange(searchTerm: string): void {
-		this.urlService.updateQueryParams({ search: searchTerm ?? null }, { pageNumber: DEFAULT_PAGE_NUMBER });
+		this.urlService.updateQueryParams({
+			search: searchTerm ?? null,
+			pageNumber: DEFAULT_PAGE_NUMBER,
+		});
 	}
 }
