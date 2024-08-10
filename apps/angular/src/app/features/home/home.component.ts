@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatSelectChange } from '@angular/material/select';
 import { 	BehaviorSubject, catchError, Observable,	shareReplay, switchMap, tap, throwError } from 'rxjs';
 import { QUERY_PARAMS_PROVIDER, QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
@@ -84,16 +83,12 @@ export class HomeComponent {
 		this.animeUrlService.updateQueryParams({ ...sortFilterParams, pageNumber: DEFAULT_PAGE_NUMBER });
 	}
 
-	// TODO (Ky Tran): Emit FilterParams instead of MatSelect
 	/**
 	 * Selection change event handler.
-	 * @param selectEvent Select Change event.
+	 * @param selectFilterParams Select filter params.
 	 */
-	protected onSelectionChange(selectEvent: MatSelectChange): void {
-		this.animeUrlService.updateQueryParams({
-			type: selectEvent.value ? selectEvent.value : null,
-			pageNumber: DEFAULT_PAGE_NUMBER,
-		});
+	protected onSelectionChange(selectFilterParams: AnimeQueryParams.Filter): void {
+		this.animeUrlService.updateQueryParams({ ...selectFilterParams, pageNumber: DEFAULT_PAGE_NUMBER });
 	}
 
 	/**
