@@ -1,24 +1,9 @@
-import {
-	booleanAttribute,
-	ChangeDetectionStrategy,
-	Component,
-	DestroyRef,
-	EventEmitter,
-	inject,
-	Input,
-	OnChanges,
-	OnInit,
-	Output,
-	SimpleChanges,
-} from '@angular/core';
-
+import { booleanAttribute, ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
 import { QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
-import { distinctUntilChanged } from 'rxjs';
 
 /** Search component. */
 @Component({
@@ -36,7 +21,7 @@ export class SearchComponent implements OnInit, OnChanges {
 
 	/** Search change event emitter. */
 	@Output()
-	public readonly searchChange = new EventEmitter<string>();
+	public readonly searchChange = new EventEmitter<string | null>();
 
 	private readonly queryParamsProvider$ = inject(QUERY_PARAMS_TOKEN);
 
@@ -50,6 +35,7 @@ export class SearchComponent implements OnInit, OnChanges {
 		this.queryParamsProvider$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(({ search }) => {
 			this.searchControl = new FormControl<string>({ value: search ? search.trim() : '', disabled: false });
 		});
+
 		// const searchResults$ = this.searchControl.valueChanges.pipe(
 		// 	distinctUntilChanged()
 		// )
@@ -61,10 +47,10 @@ export class SearchComponent implements OnInit, OnChanges {
 
 	/** @inheritdoc */
 	public ngOnChanges(changes: SimpleChanges): void {
-		if (changes['disabled']) {
-			const { currentValue: isDisabled } = changes['disabled'];
-			// TODO Use this.searchControl.disable();
-			this.searchControl[isDisabled ? 'disable' : 'enable']();
+		if (changes['disabled']?.currentValue) {
+			this.searchControl.disable();
+		} else {
+			this.searchControl.enable();
 		}
 	}
 
@@ -87,7 +73,7 @@ export class SearchComponent implements OnInit, OnChanges {
 
 			if (searchTerm !== cacheSearchTerm) {
 				cacheSearchTerm = searchTerm;
-				instance.searchChange.emit(searchTerm);
+				instance.searchChange.emit(searchTerm != null && searchTerm.trim() !== '' ? searchTerm : null);
 			}
 		}
 

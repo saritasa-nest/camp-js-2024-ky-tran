@@ -68,7 +68,7 @@ export class HomeComponent {
 	}
 
 	/**
-	 * Page change event handler.
+	 * Page change handler.
 	 * @param paginator Page event.
 	 */
 	protected onPageChange(paginator: BaseQueryParams.Paginator): void {
@@ -76,7 +76,7 @@ export class HomeComponent {
 	}
 
 	/**
-	 * Sort change event handler.
+	 * Sort change handler.
 	 * @param sortFilterParams Sort filter params.
 	 */
 	protected onSortChange(sortFilterParams: AnimeQueryParams.Sort): void {
@@ -84,7 +84,7 @@ export class HomeComponent {
 	}
 
 	/**
-	 * Selection change event handler.
+	 * Selection change handler.
 	 * @param selectFilterParams Select filter params.
 	 */
 	protected onSelectionChange(selectFilterParams: AnimeQueryParams.Filter): void {
@@ -92,13 +92,10 @@ export class HomeComponent {
 	}
 
 	/**
-	 * Search change fired when enter is hit to emit search value event.
-	 * @param searchTerm Search term.
+	 * Search change handler.
+	 * @param search Search query.
 	 */
-	protected onSearchChange(searchTerm: string): void {
-		this.animeUrlService.updateQueryParams({
-			search: searchTerm ?? null,
-			pageNumber: DEFAULT_PAGE_NUMBER,
-		});
+	protected onSearchChange(search: string | null): void {
+		this.animeUrlService.updateQueryParams({ search, pageNumber: DEFAULT_PAGE_NUMBER });
 	}
 }
