@@ -11,7 +11,7 @@ import { NullablePipe } from '@js-camp/angular/core/pipes/nullable.pipe';
 import { ProgressSpinnerComponent } from '@js-camp/angular/shared/components/progress-spinner/progress-spinner.component';
 import { AnimeTableColumns } from '@js-camp/core/enums/anime-table-columns.enum';
 import { QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
-import { SortEventDto } from '@js-camp/core/dtos/sort-event.dto';
+import { SortEventDto, SortEventFieldsDto } from '@js-camp/core/dtos/sort-event.dto';
 import { paginatorAttribute } from '@js-camp/angular/shared/attributes/paginator-attribute';
 import { emptyStringAttribute } from '@js-camp/angular/shared/attributes/empty-string-attribute';
 import { animeListAttribute } from '@js-camp/angular/shared/attributes/anime-list-attribute';
@@ -21,6 +21,7 @@ import { BaseQueryParams } from '@js-camp/core/models/base-query-params';
 import { SkeletonCellComponent } from '@js-camp/angular/app/features/home/anime-table/skeleton-cell/skeleton-cell.component';
 import { NonNullableFields } from '@js-camp/core/types/non-nullable-fields';
 import { SortEventMapper } from '@js-camp/core/mappers/sort-event.mapper';
+import { AnimeQueryParams } from '@js-camp/core/models/anime-query-params';
 
 /** Anime Table component. */
 @Component({
@@ -72,7 +73,7 @@ export class AnimeTableComponent implements OnInit {
 
 	/** Sort change event emitter. */
 	@Output()
-	public readonly sortChange = new EventEmitter<Sort>();
+	public readonly sortChange = new EventEmitter<AnimeQueryParams.Sort>();
 
 	private readonly destroyRef = inject(DestroyRef);
 
@@ -117,13 +118,12 @@ export class AnimeTableComponent implements OnInit {
 			.subscribe();
 	}
 
-	// TODO (Ky Tran): Use matSortMapper here
 	/**
 	 * Sort change event handler.
 	 * @param sortEvent Sort event.
 	 */
-	protected onSortChange(sortEvent: Sort): void {
-		this.sortChange.emit(sortEvent);
+	protected onSortChange({ active, direction }: Sort): void {
+		this.sortChange.emit(SortEventMapper.fromDto({ active: active as SortEventFieldsDto, direction }));
 	}
 
 	/**

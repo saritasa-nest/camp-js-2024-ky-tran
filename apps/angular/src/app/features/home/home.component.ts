@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Sort } from '@angular/material/sort';
 import { MatSelectChange } from '@angular/material/select';
 import { 	BehaviorSubject, catchError, Observable,	shareReplay, switchMap, tap, throwError } from 'rxjs';
 import { QUERY_PARAMS_PROVIDER, QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
@@ -15,8 +14,7 @@ import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { toggleExecutionState } from '@js-camp/angular/shared/utils/rxjs/toggleExecutionState';
 import { BaseQueryParams } from '@js-camp/core/models/base-query-params';
-import { SortEventMapper } from '@js-camp/core/mappers/sort-event.mapper';
-import { SortEventFieldsDto } from '@js-camp/core/dtos/sort-event.dto';
+import { AnimeQueryParams } from '@js-camp/core/models/anime-query-params';
 
 /** Home page. */
 @Component({
@@ -78,16 +76,12 @@ export class HomeComponent {
 		this.animeUrlService.updateQueryParams(paginator);
 	}
 
-	// TODO (Ky Tran) use FilterParam as arg here
 	/**
 	 * Sort change event handler.
-	 * @param sortEvent Sort event.
+	 * @param sortFilterParams Sort filter params.
 	 */
-	protected onSortChange(sortEvent: Sort): void {
-		this.animeUrlService.updateQueryParams({
-			...SortEventMapper.fromDto({ active: sortEvent.active as SortEventFieldsDto, direction: sortEvent.direction }),
-			pageNumber: DEFAULT_PAGE_NUMBER,
-		});
+	protected onSortChange(sortFilterParams: AnimeQueryParams.Sort): void {
+		this.animeUrlService.updateQueryParams({ ...sortFilterParams, pageNumber: DEFAULT_PAGE_NUMBER });
 	}
 
 	// TODO (Ky Tran): Emit FilterParams instead of MatSelect

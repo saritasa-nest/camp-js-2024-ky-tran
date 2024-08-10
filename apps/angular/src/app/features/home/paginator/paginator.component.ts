@@ -5,7 +5,6 @@ import { DEFAULT_PAGE_SIZE_OPTIONS } from '@js-camp/angular/shared/constants';
 import { paginatorAttribute } from '@js-camp/angular/shared/attributes/paginator-attribute';
 import { BaseQueryParams } from '@js-camp/core/models/base-query-params';
 import { NonNullableFields } from '@js-camp/core/types/non-nullable-fields';
-import { AnimeQueryParams } from '@js-camp/core/models/anime-query-params';
 
 /** MatPaginatorIntl for modifying the labels and text displayed. */
 @Injectable()
@@ -60,7 +59,7 @@ export class PaginatorComponent {
 	 * Change event object that is emitted when the user selects a different page size or navigates to another page.
 	 * @param pageEvent Page event.
 	 */
-	protected onPageChange(pageEvent: PageEvent): void {
-		this.pageChange.emit({ pageNumber: pageEvent.pageIndex + 1, pageSize: pageEvent.pageSize });
+	protected onPageChange({ pageIndex, pageSize }: PageEvent): void {
+		this.pageChange.emit({ pageNumber: pageIndex + 1, pageSize });
 	}
 }
