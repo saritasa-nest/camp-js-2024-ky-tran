@@ -4,6 +4,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
+import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
 
 /** Search component. */
 @Component({
@@ -23,6 +24,8 @@ export class SearchComponent implements OnInit, OnChanges {
 	@Output()
 	public readonly searchChange = new EventEmitter<string | null>();
 
+	private readonly searchChange$ = new BehaviorSubject<string | null>(null);
+
 	private readonly queryParamsProvider$ = inject(QUERY_PARAMS_TOKEN);
 
 	private readonly destroyRef = inject(DestroyRef);
@@ -32,18 +35,26 @@ export class SearchComponent implements OnInit, OnChanges {
 
 	/** @inheritdoc */
 	public ngOnInit(): void {
-		this.queryParamsProvider$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(({ search }) => {
-			this.searchControl = new FormControl<string>({ value: search ? search.trim() : '', disabled: false });
-		});
-
-		// const searchResults$ = this.searchControl.valueChanges.pipe(
-		// 	distinctUntilChanged()
-		// )
-		// TODO Tao mot cai observable o day
-		// searchResult$ = this.searchControl.valueChanages
+		this.initializeSearchControlFirstLoad();
+		this.initializeSearchControlSideEffect();
 	}
 
-	// private initializeSearchControlSideEffect
+	private initializeSearchControlFirstLoad(): void {
+		this.queryParamsProvider$
+			.pipe(takeUntilDestroyed(this.destroyRef))
+			.subscribe(({ search }) => {
+				this.searchControl = new FormControl<string>({ value: search ? search.trim() : '', disabled: false });
+			});
+	}
+
+	private initializeSearchControlSideEffect(): void {
+		this.searchChange$
+			.pipe(
+				distinctUntilChanged(),
+				takeUntilDestroyed(this.destroyRef),
+			)
+			.subscribe(search => this.searchChange.emit(search));
+	}
 
 	/** @inheritdoc */
 	public ngOnChanges(changes: SimpleChanges): void {
@@ -54,29 +65,9 @@ export class SearchComponent implements OnInit, OnChanges {
 		}
 	}
 
-	// public onSearchClick() {
-	// 	searchResults$.subscribe()
-	// }
-
-	// TODO Research https://rxjs.dev/api/operators/distinctUntilChanged
-
-	/** Search change fired when enter is hit to emit search value event. */
-	protected onSearchChange = this.onSearchChangeCache(this);
-
-	private onSearchChangeCache(instance: SearchComponent): () => void {
-		let cacheSearchTerm: string | null = null;
-
-		/** Inner On search change. */
-		function inner(): void {
-			// Search term can not be null, just a string or an empty string.
-			const searchTerm = (instance.searchControl.value as string).trim();
-
-			if (searchTerm !== cacheSearchTerm) {
-				cacheSearchTerm = searchTerm;
-				instance.searchChange.emit(searchTerm != null && searchTerm.trim() !== '' ? searchTerm : null);
-			}
-		}
-
-		return inner.bind(this);
+	/** Search change handler. */
+	protected onSearchChange(): void {
+		const search = this.searchControl.value;
+		this.searchChange$.next(search != null && search.trim() !== '' ? search : null);
 	}
 }
