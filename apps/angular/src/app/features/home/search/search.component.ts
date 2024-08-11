@@ -3,8 +3,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { BehaviorSubject, distinctUntilChanged, skip } from 'rxjs';
 import { QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
-import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
 
 /** Search component. */
 @Component({
@@ -43,13 +43,14 @@ export class SearchComponent implements OnInit, OnChanges {
 		this.queryParamsProvider$
 			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe(({ search }) => {
-				this.searchControl = new FormControl<string>({ value: search ? search.trim() : '', disabled: false });
+				(this.searchControl = new FormControl<string>({ value: search ? search.trim() : '', disabled: false }));
 			});
 	}
 
 	private initializeSearchControlSideEffect(): void {
 		this.searchChange$
 			.pipe(
+				skip(1),
 				distinctUntilChanged(),
 				takeUntilDestroyed(this.destroyRef),
 			)
