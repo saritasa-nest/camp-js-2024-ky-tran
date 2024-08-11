@@ -14,11 +14,11 @@ export class UrlService {
 	}
 
 	/**
-	 * Create Http query params.
-	 * @param paramsDto Query params DTO.
+	 * Create http params.
+	 * @param filterParamsDto Query params DTO.
 	 */
-	protected createHttpQueryParams(paramsDto: AnimeFilterParamsDto.Combined): HttpParams {
-		return Object.entries(paramsDto).reduce((httpPrams, [key, value]) =>
+	protected createHttpParams(filterParamsDto: AnimeFilterParamsDto.Combined): HttpParams {
+		return Object.entries(filterParamsDto).reduce((httpPrams, [key, value]) =>
 			value != null ? httpPrams.set(key, value.toString()) : httpPrams
 		, new HttpParams());
 	}

@@ -9,7 +9,7 @@ export class QueryParamsService {
 	private readonly router = inject(Router);
 
 	/**
-	 * Get query param from URL with given key.
+	 * Get query with given key.
 	 * @param key Query param key.
 	 */
 	public get(key: string): string | null {

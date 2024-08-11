@@ -17,29 +17,28 @@ export class AnimeUrlService extends UrlService {
 	private readonly queryParamsService = inject(QueryParamsService);
 
 	/**
-	 * Create Http query params.
-	 * @param params Query params.
+	 * Create anime http params.
+	 * @param filterParams Filter params.
 	 */
-	public createHttpAnimeQueryParams(params: AnimeFilterParams.Combined): HttpParams {
-		const paramsDto = AnimeFilterParamsMapper.toDto(params, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE);
-		return super.createHttpQueryParams(paramsDto);
+	public createAnimeHttpParams(filterParams: AnimeFilterParams.Combined): HttpParams {
+		const filterParamsDto = AnimeFilterParamsMapper.toDto(filterParams, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE);
+		return super.createHttpParams(filterParamsDto);
 	}
 
 	/**
 	 * Updates the URL query params.
-	 * @param params The provided query params.
+	 * @param filterParams Anime filter params.
 	 */
-	public updateQueryParams(params: Partial<AnimeFilterParams.Combined>): void {
-		// Get existed query params
-		const queryParamsFromUrl = AnimeQueryParamsMapper.fromDto(
+	public updateQueryParams(filterParams: Partial<AnimeFilterParams.Combined>): void {
+		const existedFilterParams = AnimeQueryParamsMapper.fromDto(
 			super.removeNullFields(this.activatedRoute.snapshot.queryParams) as AnimeQueryParamsDto.Combined,
 			DEFAULT_PAGE_NUMBER,
 			DEFAULT_PAGE_SIZE,
 		);
 
-		const queryParams = { ...queryParamsFromUrl, ...params };
-		const queryParamsToUrlDto = AnimeQueryParamsMapper.toDto(queryParams, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE);
+		const newFilterParams = { ...existedFilterParams, ...filterParams };
+		const queryParams = AnimeQueryParamsMapper.toDto(newFilterParams, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE);
 
-		this.queryParamsService.append(queryParamsToUrlDto);
+		this.queryParamsService.append(queryParams);
 	}
 }

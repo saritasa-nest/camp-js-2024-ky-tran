@@ -25,7 +25,7 @@ export class AnimeService {
 	 * @param filterParams Anime filter params.
 	 */
 	public getAnimeList(filterParams: AnimeFilterParams.Combined): Observable<Pagination<Anime>> {
-		const httpParams = this.animeUrlService.createHttpAnimeQueryParams(filterParams);
+		const httpParams = this.animeUrlService.createAnimeHttpParams(filterParams);
 
 		return this.httpClient.get<PaginationDto<AnimeDto>>(this.urlConfig.animeUrl, { params: httpParams })
 			.pipe(
