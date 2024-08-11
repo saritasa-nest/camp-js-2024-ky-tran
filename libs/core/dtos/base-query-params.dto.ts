@@ -4,11 +4,11 @@ export namespace BaseQueryParamsDto {
 	/** Paginator. */
 	export type Paginator = {
 
-		/** The initial index from which to return the results. */
-		offset: number | null;
+		/** Page number. */
+		pageNumber: number | null;
 
-		/** Number of results to return per page. */
-		limit: number | null;
+		/** Page size. */
+		pageSize: number | null;
 	};
 
 	/** Search. */

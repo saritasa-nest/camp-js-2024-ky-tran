@@ -1,4 +1,4 @@
-import { AnimeQueryParamsUrlDto } from '../dtos/anime-query-params-url.dto';
+import { AnimeQueryParamsDto } from '../dtos/anime-query-params.dto';
 import { AnimeFilterParams } from '../models/anime-filter-params';
 
 import { AnimeTypeUrlMapper } from './anime-type-url.mapper';
@@ -16,7 +16,7 @@ export namespace AnimeQueryParamsUrlMapper {
 	 * @param defaultPageSize Default page size.
 	 */
 	export function fromUrlDto(
-		dto: AnimeQueryParamsUrlDto.Combined,
+		dto: AnimeQueryParamsDto.Combined,
 		defaultPageNumber: number,
 		defaultPageSize: number,
 	): AnimeFilterParams.Combined {
@@ -40,7 +40,7 @@ export namespace AnimeQueryParamsUrlMapper {
 		model: AnimeFilterParams.Combined,
 		defaultPageNumber: number,
 		defaultPageSize: number,
-	): AnimeQueryParamsUrlDto.Combined {
+	): AnimeQueryParamsDto.Combined {
 		const { pageNumber, pageSize, sortField, sortDirection, type, search } = model;
 
 		return {

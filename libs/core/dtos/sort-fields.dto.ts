@@ -1,4 +1,4 @@
-/** Anime sort fields dto. */
+/** Anime sort fields DTO. */
 export enum SortFieldsDto {
 	EnglishTitle = 'title_eng',
 	AiredStartDate = 'aired__startswith',

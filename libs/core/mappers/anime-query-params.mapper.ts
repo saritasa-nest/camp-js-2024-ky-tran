@@ -1,6 +1,6 @@
 import { SortDirection } from '../models/sort-direction';
 import { AnimeFilterParams } from '../models/anime-filter-params';
-import { AnimeQueryParamsDto } from '../dtos/anime-query-params.dto';
+import { AnimeFilterParamsDto } from '../dtos/anime-filter-params.dto';
 
 import { BaseQueryParamsMapper } from './base-query-params.mapper';
 import { AnimeTypeMapper } from './anime-type.mapper';
@@ -19,7 +19,7 @@ export namespace AnimeQueryParamsMapper {
 		model: AnimeFilterParams.Combined,
 		defaultPageNumber: number,
 		defaultPageSize: number,
-	): AnimeQueryParamsDto.Combined {
+	): AnimeFilterParamsDto.Combined {
 		const { pageNumber, pageSize, sortField, sortDirection, type, search } = model;
 		const hasSorting = sortField && sortDirection;
 		const sortingSideCharacter = sortDirection === SortDirection.Ascending ? '' : '-';

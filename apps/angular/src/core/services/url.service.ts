@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { AnimeQueryParamsDto } from '@js-camp/core/dtos/anime-query-params.dto';
+import { AnimeFilterParamsDto } from '@js-camp/core/dtos/anime-filter-params.dto';
 
 /** Url Service. */
 @Injectable({ providedIn: 'root' })
@@ -17,7 +17,7 @@ export class UrlService {
 	 * Create Http query params.
 	 * @param paramsDto Query params DTO.
 	 */
-	protected createHttpQueryParams(paramsDto: AnimeQueryParamsDto.Combined): HttpParams {
+	protected createHttpQueryParams(paramsDto: AnimeFilterParamsDto.Combined): HttpParams {
 		return Object.entries(paramsDto).reduce((httpPrams, [key, value]) =>
 			value != null ? httpPrams.set(key, value.toString()) : httpPrams
 		, new HttpParams());

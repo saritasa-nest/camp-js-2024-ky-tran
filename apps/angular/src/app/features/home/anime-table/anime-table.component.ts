@@ -11,7 +11,7 @@ import { NullablePipe } from '@js-camp/angular/core/pipes/nullable.pipe';
 import { ProgressSpinnerComponent } from '@js-camp/angular/shared/components/progress-spinner/progress-spinner.component';
 import { AnimeTableColumns } from '@js-camp/core/enums/anime-table-columns.enum';
 import { QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
-import { SortEventDto, SortEventFieldsDto } from '@js-camp/core/dtos/sort-event.dto';
+import { MatSortEventDto, MatSortEventFieldsDto } from '@js-camp/core/dtos/mat-sort-event.dto';
 import { paginatorAttribute } from '@js-camp/angular/shared/attributes/paginator-attribute';
 import { emptyStringAttribute } from '@js-camp/angular/shared/attributes/empty-string-attribute';
 import { animeListAttribute } from '@js-camp/angular/shared/attributes/anime-list-attribute';
@@ -89,7 +89,7 @@ export class AnimeTableComponent implements OnInit {
 	 * Property - active: Sort field.
 	 * Property - direction: Sort direction.
 	 */
-	protected readonly pageSorter$ = new BehaviorSubject<SortEventDto>({ active: '', direction: '' });
+	protected readonly pageSorter$ = new BehaviorSubject<MatSortEventDto>({ active: '', direction: '' });
 
 	/** A skeleton template for a table while loading. */
 	protected readonly skeletonAnimeSource$ = new BehaviorSubject<Anime[]>(
@@ -124,7 +124,7 @@ export class AnimeTableComponent implements OnInit {
 	 * @param sortEvent Sort event.
 	 */
 	protected onSortChange({ active, direction }: Sort): void {
-		this.sortChange.emit(SortEventMapper.fromDto({ active: active as SortEventFieldsDto, direction }));
+		this.sortChange.emit(SortEventMapper.fromDto({ active: active as MatSortEventFieldsDto, direction }));
 	}
 
 	/**

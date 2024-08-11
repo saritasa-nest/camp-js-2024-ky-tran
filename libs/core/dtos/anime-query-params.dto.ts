@@ -1,5 +1,7 @@
-import { AnimeTypeDto } from './anime.dto';
+import { AnimeTypeQueryParamsDto } from './anime-type-query-params.dto';
 import { BaseQueryParamsDto } from './base-query-params.dto';
+import { SortDirectionQueryParamsDto } from './sort-direction-query-params.dto';
+import { SortFieldsQueryParamsDto } from './sort-fields-query-params.dto';
 
 /** Anime query params DTO. */
 export namespace AnimeQueryParamsDto {
@@ -7,15 +9,18 @@ export namespace AnimeQueryParamsDto {
 	/** Sort. */
 	export type Sort = {
 
-		/** Sort fields. */
-		ordering: string | null;
+		/** Sort field. */
+		sortField: SortFieldsQueryParamsDto | null;
+
+		/** Sort direction. */
+		sortDirection: SortDirectionQueryParamsDto | null;
 	};
 
 	/** Filter. */
 	export type Filter = {
 
 		/** Filter type. */
-		type: AnimeTypeDto | null;
+		type: AnimeTypeQueryParamsDto | null;
 	};
 
 	/** Anime query params. */

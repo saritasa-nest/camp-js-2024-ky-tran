@@ -1,5 +1,5 @@
-/** Anime type URL DTO. */
-export enum AnimeTypeUrlDto {
+/** Anime type query params DTO. */
+export enum AnimeTypeQueryParamsDto {
 	Tv = 'tv',
 	Ova = 'ova',
 	Movie = 'movie',

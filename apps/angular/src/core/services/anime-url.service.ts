@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UrlService } from '@js-camp/angular/core/services/url.service';
 import { QueryParamsService } from '@js-camp/angular/core/services/query-params.service';
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
-import { AnimeQueryParamsUrlDto } from '@js-camp/core/dtos/anime-query-params-url.dto';
+import { AnimeQueryParamsDto } from '@js-camp/core/dtos/anime-query-params.dto';
 import { AnimeQueryParamsUrlMapper } from '@js-camp/core/mappers/anime-query-params-url.mapper';
 import { AnimeFilterParams } from '@js-camp/core/models/anime-filter-params';
 import { HttpParams } from '@angular/common/http';
@@ -32,7 +32,7 @@ export class AnimeUrlService extends UrlService {
 	public updateQueryParams(params: Partial<AnimeFilterParams.Combined>): void {
 		// Get existed query params
 		const queryParamsFromUrl = AnimeQueryParamsUrlMapper.fromUrlDto(
-			super.removeNullFields(this.activatedRoute.snapshot.queryParams) as AnimeQueryParamsUrlDto.Combined,
+			super.removeNullFields(this.activatedRoute.snapshot.queryParams) as AnimeQueryParamsDto.Combined,
 			DEFAULT_PAGE_NUMBER,
 			DEFAULT_PAGE_SIZE,
 		);
