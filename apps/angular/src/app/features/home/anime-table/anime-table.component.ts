@@ -20,7 +20,7 @@ import { LazyLoadImageDirective } from '@js-camp/angular/shared/directives/lazy-
 import { BaseFilterParams } from '@js-camp/core/models/base-filter-params';
 import { SkeletonCellComponent } from '@js-camp/angular/app/features/home/anime-table/skeleton-cell/skeleton-cell.component';
 import { NonNullableFields } from '@js-camp/core/types/non-nullable-fields';
-import { SortEventMapper } from '@js-camp/core/mappers/sort-event.mapper';
+import { MatSortEventMapper } from '@js-camp/core/mappers/mat-sort-event.mapper';
 import { AnimeFilterParams } from '@js-camp/core/models/anime-filter-params';
 
 /** Anime Table component. */
@@ -110,7 +110,7 @@ export class AnimeTableComponent implements OnInit {
 		this.queryParamsProvider$
 			.pipe(
 				tap(({ pageSize, sortField, sortDirection }) => {
-					this.pageSorter$.next(SortEventMapper.toDto({ sortField, sortDirection }));
+					this.pageSorter$.next(MatSortEventMapper.toDto({ sortField, sortDirection }));
 					this.skeletonAnimeSource$.next(this.createSkeletonAnimeSource(pageSize ?? DEFAULT_PAGE_SIZE));
 				}),
 				takeUntilDestroyed(this.destroyRef),
@@ -124,7 +124,7 @@ export class AnimeTableComponent implements OnInit {
 	 * @param sortEvent Sort event.
 	 */
 	protected onSortChange({ active, direction }: Sort): void {
-		this.sortChange.emit(SortEventMapper.fromDto({ active: active as MatSortEventFieldsDto, direction }));
+		this.sortChange.emit(MatSortEventMapper.fromDto({ active: active as MatSortEventFieldsDto, direction }));
 	}
 
 	/**

@@ -5,7 +5,7 @@ import { map, Observable, shareReplay } from 'rxjs';
 import { AnimeFilterParams } from '@js-camp/core/models/anime-filter-params';
 import { AnimeQueryParamsDto } from '@js-camp/core/dtos/anime-query-params.dto';
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
-import { AnimeQueryParamsUrlMapper } from '@js-camp/core/mappers/anime-query-params-url.mapper';
+import { AnimeQueryParamsMapper } from '@js-camp/core/mappers/anime-query-params.mapper';
 
 /** Query params token. */
 export const QUERY_PARAMS_TOKEN = new InjectionToken<Observable<AnimeFilterParams.Combined>>('QUERY_PRAMS_TOKEN');
@@ -26,7 +26,7 @@ export const QUERY_PARAMS_PROVIDER: readonly Provider[] = [
 function queryParamsFactory(activatedRoute: ActivatedRoute): Observable<AnimeFilterParams.Combined> {
 	return activatedRoute.queryParams.pipe(
 		map((params: AnimeQueryParamsDto.Combined | Partial<AnimeQueryParamsDto.Combined>) =>
-			AnimeQueryParamsUrlMapper.fromUrlDto(params as AnimeQueryParamsDto.Combined, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE)),
+			AnimeQueryParamsMapper.fromDto(params as AnimeQueryParamsDto.Combined, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE)),
 		shareReplay({ refCount: true, bufferSize: 1 }),
 	);
 }

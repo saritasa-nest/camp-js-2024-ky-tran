@@ -2,8 +2,8 @@ import { MatSortEventDirectionDto, MatSortEventDto } from '../dtos/mat-sort-even
 import { AnimeFilterParams } from '../models/anime-filter-params';
 import { SortDirection } from '../models/sort-direction';
 
-/** Sort event mapper. */
-export namespace SortEventMapper {
+/** Mat sort event mapper. */
+export namespace MatSortEventMapper {
 
 	/**
 	 * Sort event from DTO to domain model.

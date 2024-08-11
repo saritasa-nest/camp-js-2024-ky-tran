@@ -2,14 +2,14 @@ import { SortFieldsQueryParamsDto } from '../dtos/sort-fields-query-params.dto';
 import { SortFields } from '../models/sort-fields';
 
 /** Mapping from DTO to Domain model. */
-export const SORT_FIELDS_URL_MAPPING_FROM_DTO: Readonly<Record<SortFieldsQueryParamsDto, SortFields>> = {
+const SORT_FIELDS_QUERY_PARAMS_MAPPING_FROM_DTO: Readonly<Record<SortFieldsQueryParamsDto, SortFields>> = {
 	[SortFieldsQueryParamsDto.EnglishTitle]: SortFields.EnglishTitle,
 	[SortFieldsQueryParamsDto.AiredStartDate]: SortFields.AiredStartDate,
 	[SortFieldsQueryParamsDto.Status]: SortFields.Status,
 };
 
 /** Mapping from Domain model to DTO. */
-export const SORT_FIELDS_URL_MAPPING_TO_DTO: Readonly<Record<SortFields, SortFieldsQueryParamsDto>> = {
+const SORT_FIELDS_QUERY_PARAMS_MAPPING_TO_DTO: Readonly<Record<SortFields, SortFieldsQueryParamsDto>> = {
 	[SortFields.EnglishTitle]: SortFieldsQueryParamsDto.EnglishTitle,
 	[SortFields.AiredStartDate]: SortFieldsQueryParamsDto.AiredStartDate,
 	[SortFields.Status]: SortFieldsQueryParamsDto.Status,
@@ -23,7 +23,7 @@ export namespace SortFieldsUrlMapper {
 	 * @param fieldDto DTO.
 	 */
 	export function fromDto(fieldDto: SortFieldsQueryParamsDto): SortFields {
-		return SORT_FIELDS_URL_MAPPING_FROM_DTO[fieldDto];
+		return SORT_FIELDS_QUERY_PARAMS_MAPPING_FROM_DTO[fieldDto];
 	}
 
 	/**
@@ -31,6 +31,6 @@ export namespace SortFieldsUrlMapper {
 	 * @param fieldModel Domain model.
 	 */
 	export function toDto(fieldModel: SortFields): SortFieldsQueryParamsDto {
-		return SORT_FIELDS_URL_MAPPING_TO_DTO[fieldModel];
+		return SORT_FIELDS_QUERY_PARAMS_MAPPING_TO_DTO[fieldModel];
 	}
 }

@@ -2,14 +2,14 @@ import { SortFields } from '../models/sort-fields';
 import { SortFieldsDto } from '../dtos/sort-fields.dto';
 
 /** Mapping from DTO to Domain model. */
-export const SORT_FIELDS_MAPPING_FROM_DTO: Readonly<Record<SortFieldsDto, SortFields>> = {
+const SORT_FIELDS_MAPPING_FROM_DTO: Readonly<Record<SortFieldsDto, SortFields>> = {
 	[SortFieldsDto.EnglishTitle]: SortFields.EnglishTitle,
 	[SortFieldsDto.AiredStartDate]: SortFields.AiredStartDate,
 	[SortFieldsDto.Status]: SortFields.Status,
 };
 
 /** Mapping from Domain model to DTO. */
-export const SORT_FIELDS_MAPPING_TO_DTO: Readonly<Record<SortFields, SortFieldsDto>> = {
+const SORT_FIELDS_MAPPING_TO_DTO: Readonly<Record<SortFields, SortFieldsDto>> = {
 	[SortFields.EnglishTitle]: SortFieldsDto.EnglishTitle,
 	[SortFields.AiredStartDate]: SortFieldsDto.AiredStartDate,
 	[SortFields.Status]: SortFieldsDto.Status,

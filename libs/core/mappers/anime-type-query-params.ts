@@ -2,7 +2,7 @@ import { AnimeType } from '../models/anime';
 import { AnimeTypeQueryParamsDto } from '../dtos/anime-type-query-params.dto';
 
 /** Mapping from DTO to domain model. */
-export const TYPE_URL_MAPPING_FROM_DTO: Readonly<Record<AnimeTypeQueryParamsDto, AnimeType>> = {
+const TYPE_QUERY_PARAMS_MAPPING_FROM_DTO: Readonly<Record<AnimeTypeQueryParamsDto, AnimeType>> = {
 	[AnimeTypeQueryParamsDto.Tv]: AnimeType.Tv,
 	[AnimeTypeQueryParamsDto.Ova]: AnimeType.Ova,
 	[AnimeTypeQueryParamsDto.Movie]: AnimeType.Movie,
@@ -14,7 +14,7 @@ export const TYPE_URL_MAPPING_FROM_DTO: Readonly<Record<AnimeTypeQueryParamsDto,
 };
 
 /** Mapping from Domain model to DTO. */
-export const TYPE_URL_MAPPING_TO_DTO: Readonly<Record<AnimeType, AnimeTypeQueryParamsDto>> = {
+const TYPE_QUERY_PARAMS_MAPPING_TO_DTO: Readonly<Record<AnimeType, AnimeTypeQueryParamsDto>> = {
 	[AnimeType.Tv]: AnimeTypeQueryParamsDto.Tv,
 	[AnimeType.Ova]: AnimeTypeQueryParamsDto.Ova,
 	[AnimeType.Movie]: AnimeTypeQueryParamsDto.Movie,
@@ -25,15 +25,15 @@ export const TYPE_URL_MAPPING_TO_DTO: Readonly<Record<AnimeType, AnimeTypeQueryP
 	[AnimeType.Unknown]: AnimeTypeQueryParamsDto.Unknown,
 };
 
-/** Anime type url mapper. */
-export namespace AnimeTypeUrlMapper {
+/** Anime type query params mapper. */
+export namespace AnimeTypeQueryParamsMapper {
 
 	/**
 	 * Mapping from DTO to domain model.
 	 * @param typeDto DTO.
 	 */
 	export function fromDto(typeDto: AnimeTypeQueryParamsDto): AnimeType {
-		return TYPE_URL_MAPPING_FROM_DTO[typeDto];
+		return TYPE_QUERY_PARAMS_MAPPING_FROM_DTO[typeDto];
 	}
 
 	/**
@@ -41,6 +41,6 @@ export namespace AnimeTypeUrlMapper {
 	 * @param typeModel Domain model.
 	 */
 	export function toDto(typeModel: AnimeType): AnimeTypeQueryParamsDto {
-		return TYPE_URL_MAPPING_TO_DTO[typeModel];
+		return TYPE_QUERY_PARAMS_MAPPING_TO_DTO[typeModel];
 	}
 }
