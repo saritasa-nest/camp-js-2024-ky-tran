@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { 	BehaviorSubject, catchError, Observable,	shareReplay, switchMap, tap, throwError } from 'rxjs';
+import { 	BehaviorSubject, catchError, shareReplay, switchMap, tap, throwError } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FILTER_PARAMS_PROVIDER, FILTER_PARAMS_TOKEN } from '@js-camp/angular/core/providers/filter-params.provider';
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
 import { AnimeTableComponent } from '@js-camp/angular/app/features/home/anime-table/anime-table.component';
@@ -25,15 +26,17 @@ import { AnimeFilterParams } from '@js-camp/core/models/anime-filter-params';
 	providers: [...FILTER_PARAMS_PROVIDER],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 	private readonly animeService = inject(AnimeService);
 
 	private readonly animeUrlService = inject(AnimeUrlService);
 
 	private readonly filterParamsProvider$ = inject(FILTER_PARAMS_TOKEN);
 
+	private readonly destroyRef = inject(DestroyRef);
+
 	/** Stream of anime list. */
-	protected readonly animeList$: Observable<Pagination<Anime>>;
+	protected readonly animeList$ = new BehaviorSubject<Pagination<Anime> | null>(null);
 
 	/** Loading status of fetching anime list. */
 	protected readonly isLoading$ = new BehaviorSubject(true);
@@ -51,19 +54,23 @@ export class HomeComponent {
 		pageSize: DEFAULT_PAGE_SIZE,
 	});
 
-	public constructor() {
-		this.animeList$ = this.filterParamsProvider$.pipe(
-			tap(filterParams => this.pagePaginator$.next({ pageNumber: filterParams.pageNumber, pageSize: filterParams.pageSize })),
-			switchMap(filterParams => this.animeService.getAnimeList(filterParams).pipe(
-				toggleExecutionState(this.isLoading$),
-				catchError((error: unknown) => throwError(() => {
-					const errorMessage = error instanceof Error ? error.message : 'Something went wrong!';
-					this.error$.next(errorMessage);
-					return error;
-				})),
-			)),
-			shareReplay({ refCount: true, bufferSize: 1 }),
-		);
+	/** @inheritdoc */
+	public ngOnInit(): void {
+		this.filterParamsProvider$
+			.pipe(
+				tap(filterParams => this.pagePaginator$.next({ pageNumber: filterParams.pageNumber, pageSize: filterParams.pageSize })),
+				switchMap(filterParams => this.animeService.getAnimeList(filterParams).pipe(
+					toggleExecutionState(this.isLoading$),
+					catchError((error: unknown) => throwError(() => {
+						const errorMessage = error instanceof Error ? error.message : 'Something went wrong!';
+						this.error$.next(errorMessage);
+						return error;
+					})),
+				)),
+				shareReplay({ refCount: true, bufferSize: 1 }),
+				takeUntilDestroyed(this.destroyRef),
+			)
+			.subscribe(result => this.animeList$.next(result));
 	}
 
 	/**

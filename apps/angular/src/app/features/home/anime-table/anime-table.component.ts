@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSortModule, Sort } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BehaviorSubject, ignoreElements, tap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DATE_FORMAT, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
 import { Anime } from '@js-camp/core/models/anime';
 import { NullablePipe } from '@js-camp/angular/core/pipes/nullable.pipe';
@@ -119,8 +119,8 @@ export class AnimeTableComponent implements OnInit, AfterViewInit {
 					this.skeletonAnimeSource$.next(this.createSkeletonAnimeSource(pageSize ?? DEFAULT_PAGE_SIZE));
 					this.scrollIntoView();
 				}),
-				takeUntilDestroyed(this.destroyRef),
 				ignoreElements(),
+				takeUntilDestroyed(this.destroyRef),
 			)
 			.subscribe();
 	}
