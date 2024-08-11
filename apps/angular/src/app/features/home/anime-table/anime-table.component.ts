@@ -10,7 +10,7 @@ import { Anime } from '@js-camp/core/models/anime';
 import { NullablePipe } from '@js-camp/angular/core/pipes/nullable.pipe';
 import { ProgressSpinnerComponent } from '@js-camp/angular/shared/components/progress-spinner/progress-spinner.component';
 import { AnimeTableColumns } from '@js-camp/core/enums/anime-table-columns.enum';
-import { QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
+import { FILTER_PARAMS_TOKEN } from '@js-camp/angular/core/providers/filter-params.provider';
 import { MatSortEventDto, MatSortEventFieldsDto } from '@js-camp/core/dtos/mat-sort-event.dto';
 import { paginatorAttribute } from '@js-camp/angular/shared/attributes/paginator-attribute';
 import { emptyStringAttribute } from '@js-camp/angular/shared/attributes/empty-string-attribute';
@@ -82,7 +82,7 @@ export class AnimeTableComponent implements OnInit {
 	/** Convert the list to MatTableDataSource to use MatSort. */
 	protected readonly dataSource = new MatTableDataSource<Anime>();
 
-	private readonly queryParamsProvider$ = inject(QUERY_PARAMS_TOKEN);
+	private readonly filterParamsProvider$ = inject(FILTER_PARAMS_TOKEN);
 
 	/**
 	 * Page sorter to store sort field and sort direction dto.
@@ -107,7 +107,7 @@ export class AnimeTableComponent implements OnInit {
 
 	/** @inheritdoc */
 	public ngOnInit(): void {
-		this.queryParamsProvider$
+		this.filterParamsProvider$
 			.pipe(
 				tap(({ pageSize, sortField, sortDirection }) => {
 					this.pageSorter$.next(MatSortEventMapper.toDto({ sortField, sortDirection }));

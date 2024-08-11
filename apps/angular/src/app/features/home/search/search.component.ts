@@ -4,7 +4,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BehaviorSubject, distinctUntilChanged, skip } from 'rxjs';
-import { QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
+import { FILTER_PARAMS_TOKEN } from '@js-camp/angular/core/providers/filter-params.provider';
 
 /** Search component. */
 @Component({
@@ -26,7 +26,7 @@ export class SearchComponent implements OnInit, OnChanges {
 
 	private readonly searchChange$ = new BehaviorSubject<string | null>(null);
 
-	private readonly queryParamsProvider$ = inject(QUERY_PARAMS_TOKEN);
+	private readonly filterParamsProvider$ = inject(FILTER_PARAMS_TOKEN);
 
 	private readonly destroyRef = inject(DestroyRef);
 
@@ -40,7 +40,7 @@ export class SearchComponent implements OnInit, OnChanges {
 	}
 
 	private initializeSearchControlFirstLoad(): void {
-		this.queryParamsProvider$
+		this.filterParamsProvider$
 			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe(({ search }) => {
 				(this.searchControl = new FormControl<string>({ value: search ? search.trim() : '', disabled: false }));

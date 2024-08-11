@@ -2,7 +2,7 @@ import { booleanAttribute, ChangeDetectionStrategy, Component, EventEmitter, inj
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
-import { QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
+import { FILTER_PARAMS_TOKEN } from '@js-camp/angular/core/providers/filter-params.provider';
 import { AnimeType } from '@js-camp/core/models/anime';
 import { AnimeFilterParams } from '@js-camp/core/models/anime-filter-params';
 
@@ -24,8 +24,8 @@ export class FilterComponent {
 	@Output()
 	public readonly selectionChange = new EventEmitter<AnimeFilterParams.Filter>();
 
-	/** Query params provider. */
-	protected readonly queryParamsProvider$ = inject(QUERY_PARAMS_TOKEN);
+	/** Filter params provider. */
+	protected readonly filterParamsProvider$ = inject(FILTER_PARAMS_TOKEN);
 
 	/** Anime types. */
 	protected readonly animeTypes = Object.values(AnimeType);

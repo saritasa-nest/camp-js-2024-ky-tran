@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { 	BehaviorSubject, catchError, Observable,	shareReplay, switchMap, tap, throwError } from 'rxjs';
-import { QUERY_PARAMS_PROVIDER, QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
+import { FILTER_PARAMS_PROVIDER, FILTER_PARAMS_TOKEN } from '@js-camp/angular/core/providers/filter-params.provider';
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
 import { AnimeTableComponent } from '@js-camp/angular/app/features/home/anime-table/anime-table.component';
 import { FilterComponent } from '@js-camp/angular/app/features/home/filter/filter.component';
@@ -22,7 +22,7 @@ import { AnimeFilterParams } from '@js-camp/core/models/anime-filter-params';
 	templateUrl: './home.component.html',
 	styleUrl: './home.component.css',
 	imports: [CommonModule, AnimeTableComponent, FilterComponent, SearchComponent, PaginatorComponent],
-	providers: [...QUERY_PARAMS_PROVIDER],
+	providers: [...FILTER_PARAMS_PROVIDER],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
@@ -30,7 +30,7 @@ export class HomeComponent {
 
 	private readonly animeUrlService = inject(AnimeUrlService);
 
-	private readonly queryParamsProvider$ = inject(QUERY_PARAMS_TOKEN);
+	private readonly filterParamsProvider$ = inject(FILTER_PARAMS_TOKEN);
 
 	/** Stream of anime list. */
 	protected readonly animeList$: Observable<Pagination<Anime>>;
@@ -52,7 +52,7 @@ export class HomeComponent {
 	});
 
 	public constructor() {
-		this.animeList$ = this.queryParamsProvider$.pipe(
+		this.animeList$ = this.filterParamsProvider$.pipe(
 			tap(filterParams => this.pagePaginator$.next({ pageNumber: filterParams.pageNumber, pageSize: filterParams.pageSize })),
 			switchMap(filterParams => this.animeService.getAnimeList(filterParams).pipe(
 				toggleExecutionState(this.isLoading$),
