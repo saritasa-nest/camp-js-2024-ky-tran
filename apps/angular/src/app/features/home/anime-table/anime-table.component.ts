@@ -1,4 +1,4 @@
-import { booleanAttribute, ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, booleanAttribute, ChangeDetectionStrategy, Component, DestroyRef, ElementRef, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSortModule, Sort } from '@angular/material/sort';
@@ -40,7 +40,7 @@ import { AnimeFilterParams } from '@js-camp/core/models/anime-filter-params';
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AnimeTableComponent implements OnInit {
+export class AnimeTableComponent implements OnInit, AfterViewInit {
 	/** Anime list. */
 	@Input({ required: true, transform: animeListAttribute })
 	public set animeList(values: readonly Anime[]) {
@@ -105,6 +105,11 @@ export class AnimeTableComponent implements OnInit {
 	/** Date format. */
 	protected readonly dateFormat = DATE_FORMAT;
 
+	/** Table element. */
+	private tableEl: HTMLElement | null = null;
+
+	public constructor(private readonly elementRef: ElementRef) {}
+
 	/** @inheritdoc */
 	public ngOnInit(): void {
 		this.filterParamsProvider$
@@ -112,11 +117,23 @@ export class AnimeTableComponent implements OnInit {
 				tap(({ pageSize, sortField, sortDirection }) => {
 					this.pageSorter$.next(MatSortEventMapper.toDto({ sortField, sortDirection }));
 					this.skeletonAnimeSource$.next(this.createSkeletonAnimeSource(pageSize ?? DEFAULT_PAGE_SIZE));
+					this.scrollIntoView();
 				}),
 				takeUntilDestroyed(this.destroyRef),
 				ignoreElements(),
 			)
 			.subscribe();
+	}
+
+	/** @inheritdoc */
+	public ngAfterViewInit(): void {
+		this.tableEl = this.elementRef.nativeElement.querySelector(`#table`);
+	}
+
+	private scrollIntoView(): void {
+		if (this.tableEl) {
+			this.tableEl.scrollIntoView({ block: 'start' });
+		}
 	}
 
 	/**
