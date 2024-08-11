@@ -1,4 +1,3 @@
-// TODO (Ky Tran): Update name
 /** Base query params domain model. */
 export namespace BaseQueryParams {
 

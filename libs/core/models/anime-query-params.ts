@@ -3,7 +3,6 @@ import { AnimeType } from './anime';
 import { SortFields } from './sort-fields';
 import { BaseQueryParams } from './base-query-params';
 
-// TODO (Ky Tran): Update name
 /** Anime query params domain model. */
 export namespace AnimeQueryParams {
 

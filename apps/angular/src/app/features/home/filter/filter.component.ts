@@ -20,7 +20,6 @@ export class FilterComponent {
 	@Input({ transform: booleanAttribute })
 	protected readonly disabled = false;
 
-	// TODO (Ky Tran): Emit filter
 	/** Selection change event emitter. */
 	@Output()
 	public readonly selectionChange = new EventEmitter<AnimeQueryParams.Filter>();

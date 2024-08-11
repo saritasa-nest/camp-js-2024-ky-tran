@@ -51,7 +51,6 @@ export class HomeComponent {
 		pageSize: DEFAULT_PAGE_SIZE,
 	});
 
-	// debounceTime(300), throttleTime(500, undefined, { leading: true, trailing: true })
 	public constructor() {
 		this.animeList$ = this.queryParamsProvider$.pipe(
 			tap(filterParams => this.pagePaginator$.next({ pageNumber: filterParams.pageNumber, pageSize: filterParams.pageSize })),

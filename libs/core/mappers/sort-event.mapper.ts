@@ -5,31 +5,24 @@ import { SortDirection } from '../models/sort-direction';
 /** Sort event mapper. */
 export namespace SortEventMapper {
 
-	// TODO (Ky Tran): Enhance below logic
 	/**
 	 * Sort event from DTO to domain model.
 	 * @param dto DTO.
 	 */
 	export function fromDto(dto: SortEventDto): AnimeQueryParams.Sort {
-		const { active, direction } = dto;
-
 		let sortDirection: SortDirection | null = null;
 
-		if (direction === 'asc') {
+		if (dto.direction === 'asc') {
 			sortDirection = SortDirection.Ascending;
 		}
-		if (direction === 'desc') {
+		if (dto.direction === 'desc') {
 			sortDirection = SortDirection.Descending;
 		}
-		if (direction === '') {
-			sortDirection = null;
-		}
 
-		if (sortDirection === null) {
-			return { sortField: null, sortDirection: null };
-		}
-
-		return { sortField: active ? active : null, sortDirection };
+		return {
+			sortField: sortDirection !== null && dto.active ? dto.active : null,
+			sortDirection,
+		};
 	}
 
 	/**
@@ -37,20 +30,15 @@ export namespace SortEventMapper {
 	 * @param model Domain model.
 	 */
 	export function toDto(model: AnimeQueryParams.Sort): SortEventDto {
-		const { sortField, sortDirection } = model;
-
 		let direction: SortEventDirectionDto = '';
 
-		if (sortDirection === SortDirection.Ascending) {
+		if (model.sortDirection === SortDirection.Ascending) {
 			direction = 'asc';
 		}
-		if (sortDirection === SortDirection.Descending) {
+		if (model.sortDirection === SortDirection.Descending) {
 			direction = 'desc';
 		}
-		if (sortDirection === null) {
-			direction = '';
-		}
 
-		return { active: sortField ? sortField : '', direction };
+		return { active: model.sortField ?? '', direction };
 	}
 }
