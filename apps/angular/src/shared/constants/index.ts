@@ -4,6 +4,9 @@ export const DATE_FORMAT = 'MMM d, y';
 /** Fall back value for falsy field in table. */
 export const DEFAULT_PLACEHOLDER = '--';
 
+/** Default number of anime in total. */
+export const DEFAULT_ANIME_TOTAL = 0;
+
 /** Default page number. */
 export const DEFAULT_PAGE_NUMBER = 1;
 

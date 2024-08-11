@@ -1,7 +1,7 @@
-import { booleanAttribute, ChangeDetectionStrategy, Component, EventEmitter, Injectable, Input, numberAttribute, Output, ViewChild } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, EventEmitter, Injectable, Input, numberAttribute, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatPaginator, MatPaginatorIntl, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { DEFAULT_PAGE_SIZE_OPTIONS } from '@js-camp/angular/shared/constants';
+import { MatPaginatorIntl, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { DEFAULT_ANIME_TOTAL, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE, DEFAULT_PAGE_SIZE_OPTIONS } from '@js-camp/angular/shared/constants';
 import { paginatorAttribute } from '@js-camp/angular/shared/attributes/paginator-attribute';
 import { BaseQueryParams } from '@js-camp/core/models/base-query-params';
 import { NonNullableFields } from '@js-camp/core/types/non-nullable-fields';
@@ -24,12 +24,9 @@ class MatPaginatorIntlCro extends MatPaginatorIntl {
 	providers: [{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro }],
 })
 export class PaginatorComponent {
-	@ViewChild(MatPaginator)
-	private readonly paginator!: MatPaginator;
-
 	/** The length of the total number of items that are being paginated. */
 	@Input({ required: true, transform: numberAttribute })
-	protected readonly length!: number;
+	protected readonly length = DEFAULT_ANIME_TOTAL;
 
 	/**
 	 * Page paginator to store page index and page number.
@@ -37,7 +34,7 @@ export class PaginatorComponent {
 	 * Page number: Number of items to display on a page.
 	 */
 	@Input({ required: true, transform: paginatorAttribute })
-	protected readonly pagePaginator!: NonNullableFields<BaseQueryParams.Paginator>;
+	protected readonly pagePaginator: NonNullableFields<BaseQueryParams.Paginator>;
 
 	/** The set of provided page size options to display to the user. */
 	@Input()
@@ -54,6 +51,10 @@ export class PaginatorComponent {
 	/** Page change event emitter. */
 	@Output()
 	public readonly pageChange = new EventEmitter<BaseQueryParams.Paginator>();
+
+	public constructor() {
+		this.pagePaginator = { pageNumber: DEFAULT_PAGE_NUMBER, pageSize: DEFAULT_PAGE_SIZE };
+	}
 
 	/**
 	 * Change event object that is emitted when the user selects a different page size or navigates to another page.

@@ -11,5 +11,5 @@ import { booleanAttribute, ChangeDetectionStrategy, Component, Input } from '@an
 export class SkeletonCellComponent {
 	/** Loading status code skeleton cell. */
 	@Input({ required: true, transform: booleanAttribute })
-	public isLoading!: boolean;
+	public isLoading = false;
 }
