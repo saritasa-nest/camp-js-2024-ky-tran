@@ -1,5 +1,5 @@
 import { BaseQueryParamsDto } from '../dtos/base-query-params.dto';
-import { BaseQueryParams } from '../models/base-query-params';
+import { BaseFilterParams } from '../models/base-filter-params';
 import { BaseQueryParamsUrlDto } from '../dtos/base-query-params-url.dto';
 
 /** Base query params mapper. */
@@ -12,7 +12,7 @@ export namespace BaseQueryParamsMapper {
 	 * @param defaultPageSize Default page size.
 	 */
 	export function mapPaginatorToDto(
-		paginator: BaseQueryParams.Paginator,
+		paginator: BaseFilterParams.Paginator,
 		defaultPageNumber: number,
 		defaultPageSize: number,
 	): BaseQueryParamsDto.Paginator {
@@ -28,7 +28,7 @@ export namespace BaseQueryParamsMapper {
 	 * Map Search from domain model to DTO.
 	 * @param search Domain model.
 	 */
-	export function mapSearchToDto({ search }: BaseQueryParams.Search): BaseQueryParamsDto.Search {
+	export function mapSearchToDto({ search }: BaseFilterParams.Search): BaseQueryParamsDto.Search {
 		return { search };
 	}
 
@@ -39,7 +39,7 @@ export namespace BaseQueryParamsMapper {
 	 * @param defaultPageSize Default page size.
 	 */
 	export function mapCombinedToDto(
-		baseModel: BaseQueryParams.Combined,
+		baseModel: BaseFilterParams.Combined,
 		defaultPageNumber: number,
 		defaultPageSize: number,
 	): BaseQueryParamsDto.Combined {
@@ -58,7 +58,7 @@ export namespace BaseQueryParamsMapper {
 	 * @param defaultPageSize Default page size.
 	 */
 	export function mapPaginatorUrlToDto(
-		paginator: BaseQueryParams.Paginator,
+		paginator: BaseFilterParams.Paginator,
 		defaultPageNumber: number,
 		defaultPageSize: number,
 	): BaseQueryParamsUrlDto.Paginator {
@@ -80,7 +80,7 @@ export namespace BaseQueryParamsMapper {
 		paginator: BaseQueryParamsUrlDto.Paginator,
 		defaultPageNumber: number,
 		defaultPageSize: number,
-	): BaseQueryParams.Paginator {
+	): BaseFilterParams.Paginator {
 		const { pageNumber, pageSize } = paginator;
 
 		return {
@@ -93,7 +93,7 @@ export namespace BaseQueryParamsMapper {
 	 * Map search from domain model to DTO.
 	 * @param search Domain model.
 	 */
-	export function mapSearchUrlToDto({ search }: BaseQueryParams.Search): BaseQueryParamsUrlDto.Search {
+	export function mapSearchUrlToDto({ search }: BaseFilterParams.Search): BaseQueryParamsUrlDto.Search {
 		return { search };
 	}
 
@@ -101,7 +101,7 @@ export namespace BaseQueryParamsMapper {
 	 * Map search from DTO to domain model.
 	 * @param search DTO.
 	 */
-	export function mapSearchUrlFromDto({ search }: BaseQueryParamsUrlDto.Search): BaseQueryParams.Search {
+	export function mapSearchUrlFromDto({ search }: BaseQueryParamsUrlDto.Search): BaseFilterParams.Search {
 		return { search };
 	}
 
@@ -112,7 +112,7 @@ export namespace BaseQueryParamsMapper {
 	 * @param defaultPageSize Default page size.
 	 */
 	export function mapCombinedUrlToDto(
-		baseModel: BaseQueryParams.Combined,
+		baseModel: BaseFilterParams.Combined,
 		defaultPageNumber: number,
 		defaultPageSize: number,
 	): BaseQueryParamsUrlDto.Combined {
@@ -134,7 +134,7 @@ export namespace BaseQueryParamsMapper {
 		baseDto: BaseQueryParamsUrlDto.Combined,
 		defaultPageNumber: number,
 		defaultPageSize: number,
-	): BaseQueryParams.Combined {
+	): BaseFilterParams.Combined {
 		const { pageNumber, pageSize, search } = baseDto;
 
 		return {

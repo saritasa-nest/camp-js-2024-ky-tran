@@ -17,11 +17,11 @@ import { emptyStringAttribute } from '@js-camp/angular/shared/attributes/empty-s
 import { animeListAttribute } from '@js-camp/angular/shared/attributes/anime-list-attribute';
 import { SnackbarComponent } from '@js-camp/angular/shared/components/error-snack-bar/error-snack-bar.component';
 import { LazyLoadImageDirective } from '@js-camp/angular/shared/directives/lazy-load-image.directive';
-import { BaseQueryParams } from '@js-camp/core/models/base-query-params';
+import { BaseFilterParams } from '@js-camp/core/models/base-filter-params';
 import { SkeletonCellComponent } from '@js-camp/angular/app/features/home/anime-table/skeleton-cell/skeleton-cell.component';
 import { NonNullableFields } from '@js-camp/core/types/non-nullable-fields';
 import { SortEventMapper } from '@js-camp/core/mappers/sort-event.mapper';
-import { AnimeQueryParams } from '@js-camp/core/models/anime-query-params';
+import { AnimeFilterParams } from '@js-camp/core/models/anime-filter-params';
 
 /** Anime Table component. */
 @Component({
@@ -69,11 +69,11 @@ export class AnimeTableComponent implements OnInit {
 	 * Property - pageSize: Number of items to display on a page.
 	 */
 	@Input({ required: true, transform: paginatorAttribute })
-	protected readonly pagePaginator: NonNullableFields<BaseQueryParams.Paginator> | null = null;
+	protected readonly pagePaginator: NonNullableFields<BaseFilterParams.Paginator> | null = null;
 
 	/** Sort change event emitter. */
 	@Output()
-	public readonly sortChange = new EventEmitter<AnimeQueryParams.Sort>();
+	public readonly sortChange = new EventEmitter<AnimeFilterParams.Sort>();
 
 	private readonly destroyRef = inject(DestroyRef);
 

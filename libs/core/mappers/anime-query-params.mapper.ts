@@ -1,5 +1,5 @@
 import { SortDirection } from '../models/sort-direction';
-import { AnimeQueryParams } from '../models/anime-query-params';
+import { AnimeFilterParams } from '../models/anime-filter-params';
 import { AnimeQueryParamsDto } from '../dtos/anime-query-params.dto';
 
 import { BaseQueryParamsMapper } from './base-query-params.mapper';
@@ -16,7 +16,7 @@ export namespace AnimeQueryParamsMapper {
 	 * @param defaultPageSize Default page size.
 	 */
 	export function toDto(
-		model: AnimeQueryParams.Combined,
+		model: AnimeFilterParams.Combined,
 		defaultPageNumber: number,
 		defaultPageSize: number,
 	): AnimeQueryParamsDto.Combined {

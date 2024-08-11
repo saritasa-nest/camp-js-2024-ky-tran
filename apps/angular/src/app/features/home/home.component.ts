@@ -12,8 +12,8 @@ import { AnimeUrlService } from '@js-camp/angular/core/services/anime-url.servic
 import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { toggleExecutionState } from '@js-camp/angular/shared/utils/rxjs/toggleExecutionState';
-import { BaseQueryParams } from '@js-camp/core/models/base-query-params';
-import { AnimeQueryParams } from '@js-camp/core/models/anime-query-params';
+import { BaseFilterParams } from '@js-camp/core/models/base-filter-params';
+import { AnimeFilterParams } from '@js-camp/core/models/anime-filter-params';
 
 /** Home page. */
 @Component({
@@ -46,7 +46,7 @@ export class HomeComponent {
 	 * Page index: The zero-based page index of the displayed list of items.
 	 * Page number: Number of items to display on a page.
 	 */
-	protected readonly pagePaginator$ = new BehaviorSubject<BaseQueryParams.Paginator>({
+	protected readonly pagePaginator$ = new BehaviorSubject<BaseFilterParams.Paginator>({
 		pageNumber: DEFAULT_PAGE_NUMBER,
 		pageSize: DEFAULT_PAGE_SIZE,
 	});
@@ -70,7 +70,7 @@ export class HomeComponent {
 	 * Page change handler.
 	 * @param paginator Page event.
 	 */
-	protected onPageChange(paginator: BaseQueryParams.Paginator): void {
+	protected onPageChange(paginator: BaseFilterParams.Paginator): void {
 		this.animeUrlService.updateQueryParams(paginator);
 	}
 
@@ -78,7 +78,7 @@ export class HomeComponent {
 	 * Sort change handler.
 	 * @param sortFilterParams Sort filter params.
 	 */
-	protected onSortChange(sortFilterParams: AnimeQueryParams.Sort): void {
+	protected onSortChange(sortFilterParams: AnimeFilterParams.Sort): void {
 		this.animeUrlService.updateQueryParams({ ...sortFilterParams, pageNumber: DEFAULT_PAGE_NUMBER });
 	}
 
@@ -86,7 +86,7 @@ export class HomeComponent {
 	 * Selection change handler.
 	 * @param selectFilterParams Select filter params.
 	 */
-	protected onSelectionChange(selectFilterParams: AnimeQueryParams.Filter): void {
+	protected onSelectionChange(selectFilterParams: AnimeFilterParams.Filter): void {
 		this.animeUrlService.updateQueryParams({ ...selectFilterParams, pageNumber: DEFAULT_PAGE_NUMBER });
 	}
 

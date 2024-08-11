@@ -1,5 +1,5 @@
 import { SortEventDirectionDto, SortEventDto } from '../dtos/sort-event.dto';
-import { AnimeQueryParams } from '../models/anime-query-params';
+import { AnimeFilterParams } from '../models/anime-filter-params';
 import { SortDirection } from '../models/sort-direction';
 
 /** Sort event mapper. */
@@ -9,7 +9,7 @@ export namespace SortEventMapper {
 	 * Sort event from DTO to domain model.
 	 * @param dto DTO.
 	 */
-	export function fromDto(dto: SortEventDto): AnimeQueryParams.Sort {
+	export function fromDto(dto: SortEventDto): AnimeFilterParams.Sort {
 		let sortDirection: SortDirection | null = null;
 
 		if (dto.direction === 'asc') {
@@ -29,7 +29,7 @@ export namespace SortEventMapper {
 	 * Sort from event domain model to DTO.
 	 * @param model Domain model.
 	 */
-	export function toDto(model: AnimeQueryParams.Sort): SortEventDto {
+	export function toDto(model: AnimeFilterParams.Sort): SortEventDto {
 		let direction: SortEventDirectionDto = '';
 
 		if (model.sortDirection === SortDirection.Ascending) {

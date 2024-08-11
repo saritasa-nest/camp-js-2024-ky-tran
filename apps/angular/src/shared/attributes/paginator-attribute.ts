@@ -1,5 +1,5 @@
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
-import { BaseQueryParams } from '@js-camp/core/models/base-query-params';
+import { BaseFilterParams } from '@js-camp/core/models/base-filter-params';
 import { NonNullableFields } from '@js-camp/core/types/non-nullable-fields';
 
 /**
@@ -7,8 +7,8 @@ import { NonNullableFields } from '@js-camp/core/types/non-nullable-fields';
  * @param paginator Query params generator.
  */
 export function paginatorAttribute(
-	paginator: BaseQueryParams.Paginator | null,
-): NonNullableFields<BaseQueryParams.Paginator> {
+	paginator: BaseFilterParams.Paginator | null,
+): NonNullableFields<BaseFilterParams.Paginator> {
 	return {
 		pageNumber: paginator?.pageNumber ?? DEFAULT_PAGE_NUMBER,
 		pageSize: paginator?.pageSize ?? DEFAULT_PAGE_SIZE,

@@ -1,10 +1,10 @@
 import { SortDirection } from './sort-direction';
 import { AnimeType } from './anime';
 import { SortFields } from './sort-fields';
-import { BaseQueryParams } from './base-query-params';
+import { BaseFilterParams } from './base-filter-params';
 
-/** Anime query params domain model. */
-export namespace AnimeQueryParams {
+/** Anime filter params domain model. */
+export namespace AnimeFilterParams {
 
 	/** Sort. */
 	export type Sort = {
@@ -24,5 +24,5 @@ export namespace AnimeQueryParams {
 	};
 
 	/** Anime query params. */
-	export type Combined = Sort & Filter & BaseQueryParams.Combined;
+	export type Combined = Sort & Filter & BaseFilterParams.Combined;
 }

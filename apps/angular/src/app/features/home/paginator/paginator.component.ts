@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatPaginatorIntl, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { DEFAULT_ANIME_TOTAL, DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE, DEFAULT_PAGE_SIZE_OPTIONS } from '@js-camp/angular/shared/constants';
 import { paginatorAttribute } from '@js-camp/angular/shared/attributes/paginator-attribute';
-import { BaseQueryParams } from '@js-camp/core/models/base-query-params';
+import { BaseFilterParams } from '@js-camp/core/models/base-filter-params';
 import { NonNullableFields } from '@js-camp/core/types/non-nullable-fields';
 
 /** MatPaginatorIntl for modifying the labels and text displayed. */
@@ -34,7 +34,7 @@ export class PaginatorComponent {
 	 * Page number: Number of items to display on a page.
 	 */
 	@Input({ required: true, transform: paginatorAttribute })
-	protected readonly pagePaginator: NonNullableFields<BaseQueryParams.Paginator>;
+	protected readonly pagePaginator: NonNullableFields<BaseFilterParams.Paginator>;
 
 	/** The set of provided page size options to display to the user. */
 	@Input()
@@ -50,7 +50,7 @@ export class PaginatorComponent {
 
 	/** Page change event emitter. */
 	@Output()
-	public readonly pageChange = new EventEmitter<BaseQueryParams.Paginator>();
+	public readonly pageChange = new EventEmitter<BaseFilterParams.Paginator>();
 
 	public constructor() {
 		this.pagePaginator = { pageNumber: DEFAULT_PAGE_NUMBER, pageSize: DEFAULT_PAGE_SIZE };

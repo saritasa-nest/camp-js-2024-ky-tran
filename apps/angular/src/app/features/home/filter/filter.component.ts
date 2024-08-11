@@ -4,7 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { QUERY_PARAMS_TOKEN } from '@js-camp/angular/core/providers/query-params.provider';
 import { AnimeType } from '@js-camp/core/models/anime';
-import { AnimeQueryParams } from '@js-camp/core/models/anime-query-params';
+import { AnimeFilterParams } from '@js-camp/core/models/anime-filter-params';
 
 /** Filter component. */
 @Component({
@@ -22,7 +22,7 @@ export class FilterComponent {
 
 	/** Selection change event emitter. */
 	@Output()
-	public readonly selectionChange = new EventEmitter<AnimeQueryParams.Filter>();
+	public readonly selectionChange = new EventEmitter<AnimeFilterParams.Filter>();
 
 	/** Query params provider. */
 	protected readonly queryParamsProvider$ = inject(QUERY_PARAMS_TOKEN);
