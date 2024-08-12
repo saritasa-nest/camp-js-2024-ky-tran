@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { MainLayoutComponent } from '@js-camp/angular/shared/components/main-layout/main-layout.component';
 
 /** App component. */
 @Component({
 	selector: 'camp-root',
+	standalone: true,
 	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.css'],
+	styleUrl: './app.component.css',
+	imports: [MainLayoutComponent],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {}

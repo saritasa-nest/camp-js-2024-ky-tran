@@ -15,5 +15,8 @@
     {
       "path": "./tsconfig.app.json"
     }
-  ]
+  ],
+	"angularCompilerOptions": {
+    "strictTemplates": true
+  }
 }

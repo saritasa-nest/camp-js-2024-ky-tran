@@ -1,3 +1,15 @@
 :host {
 	display: block;
+	min-height: 100vh;
+	color: var(--text-color-main);
+	background-color: var(--background-color-primary);
+	-webkit-font-smoothing: antialiased;
+	line-height: var(--line-height-body);
+	padding: var(--gap-large) var(--gap-medium);
+}
+
+@media only screen and (max-width: 1320px) {
+	:host {
+		padding: var(--gap-medium);
+	}
 }

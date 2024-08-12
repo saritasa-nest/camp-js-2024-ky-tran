@@ -1,7 +1,7 @@
 import { Genre } from '@js-camp/core/models/genre';
-import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
-import { GenreDto } from '@js-camp/core/dtos/genre.dto';
-import { GenreMapper } from '@js-camp/core/mappers/genre.mapper';
+import { PaginationDto } from '@js-camp/core/dtos/pagination';
+import { GenreDto } from '@js-camp/core/dtos/genre';
+import { GenreMapper } from '@js-camp/core/mappers/genre';
 
 import { http } from '..';
 
