@@ -6,4 +6,7 @@ import { environment } from '@js-camp/angular/environments/environment';
 export class AppConfig {
 	/** Boolean value indicating if it is in production mode or not. */
 	public readonly isProduction = environment.production;
+
+	/** Api key. */
+	public readonly apiKey = environment.apiKey;
 }
