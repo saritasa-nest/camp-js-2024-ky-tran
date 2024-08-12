@@ -1,9 +1,9 @@
-import { booleanAttribute, ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { BehaviorSubject, distinctUntilChanged, skip } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, ignoreElements, merge, Observable, skip, tap } from 'rxjs';
 import { FILTER_PARAMS_TOKEN } from '@js-camp/angular/core/providers/filter-params.provider';
 
 /** Search component. */
@@ -15,10 +15,16 @@ import { FILTER_PARAMS_TOKEN } from '@js-camp/angular/core/providers/filter-para
 	imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchComponent implements OnInit, OnChanges {
+export class SearchComponent implements OnInit {
 	/** Whether the filter select is disabled. */
 	@Input({ transform: booleanAttribute })
-	protected readonly disabled = false;
+	protected set disabled(isDisabled: boolean) {
+		if (isDisabled) {
+			this.searchControl.disable();
+		} else {
+			this.searchControl.enable();
+		}
+	}
 
 	/** Search change event emitter. */
 	@Output()
@@ -31,39 +37,29 @@ export class SearchComponent implements OnInit, OnChanges {
 	private readonly destroyRef = inject(DestroyRef);
 
 	/** Search control. */
-	protected searchControl = new FormControl<string>({ value: '', disabled: false });
+	protected readonly searchControl = new FormControl('');
 
 	/** @inheritdoc */
 	public ngOnInit(): void {
-		this.initializeSearchControlFirstLoad();
-		this.initializeSearchControlSideEffect();
-	}
-
-	private initializeSearchControlFirstLoad(): void {
-		this.filterParamsProvider$
+		merge(this.searchChangeFirstLoad(), this.searchChangeSideEffect())
 			.pipe(takeUntilDestroyed(this.destroyRef))
-			.subscribe(({ search }) => {
-				(this.searchControl = new FormControl<string>({ value: search ? search.trim() : '', disabled: false }));
-			});
+			.subscribe();
 	}
 
-	private initializeSearchControlSideEffect(): void {
-		this.searchChange$
-			.pipe(
-				skip(1),
-				distinctUntilChanged(),
-				takeUntilDestroyed(this.destroyRef),
-			)
-			.subscribe(search => this.searchChange.emit(search));
+	private searchChangeFirstLoad(): Observable<void> {
+		return this.filterParamsProvider$.pipe(
+			tap(({ search }) => this.searchControl.setValue(search ? search.trim() : '')),
+			ignoreElements(),
+		);
 	}
 
-	/** @inheritdoc */
-	public ngOnChanges(changes: SimpleChanges): void {
-		if (changes['disabled']?.currentValue) {
-			this.searchControl.disable();
-		} else {
-			this.searchControl.enable();
-		}
+	private searchChangeSideEffect(): Observable<void> {
+		return this.searchChange$.pipe(
+			skip(1),
+			distinctUntilChanged(),
+			tap(search => this.searchChange.emit(search)),
+			ignoreElements(),
+		);
 	}
 
 	/** Search change handler. */
