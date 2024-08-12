@@ -20,14 +20,14 @@ export namespace AnimeFilterParamsMapper {
 		defaultPageNumber: number,
 		defaultPageSize: number,
 	): AnimeFilterParamsDto.Combined {
-		const { pageNumber, pageSize, sortField, sortDirection, type, search } = model;
+		const { pageNumber, pageSize, sortField, sortDirection, typeIn, search } = model;
 		const hasSorting = sortField && sortDirection;
 		const sortingSideCharacter = sortDirection === SortDirection.Ascending ? '' : '-';
 
 		return {
 			...BaseFilterParamsMapper.mapCombinedToDto({ pageNumber, pageSize, search }, defaultPageNumber, defaultPageSize),
 			ordering: hasSorting ? `${sortingSideCharacter}${SortFieldsMapper.toDto(sortField)}` : null,
-			type: type ? AnimeTypeMapper.toDto(type) : null,
+			type__in: typeIn ? typeIn.map(type => AnimeTypeMapper.toDto(type)).join(',') : null,
 		};
 	}
 }

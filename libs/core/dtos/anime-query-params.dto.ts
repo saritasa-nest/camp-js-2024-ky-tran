@@ -1,4 +1,3 @@
-import { AnimeTypeQueryParamsDto } from './anime-type-query-params.dto';
 import { BaseQueryParamsDto } from './base-query-params.dto';
 import { SortDirectionQueryParamsDto } from './sort-direction-query-params.dto';
 import { SortFieldsQueryParamsDto } from './sort-fields-query-params.dto';
@@ -20,7 +19,7 @@ export namespace AnimeQueryParamsDto {
 	export type Filter = {
 
 		/** Filter type. */
-		type: AnimeTypeQueryParamsDto | null;
+		typeIn: string | null;
 	};
 
 	/** Anime query params. */

@@ -7,6 +7,7 @@ html {
 	--mat-select-enabled-arrow-color: var(--background-color-primary-bright);
 	--mdc-filled-text-field-hover-active-indicator-color: var(--background-color-primary-bright);
 	--mdc-filled-text-field-focus-active-indicator-color: var(--text-main-color);
+	--mat-full-pseudo-checkbox-selected-icon-color: var(--background-color-primary-subtle);
 }
 
 .mat-mdc-text-field-wrapper.mdc-text-field.mdc-text-field--filled {

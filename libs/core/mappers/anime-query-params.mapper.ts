@@ -1,5 +1,6 @@
 import { AnimeQueryParamsDto } from '../dtos/anime-query-params.dto';
 import { AnimeFilterParams } from '../models/anime-filter-params';
+import { AnimeTypeQueryParamsDto } from '../dtos/anime-type-query-params.dto';
 
 import { AnimeTypeQueryParamsMapper } from './anime-type-query-params';
 import { SortFieldsUrlMapper } from './sort-fields-query-params.mapper';
@@ -20,13 +21,13 @@ export namespace AnimeQueryParamsMapper {
 		defaultPageNumber: number,
 		defaultPageSize: number,
 	): AnimeFilterParams.Combined {
-		const { pageNumber, pageSize, sortField, sortDirection, type, search } = dto;
+		const { pageNumber, pageSize, sortField, sortDirection, typeIn, search } = dto;
 
 		return {
 			...BaseQueryParamsMapper.mapCombinedFromDto({ pageNumber, pageSize, search }, defaultPageNumber, defaultPageSize),
 			sortField: sortField ? SortFieldsUrlMapper.fromDto(sortField) : null,
 			sortDirection: sortDirection ? SortDirectionQueryParamsMapper.fromDto(sortDirection) : null,
-			type: type ? AnimeTypeQueryParamsMapper.fromDto(type) : null,
+			typeIn: typeIn ? typeIn.split(',').map(type => AnimeTypeQueryParamsMapper.fromDto(type as AnimeTypeQueryParamsDto)) : null,
 		};
 	}
 
@@ -41,13 +42,13 @@ export namespace AnimeQueryParamsMapper {
 		defaultPageNumber: number,
 		defaultPageSize: number,
 	): AnimeQueryParamsDto.Combined {
-		const { pageNumber, pageSize, sortField, sortDirection, type, search } = model;
+		const { pageNumber, pageSize, sortField, sortDirection, typeIn, search } = model;
 
 		return {
 			...BaseQueryParamsMapper.mapCombinedToDto({ pageNumber, pageSize, search }, defaultPageNumber, defaultPageSize),
 			sortField: sortField ? SortFieldsUrlMapper.toDto(sortField) : null,
 			sortDirection: sortDirection ? SortDirectionQueryParamsMapper.toDto(sortDirection) : null,
-			type: type ? AnimeTypeQueryParamsMapper.toDto(type) : null,
+			typeIn: typeIn ? typeIn.map(type => AnimeTypeQueryParamsMapper.toDto(type)).join(',') : null,
 		};
 	}
 }

@@ -20,7 +20,7 @@ export namespace AnimeFilterParams {
 	export type Filter = {
 
 		/** Filter type. */
-		type: AnimeType | null;
+		typeIn: readonly AnimeType[] | null;
 	};
 
 	/** Anime query params. */

@@ -30,11 +30,15 @@ export class FilterComponent {
 	/** Anime types. */
 	protected readonly animeTypes = Object.values(AnimeType);
 
+	private isSelectField(fields: unknown[]): boolean {
+		return Boolean(fields.length) && fields.every(field => field != null);
+	}
+
 	/**
 	 * Selection change event handler.
 	 * @param selectEvent Select Change event.
 	 */
 	protected onSelectionChange(selectEvent: MatSelectChange): void {
-		this.selectionChange.emit({ type: selectEvent.value ? selectEvent.value : null });
+		this.selectionChange.emit({ typeIn: this.isSelectField(selectEvent.value) ? selectEvent.value : null });
 	}
 }

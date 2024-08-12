@@ -1,4 +1,3 @@
-import { AnimeTypeDto } from './anime.dto';
 import { BaseFilterParamsDto } from './base-filter-params.dto';
 
 /** Anime filter params DTO. */
@@ -15,7 +14,7 @@ export namespace AnimeFilterParamsDto {
 	export type Filter = {
 
 		/** Filter type. */
-		type: AnimeTypeDto | null;
+		type__in: string | null;
 	};
 
 	/** Anime query params. */
