@@ -15,15 +15,15 @@
 			[matSortDirection]="data.pageSorter?.direction ?? ''"
 		>
 			<ng-container [matColumnDef]="animeColumns.Index">
-				<th class="table__column_order" mat-header-cell *matHeaderCellDef>#</th>
-				<td class="table__column_order" mat-cell *matCellDef="let anime; let i = index">
+				<th mat-header-cell *matHeaderCellDef>#</th>
+				<td mat-cell *matCellDef="let anime; let i = index">
 					<camp-skeleton-cell [isLoading]="isLoading">{{ rowOrder(i) | appNullable }}</camp-skeleton-cell>
 				</td>
 			</ng-container>
 
 			<ng-container [matColumnDef]="animeColumns.Image">
-				<th class="table__column_image" mat-header-cell *matHeaderCellDef>Image</th>
-				<td class="table__column_image" mat-cell *matCellDef="let anime">
+				<th mat-header-cell *matHeaderCellDef>Image</th>
+				<td mat-cell *matCellDef="let anime">
 					<camp-skeleton-cell [isLoading]="isLoading">
 						<div class="table__row-image-container">
 							<img
@@ -38,36 +38,36 @@
 			</ng-container>
 
 			<ng-container [matColumnDef]="animeColumns.EnglishTitle">
-				<th class="table__column_title" mat-header-cell *matHeaderCellDef mat-sort-header>English Title</th>
-				<td class="table__column_title" mat-cell *matCellDef="let anime">
+				<th mat-header-cell *matHeaderCellDef mat-sort-header>English Title</th>
+				<td mat-cell *matCellDef="let anime">
 					<camp-skeleton-cell [isLoading]="isLoading">{{ anime.englishTitle | appNullable }}</camp-skeleton-cell>
 				</td>
 			</ng-container>
 
 			<ng-container [matColumnDef]="animeColumns.JapaneseTitle">
-				<th class="table__column_title" mat-header-cell *matHeaderCellDef>Japanese Title</th>
-				<td class="table__column_title" mat-cell *matCellDef="let anime">
+				<th mat-header-cell *matHeaderCellDef>Japanese Title</th>
+				<td mat-cell *matCellDef="let anime">
 					<camp-skeleton-cell [isLoading]="isLoading">{{ anime.japaneseTitle | appNullable }}</camp-skeleton-cell>
 				</td>
 			</ng-container>
 
 			<ng-container [matColumnDef]="animeColumns.AiredStart">
-				<th class="table__column_start-date" mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</th>
-				<td class="table__column_start-date" mat-cell *matCellDef="let anime">
+				<th mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</th>
+				<td mat-cell *matCellDef="let anime">
 					<camp-skeleton-cell [isLoading]="isLoading">{{ anime.aired?.startAt | date:dateFormat | appNullable }}</camp-skeleton-cell>
 				</td>
 			</ng-container>
 
 			<ng-container [matColumnDef]="animeColumns.Type">
-				<th class="table__column_type" mat-header-cell *matHeaderCellDef>Type</th>
-				<td class="table__column_type" mat-cell *matCellDef="let anime">
+				<th mat-header-cell *matHeaderCellDef>Type</th>
+				<td mat-cell *matCellDef="let anime">
 					<camp-skeleton-cell [isLoading]="isLoading">{{ anime.type | appNullable }}</camp-skeleton-cell>
 				</td>
 			</ng-container>
 
 			<ng-container [matColumnDef]="animeColumns.Status">
-				<th class="table__column_status" mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-				<td class="table__column_status" mat-cell *matCellDef="let anime">
+				<th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+				<td mat-cell *matCellDef="let anime">
 					<camp-skeleton-cell [isLoading]="isLoading">{{ anime.status | appNullable }}</camp-skeleton-cell>
 				</td>
 			</ng-container>

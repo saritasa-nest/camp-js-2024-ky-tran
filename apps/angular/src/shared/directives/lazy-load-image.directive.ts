@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, inject, Input, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { emptyStringAttribute } from '@js-camp/angular/shared/attributes/empty-string-attribute';
 
 /** Lazy Load Image directive. */
@@ -10,7 +10,9 @@ export class LazyLoadImageDirective implements OnInit, OnDestroy {
 
 	private observer!: IntersectionObserver;
 
-	public constructor(private readonly element: ElementRef, private readonly renderer: Renderer2) {}
+	private readonly element = inject(ElementRef);
+
+	private readonly renderer = inject(Renderer2);
 
 	/** On Init. */
 	public ngOnInit(): void {

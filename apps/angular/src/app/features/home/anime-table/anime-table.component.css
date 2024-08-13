@@ -56,24 +56,25 @@
 	background-color: var(--background-color-primary-light);
 }
 
-.table__column_order {
+.mat-column-index {
 	width: 5%;
 }
 
-.table__column_title,
-.table__column_image {
+.mat-column-image,
+.mat-column-englishTitle,
+.mat-column-japaneseTitle {
 	width: 20%;
 }
 
-.table__column_start-date {
+.mat-column-startDate {
 	width: 12.5%;
 }
 
-.table__column_type {
+.mat-column-type {
 	width: 8.5%;
 }
 
-.table__column_status {
+.mat-column-status {
 	width: 14%;
 }
 

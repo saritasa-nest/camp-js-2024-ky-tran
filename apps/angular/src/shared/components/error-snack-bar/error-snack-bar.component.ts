@@ -1,14 +1,6 @@
-import { ChangeDetectionStrategy, Component, Inject, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-
-import {
-	MAT_SNACK_BAR_DATA,
-	MatSnackBarAction,
-	MatSnackBarActions,
-	MatSnackBarLabel,
-	MatSnackBarRef,
-} from '@angular/material/snack-bar';
-
+import { MAT_SNACK_BAR_DATA, MatSnackBarAction, MatSnackBarActions, MatSnackBarLabel, MatSnackBarRef } from '@angular/material/snack-bar';
 import { ErrorSnackBarData } from '@js-camp/angular/shared/types/error-snack-bar-data';
 
 /** Snackbar component. */
@@ -24,5 +16,6 @@ export class SnackbarComponent {
 	/** Snack bar ref. */
 	protected readonly snackBarRef = inject(MatSnackBarRef);
 
-	public constructor(@Inject(MAT_SNACK_BAR_DATA) public data: ErrorSnackBarData) {}
+	/** Error snack bar data. */
+	protected readonly data: ErrorSnackBarData = inject(MAT_SNACK_BAR_DATA);
 }

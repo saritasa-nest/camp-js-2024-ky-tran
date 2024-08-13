@@ -10,7 +10,7 @@ export function toggleExecutionState<T>(subject$: Subject<boolean>): MonoTypeOpe
 		return EMPTY;
 	});
 
-	return function(source$) {
+	return source$ => {
 		const sharedSource$ = source$.pipe(shareReplay({ refCount: true, bufferSize: 1 }));
 
 		const finishLoadingSideEffect$ = sharedSource$.pipe(

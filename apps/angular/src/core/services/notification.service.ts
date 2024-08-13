@@ -10,15 +10,13 @@ export class NotificationService {
 
 	/** Notify app error. */
 	public notifyAppError<T>(): MonoTypeOperatorFunction<T> {
-		const { snackBar } = this;
-
-		return function(source$) {
+		return source$ => {
 			const sharedSource$ = source$.pipe(shareReplay({ refCount: true, bufferSize: 1 }));
 
 			const catchError$ = sharedSource$.pipe(
 				ignoreElements(),
 				catchError((error: unknown) => throwError(() => {
-					snackBar.openFromComponent(SnackbarComponent, {
+					this.snackBar.openFromComponent(SnackbarComponent, {
 						verticalPosition: 'top',
 						horizontalPosition: 'right',
 						data: { errorMessage: error instanceof Error ? error.message : 'Something went wrong!. Please try again.' },

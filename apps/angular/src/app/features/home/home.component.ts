@@ -56,7 +56,7 @@ export class HomeComponent {
 	public constructor() {
 		this.animeList$ = this.filterParamsProvider$
 			.pipe(
-				tap(filterParams => this.pagePaginator$.next({ pageNumber: filterParams.pageNumber, pageSize: filterParams.pageSize })),
+				tap(filterParams => this.handlePaginatorSideEffect(filterParams)),
 				switchMap(filterParams => this.animeService.getList(filterParams)
 					.pipe(
 						toggleExecutionState(this.isLoading$),
@@ -65,6 +65,10 @@ export class HomeComponent {
 				shareReplay({ refCount: true, bufferSize: 1 }),
 				takeUntilDestroyed(this.destroyRef),
 			);
+	}
+
+	private handlePaginatorSideEffect(filterParams: AnimeFilterParams.Combined): void {
+		this.pagePaginator$.next({ pageNumber: filterParams.pageNumber, pageSize: filterParams.pageSize });
 	}
 
 	/**
