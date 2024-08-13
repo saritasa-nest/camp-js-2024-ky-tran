@@ -2,7 +2,6 @@ import { AfterViewInit, booleanAttribute, ChangeDetectionStrategy, Component, De
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSortModule, Sort } from '@angular/material/sort';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject, ignoreElements, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DATE_FORMAT, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
@@ -13,9 +12,7 @@ import { AnimeTableColumns } from '@js-camp/core/enums/anime-table-columns.enum'
 import { FILTER_PARAMS_TOKEN } from '@js-camp/angular/core/providers/filter-params.provider';
 import { MatSortEventDto, MatSortEventFieldsDto } from '@js-camp/core/dtos/mat-sort-event.dto';
 import { paginatorAttribute } from '@js-camp/angular/shared/attributes/paginator-attribute';
-import { emptyStringAttribute } from '@js-camp/angular/shared/attributes/empty-string-attribute';
 import { animeListAttribute } from '@js-camp/angular/shared/attributes/anime-list-attribute';
-import { SnackbarComponent } from '@js-camp/angular/shared/components/error-snack-bar/error-snack-bar.component';
 import { LazyLoadImageDirective } from '@js-camp/angular/shared/directives/lazy-load-image.directive';
 import { BaseFilterParams } from '@js-camp/core/models/base-filter-params';
 import { SkeletonCellComponent } from '@js-camp/angular/app/features/home/anime-table/skeleton-cell/skeleton-cell.component';
@@ -51,18 +48,6 @@ export class AnimeTableComponent implements OnInit, AfterViewInit {
 	@Input({ required: true, transform: booleanAttribute })
 	public isLoading = false;
 
-	/** Error message if something went wrong fetching anime list. */
-	@Input({ required: true, transform: emptyStringAttribute })
-	public set error(value: string) {
-		if (value !== '') {
-			this.snackBar.openFromComponent(SnackbarComponent, {
-				verticalPosition: 'top',
-				horizontalPosition: 'right',
-				data: { errorMessage: value },
-			});
-		}
-	}
-
 	/**
 	 * Page paginator to store page index and page number.
 	 * Property - pageNumber: Will be converted to the zero-based page index of the displayed list of items.
@@ -77,12 +62,10 @@ export class AnimeTableComponent implements OnInit, AfterViewInit {
 
 	private readonly destroyRef = inject(DestroyRef);
 
-	private readonly snackBar = inject(MatSnackBar);
+	private readonly filterParamsProvider$ = inject(FILTER_PARAMS_TOKEN);
 
 	/** Convert the list to MatTableDataSource to use MatSort. */
 	protected readonly dataSource = new MatTableDataSource<Anime>();
-
-	private readonly filterParamsProvider$ = inject(FILTER_PARAMS_TOKEN);
 
 	/**
 	 * Page sorter to store sort field and sort direction dto.

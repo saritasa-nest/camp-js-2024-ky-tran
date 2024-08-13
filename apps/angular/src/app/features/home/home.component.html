@@ -1,6 +1,5 @@
 @if ({
 	isLoading: isLoading$ | async,
-	error: (error$ | async) ?? '',
 	animeList: animeList$ | async,
 	pagePaginator: pagePaginator$ | async,
 }; as data) {
@@ -16,7 +15,6 @@
 		<camp-anime-table
 			[isLoading]="data.isLoading"
 			[animeList]="data.isLoading ? [] : data.animeList?.results ?? []"
-			[error]="data.error"
 			[pagePaginator]="data.pagePaginator"
 			(sortChange)="onSortChange($event)"
 		/>

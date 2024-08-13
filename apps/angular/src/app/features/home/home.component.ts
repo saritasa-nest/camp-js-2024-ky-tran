@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { 	BehaviorSubject, catchError, shareReplay, switchMap, tap, throwError } from 'rxjs';
+import { 	BehaviorSubject, Observable, shareReplay, switchMap, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FILTER_PARAMS_PROVIDER, FILTER_PARAMS_TOKEN } from '@js-camp/angular/core/providers/filter-params.provider';
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
@@ -10,6 +10,7 @@ import { SearchComponent } from '@js-camp/angular/app/features/home/search/searc
 import { PaginatorComponent } from '@js-camp/angular/app/features/home/paginator/paginator.component';
 import { AnimeService } from '@js-camp/angular/core/services/anime.service';
 import { AnimeUrlService } from '@js-camp/angular/core/services/anime-url.service';
+import { NotificationService } from '@js-camp/angular/core/services/notification.service';
 import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { toggleExecutionState } from '@js-camp/angular/shared/utils/rxjs/toggleExecutionState';
@@ -26,23 +27,22 @@ import { AnimeFilterParams } from '@js-camp/core/models/anime-filter-params';
 	providers: [...FILTER_PARAMS_PROVIDER],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 	private readonly animeService = inject(AnimeService);
 
 	private readonly animeUrlService = inject(AnimeUrlService);
+
+	private readonly notificationService = inject(NotificationService);
 
 	private readonly filterParamsProvider$ = inject(FILTER_PARAMS_TOKEN);
 
 	private readonly destroyRef = inject(DestroyRef);
 
 	/** Stream of anime list. */
-	protected readonly animeList$ = new BehaviorSubject<Pagination<Anime> | null>(null);
+	protected readonly animeList$: Observable<Pagination<Anime>>;
 
 	/** Loading status of fetching anime list. */
 	protected readonly isLoading$ = new BehaviorSubject(true);
-
-	/** Error message if something went wrong fetching anime list. */
-	protected readonly error$ = new BehaviorSubject('');
 
 	/**
 	 * Page paginator to store page index and page number.
@@ -54,23 +54,18 @@ export class HomeComponent implements OnInit {
 		pageSize: DEFAULT_PAGE_SIZE,
 	});
 
-	/** @inheritdoc */
-	public ngOnInit(): void {
-		this.filterParamsProvider$
+	public constructor() {
+		this.animeList$ = this.filterParamsProvider$
 			.pipe(
 				tap(filterParams => this.pagePaginator$.next({ pageNumber: filterParams.pageNumber, pageSize: filterParams.pageSize })),
-				switchMap(filterParams => this.animeService.getAnimeList(filterParams).pipe(
-					toggleExecutionState(this.isLoading$),
-					catchError((error: unknown) => throwError(() => {
-						const errorMessage = error instanceof Error ? error.message : 'Something went wrong!';
-						this.error$.next(errorMessage);
-						return error;
-					})),
-				)),
+				switchMap(filterParams => this.animeService.getList(filterParams)
+					.pipe(
+						toggleExecutionState(this.isLoading$),
+						this.notificationService.notifyAppError(),
+					)),
 				shareReplay({ refCount: true, bufferSize: 1 }),
 				takeUntilDestroyed(this.destroyRef),
-			)
-			.subscribe(result => this.animeList$.next(result));
+			);
 	}
 
 	/**
