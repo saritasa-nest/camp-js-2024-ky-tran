@@ -5,5 +5,5 @@
     "outDir": "../../dist/out-tsc",
     "types": ["node"]
   },
-  "include": ["**/*.ts", "../../apps/angular/src/core/mappers/pagination.mapper.ts"]
+  "include": ["**/*.ts", "../../apps/angular/src/core/mappers/pagination.mapper.ts", "../../apps/angular/src/core/enums/anime-table-columns.ts"]
 }

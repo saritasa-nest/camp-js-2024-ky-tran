@@ -1,5 +1,5 @@
-import { BaseQueryParamsDto } from '../dtos/base-query-params.dto';
 import { BaseFilterParams } from '../models/base-filter-params';
+import { BaseQueryParams } from '../namespaces/base-query-params';
 
 /** Base query params mapper. */
 export namespace BaseQueryParamsMapper {
@@ -14,7 +14,7 @@ export namespace BaseQueryParamsMapper {
 		paginator: BaseFilterParams.Paginator,
 		defaultPageNumber: number,
 		defaultPageSize: number,
-	): BaseQueryParamsDto.Paginator {
+	): BaseQueryParams.Paginator {
 		const { pageNumber, pageSize } = paginator;
 
 		return {
@@ -30,7 +30,7 @@ export namespace BaseQueryParamsMapper {
 	 * @param defaultPageSize Default page size.
 	 */
 	export function mapPaginatorFromDto(
-		paginator: BaseQueryParamsDto.Paginator,
+		paginator: BaseQueryParams.Paginator,
 		defaultPageNumber: number,
 		defaultPageSize: number,
 	): BaseFilterParams.Paginator {
@@ -46,7 +46,7 @@ export namespace BaseQueryParamsMapper {
 	 * Map search query params from domain model to DTO.
 	 * @param search Domain model.
 	 */
-	export function mapSearchToDto({ search }: BaseFilterParams.Search): BaseQueryParamsDto.Search {
+	export function mapSearchToDto({ search }: BaseFilterParams.Search): BaseQueryParams.Search {
 		return { search };
 	}
 
@@ -54,7 +54,7 @@ export namespace BaseQueryParamsMapper {
 	 * Map search query params from DTO to domain model.
 	 * @param search DTO.
 	 */
-	export function mapSearchFromDto({ search }: BaseQueryParamsDto.Search): BaseFilterParams.Search {
+	export function mapSearchFromDto({ search }: BaseQueryParams.Search): BaseFilterParams.Search {
 		return { search };
 	}
 
@@ -68,7 +68,7 @@ export namespace BaseQueryParamsMapper {
 		baseModel: BaseFilterParams.Combined,
 		defaultPageNumber: number,
 		defaultPageSize: number,
-	): BaseQueryParamsDto.Combined {
+	): BaseQueryParams.Combined {
 		const { pageNumber, pageSize, search } = baseModel;
 
 		return {
@@ -84,7 +84,7 @@ export namespace BaseQueryParamsMapper {
 	 * @param defaultPageSize Default page size.
 	 */
 	export function mapCombinedFromDto(
-		baseDto: BaseQueryParamsDto.Combined,
+		baseDto: BaseQueryParams.Combined,
 		defaultPageNumber: number,
 		defaultPageSize: number,
 	): BaseFilterParams.Combined {

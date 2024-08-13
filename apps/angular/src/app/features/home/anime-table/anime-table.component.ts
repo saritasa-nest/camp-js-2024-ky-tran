@@ -8,7 +8,7 @@ import { DATE_FORMAT, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constant
 import { Anime } from '@js-camp/core/models/anime';
 import { NullablePipe } from '@js-camp/angular/core/pipes/nullable.pipe';
 import { ProgressSpinnerComponent } from '@js-camp/angular/shared/components/progress-spinner/progress-spinner.component';
-import { AnimeTableColumns } from '@js-camp/core/enums/anime-table-columns.enum';
+import { AnimeTableColumns } from '@js-camp/angular/core/enums/anime-table-columns';
 import { FILTER_PARAMS_TOKEN } from '@js-camp/angular/core/providers/filter-params.provider';
 import { paginatorAttribute } from '@js-camp/angular/shared/attributes/paginator-attribute';
 import { animeListAttribute } from '@js-camp/angular/shared/attributes/anime-list-attribute';
@@ -20,12 +20,7 @@ import { AnimeFilterParams } from '@js-camp/core/models/anime-filter-params';
 import { PaginatorComponent } from '@js-camp/angular/app/features/home/anime-table/paginator/paginator.component';
 import { SortDirection } from '@js-camp/core/models/sort-direction';
 import { SortFields } from '@js-camp/core/models/sort-fields';
-
-/** Sort event direction. */
-enum SortEventDirection {
-	Ascending = 'asc',
-	Descending = 'desc',
-}
+import { SortEventDirection } from '@js-camp/angular/core/enums/sort-event-direction';
 
 /** Anime Table component. */
 @Component({
