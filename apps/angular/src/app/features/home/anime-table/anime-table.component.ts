@@ -1,4 +1,4 @@
-import { AfterViewInit, booleanAttribute, ChangeDetectionStrategy, Component, DestroyRef, ElementRef, EventEmitter, inject, Input, numberAttribute, OnInit, Output } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, DestroyRef, ElementRef, EventEmitter, inject, Input, numberAttribute, OnInit, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSortModule, Sort } from '@angular/material/sort';
@@ -39,7 +39,10 @@ import { PaginatorComponent } from '@js-camp/angular/app/features/home/anime-tab
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AnimeTableComponent implements OnInit, AfterViewInit {
+export class AnimeTableComponent implements OnInit {
+	/** Anime table reference. */
+	@ViewChild('table') private readonly animeTableRef!: ElementRef<HTMLElement>;
+
 	/** Anime list. */
 	@Input({ required: true, transform: animeListAttribute })
 	protected set animeList(values: readonly Anime[]) {
@@ -98,9 +101,6 @@ export class AnimeTableComponent implements OnInit, AfterViewInit {
 	/** Date format. */
 	protected readonly dateFormat = DATE_FORMAT;
 
-	/** Table element. */
-	private tableEl: HTMLElement | null = null;
-
 	public constructor(private readonly elementRef: ElementRef) {}
 
 	/** @inheritdoc */
@@ -118,14 +118,9 @@ export class AnimeTableComponent implements OnInit, AfterViewInit {
 			.subscribe();
 	}
 
-	/** @inheritdoc */
-	public ngAfterViewInit(): void {
-		this.tableEl = this.elementRef.nativeElement.querySelector(`#table`);
-	}
-
 	private scrollIntoView(): void {
-		if (this.tableEl) {
-			this.tableEl.scrollIntoView({ block: 'start' });
+		if (this.animeTableRef && '_elementRef' in this.animeTableRef) {
+			(this.animeTableRef._elementRef as ElementRef<HTMLElement>).nativeElement.scrollIntoView({ block: 'start' });
 		}
 	}
 

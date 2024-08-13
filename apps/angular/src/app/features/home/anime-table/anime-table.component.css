@@ -11,6 +11,7 @@
 
 .table-wrapper {
 	overflow: auto;
+	border-bottom: var(--width-border-large) solid var(--background-color-primary-bright);
 }
 
 .table-wrapper::-webkit-scrollbar {
