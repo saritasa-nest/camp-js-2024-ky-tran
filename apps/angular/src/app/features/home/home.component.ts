@@ -7,7 +7,6 @@ import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/
 import { AnimeTableComponent } from '@js-camp/angular/app/features/home/anime-table/anime-table.component';
 import { FilterComponent } from '@js-camp/angular/app/features/home/filter/filter.component';
 import { SearchComponent } from '@js-camp/angular/app/features/home/search/search.component';
-import { PaginatorComponent } from '@js-camp/angular/app/features/home/paginator/paginator.component';
 import { AnimeService } from '@js-camp/angular/core/services/anime.service';
 import { AnimeUrlService } from '@js-camp/angular/core/services/anime-url.service';
 import { NotificationService } from '@js-camp/angular/core/services/notification.service';
@@ -23,7 +22,7 @@ import { AnimeFilterParams } from '@js-camp/core/models/anime-filter-params';
 	standalone: true,
 	templateUrl: './home.component.html',
 	styleUrl: './home.component.css',
-	imports: [CommonModule, AnimeTableComponent, FilterComponent, SearchComponent, PaginatorComponent],
+	imports: [CommonModule, AnimeTableComponent, FilterComponent, SearchComponent],
 	providers: [...FILTER_PARAMS_PROVIDER],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

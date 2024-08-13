@@ -31,7 +31,10 @@ export class AnimeService {
 			.pipe(
 				map(responseDto => PaginationMapper.fromDto(responseDto, AnimeMapper.fromDto)),
 				shareReplay({ refCount: true, bufferSize: 1 }),
-				catchError((_: unknown) => throwError(() => new Error('Something went wrong. Please try again.'))),
+				catchError((error: unknown) => throwError(() => {
+					const errorMessage = error && typeof error === 'object' && 'message' in error ? error.message : 'unknown error';
+					return new Error(`Something went wrong. Please try again. Error message: ${errorMessage}`);
+				})),
 			);
 	}
 }

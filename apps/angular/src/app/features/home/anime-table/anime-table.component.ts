@@ -1,4 +1,4 @@
-import { AfterViewInit, booleanAttribute, ChangeDetectionStrategy, Component, DestroyRef, ElementRef, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, booleanAttribute, ChangeDetectionStrategy, Component, DestroyRef, ElementRef, EventEmitter, inject, Input, numberAttribute, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSortModule, Sort } from '@angular/material/sort';
@@ -19,6 +19,7 @@ import { SkeletonCellComponent } from '@js-camp/angular/app/features/home/anime-
 import { NonNullableFields } from '@js-camp/core/types/non-nullable-fields';
 import { MatSortEventMapper } from '@js-camp/core/mappers/mat-sort-event.mapper';
 import { AnimeFilterParams } from '@js-camp/core/models/anime-filter-params';
+import { PaginatorComponent } from '@js-camp/angular/app/features/home/anime-table/paginator/paginator.component';
 
 /** Anime Table component. */
 @Component({
@@ -34,19 +35,24 @@ import { AnimeFilterParams } from '@js-camp/core/models/anime-filter-params';
 		NullablePipe,
 		LazyLoadImageDirective,
 		SkeletonCellComponent,
+		PaginatorComponent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimeTableComponent implements OnInit, AfterViewInit {
 	/** Anime list. */
 	@Input({ required: true, transform: animeListAttribute })
-	public set animeList(values: readonly Anime[]) {
+	protected set animeList(values: readonly Anime[]) {
 		this.dataSource.data = [...values];
 	}
 
+	/** Anime list total. */
+	@Input({ required: true, transform: numberAttribute })
+	protected readonly animeListTotal = 0;
+
 	/** Loading status of fetching anime list. */
 	@Input({ required: true, transform: booleanAttribute })
-	public isLoading = false;
+	protected readonly isLoading = false;
 
 	/**
 	 * Page paginator to store page index and page number.
@@ -55,6 +61,10 @@ export class AnimeTableComponent implements OnInit, AfterViewInit {
 	 */
 	@Input({ required: true, transform: paginatorAttribute })
 	protected readonly pagePaginator: NonNullableFields<BaseFilterParams.Paginator> | null = null;
+
+	/** Page change event emitter. */
+	@Output()
+	public readonly pageChange = new EventEmitter<BaseFilterParams.Paginator>();
 
 	/** Sort change event emitter. */
 	@Output()
@@ -120,6 +130,14 @@ export class AnimeTableComponent implements OnInit, AfterViewInit {
 	}
 
 	/**
+	 * Page change handler.
+	 * @param paginator Page event.
+	 */
+	protected onPageChange(paginator: BaseFilterParams.Paginator): void {
+		this.pageChange.emit(paginator);
+	}
+
+	/**
 	 * Sort change event handler.
 	 * @param sortEvent Sort event.
 	 */
@@ -139,8 +157,8 @@ export class AnimeTableComponent implements OnInit, AfterViewInit {
 	 * Get description of an anime image.
 	 * @param anime Anime.
 	 */
-	protected animeImageDescription(anime: Anime): string {
-		return anime.englishTitle ?? anime.japaneseTitle ?? 'Anime image';
+	protected animeImageDescription({ japaneseTitle, englishTitle }: Anime): string {
+		return japaneseTitle ?? englishTitle ?? 'Anime image';
 	}
 
 	/**

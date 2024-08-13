@@ -1,5 +1,32 @@
+:host,
+.table-wrapper {
+	flex-grow: 1;
+	flex-basis: 0;
+}
+
+:host {
+	display: flex;
+	flex-direction: column;
+}
+
+.table-wrapper {
+	overflow: auto;
+}
+
+.table-wrapper::-webkit-scrollbar {
+	width: var(--width-table-scrollbar);
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+	background-color: var(--background-color-primary-subtle);
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+	background-color: var(--background-color-primary);
+	box-shadow: var(--box-shadow-scrollbar);
+}
+
 .table {
-	height: 100%;
 	background-color: var(--background-color-primary-bright);
 	border-inline: var(--width-border-medium) solid var(--background-color-primary-bright);
 }

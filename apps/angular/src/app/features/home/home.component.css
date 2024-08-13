@@ -28,19 +28,4 @@
 .content {
 	flex-grow: 1;
 	flex-basis: 0;
-	overflow-y: auto;
-	border-bottom: var(--width-border-medium) solid var(--background-color-primary-bright);
-}
-
-.content::-webkit-scrollbar {
-	width: var(--width-table-scrollbar);
-}
-
-.content::-webkit-scrollbar-track {
-	background-color: var(--background-color-primary-subtle);
-}
-
-.content::-webkit-scrollbar-thumb {
-	background-color: var(--background-color-primary);
-	box-shadow: var(--box-shadow-scrollbar);
 }
