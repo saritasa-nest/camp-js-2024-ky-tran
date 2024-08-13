@@ -1,28 +1,39 @@
 import { AnimeType } from '../models/anime';
-import { AnimeTypeQueryParamsDto } from '../dtos/anime-type-query-params.dto';
 
-/** Mapping from DTO to domain model. */
-const TYPE_QUERY_PARAMS_MAPPING_FROM_DTO: Readonly<Record<AnimeTypeQueryParamsDto, AnimeType>> = {
-	[AnimeTypeQueryParamsDto.Tv]: AnimeType.Tv,
-	[AnimeTypeQueryParamsDto.Ova]: AnimeType.Ova,
-	[AnimeTypeQueryParamsDto.Movie]: AnimeType.Movie,
-	[AnimeTypeQueryParamsDto.Special]: AnimeType.Special,
-	[AnimeTypeQueryParamsDto.Ona]: AnimeType.Ona,
-	[AnimeTypeQueryParamsDto.Music]: AnimeType.Music,
-	[AnimeTypeQueryParamsDto.PromotionalVideos]: AnimeType.PromotionalVideos,
-	[AnimeTypeQueryParamsDto.Unknown]: AnimeType.Unknown,
+/** Anime type query params. */
+export enum AnimeTypeQueryParams {
+	Tv = 'tv',
+	Ova = 'ova',
+	Movie = 'movie',
+	Special = 'special',
+	Ona = 'ona',
+	Music = 'music',
+	PromotionalVideos = 'promotional videos',
+	Unknown = 'unknown',
+}
+
+/** Mapping from query params to domain model. */
+const TYPE_QUERY_PARAMS_MAPPING_FROM_DTO: Readonly<Record<AnimeTypeQueryParams, AnimeType>> = {
+	[AnimeTypeQueryParams.Tv]: AnimeType.Tv,
+	[AnimeTypeQueryParams.Ova]: AnimeType.Ova,
+	[AnimeTypeQueryParams.Movie]: AnimeType.Movie,
+	[AnimeTypeQueryParams.Special]: AnimeType.Special,
+	[AnimeTypeQueryParams.Ona]: AnimeType.Ona,
+	[AnimeTypeQueryParams.Music]: AnimeType.Music,
+	[AnimeTypeQueryParams.PromotionalVideos]: AnimeType.PromotionalVideos,
+	[AnimeTypeQueryParams.Unknown]: AnimeType.Unknown,
 };
 
-/** Mapping from Domain model to DTO. */
-const TYPE_QUERY_PARAMS_MAPPING_TO_DTO: Readonly<Record<AnimeType, AnimeTypeQueryParamsDto>> = {
-	[AnimeType.Tv]: AnimeTypeQueryParamsDto.Tv,
-	[AnimeType.Ova]: AnimeTypeQueryParamsDto.Ova,
-	[AnimeType.Movie]: AnimeTypeQueryParamsDto.Movie,
-	[AnimeType.Special]: AnimeTypeQueryParamsDto.Special,
-	[AnimeType.Ona]: AnimeTypeQueryParamsDto.Ona,
-	[AnimeType.Music]: AnimeTypeQueryParamsDto.Music,
-	[AnimeType.PromotionalVideos]: AnimeTypeQueryParamsDto.PromotionalVideos,
-	[AnimeType.Unknown]: AnimeTypeQueryParamsDto.Unknown,
+/** Mapping from domain model to query params. */
+const TYPE_QUERY_PARAMS_MAPPING_TO_DTO: Readonly<Record<AnimeType, AnimeTypeQueryParams>> = {
+	[AnimeType.Tv]: AnimeTypeQueryParams.Tv,
+	[AnimeType.Ova]: AnimeTypeQueryParams.Ova,
+	[AnimeType.Movie]: AnimeTypeQueryParams.Movie,
+	[AnimeType.Special]: AnimeTypeQueryParams.Special,
+	[AnimeType.Ona]: AnimeTypeQueryParams.Ona,
+	[AnimeType.Music]: AnimeTypeQueryParams.Music,
+	[AnimeType.PromotionalVideos]: AnimeTypeQueryParams.PromotionalVideos,
+	[AnimeType.Unknown]: AnimeTypeQueryParams.Unknown,
 };
 
 /** Anime type query params mapper. */
@@ -32,7 +43,7 @@ export namespace AnimeTypeQueryParamsMapper {
 	 * Mapping from DTO to domain model.
 	 * @param typeDto DTO.
 	 */
-	export function fromDto(typeDto: AnimeTypeQueryParamsDto): AnimeType {
+	export function fromDto(typeDto: AnimeTypeQueryParams): AnimeType {
 		return TYPE_QUERY_PARAMS_MAPPING_FROM_DTO[typeDto];
 	}
 
@@ -40,7 +51,7 @@ export namespace AnimeTypeQueryParamsMapper {
 	 * Mapping from domain model to DTO.
 	 * @param typeModel Domain model.
 	 */
-	export function toDto(typeModel: AnimeType): AnimeTypeQueryParamsDto {
+	export function toDto(typeModel: AnimeType): AnimeTypeQueryParams {
 		return TYPE_QUERY_PARAMS_MAPPING_TO_DTO[typeModel];
 	}
 }

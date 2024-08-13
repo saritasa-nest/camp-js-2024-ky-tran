@@ -47,7 +47,7 @@ enum SortEventDirection {
 })
 export class AnimeTableComponent implements OnInit {
 	/** Anime table reference. */
-	@ViewChild('table') private readonly animeTableRef!: ElementRef<HTMLElement>;
+	@ViewChild('table', { read: ElementRef }) private readonly animeTableRef!: ElementRef<HTMLElement>;
 
 	/** Anime list. */
 	@Input({ required: true, transform: animeListAttribute })
@@ -125,8 +125,8 @@ export class AnimeTableComponent implements OnInit {
 	}
 
 	private scrollIntoView(): void {
-		if (this.animeTableRef && '_elementRef' in this.animeTableRef) {
-			(this.animeTableRef._elementRef as ElementRef<HTMLElement>).nativeElement.scrollIntoView({ block: 'start' });
+		if (this.animeTableRef) {
+			this.animeTableRef.nativeElement.scrollIntoView({ block: 'start' });
 		}
 	}
 

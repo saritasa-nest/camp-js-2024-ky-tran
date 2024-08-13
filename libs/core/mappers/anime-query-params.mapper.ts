@@ -1,8 +1,7 @@
 import { AnimeQueryParamsDto } from '../dtos/anime-query-params.dto';
 import { AnimeFilterParams } from '../models/anime-filter-params';
-import { AnimeTypeQueryParamsDto } from '../dtos/anime-type-query-params.dto';
 
-import { AnimeTypeQueryParamsMapper } from './anime-type-query-params';
+import { AnimeTypeQueryParams, AnimeTypeQueryParamsMapper } from './anime-type-query-params';
 import { SortFieldsUrlMapper } from './sort-fields-query-params.mapper';
 import { SortDirectionQueryParamsMapper } from './sort-direction-query-params.mapper';
 import { BaseQueryParamsMapper } from './base-query-params.mapper';
@@ -27,7 +26,7 @@ export namespace AnimeQueryParamsMapper {
 			...BaseQueryParamsMapper.mapCombinedFromDto({ pageNumber, pageSize, search }, defaultPageNumber, defaultPageSize),
 			sortField: sortField ? SortFieldsUrlMapper.fromDto(sortField) : null,
 			sortDirection: sortDirection ? SortDirectionQueryParamsMapper.fromDto(sortDirection) : null,
-			typeIn: typeIn ? typeIn.split(',').map(type => AnimeTypeQueryParamsMapper.fromDto(type as AnimeTypeQueryParamsDto)) : null,
+			typeIn: typeIn ? typeIn.split(',').map(type => AnimeTypeQueryParamsMapper.fromDto(type as AnimeTypeQueryParams)) : null,
 		};
 	}
 
