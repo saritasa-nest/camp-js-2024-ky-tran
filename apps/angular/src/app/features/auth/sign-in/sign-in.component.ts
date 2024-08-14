@@ -1,7 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { tap } from 'rxjs';
 
 /** Sign In component. */
 @Component({
@@ -12,8 +14,10 @@ import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, Validatio
 	imports: [RouterModule, MatIconModule, ReactiveFormsModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SignInComponent {
+export class SignInComponent implements OnInit {
 	private readonly formBuilder = inject(NonNullableFormBuilder);
+
+	private readonly destroyRef = inject(DestroyRef);
 
 	/** Sign in form group. */
 	protected readonly form = this.formBuilder.group({
@@ -23,6 +27,27 @@ export class SignInComponent {
 
 	/** Hide password signal. */
 	protected readonly hidePassword = signal(true);
+
+	/** Show toggle hide password icon. */
+	protected readonly showToggleHidePasswordIcon = signal(false);
+
+	/** @inheritdoc */
+	public ngOnInit(): void {
+		this.form.controls.password.valueChanges
+			.pipe(
+				tap(password => this.toggleHidePasswordSideEffect(Boolean(password))),
+				takeUntilDestroyed(this.destroyRef),
+			)
+			.subscribe();
+	}
+
+	private toggleHidePasswordSideEffect(hasPassword: boolean): void {
+		this.showToggleHidePasswordIcon.set(hasPassword);
+
+		if (!hasPassword) {
+			this.hidePassword.set(true);
+		}
+	}
 
 	private validateNonNumericPassword(control: AbstractControl): ValidationErrors | null {
 		if (!control.value) {

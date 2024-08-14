@@ -25,9 +25,11 @@
 		>
 		<!-- <p class="form__group-error-message">Something went wrong!</p> -->
 
-		<mat-icon class="sign-in-password-icon" (click)="onToggleHidePassword()">
-			{{hidePassword() ? 'visibility_off' : 'visibility'}}
-		</mat-icon>
+		@if (showToggleHidePasswordIcon()) {
+			<mat-icon class="sign-in-password-icon" (click)="onToggleHidePassword()">
+				{{hidePassword() ? 'visibility_off' : 'visibility'}}
+			</mat-icon>
+		}
 	</div>
 
 	<div class="form__group form__group-sign-up">

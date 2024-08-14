@@ -14,3 +14,7 @@ import { ErrorMessageComponent } from '@js-camp/angular/shared/components/error-
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainLayoutComponent {}
+
+// this.signInForm.controls['password'].valueChanges.subscribe(value => {
+// 	this.showPasswordIcon = !!value; // Show icon if there's a value, hide if empty
+// });
