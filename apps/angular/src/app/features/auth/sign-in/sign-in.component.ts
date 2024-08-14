@@ -1,9 +1,21 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { ignoreElements, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { tap } from 'rxjs';
+import { PASSWORD_MIN_LENGTH } from '@js-camp/angular/shared/constants';
+import { SignInFormErrorService } from '@js-camp/angular/core/services/sign-in-form-error.service';
+
+/** Sign in form. */
+export type SignInForm = FormGroup<Readonly<{
+
+	/** Email. */
+	email: FormControl<string>;
+
+	/** Password. */
+	password: FormControl<string>;
+}>>;
 
 /** Sign In component. */
 @Component({
@@ -19,43 +31,64 @@ export class SignInComponent implements OnInit {
 
 	private readonly destroyRef = inject(DestroyRef);
 
+	/** Form error service. */
+	protected readonly formErrorService = inject(SignInFormErrorService);
+
 	/** Sign in form group. */
-	protected readonly form = this.formBuilder.group({
+	protected readonly form: SignInForm = this.formBuilder.group({
 		email: ['', [Validators.email, Validators.required]],
-		password: ['', [Validators.required, Validators.minLength(8), this.validateNonNumericPassword]],
+		password: ['', [Validators.required, Validators.minLength(PASSWORD_MIN_LENGTH), this.validateNonNumericPassword]],
 	});
 
 	/** Hide password signal. */
-	protected readonly hidePassword = signal(true);
+	protected readonly hidePasswordSignal = signal(true);
 
 	/** Show toggle hide password icon. */
-	protected readonly showToggleHidePasswordIcon = signal(false);
+	protected readonly showToggleHidePasswordIconSignal = signal(false);
+
+	/** Email error signal. */
+	protected readonly emailErrorSignal = this.formErrorService.getEmailErrorSignal();
+
+	/** Password error signal. */
+	protected readonly passwordErrorSignal = this.formErrorService.getPasswordErrorSignal();
 
 	/** @inheritdoc */
 	public ngOnInit(): void {
+		this.form.controls.email.valueChanges
+			.pipe(
+				tap(() => this.formErrorService.clearEmailError()),
+				takeUntilDestroyed(this.destroyRef),
+				ignoreElements(),
+			)
+			.subscribe();
+
 		this.form.controls.password.valueChanges
 			.pipe(
-				tap(password => this.toggleHidePasswordSideEffect(Boolean(password))),
+				tap(password => {
+					this.toggleHidePasswordSideEffect(Boolean(password));
+					this.formErrorService.clearPasswordError();
+				}),
 				takeUntilDestroyed(this.destroyRef),
+				ignoreElements(),
 			)
 			.subscribe();
 	}
 
 	private toggleHidePasswordSideEffect(hasPassword: boolean): void {
-		this.showToggleHidePasswordIcon.set(hasPassword);
+		this.showToggleHidePasswordIconSignal.set(hasPassword);
 
 		if (!hasPassword) {
-			this.hidePassword.set(true);
+			this.hidePasswordSignal.set(true);
 		}
 	}
 
 	private validateNonNumericPassword(control: AbstractControl): ValidationErrors | null {
-		if (!control.value) {
-			return null;
+		if (control.value) {
+			const isNumeric = /^\d+$/.test(control.value);
+			return isNumeric ? { numericPassword: true } : null;
 		}
 
-		const isNumeric = /^\d+$/.test(control.value);
-		return isNumeric ? { numericPassword: true } : null;
+		return null;
 	}
 
 	/**
@@ -63,12 +96,21 @@ export class SignInComponent implements OnInit {
 	 * @param event Mouse event.
 	 */
 	protected onToggleHidePassword(): void {
-		this.hidePassword.set(!this.hidePassword());
+		this.hidePasswordSignal.set(!this.hidePasswordSignal());
 	}
 
 	/** On submit. */
 	protected onSubmit(): void {
+		if (this.form.valid) {
+			const data = this.form.getRawValue();
+			console.log(data);
+			return;
+		}
+
 		console.log('Is form valid -->', this.form.valid);
 		console.log(this.form);
+
+		this.formErrorService.handleEmailError(this.form);
+		this.formErrorService.handlePasswordError(this.form);
 	}
 }

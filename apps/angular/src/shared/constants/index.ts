@@ -15,3 +15,6 @@ export const DEFAULT_PAGE_SIZE = 10;
 
 /** The set of provided page size options to display to the user. */
 export const DEFAULT_PAGE_SIZE_OPTIONS = [5, 10, 20, 30, 50];
+
+/** The minimum length of password. */
+export const PASSWORD_MIN_LENGTH = 8;

@@ -1,8 +1,9 @@
-<h2 class="header-title">Let's "sign in" Onii-chan :3</h2>
+<h2 class="header-title">Let's "sign in"! Onii-chan :3</h2>
 
 <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
 	<div class="form__group">
 		<label for="sign-in-email" class="form__group-label">Email</label>
+
 		<input
 			id="sign-in-email"
 			class="form__group-input
@@ -10,31 +11,40 @@
 			type="email"
 			name="email"
 			formControlName="email"
+			(blur)="formErrorService.handleEmailError(form)"
 		>
-		<!-- <p class="form__group-error-message">Something went wrong!</p> -->
+
+		@if (emailErrorSignal()) {
+			<p class="form__group-error-message">{{ emailErrorSignal() }}</p>
+		}
 	</div>
 
 	<div class="form__group">
 		<label for="sign-in-password" class="form__group-label">Password</label>
+
 		<input
 			id="sign-in-password"
 			class="form__group-input form__group-password"
-			[type]="hidePassword() ? 'password' : 'text'"
+			[type]="hidePasswordSignal() ? 'password' : 'text'"
 			name="password"
 			formControlName="password"
+			(blur)="formErrorService.handlePasswordError(form)"
 		>
-		<!-- <p class="form__group-error-message">Something went wrong!</p> -->
 
-		@if (showToggleHidePasswordIcon()) {
+		@if (showToggleHidePasswordIconSignal()) {
 			<mat-icon class="sign-in-password-icon" (click)="onToggleHidePassword()">
-				{{hidePassword() ? 'visibility_off' : 'visibility'}}
+				{{hidePasswordSignal() ? 'visibility_off' : 'visibility'}}
 			</mat-icon>
+		}
+
+		@if (passwordErrorSignal()) {
+			<p class="form__group-error-message">{{ passwordErrorSignal() }}</p>
 		}
 	</div>
 
 	<div class="form__group form__group-sign-up">
-		<p>Onii-chan does not have account yet?</p>
-		<a class="form__group-link" routerLink="/auth/signup">Let's sign up</a>
+		<p>Onii-chan does not have an account yet?</p>
+		<a class="form__group-link" [routerLink]="['../', 'signup']">Let's sign up</a>
 	</div>
 
 	<div class="form__group">
