@@ -1,0 +1,86 @@
+:host {
+	display: block;
+	padding: var(--gap-huge) 0 var(--gap-extra-huge);
+}
+
+.header-title {
+	font-size: var(--font-size-extra-large);
+	line-height: var(--line-height-title);
+	text-align: center;
+	margin-bottom: var(--gap-large);
+}
+
+.form {
+	min-width: 480px;
+	background-color: var(--background-color-primary-bright);
+	font-size: var(--font-size-medium);
+	padding: var(--gap-extra-medium) var(--gap-extra-large);
+	border: 1px solid var(--background-color-primary-subtle);
+	overflow: hidden;
+}
+
+.form__group {
+	display: flex;
+	flex-direction: column;
+	gap: var(--gap-extra-small);
+	padding-block: var(--gap-medium-small);
+}
+
+.form__group-label {
+	font-size: var(--font-size-extra-medium);
+	font-weight: 500;
+}
+
+.form__group-input {
+	background-color: var(--background-color-primary-extra-bright);
+	color: inherit;
+	caret-color: var(--text-color-main);
+	-webkit-text-fill-color: var(--text-color-main) !important;
+	background-clip: text !important;
+	font-family: inherit;
+	padding: var(--gap-medium-small) var(--gap-small);
+	border: 1px solid var(--background-color-primary-light);
+}
+
+.form__group-input:focus {
+	outline: 1px solid var(--background-color-primary-subtle);
+}
+
+.form__group-input:disabled {
+	background-color: var(--background-color-primary-light);
+}
+
+.form__group-error-message {
+	color: var(--error-color-main);
+}
+
+.form__group-link:link,
+.form__group-link:visited {
+	color: var(--text-color-main);
+	font-weight: 500;
+}
+
+.form__group-sign-up {
+	flex-direction: row;
+	align-items: center;
+}
+
+.form__group-submit-button {
+	background-color: var(--background-color-primary-extra-bright);
+	color: var(--text-color-main);
+	font-size: var(--font-size-medium);
+	font-weight: 600;
+	padding: var(--gap-medium-small) var(--gap-small);
+	transition: 0.2s;
+	border: 1px solid var(--background-color-primary-bright);
+	cursor: pointer;
+}
+
+.form__group-submit-button:hover {
+	border: 1px solid var(--background-color-primary-light);
+}
+
+.form__group-submit-button:disabled {
+	background-color: var(--background-color-primary-light);
+	cursor: not-allowed;
+}

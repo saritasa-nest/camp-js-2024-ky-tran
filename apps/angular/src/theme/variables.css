@@ -12,6 +12,7 @@
 	--height-layout-main: 640px;
 	--width-layout-main: 1280px;
 	--width-layout-sub: 180px;
+	--width-layout-form: 480px;
 	--width-image-main: 150px;
 	--height-skeleton-cell: 24px;
 	--height-table-header: 56px;
@@ -22,12 +23,14 @@
 	--width-paginator-arrow: 24px;
 	--gap-tiny: 4px;
 	--gap-extra-small: 8px;
+	--gap-medium-small: 12px;
 	--gap-small: 16px;
 	--gap-medium: 20px;
 	--gap-extra-medium: 24px;
 	--gap-large: 30px;
 	--gap-extra-large: 40px;
 	--gap-huge: 60px;
+	--gap-extra-huge: 80px;
 
 	/* Font-size */
 	--font-size-root: 10px;

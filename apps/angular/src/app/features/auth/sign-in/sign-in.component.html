@@ -1,0 +1,24 @@
+<h2 class="header-title">Let's "sign in" Onii-chan :3</h2>
+
+<form class="form">
+	<div class="form__group">
+		<label for="sign-in-email" class="form__group-label">Email</label>
+		<input id="sign-in-email" class="form__group-input form__group-email" type="email" name="email">
+		<!-- <p class="form__group-error-message">Something went wrong!</p> -->
+	</div>
+
+	<div class="form__group">
+		<label for="sign-in-password" class="form__group-label">Password</label>
+		<input id="sign-in-password" class="form__group-input form__group-password" type="password" name="password">
+		<!-- <p class="form__group-error-message">Something went wrong!</p> -->
+	</div>
+
+	<div class="form__group form__group-sign-up">
+		<p>Onii-chan does not have account yet?</p>
+		<a class="form__group-link" routerLink="/auth/signup">Let's sign up</a>
+	</div>
+
+	<div class="form__group">
+		<button class="form__group-submit-button" type="submit">Sign in</button>
+	</div>
+</form>

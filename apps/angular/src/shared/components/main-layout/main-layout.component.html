@@ -22,7 +22,7 @@
 </nav>
 
 <main class="main">
-	@defer {
+	@defer(on timer(700ms)) {
 		<router-outlet />
 	} @placeholder {
 		<camp-progress-spinner />
