@@ -24,6 +24,7 @@
 	flex-direction: column;
 	gap: var(--gap-extra-small);
 	padding-block: var(--gap-medium-small);
+	position: relative;
 }
 
 .form__group-label {
@@ -83,4 +84,12 @@
 .form__group-submit-button:disabled {
 	background-color: var(--background-color-primary-light);
 	cursor: not-allowed;
+}
+
+.sign-in-password-icon {
+	position: absolute;
+	right: var(--gap-small);
+	bottom: calc(var(--gap-extra-medium) - 2px);
+	filter: brightness(0.8);
+	cursor: pointer;
 }

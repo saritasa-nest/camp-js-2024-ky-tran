@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 /** Sign In component. */
 @Component({
@@ -7,19 +8,18 @@ import { RouterModule } from '@angular/router';
 	standalone: true,
 	templateUrl: './sign-in.component.html',
 	styleUrl: './sign-in.component.css',
-	imports: [RouterModule],
+	imports: [RouterModule, MatIconModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignInComponent {
-	// /** Hide signal. */
-	// protected readonly hide = signal(true);
+	/** Hide password signal. */
+	protected readonly hidePassword = signal(true);
 
-	// /**
-	//  * Handle hide password event.
-	//  * @param event Mouse event.
-	//  */
-	// protected onHidePassword(event: MouseEvent): void {
-	// 	this.hide.set(!this.hide());
-	// 	event.stopPropagation();
-	// }
+	/**
+	 * Toggle hide password event.
+	 * @param event Mouse event.
+	 */
+	protected onToggleHidePassword(): void {
+		this.hidePassword.set(!this.hidePassword());
+	}
 }

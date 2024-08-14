@@ -9,8 +9,17 @@
 
 	<div class="form__group">
 		<label for="sign-in-password" class="form__group-label">Password</label>
-		<input id="sign-in-password" class="form__group-input form__group-password" type="password" name="password">
+		<input
+			id="sign-in-password"
+			class="form__group-input form__group-password"
+			[type]="hidePassword() ? 'password' : 'text'"
+			name="password"
+		>
 		<!-- <p class="form__group-error-message">Something went wrong!</p> -->
+
+		<mat-icon class="sign-in-password-icon" (click)="onToggleHidePassword()">
+			{{hidePassword() ? 'visibility_off' : 'visibility'}}
+		</mat-icon>
 	</div>
 
 	<div class="form__group form__group-sign-up">
