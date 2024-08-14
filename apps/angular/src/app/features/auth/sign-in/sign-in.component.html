@@ -1,9 +1,16 @@
 <h2 class="header-title">Let's "sign in" Onii-chan :3</h2>
 
-<form class="form">
+<form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
 	<div class="form__group">
 		<label for="sign-in-email" class="form__group-label">Email</label>
-		<input id="sign-in-email" class="form__group-input form__group-email" type="email" name="email">
+		<input
+			id="sign-in-email"
+			class="form__group-input
+			form__group-email"
+			type="email"
+			name="email"
+			formControlName="email"
+		>
 		<!-- <p class="form__group-error-message">Something went wrong!</p> -->
 	</div>
 
@@ -14,6 +21,7 @@
 			class="form__group-input form__group-password"
 			[type]="hidePassword() ? 'password' : 'text'"
 			name="password"
+			formControlName="password"
 		>
 		<!-- <p class="form__group-error-message">Something went wrong!</p> -->
 
