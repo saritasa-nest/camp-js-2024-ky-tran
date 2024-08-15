@@ -10,8 +10,14 @@ export class UrlConfig {
 	/** Auth base url. */
 	public readonly authBaseUrl = `${environment.baseUrl}/auth`;
 
-	/** Sin in url. */
-	public readonly signInUrl = `${this.authBaseUrl}/login/`;
+	/** Auth sign in url. */
+	public readonly authSignInUrl = `${this.authBaseUrl}/login/`;
+
+	/** Users base url. */
+	public readonly usersBaseUrl = `${environment.baseUrl}/users`;
+
+	/** Users profile url. */
+	public readonly usersProfileUrl = `${this.usersBaseUrl}/profile/`;
 
 	/** Anime base url. */
 	public readonly animeBaseUrl = `${environment.baseUrl}/anime`;

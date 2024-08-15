@@ -20,7 +20,7 @@ export class AuthService {
 	 * @param signInData Sign in data.
 	 */
 	public signIn(signInData: SignIn): Observable<UserSecret> {
-		return this.httpClient.post<UserSecretDto>(this.urlConfig.signInUrl, SignInMapper.toDto(signInData))
+		return this.httpClient.post<UserSecretDto>(this.urlConfig.authSignInUrl, SignInMapper.toDto(signInData))
 			.pipe(first(), map(userSecretDto => UserSecretMapper.fromDto(userSecretDto)));
 	}
 }

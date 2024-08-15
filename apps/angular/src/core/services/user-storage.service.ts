@@ -9,7 +9,8 @@ import { USER_STORAGE_KEY } from '@js-camp/angular/shared/constants';
 export class UserStorageService {
 	private readonly localStorageService = inject(LocalStorageService);
 
-	private readonly storage$: Observable<UserSecret | null> = this.localStorageService.get(USER_STORAGE_KEY);
+	/** Get user secret from local storage. */
+	public readonly secret$: Observable<UserSecret | null> = this.localStorageService.get(USER_STORAGE_KEY);
 
 	/**
 	 * Save user secret to local storage.

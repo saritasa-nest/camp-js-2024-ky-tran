@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { WINDOW } from '@js-camp/angular/core/providers/window.provider';
-import { BehaviorSubject, defer, EMPTY, filter, fromEvent, map, merge, Observable, shareReplay, startWith } from 'rxjs';
+import { BehaviorSubject, defer, filter, fromEvent, map, merge, Observable, of, shareReplay, startWith } from 'rxjs';
 
 /** Local storage service. */
 @Injectable({ providedIn: 'root' })
@@ -21,7 +21,7 @@ export class LocalStorageService {
 			this.localStorage.setItem(key, JSON.stringify(data));
 			this.valueChange$.next(key);
 
-			return EMPTY;
+			return of(undefined);
 		});
 	}
 
@@ -34,7 +34,7 @@ export class LocalStorageService {
 			this.localStorage.removeItem(key);
 			this.valueChange$.next(key);
 
-			return EMPTY;
+			return of(undefined);
 		});
 	}
 
@@ -58,7 +58,7 @@ export class LocalStorageService {
 
 	private detectStorageChange(detectedKey: string): Observable<void> {
 		const otherPageChange$ = fromEvent(this.window, 'storage').pipe(
-			filter(event => event instanceof StorageEvent),
+			filter((event): event is StorageEvent => event instanceof StorageEvent),
 			map(event => event.key),
 		);
 
