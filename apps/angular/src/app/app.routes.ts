@@ -3,20 +3,28 @@ import { HomeComponent } from '@js-camp/angular/app/features/home/home.component
 import { AuthComponent } from '@js-camp/angular/app/features/auth/auth.component';
 import { NotFoundComponent } from '@js-camp/angular/app/features/not-found/not-found.component';
 import { SignInComponent } from '@js-camp/angular/app/features/auth/sign-in/sign-in.component';
-
-import { authGuard } from '../core/guards/auth-guard';
+import { authGuard } from '@js-camp/angular/core/guards/auth-guard';
+import { UserComponent } from '@js-camp/angular/app/features/user/user.component';
+import { UserProfileComponent } from '@js-camp/angular/app/features/auth/user-profile/user-profile.component';
 
 /** Routes object. */
 export const appRoutes: Routes = [
-	{ path: '', redirectTo: '/home', pathMatch: 'full' },
+	{ path: '', redirectTo: 'home', pathMatch: 'full' },
 	{ path: 'home', component: HomeComponent },
+	{
+		path: 'user',
+		component: UserComponent,
+		children: [
+			{ path: '', redirectTo: 'user', pathMatch: 'full' },
+			{ path: 'profile', component: UserProfileComponent, canMatch: [authGuard({ isAuthorized: true })] },
+		],
+	},
 	{
 		path: 'auth',
 		component: AuthComponent,
 		children: [
 			{ path: '', redirectTo: 'signin', pathMatch: 'full' },
-			{ path: 'signin', component: SignInComponent },
-			{ path: 'user', component: NotFoundComponent, canMatch: [authGuard({ isAuthorized: true })] },
+			{ path: 'signin', component: SignInComponent, canMatch: [authGuard({ isAuthorized: false })] },
 		],
 	},
 	{ path: '**', component: NotFoundComponent },

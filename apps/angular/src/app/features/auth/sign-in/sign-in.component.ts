@@ -10,6 +10,7 @@ import { SignInForm } from '@js-camp/angular/shared/types/auth-form';
 import { SignIn } from '@js-camp/core/models/sign-in';
 import { AppConfig } from '@js-camp/angular/config/app.config';
 import { UserService } from '@js-camp/angular/core/services/user.service';
+import { PATHS } from '@js-camp/core/utils/paths';
 
 /** Sign in component. */
 @Component({
@@ -139,7 +140,7 @@ export class SignInComponent implements OnInit {
 			.pipe(
 				first(),
 				tap({
-					next: () => console.log('Sign in successfully!'),
+					next: () => this.router.navigate([PATHS.home]),
 					error: (error: unknown) => console.log(error),
 					finalize: () => this.finishLoadingSideEffect(),
 				}),

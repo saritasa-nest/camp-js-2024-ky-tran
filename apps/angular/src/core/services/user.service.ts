@@ -50,4 +50,9 @@ export class UserService {
 			map(() => undefined),
 		);
 	}
+
+	/** Sign out. */
+	public signout(): Observable<void> {
+		return this.userStorageService.removeSecret();
+	}
 }

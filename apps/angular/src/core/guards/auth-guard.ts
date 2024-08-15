@@ -1,7 +1,8 @@
 import { inject } from '@angular/core';
-import { CanMatchFn, Router } from '@angular/router';
+import { CanMatchFn, RedirectCommand, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { UserService } from '@js-camp/angular/core/services/user.service';
+import { PATHS } from '@js-camp/core/utils/paths';
 
 type AuthGuardParams = {
 
@@ -27,10 +28,10 @@ export function authGuard({ isAuthorized }: AuthGuardParams): CanMatchFn {
 		return userService.isAuthorized$.pipe(
 			map(isUserAuthorized => {
 				if (isAuthorized) {
-					return isUserAuthorized ? true : router.parseUrl('/auth/signin');
+					return isUserAuthorized ? true : new RedirectCommand(router.parseUrl(PATHS.signIn));
 				}
 
-				return isUserAuthorized ? router.parseUrl('/') : true;
+				return isUserAuthorized ? new RedirectCommand(router.parseUrl(PATHS.userProfile)) : true;
 			}),
 		);
 	};
