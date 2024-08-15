@@ -8,8 +8,8 @@ import { PASSWORD_MIN_LENGTH, SIGN_IN_EMAIL_DEV, SIGN_IN_PASSWORD_DEV } from '@j
 import { SignInFormErrorService } from '@js-camp/angular/core/services/sign-in-form-error.service';
 import { SignInForm } from '@js-camp/angular/shared/types/auth-form';
 import { SignIn } from '@js-camp/core/models/sign-in';
-import { AuthService } from '@js-camp/angular/core/services/auth.service';
 import { AppConfig } from '@js-camp/angular/config/app.config';
+import { UserService } from '@js-camp/angular/core/services/user.service';
 
 /** Sign in component. */
 @Component({
@@ -29,7 +29,7 @@ export class SignInComponent implements OnInit {
 
 	private readonly appConfig = inject(AppConfig);
 
-	private readonly authService = inject(AuthService);
+	private readonly userService = inject(UserService);
 
 	/** Form error service. */
 	protected readonly formErrorService = inject(SignInFormErrorService);
@@ -135,11 +135,11 @@ export class SignInComponent implements OnInit {
 		this.startLoadingSideEffect();
 
 		// TODO (Ky Tran): handle sign in error.
-		this.authService.signIn(signInData)
+		this.userService.signIn(signInData)
 			.pipe(
 				first(),
 				tap({
-					next: userSecret => console.log(userSecret),
+					next: () => console.log('Sign in successfully!'),
 					error: (error: unknown) => console.log(error),
 					finalize: () => this.finishLoadingSideEffect(),
 				}),
