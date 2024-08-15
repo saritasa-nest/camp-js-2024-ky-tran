@@ -144,6 +144,7 @@ export class SignInComponent implements OnInit {
 					error: (error: unknown) => console.log(error),
 					finalize: () => this.loadingSideEffect('end'),
 				}),
+				ignoreElements(),
 			)
 			.subscribe();
 	}
