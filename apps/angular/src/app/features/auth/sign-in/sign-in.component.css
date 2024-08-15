@@ -39,12 +39,10 @@
 	width: 100%;
 	background-color: var(--background-color-primary-extra-bright);
 	color: inherit;
-	caret-color: var(--text-color-main);
-	-webkit-text-fill-color: var(--text-color-main) !important;
-	background-clip: text !important;
 	font-family: inherit;
 	padding: var(--gap-medium-small) var(--gap-small);
 	border: 1px solid var(--background-color-primary-light);
+	caret-color: var(--text-color-main);
 }
 
 .form__group-input:focus {
@@ -53,6 +51,20 @@
 
 .form__group-input:disabled {
 	background-color: var(--background-color-primary-light);
+}
+
+/*
+	Style input autocomplete background color
+	https://stackoverflow.com/questions/2781549/removing-input-background-colour-for-chrome-autocomplete
+*/
+.form__group-input:-webkit-autofill,
+.form__group-input:-webkit-autofill:hover,
+.form__group-input:-webkit-autofill:focus,
+.form__group-input:-webkit-autofill:active {
+	background-clip: text;
+	-webkit-text-fill-color: var(--text-color-main);
+	transition: background-color 5000s ease-in-out 0s;
+	box-shadow: inset 0 0 var(--gap-medium) var(--gap-medium) var(--background-color-primary-extra-bright);
 }
 
 .form__group-input-icon {

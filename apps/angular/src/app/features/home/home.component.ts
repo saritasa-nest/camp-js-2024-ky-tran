@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { 	BehaviorSubject, Observable, shareReplay, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Observable, shareReplay, switchMap, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FILTER_PARAMS_PROVIDER, FILTER_PARAMS_TOKEN } from '@js-camp/angular/core/providers/filter-params.provider';
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';

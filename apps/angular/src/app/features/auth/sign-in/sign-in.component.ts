@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
-import { ignoreElements, merge, Observable, tap } from 'rxjs';
+import { first, ignoreElements, merge, Observable, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PASSWORD_MIN_LENGTH, SIGN_IN_EMAIL_DEV, SIGN_IN_PASSWORD_DEV } from '@js-camp/angular/shared/constants';
 import { SignInFormErrorService } from '@js-camp/angular/core/services/sign-in-form-error.service';
@@ -21,6 +21,8 @@ import { AppConfig } from '@js-camp/angular/config/app.config';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignInComponent implements OnInit {
+	private readonly router = inject(Router);
+
 	private readonly formBuilder = inject(NonNullableFormBuilder);
 
 	private readonly destroyRef = inject(DestroyRef);
@@ -55,6 +57,9 @@ export class SignInComponent implements OnInit {
 
 	/** Password error signal. */
 	protected readonly passwordErrorSignal = this.formErrorService.getPasswordErrorSignal();
+
+	/** Loading status signal. */
+	protected readonly isLoadingSignal = signal(false);
 
 	/** @inheritdoc */
 	public ngOnInit(): void {
@@ -104,6 +109,19 @@ export class SignInComponent implements OnInit {
 		this.hidePasswordSignal.set(!this.hidePasswordSignal());
 	}
 
+	private loadingSideEffect(state: 'start' | 'end'): void {
+		if (state === 'start') {
+			this.isLoadingSignal.set(true);
+			this.form.controls.email.disable();
+			this.form.controls.password.disable();
+		}
+		if (state === 'end') {
+			this.isLoadingSignal.set(false);
+			this.form.controls.email.enable();
+			this.form.controls.password.enable();
+		}
+	}
+
 	/** On submit. */
 	protected onSubmit(): void {
 		if (!this.form.valid) {
@@ -115,11 +133,16 @@ export class SignInComponent implements OnInit {
 		const data = this.form.getRawValue();
 		const signInData: SignIn = { email: data.email, password: data.password };
 
+		this.loadingSideEffect('start');
+
+		// TODO (Ky Tran): handle sign in
 		this.authService.signIn(signInData)
 			.pipe(
+				first(),
 				tap({
-					next: userSecret => console.log(userSecret),
+					next: () => this.router.navigate(['/']),
 					error: (error: unknown) => console.log(error),
+					finalize: () => this.loadingSideEffect('end'),
 				}),
 			)
 			.subscribe();

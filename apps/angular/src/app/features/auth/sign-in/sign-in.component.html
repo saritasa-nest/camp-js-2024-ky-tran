@@ -48,6 +48,6 @@
 	</div>
 
 	<div class="form__group">
-		<button class="form__group-submit-button" type="submit">Sign in</button>
+		<button class="form__group-submit-button" type="submit" [disabled]="isLoadingSignal()">Sign in</button>
 	</div>
 </form>
