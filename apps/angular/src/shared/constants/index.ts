@@ -24,3 +24,6 @@ export const SIGN_IN_EMAIL_DEV = 'test@gmail.com';
 
 /** Sign in password for development. */
 export const SIGN_IN_PASSWORD_DEV = 'asdzxc123$';
+
+/** User storage key. */
+export const USER_STORAGE_KEY = 'user';
