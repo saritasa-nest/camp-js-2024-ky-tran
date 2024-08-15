@@ -22,20 +22,20 @@
 	<div class="form__group">
 		<label for="sign-in-password" class="form__group-label">Password</label>
 
-		<input
-			id="sign-in-password"
-			class="form__group-input form__group-password"
-			[type]="hidePasswordSignal() ? 'password' : 'text'"
-			name="password"
-			formControlName="password"
-			(blur)="formErrorService.handlePasswordError(form)"
-		>
+		<div class="form__group-input-wrapper">
+			<input
+				id="sign-in-password"
+				class="form__group-input form__group-password"
+				[type]="hidePasswordSignal() ? 'password' : 'text'"
+				name="password"
+				formControlName="password"
+				(blur)="formErrorService.handlePasswordError(form)"
+			>
 
-		@if (showToggleHidePasswordIconSignal()) {
-			<mat-icon class="sign-in-password-icon" (click)="onToggleHidePassword()">
+			<mat-icon class="form__group-input-icon" [class.show]="showToggleHidePasswordIconSignal()" (click)="onToggleHidePassword()">
 				{{hidePasswordSignal() ? 'visibility_off' : 'visibility'}}
 			</mat-icon>
-		}
+		</div>
 
 		@if (passwordErrorSignal()) {
 			<p class="form__group-error-message">{{ passwordErrorSignal() }}</p>

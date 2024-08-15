@@ -1,21 +1,12 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { AbstractControl, FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
-import { ignoreElements, tap } from 'rxjs';
+import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { ignoreElements, merge, Observable, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PASSWORD_MIN_LENGTH } from '@js-camp/angular/shared/constants';
 import { SignInFormErrorService } from '@js-camp/angular/core/services/sign-in-form-error.service';
-
-/** Sign in form. */
-export type SignInForm = FormGroup<Readonly<{
-
-	/** Email. */
-	email: FormControl<string>;
-
-	/** Password. */
-	password: FormControl<string>;
-}>>;
+import { SignInForm } from '@js-camp/angular/shared/types/auth-form';
 
 /** Sign In component. */
 @Component({
@@ -54,24 +45,25 @@ export class SignInComponent implements OnInit {
 
 	/** @inheritdoc */
 	public ngOnInit(): void {
-		this.form.controls.email.valueChanges
-			.pipe(
-				tap(() => this.formErrorService.clearEmailError()),
-				takeUntilDestroyed(this.destroyRef),
-				ignoreElements(),
-			)
+		merge(this.emailChangesSideEffect(), this.passwordChangesSideEffect())
+			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe();
+	}
 
-		this.form.controls.password.valueChanges
+	private emailChangesSideEffect(): Observable<void> {
+		return this.form.controls.email.valueChanges
+			.pipe(tap(() => this.formErrorService.clearEmailError()), ignoreElements());
+	}
+
+	private passwordChangesSideEffect(): Observable<void> {
+		return this.form.controls.password.valueChanges
 			.pipe(
 				tap(password => {
 					this.toggleHidePasswordSideEffect(Boolean(password));
 					this.formErrorService.clearPasswordError();
 				}),
-				takeUntilDestroyed(this.destroyRef),
 				ignoreElements(),
-			)
-			.subscribe();
+			);
 	}
 
 	private toggleHidePasswordSideEffect(hasPassword: boolean): void {

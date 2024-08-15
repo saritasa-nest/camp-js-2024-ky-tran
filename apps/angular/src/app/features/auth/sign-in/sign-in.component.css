@@ -24,7 +24,6 @@
 	flex-direction: column;
 	gap: var(--gap-extra-small);
 	padding-block: var(--gap-medium-small);
-	position: relative;
 }
 
 .form__group-label {
@@ -32,7 +31,12 @@
 	font-weight: 500;
 }
 
+.form__group-input-wrapper {
+	position: relative;
+}
+
 .form__group-input {
+	width: 100%;
 	background-color: var(--background-color-primary-extra-bright);
 	color: inherit;
 	caret-color: var(--text-color-main);
@@ -49,6 +53,20 @@
 
 .form__group-input:disabled {
 	background-color: var(--background-color-primary-light);
+}
+
+.form__group-input-icon {
+	position: absolute;
+	top: 50%;
+	right: var(--gap-small);
+	transform: translateY(-50%);
+	filter: brightness(0.8);
+	visibility: hidden;
+	cursor: pointer;
+}
+
+.form__group-input-icon.show {
+	visibility: visible;
 }
 
 .form__group-error-message {
@@ -84,12 +102,4 @@
 .form__group-submit-button:disabled {
 	background-color: var(--background-color-primary-light);
 	cursor: not-allowed;
-}
-
-.sign-in-password-icon {
-	position: absolute;
-	right: var(--gap-small);
-	bottom: calc(var(--gap-extra-medium) - 2px);
-	filter: brightness(0.8);
-	cursor: pointer;
 }

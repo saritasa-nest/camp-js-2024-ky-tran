@@ -1,9 +1,7 @@
 import { Injectable, signal, WritableSignal } from '@angular/core';
+import { ValidationErrors } from '@angular/forms';
 import { PASSWORD_MIN_LENGTH } from '@js-camp/angular/shared/constants';
-import { SignInForm } from '@js-camp/angular/app/features/auth/sign-in/sign-in.component';
-
-type AllErrorString = Readonly<Record<string, string>>;
-type AllError = Readonly<Record<string, AllErrorString>>;
+import { AllError, AllErrorString, SignInForm } from '@js-camp/angular/shared/types/auth-form';
 
 /** Sign In Form Error service. */
 @Injectable({ providedIn: 'root' })
@@ -13,15 +11,6 @@ export class SignInFormErrorService {
 
 	/** Password error signal. */
 	protected readonly passwordErrorSignal = signal('');
-
-	/**
-	 * Get error.
-	 * @param controlField Control field.
-	 * @param errorField Error filed.
-	 */
-	public getError(controlField: string, errorField: string): string {
-		return this.getAllErrors()[controlField][errorField];
-	}
 
 	private createRequiredError(field: string): AllErrorString {
 		return { required: `${field} is required.` };
@@ -41,6 +30,14 @@ export class SignInFormErrorService {
 		};
 	}
 
+	private getError(controlField: string, errorField: string): string {
+		return this.getAllErrors()[controlField][errorField];
+	}
+
+	private handleErrorMessage(field: string, errors: ValidationErrors | null): string {
+		return errors ? this.getError(field, Object.keys(errors)[0]) : '';
+	}
+
 	/** Get email error signal. */
 	public getEmailErrorSignal(): WritableSignal<string> {
 		return this.emailErrorSignal;
@@ -51,10 +48,7 @@ export class SignInFormErrorService {
 	 * @param form Form group.
 	 */
 	public handleEmailError(form: SignInForm): void {
-		const { errors } = form.controls.email;
-		const errorMessage = errors ? this.getError('email', Object.keys(errors)[0]) : '';
-
-		this.emailErrorSignal.set(errorMessage);
+		this.emailErrorSignal.set(this.handleErrorMessage('email', form.controls.email.errors));
 	}
 
 	/** Clear email error. */
@@ -72,10 +66,7 @@ export class SignInFormErrorService {
 	 * @param form Form group.
 	 */
 	public handlePasswordError(form: SignInForm): void {
-		const { errors } = form.controls.password;
-		const errorMessage = errors ? this.getError('password', Object.keys(errors)[0]) : '';
-
-		this.passwordErrorSignal.set(errorMessage);
+		this.passwordErrorSignal.set(this.handleErrorMessage('password', form.controls.password.errors));
 	}
 
 	/** Clear password error. */
