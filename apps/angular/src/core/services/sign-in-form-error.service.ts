@@ -3,7 +3,7 @@ import { ValidationErrors } from '@angular/forms';
 import { PASSWORD_MIN_LENGTH } from '@js-camp/angular/shared/constants';
 import { AllError, AllErrorString, SignInForm } from '@js-camp/angular/shared/types/auth-form';
 
-/** Sign In Form Error service. */
+/** Sign in form error service. */
 @Injectable({ providedIn: 'root' })
 export class SignInFormErrorService {
 	/** Email error signal. */
