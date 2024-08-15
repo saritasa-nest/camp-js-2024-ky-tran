@@ -134,7 +134,7 @@ export class SignInComponent implements OnInit {
 
 		this.startLoadingSideEffect();
 
-		// TODO (Ky Tran): handle sign in
+		// TODO (Ky Tran): handle sign in error.
 		this.authService.signIn(signInData)
 			.pipe(
 				first(),
