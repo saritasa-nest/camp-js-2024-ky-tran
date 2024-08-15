@@ -109,17 +109,16 @@ export class SignInComponent implements OnInit {
 		this.hidePasswordSignal.set(!this.hidePasswordSignal());
 	}
 
-	private loadingSideEffect(state: 'start' | 'end'): void {
-		if (state === 'start') {
-			this.isLoadingSignal.set(true);
-			this.form.controls.email.disable();
-			this.form.controls.password.disable();
-		}
-		if (state === 'end') {
-			this.isLoadingSignal.set(false);
-			this.form.controls.email.enable();
-			this.form.controls.password.enable();
-		}
+	private startLoadingSideEffect(): void {
+		this.isLoadingSignal.set(true);
+		this.form.controls.email.disable();
+		this.form.controls.password.disable();
+	}
+
+	private finishLoadingSideEffect(): void {
+		this.isLoadingSignal.set(false);
+		this.form.controls.email.enable();
+		this.form.controls.password.enable();
 	}
 
 	/** On submit. */
@@ -133,16 +132,16 @@ export class SignInComponent implements OnInit {
 		const data = this.form.getRawValue();
 		const signInData: SignIn = { email: data.email, password: data.password };
 
-		this.loadingSideEffect('start');
+		this.startLoadingSideEffect();
 
 		// TODO (Ky Tran): handle sign in
 		this.authService.signIn(signInData)
 			.pipe(
 				first(),
 				tap({
-					next: () => this.router.navigate(['/']),
+					next: userSecret => console.log(userSecret),
 					error: (error: unknown) => console.log(error),
-					finalize: () => this.loadingSideEffect('end'),
+					finalize: () => this.finishLoadingSideEffect(),
 				}),
 				ignoreElements(),
 			)
