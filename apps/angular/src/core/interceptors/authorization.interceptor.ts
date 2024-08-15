@@ -2,6 +2,7 @@ import { HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { first, map, Observable, switchMap } from 'rxjs';
 import { UserStorageService } from '@js-camp/angular/core/services/user-storage.service';
+import { UrlConfig } from '@js-camp/angular/config/url.config';
 
 /**
  * Authorization key interceptor.
@@ -11,9 +12,15 @@ import { UserStorageService } from '@js-camp/angular/core/services/user-storage.
 export function authorizationInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
 	const AUTH_KEY_HEADER = 'Authorization';
 
+	const urlConfig = inject(UrlConfig);
+
 	const userStorageService = inject(UserStorageService);
 
-	// TODO (Ky Tran): By pass urls don't use token to avoid error
+	const bypassUrls = [urlConfig.animeUrl];
+
+	if (bypassUrls.includes(req.url)) {
+		return next(req);
+	}
 
 	return userStorageService.secret$.pipe(
 		first(),
