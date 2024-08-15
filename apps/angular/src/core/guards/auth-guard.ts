@@ -1,14 +1,37 @@
-import { CanMatchFn } from '@angular/router';
-import { map, of, tap } from 'rxjs';
+import { inject } from '@angular/core';
+import { CanMatchFn, Router } from '@angular/router';
+import { map } from 'rxjs';
+import { UserService } from '@js-camp/angular/core/services/user.service';
 
-/** Auth guard. */
-export function authGuard(): CanMatchFn {
+type AuthGuardParams = {
+
+	/**
+	 * Whether guard is configured for currently authorized user or not.
+	 * If 'true', guard will prevent a current user from accessing a route if he is not authorized.
+	 * If 'false', guard will prevent a current user from accessing a route if he is authorized.
+	 */
+	readonly isAuthorized: boolean;
+};
+
+/**
+ * Auth guard.
+ * @param isAuthorized The route required authorization or not.
+ * @returns CanMatchFn.
+ */
+export function authGuard({ isAuthorized }: AuthGuardParams): CanMatchFn {
 	return () => {
-		console.log(123);
+		const userService = inject(UserService);
 
-		return of(true).pipe(
-			tap(() => console.log('Hi, I am auth guard!')),
-			map(() => true),
+		const router = inject(Router);
+
+		return userService.isAuthorized$.pipe(
+			map(isUserAuthorized => {
+				if (isAuthorized) {
+					return isUserAuthorized ? true : router.parseUrl('/auth/signin');
+				}
+
+				return isUserAuthorized ? router.parseUrl('/') : true;
+			}),
 		);
 	};
 }

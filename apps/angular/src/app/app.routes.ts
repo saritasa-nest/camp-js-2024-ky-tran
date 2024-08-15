@@ -9,13 +9,14 @@ import { authGuard } from '../core/guards/auth-guard';
 /** Routes object. */
 export const appRoutes: Routes = [
 	{ path: '', redirectTo: '/home', pathMatch: 'full' },
-	{ path: 'home', component: HomeComponent, canMatch: [authGuard()] },
+	{ path: 'home', component: HomeComponent },
 	{
 		path: 'auth',
 		component: AuthComponent,
 		children: [
 			{ path: '', redirectTo: 'signin', pathMatch: 'full' },
 			{ path: 'signin', component: SignInComponent },
+			{ path: 'user', component: NotFoundComponent, canMatch: [authGuard({ isAuthorized: true })] },
 		],
 	},
 	{ path: '**', component: NotFoundComponent },
