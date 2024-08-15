@@ -19,7 +19,7 @@ export class UserProfileComponent {
 
 	/** On sign out. */
 	protected onSignOut(): void {
-		this.userService.signout()
+		this.userService.signOut()
 			.pipe(first(), ignoreElements())
 			.subscribe(() => this.router.navigate([PATHS.signIn]));
 	}

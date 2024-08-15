@@ -52,7 +52,7 @@ export class UserService {
 	}
 
 	/** Sign out. */
-	public signout(): Observable<void> {
+	public signOut(): Observable<void> {
 		return this.userStorageService.removeSecret();
 	}
 }
