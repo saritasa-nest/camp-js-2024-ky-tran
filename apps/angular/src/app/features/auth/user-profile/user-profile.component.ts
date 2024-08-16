@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { first, ignoreElements } from 'rxjs';
+import { first } from 'rxjs';
 import { UserService } from '@js-camp/angular/core/services/user.service';
 import { PATHS } from '@js-camp/core/utils/paths';
 
@@ -20,7 +20,7 @@ export class UserProfileComponent {
 	/** On sign out. */
 	protected onSignOut(): void {
 		this.userService.signOut()
-			.pipe(first(), ignoreElements())
+			.pipe(first())
 			.subscribe(() => this.router.navigate([PATHS.signIn]));
 	}
 }

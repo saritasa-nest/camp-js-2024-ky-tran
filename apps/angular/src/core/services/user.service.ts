@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { first, map, Observable, of, shareReplay, switchMap, tap } from 'rxjs';
+import { catchError, first, map, Observable, of, shareReplay, switchMap, tap, throwError } from 'rxjs';
 import { AuthService } from '@js-camp/angular/core/services/auth.service';
 import { UserStorageService } from '@js-camp/angular/core/services/user-storage.service';
 import { SignIn } from '@js-camp/core/models/sign-in';
@@ -62,6 +62,11 @@ export class UserService {
 		return this.userStorageService.secret$.pipe(
 			first(),
 			switchMap(userSecret => userSecret ? this.authService.signInRefresh(userSecret) : of(null)),
+			tap(() => console.log('=========== I am called here man.')),
+			catchError((error) => {
+				console.log('Should I go log out?');
+				return throwError(() => error);
+			}),
 			switchMap(newUserSecret => this.userStorageService.saveSecret(newUserSecret ?? { accessToken: '', refreshToken: '' })),
 		);
 	}

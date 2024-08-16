@@ -15,7 +15,7 @@ export const appRoutes: Routes = [
 		path: 'user',
 		component: UserComponent,
 		children: [
-			{ path: '', redirectTo: 'user', pathMatch: 'full' },
+			{ path: '', redirectTo: 'profile', pathMatch: 'full' },
 			{ path: 'profile', component: UserProfileComponent, canMatch: [authGuard({ isAuthorized: true })] },
 		],
 	},
