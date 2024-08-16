@@ -30,7 +30,13 @@ export function authorizationRefreshInterceptor(req: HttpRequest<unknown>, next:
 
 		return userService.signInRefresh().pipe(
 			first(),
-			switchMap(newUserSecret => next(req.clone(createBearerTokenOption(newUserSecret.accessToken)))),
+			switchMap(newUserSecret => {
+				if (newUserSecret) {
+					return next(req.clone(createBearerTokenOption(newUserSecret.accessToken)));
+				}
+
+				return next(req);
+			}),
 		);
 	}));
 }

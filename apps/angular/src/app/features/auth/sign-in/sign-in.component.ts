@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, NonNullableFormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { first, ignoreElements, merge, Observable, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PASSWORD_MIN_LENGTH, SIGN_IN_EMAIL_DEV, SIGN_IN_PASSWORD_DEV } from '@js-camp/angular/shared/constants';
@@ -110,33 +110,31 @@ export class SignInComponent implements OnInit {
 		this.hidePasswordSignal.set(!this.hidePasswordSignal());
 	}
 
+	private getAllFormControls(): FormControl<string>[] {
+		return Object.entries(this.form.controls).map(([_, formControlValue]) => formControlValue);
+	}
+
 	private startLoadingSideEffect(): void {
 		this.isLoadingSignal.set(true);
-		this.form.controls.email.disable();
-		this.form.controls.password.disable();
+		this.getAllFormControls().forEach(formControl => formControl.disable());
 	}
 
 	private finishLoadingSideEffect(): void {
 		this.isLoadingSignal.set(false);
-		this.form.controls.email.enable();
-		this.form.controls.password.enable();
+		this.getAllFormControls().forEach(formControl => formControl.enable());
 	}
 
 	/** On submit. */
 	protected onSubmit(): void {
 		if (!this.form.valid) {
-			this.formErrorService.handleEmailError(this.form);
-			this.formErrorService.handlePasswordError(this.form);
+			this.formErrorService.handleAllErrorInputsAtOnce(this.form);
 			return;
 		}
 
-		const data = this.form.getRawValue();
-		const signInData: SignIn = { email: data.email, password: data.password };
-
 		this.startLoadingSideEffect();
+		const { email, password } = this.form.getRawValue();
 
-		// TODO (Ky Tran): handle sign in error.
-		this.userService.signIn(signInData)
+		this.userService.signIn({ email, password })
 			.pipe(
 				first(),
 				tap({

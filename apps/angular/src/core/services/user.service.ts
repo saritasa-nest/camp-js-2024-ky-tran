@@ -58,11 +58,11 @@ export class UserService {
 	}
 
 	/** Sign in refresh. */
-	public signInRefresh(): Observable<UserSecret> {
+	public signInRefresh(): Observable<UserSecret | null> {
 		return this.userStorageService.secret$.pipe(
 			first(),
 			switchMap(userSecret => userSecret ? this.authService.signInRefresh(userSecret) : of(null)),
-			switchMap(newUserSecret => this.userStorageService.saveSecret(newUserSecret ?? { accessToken: '', refreshToken: '' })),
+			switchMap(newUserSecret => newUserSecret ? this.userStorageService.saveSecret(newUserSecret) : of(null)),
 		);
 	}
 }

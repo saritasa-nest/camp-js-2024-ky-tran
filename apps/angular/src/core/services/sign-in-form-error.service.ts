@@ -38,6 +38,15 @@ export class SignInFormErrorService {
 		return errors ? this.getError(field, Object.keys(errors)[0]) : '';
 	}
 
+	/**
+	 * Handle all error inputs at once.
+	 * @param form Sign in form.
+	 */
+	public handleAllErrorInputsAtOnce(form: SignInForm): void {
+		this.handleEmailError(form);
+		this.handlePasswordError(form);
+	}
+
 	/** Get email error signal. */
 	public getEmailErrorSignal(): WritableSignal<string> {
 		return this.emailErrorSignal;
@@ -45,7 +54,7 @@ export class SignInFormErrorService {
 
 	/**
 	 * Handle email error.
-	 * @param form Form group.
+	 * @param form Sign in form.
 	 */
 	public handleEmailError(form: SignInForm): void {
 		this.emailErrorSignal.set(this.handleErrorMessage('email', form.controls.email.errors));
@@ -63,7 +72,7 @@ export class SignInFormErrorService {
 
 	/**
 	 * Handle password error.
-	 * @param form Form group.
+	 * @param form Sign in form.
 	 */
 	public handlePasswordError(form: SignInForm): void {
 		this.passwordErrorSignal.set(this.handleErrorMessage('password', form.controls.password.errors));
