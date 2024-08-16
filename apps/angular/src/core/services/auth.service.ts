@@ -25,10 +25,10 @@ export class AuthService {
 	}
 
 	/**
-	 * Refresh sign in.
+	 * Sign in refresh.
 	 * @param userSecret User secret tokens.
 	 */
-	public refreshSecret(userSecret: UserSecret): Observable<UserSecret> {
+	public signInRefresh(userSecret: UserSecret): Observable<UserSecret> {
 		return this.httpClient
 			.post<UserSecretDto>(this.urlConfig.authSignInRefreshUrl, UserSecretMapper.toDto(userSecret))
 			.pipe(

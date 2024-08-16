@@ -1,7 +1,8 @@
-import { HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpRequest, HttpStatusCode } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { first, map, Observable, switchMap } from 'rxjs';
+import { catchError, first, map, Observable, switchMap, tap, throwError } from 'rxjs';
 import { UserStorageService } from '@js-camp/angular/core/services/user-storage.service';
+import { UserService } from '@js-camp/angular/core/services/user.service';
 import { UrlConfig } from '@js-camp/angular/config/url.config';
 
 /**
@@ -16,15 +17,35 @@ export function authorizationInterceptor(req: HttpRequest<unknown>, next: HttpHa
 
 	const userStorageService = inject(UserStorageService);
 
+	const userService = inject(UserService);
+
 	const bypassUrls = [urlConfig.animeUrl];
 
 	if (bypassUrls.includes(req.url)) {
 		return next(req);
 	}
 
+	function createBearerTokenOption(token: string) {
+		return { setHeaders: { [AUTH_KEY_HEADER]: `Bearer ${token}` } }
+	}
+
 	return userStorageService.secret$.pipe(
 		first(),
-		map(userSecret => userSecret ? req.clone({ setHeaders: { [AUTH_KEY_HEADER]: `Bearer ${userSecret.accessToken}` } }) : req),
-		switchMap(reqClone => next(reqClone)),
+		map(userSecret => userSecret ? req.clone(createBearerTokenOption(userSecret.accessToken)) : req),
+		switchMap(reqClone => next(reqClone).pipe(
+			catchError(error => {
+				if (error instanceof HttpErrorResponse && error.status !== HttpStatusCode.Unauthorized) {
+					return throwError(() => error);
+				}
+
+				// Send refresh token
+				console.log('Need refresh');
+
+				return userService.signInRefresh().pipe(
+					first(),
+					switchMap(newUserSecret => next(req.clone(createBearerTokenOption(newUserSecret.accessToken)))),
+				);
+			}),
+		)),
 	);
 }

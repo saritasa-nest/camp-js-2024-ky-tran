@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { first, map, Observable, of, shareReplay, switchMap } from 'rxjs';
+import { first, map, Observable, of, shareReplay, switchMap, tap } from 'rxjs';
 import { AuthService } from '@js-camp/angular/core/services/auth.service';
 import { UserStorageService } from '@js-camp/angular/core/services/user-storage.service';
 import { SignIn } from '@js-camp/core/models/sign-in';
@@ -8,6 +8,7 @@ import { UrlConfig } from '@js-camp/angular/config/url.config';
 import { User } from '@js-camp/core/models/user';
 import { UserDto } from '@js-camp/core/dtos/user.dto';
 import { UserMapper } from '@js-camp/core/mappers/user.mapper';
+import { UserSecret } from '@js-camp/core/models/user-secret';
 
 /** User serivce. */
 @Injectable({ providedIn: 'root' })
@@ -54,5 +55,14 @@ export class UserService {
 	/** Sign out. */
 	public signOut(): Observable<void> {
 		return this.userStorageService.removeSecret();
+	}
+
+	/** Sign in refresh. */
+	public signInRefresh(): Observable<UserSecret> {
+		return this.userStorageService.secret$.pipe(
+			first(),
+			switchMap(userSecret => userSecret ? this.authService.signInRefresh(userSecret) : of(null)),
+			switchMap(newUserSecret => this.userStorageService.saveSecret(newUserSecret ?? { accessToken: '', refreshToken: '' })),
+		);
 	}
 }
