@@ -60,7 +60,7 @@ export class HomeComponent {
 				switchMap(filterParams => this.animeService.getList(filterParams)
 					.pipe(
 						toggleExecutionState(this.isLoading$),
-						this.notificationService.notifyAppError(),
+						this.notificationService.notifyAppErrorPipe(),
 					)),
 				shareReplay({ refCount: true, bufferSize: 1 }),
 				takeUntilDestroyed(this.destroyRef),

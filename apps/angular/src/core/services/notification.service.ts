@@ -2,26 +2,34 @@ import { inject, Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, ignoreElements, merge, MonoTypeOperatorFunction, shareReplay, throwError } from 'rxjs';
 import { SnackbarComponent } from '@js-camp/angular/shared/components/error-snack-bar/error-snack-bar.component';
+import { DEFAULT_ERROR_MESSAGE } from '@js-camp/angular/shared/constants';
 
 /** Notification service. */
 @Injectable({ providedIn: 'root' })
 export class NotificationService {
 	private readonly snackBar = inject(MatSnackBar);
 
-	/** Notify app error. */
-	public notifyAppError<T>(): MonoTypeOperatorFunction<T> {
+	/**
+	 * Notify app error.
+	 * @param errorMessage Error message.
+	 */
+	public notifyAppError(errorMessage: string | null): void {
+		this.snackBar.openFromComponent(SnackbarComponent, {
+			verticalPosition: 'top',
+			horizontalPosition: 'right',
+			data: { errorMessage: errorMessage ?? DEFAULT_ERROR_MESSAGE },
+		});
+	}
+
+	/** Notify app error pipe. */
+	public notifyAppErrorPipe<T>(): MonoTypeOperatorFunction<T> {
 		return source$ => {
 			const sharedSource$ = source$.pipe(shareReplay({ refCount: true, bufferSize: 1 }));
 
 			const catchError$ = sharedSource$.pipe(
 				ignoreElements(),
 				catchError((error: unknown) => throwError(() => {
-					this.snackBar.openFromComponent(SnackbarComponent, {
-						verticalPosition: 'top',
-						horizontalPosition: 'right',
-						data: { errorMessage: error instanceof Error ? error.message : 'Something went wrong!. Please try again.' },
-					});
-
+					this.notifyAppError(error instanceof Error ? error.message : null);
 					return error;
 				})),
 			);

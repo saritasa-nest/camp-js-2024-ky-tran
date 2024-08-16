@@ -1,16 +1,15 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { AbstractControl, FormControl, NonNullableFormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { first, ignoreElements, merge, Observable, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { PASSWORD_MIN_LENGTH, SIGN_IN_EMAIL_DEV, SIGN_IN_PASSWORD_DEV } from '@js-camp/angular/shared/constants';
 import { SignInFormErrorService } from '@js-camp/angular/core/services/sign-in-form-error.service';
-import { SignInForm } from '@js-camp/angular/shared/types/auth-form';
-import { SignIn } from '@js-camp/core/models/sign-in';
-import { AppConfig } from '@js-camp/angular/config/app.config';
 import { UserService } from '@js-camp/angular/core/services/user.service';
 import { PATHS } from '@js-camp/core/utils/paths';
+import { AuthErrors } from '@js-camp/core/models/auth-errors.model';
+import { NotificationService } from '@js-camp/angular/core/services/notification.service';
+import { SignInFormService } from '@js-camp/angular/core/services/sign-in-form.service';
 
 /** Sign in component. */
 @Component({
@@ -24,28 +23,19 @@ import { PATHS } from '@js-camp/core/utils/paths';
 export class SignInComponent implements OnInit {
 	private readonly router = inject(Router);
 
-	private readonly formBuilder = inject(NonNullableFormBuilder);
-
 	private readonly destroyRef = inject(DestroyRef);
 
-	private readonly appConfig = inject(AppConfig);
+	private readonly formService = inject(SignInFormService);
 
 	private readonly userService = inject(UserService);
+
+	private readonly notificationService = inject(NotificationService);
 
 	/** Form error service. */
 	protected readonly formErrorService = inject(SignInFormErrorService);
 
 	/** Sign in form group. */
-	protected readonly form: SignInForm = this.formBuilder.group({
-		email: [
-			this.appConfig.isProduction ? '' : SIGN_IN_EMAIL_DEV,
-			[Validators.email, Validators.required],
-		],
-		password: [
-			this.appConfig.isProduction ? '' : SIGN_IN_PASSWORD_DEV,
-			[Validators.required, Validators.minLength(PASSWORD_MIN_LENGTH), this.validateNonNumericPassword],
-		],
-	});
+	protected readonly form = this.formService.initialize();
 
 	/** Hide password signal. */
 	protected readonly hidePasswordSignal = signal(true);
@@ -64,26 +54,27 @@ export class SignInComponent implements OnInit {
 
 	/** @inheritdoc */
 	public ngOnInit(): void {
-		merge(this.emailChangesSideEffect(), this.passwordChangesSideEffect())
+		merge(this.emailChangesSideEffect$, this.passwordChangesSideEffect$)
 			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe();
 	}
 
-	private emailChangesSideEffect(): Observable<void> {
-		return this.form.controls.email.valueChanges
-			.pipe(tap(() => this.formErrorService.clearEmailError()), ignoreElements());
+	private createFormControlSideEffect<T>(control: AbstractControl<T>, callback: (value: T) => void): Observable<void> {
+		return control.valueChanges.pipe(tap(callback), ignoreElements());
 	}
 
-	private passwordChangesSideEffect(): Observable<void> {
-		return this.form.controls.password.valueChanges
-			.pipe(
-				tap(password => {
-					this.toggleHidePasswordSideEffect(Boolean(password));
-					this.formErrorService.clearPasswordError();
-				}),
-				ignoreElements(),
-			);
-	}
+	private emailChangesSideEffect$ = this.createFormControlSideEffect(
+		this.form.controls.email,
+		() => this.formErrorService.clearEmailError(),
+	);
+
+	private passwordChangesSideEffect$ = this.createFormControlSideEffect(
+		this.form.controls.password,
+		password => {
+			this.toggleHidePasswordSideEffect(Boolean(password));
+			this.formErrorService.clearPasswordError();
+		},
+	);
 
 	private toggleHidePasswordSideEffect(hasPassword: boolean): void {
 		this.showToggleHidePasswordIconSignal.set(hasPassword);
@@ -91,15 +82,6 @@ export class SignInComponent implements OnInit {
 		if (!hasPassword) {
 			this.hidePasswordSignal.set(true);
 		}
-	}
-
-	private validateNonNumericPassword(control: AbstractControl): ValidationErrors | null {
-		if (control.value) {
-			const isNumeric = /^\d+$/.test(control.value);
-			return isNumeric ? { numericPassword: true } : null;
-		}
-
-		return null;
 	}
 
 	/**
@@ -132,14 +114,16 @@ export class SignInComponent implements OnInit {
 		}
 
 		this.startLoadingSideEffect();
-		const { email, password } = this.form.getRawValue();
 
-		this.userService.signIn({ email, password })
+		this.userService.signIn(this.form.getRawValue())
 			.pipe(
 				first(),
 				tap({
 					next: () => this.router.navigate([PATHS.home]),
-					error: (error: unknown) => console.log(error),
+					error: ({ errors }) => {
+						const { actionErrorMessage } = this.formErrorService.handleSubmitError(errors as AuthErrors);
+						this.notificationService.notifyAppError(actionErrorMessage);
+					},
 					finalize: () => this.finishLoadingSideEffect(),
 				}),
 				ignoreElements(),

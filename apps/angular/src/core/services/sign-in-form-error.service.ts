@@ -1,7 +1,8 @@
 import { Injectable, signal, WritableSignal } from '@angular/core';
 import { ValidationErrors } from '@angular/forms';
-import { PASSWORD_MIN_LENGTH } from '@js-camp/angular/shared/constants';
+import { DEFAULT_ERROR_MESSAGE, PASSWORD_MIN_LENGTH } from '@js-camp/angular/shared/constants';
 import { AllError, AllErrorString, SignInForm } from '@js-camp/angular/shared/types/auth-form';
+import { AuthErrors } from '@js-camp/core/models/auth-errors.model';
 
 /** Sign in form error service. */
 @Injectable({ providedIn: 'root' })
@@ -52,22 +53,17 @@ export class SignInFormErrorService {
 		return this.emailErrorSignal;
 	}
 
+	/** Get password error signal. */
+	public getPasswordErrorSignal(): WritableSignal<string> {
+		return this.passwordErrorSignal;
+	}
+
 	/**
 	 * Handle email error.
 	 * @param form Sign in form.
 	 */
 	public handleEmailError(form: SignInForm): void {
 		this.emailErrorSignal.set(this.handleErrorMessage('email', form.controls.email.errors));
-	}
-
-	/** Clear email error. */
-	public clearEmailError(): void {
-		this.emailErrorSignal.set('');
-	}
-
-	/** Get password error signal. */
-	public getPasswordErrorSignal(): WritableSignal<string> {
-		return this.passwordErrorSignal;
 	}
 
 	/**
@@ -78,8 +74,22 @@ export class SignInFormErrorService {
 		this.passwordErrorSignal.set(this.handleErrorMessage('password', form.controls.password.errors));
 	}
 
+	/** Clear email error. */
+	public clearEmailError(): void {
+		this.emailErrorSignal.set('');
+	}
+
 	/** Clear password error. */
 	public clearPasswordError(): void {
 		this.passwordErrorSignal.set('');
+	}
+
+	/**
+	 * Handle submit error.
+	 * @param errors Errors.
+	 */
+	public handleSubmitError(errors: AuthErrors): { actionErrorMessage: string; } {
+		const actionError = errors.find(error => error.field == null);
+		return { actionErrorMessage: actionError ? actionError.message : DEFAULT_ERROR_MESSAGE };
 	}
 }

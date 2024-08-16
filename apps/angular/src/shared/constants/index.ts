@@ -27,3 +27,6 @@ export const SIGN_IN_PASSWORD_DEV = 'asdzxc123$';
 
 /** User storage key. */
 export const USER_STORAGE_KEY = 'user';
+
+/** Default error message. */
+export const DEFAULT_ERROR_MESSAGE = 'Something went wrong! Please try again.';
