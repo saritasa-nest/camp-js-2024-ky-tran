@@ -1,35 +1,40 @@
-<nav class="sidebar">
-	<div>
-		<header class="sidebar__header">
-			<a title="Home page" routerLink="/home">
-				<img class="sidebar__header-logo" src="assets/saritasa-logo.png" alt="Saritasa Logo">
-			</a>
-		</header>
+@if ({ user: this.userService.user$ | async }; as data) {
+	<nav class="sidebar">
+		<div>
+			<header class="sidebar__header">
+				<a title="Home page" routerLink="/home">
+					<img class="sidebar__header-logo" src="assets/saritasa-logo.png" alt="Saritasa Logo">
+				</a>
+			</header>
 
-		<ul class="sidebar__list">
-			<li>
-				<a class="sidebar__link" title="Home page" routerLink="/home" routerLinkActive="sidebar__link_active">Home</a>
-			</li>
-			<li>
-				<a class="sidebar__link" title="User page" routerLink="/user" routerLinkActive="sidebar__link_active">User</a>
-			</li>
-			<li>
-				<a class="sidebar__link" title="Auth page" routerLink="/auth" routerLinkActive="sidebar__link_active">Auth</a>
-			</li>
-		</ul>
-	</div>
+			<ul class="sidebar__list">
+				<li>
+					<a class="sidebar__link" title="Home page" routerLink="/home" routerLinkActive="sidebar__link_active">Home</a>
+				</li>
+				@if (data.user) {
+					<li>
+						<a class="sidebar__link" title="User page" routerLink="/user" routerLinkActive="sidebar__link_active">User</a>
+					</li>
+				} @else {
+					<li>
+						<a class="sidebar__link" title="Auth page" routerLink="/auth" routerLinkActive="sidebar__link_active">Auth</a>
+					</li>
+				}
+			</ul>
+		</div>
 
-	<footer class="sidebar__footer">
-		<p class="sidebar__footer-text">Builders of Better</p>
-	</footer>
-</nav>
+		<footer class="sidebar__footer">
+			<p class="sidebar__footer-text">Builders of Better</p>
+		</footer>
+	</nav>
 
-<main class="main">
-	@defer(on timer(700ms)) {
-		<router-outlet />
-	} @placeholder {
-		<camp-progress-spinner />
-	} @error {
-		<camp-error-message />
-	}
-</main>
+	<main class="main">
+		@defer(on timer(700ms)) {
+			<router-outlet />
+		} @placeholder {
+			<camp-progress-spinner />
+		} @error {
+			<camp-error-message />
+		}
+	</main>
+}
