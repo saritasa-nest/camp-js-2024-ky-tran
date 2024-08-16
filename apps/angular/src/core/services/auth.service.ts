@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, first, map, Observable, throwError } from 'rxjs';
+import { first, map, Observable } from 'rxjs';
 import { SignInMapper } from '@js-camp/core/mappers/sign-in.mapper';
 import { SignIn } from '@js-camp/core/models/sign-in';
 import { UserSecret } from '@js-camp/core/models/user-secret';
@@ -31,13 +31,6 @@ export class AuthService {
 	public signInRefresh(userSecret: UserSecret): Observable<UserSecret> {
 		return this.httpClient
 			.post<UserSecretDto>(this.urlConfig.authSignInRefreshUrl, UserSecretMapper.toDto(userSecret))
-			.pipe(
-				first(),
-				catchError(error => throwError(() => {
-					console.log('Auth service refresh sign in error.');
-					return error;
-				})),
-				map(newUserSecret => UserSecretMapper.fromDto(newUserSecret)),
-			);
+			.pipe(first(), map(newUserSecret => UserSecretMapper.fromDto(newUserSecret)));
 	}
 }

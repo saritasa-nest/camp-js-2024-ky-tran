@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpRequest, HttpStatusCode } from '@angular/common/http';
-import { catchError, first, map, Observable, switchMap } from 'rxjs';
+import { catchError, first, Observable, switchMap } from 'rxjs';
 import { UserService } from '@js-camp/angular/core/services/user.service';
 import { UrlConfig } from '@js-camp/angular/config/url.config';
 import { authorizationBypassUrls, createBearerTokenOption } from '@js-camp/angular/core/interceptors/authorization.interceptor';

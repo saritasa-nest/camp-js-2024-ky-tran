@@ -57,14 +57,12 @@ export class LocalStorageService {
 	}
 
 	private detectStorageChange(detectedKey: string): Observable<void> {
-		// const otherPageChange$ = fromEvent(this.window, 'storage').pipe(
-		// 	filter((event): event is StorageEvent => event instanceof StorageEvent),
-		// 	map(event => event.key),
-		// );
+		const otherPageChange$ = fromEvent(this.window, 'storage').pipe(
+			filter((event): event is StorageEvent => event instanceof StorageEvent),
+			map(event => event.key),
+		);
 
-		// otherPageChange$
-
-		return merge(this.valueChange$)
+		return merge(otherPageChange$, this.valueChange$)
 			.pipe(
 				filter(key => key === detectedKey),
 				map(() => undefined),
