@@ -5,7 +5,7 @@ import { NotFoundComponent } from '@js-camp/angular/app/features/not-found/not-f
 import { SignInComponent } from '@js-camp/angular/app/features/auth/sign-in/sign-in.component';
 import { authGuard } from '@js-camp/angular/core/guards/auth-guard';
 import { UserComponent } from '@js-camp/angular/app/features/user/user.component';
-import { UserProfileComponent } from '@js-camp/angular/app/features/auth/user-profile/user-profile.component';
+import { UserProfileComponent } from '@js-camp/angular/app/features/user/user-profile/user-profile.component';
 
 /** Routes object. */
 export const appRoutes: Routes = [

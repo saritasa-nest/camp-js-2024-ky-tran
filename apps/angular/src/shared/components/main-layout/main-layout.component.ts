@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { ProgressSpinnerComponent } from '@js-camp/angular/shared/components/progress-spinner/progress-spinner.component';
 import { ErrorMessageComponent } from '@js-camp/angular/shared/components/error-message/error-message.component';
+import { UserService } from '@js-camp/angular/core/services/user.service';
 
 /** Main Layout component. */
 @Component({
@@ -13,4 +14,6 @@ import { ErrorMessageComponent } from '@js-camp/angular/shared/components/error-
 	imports: [RouterModule, ProgressSpinnerComponent, ErrorMessageComponent],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MainLayoutComponent {}
+export class MainLayoutComponent {
+	private readonly userService = inject(UserService);
+}
