@@ -12,12 +12,16 @@ export class NotificationService {
 	/**
 	 * Notify app error.
 	 * @param errorMessage Error message.
+	 * @param durationInSecond Duration in second.
 	 */
-	public notifyAppError(errorMessage: string | null): void {
+	public notifyAppError(errorMessage: string | null, durationInSecond?: number): void {
+		const durationMillisecondOption = durationInSecond ? { duration: durationInSecond * 1000 } : {};
+
 		this.snackBar.openFromComponent(SnackbarComponent, {
 			verticalPosition: 'top',
 			horizontalPosition: 'right',
 			data: { errorMessage: errorMessage ?? DEFAULT_ERROR_MESSAGE },
+			...durationMillisecondOption,
 		});
 	}
 

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal 
 import { Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { AbstractControl, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { first, ignoreElements, merge, Observable, tap } from 'rxjs';
+import { catchError, first, ignoreElements, merge, Observable, tap, throwError } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SignInFormErrorService } from '@js-camp/angular/core/services/sign-in-form-error.service';
 import { UserService } from '@js-camp/angular/core/services/user.service';
@@ -120,11 +120,13 @@ export class SignInComponent implements OnInit {
 				first(),
 				tap({
 					next: () => this.router.navigate([PATHS.home]),
-					error: ({ errors }) => {
-						const { actionErrorMessage } = this.formErrorService.handleSubmitError(errors as AuthErrors);
-						this.notificationService.notifyAppError(actionErrorMessage);
-					},
 					finalize: () => this.finishLoadingSideEffect(),
+				}),
+				catchError(({ errors }) => {
+					const { actionErrorMessage } = this.formErrorService.handleSubmitError(errors as AuthErrors);
+					const snackbarDurationInSecond = 5;
+					this.notificationService.notifyAppError(actionErrorMessage, snackbarDurationInSecond);
+					return throwError(() => new Error('Authorization error.'))
 				}),
 				ignoreElements(),
 			)
