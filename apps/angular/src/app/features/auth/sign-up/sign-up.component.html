@@ -1,0 +1,79 @@
+<h2 class="header-title">Let's sign up! Onii-chan :3</h2>
+
+<form class="form">
+	<div class="form__group">
+		<label for="sign-up-email" class="form__group-label">Email</label>
+
+		<input
+			id="sign-up-email"
+			class="form__group-input form__group-email"
+			type="email"
+			name="email"
+		>
+
+		<p class="form__group-error-message">Something went wrong!</p>
+	</div>
+
+	<div class="form__group">
+		<label for="sign-up-first-name" class="form__group-label">First name</label>
+
+		<input
+			id="sign-up-first-name"
+			class="form__group-input form__group-email"
+			type="text"
+			name="firstName"
+		>
+
+		<p class="form__group-error-message">Something went wrong!</p>
+	</div>
+
+	<div class="form__group">
+		<label for="sign-up-last-name" class="form__group-label">Last name</label>
+
+		<input
+			id="sign-up-last-name"
+			class="form__group-input form__group-email"
+			type="text"
+			name="lastName"
+		>
+
+		<p class="form__group-error-message">Something went wrong!</p>
+	</div>
+
+	<div class="form__group">
+		<label for="sign-up-password" class="form__group-label">Password</label>
+
+		<div class="form__group-input-wrapper">
+			<input
+				id="sign-up-password"
+				class="form__group-input form__group-password"
+				name="password"
+			>
+		</div>
+
+		<p class="form__group-error-message">Something went wrong!</p>
+	</div>
+
+	<div class="form__group">
+		<label for="sign-up-password-confirm" class="form__group-label">Password Confirm</label>
+
+		<div class="form__group-input-wrapper">
+			<input
+				id="sign-up-password-confirm"
+				class="form__group-input form__group-password"
+				name="password"
+			>
+		</div>
+
+		<p class="form__group-error-message">Something went wrong!</p>
+	</div>
+
+	<div class="form__group form__group-call-to-sign-action">
+		<p>Onii-chan already has an account?</p>
+		<a class="form__group-link" [routerLink]="['../', 'signin']">Let's sign in</a>
+	</div>
+
+	<div class="form__group">
+		<button class="form__group-submit-button" type="submit">Sign up</button>
+	</div>
+</form>

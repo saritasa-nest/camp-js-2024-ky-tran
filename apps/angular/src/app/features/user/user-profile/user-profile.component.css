@@ -28,13 +28,13 @@
 }
 
 .user-info__name {
-	font-weight: 500;
+	font-weight: var(--font-weight-medium);
 }
 
 .button {
 	display: inline-block;
 	font-size: var(--font-size-medium);
-	font-weight: 600;
+	font-weight: var(--font-weight-extra-medium);
 	padding: var(--font-size-small) var(--font-size-large);
 	transition: 0.2s;
 	cursor: pointer;

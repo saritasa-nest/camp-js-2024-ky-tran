@@ -11,7 +11,7 @@ import { AuthErrors } from '@js-camp/core/models/auth-errors.model';
 import { NotificationService } from '@js-camp/angular/core/services/notification.service';
 import { SignInFormService } from '@js-camp/angular/core/services/sign-in-form.service';
 
-/** Sign in component. */
+/** Sign In component. */
 @Component({
 	selector: 'camp-sign-in',
 	standalone: true,

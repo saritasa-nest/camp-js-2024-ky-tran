@@ -6,6 +6,7 @@ import { SignInComponent } from '@js-camp/angular/app/features/auth/sign-in/sign
 import { authGuard } from '@js-camp/angular/core/guards/auth-guard';
 import { UserComponent } from '@js-camp/angular/app/features/user/user.component';
 import { UserProfileComponent } from '@js-camp/angular/app/features/user/user-profile/user-profile.component';
+import { SignUpComponent } from '@js-camp/angular/app/features/auth/sign-up/sign-up.component';
 
 /** Routes object. */
 export const appRoutes: Routes = [
@@ -25,6 +26,7 @@ export const appRoutes: Routes = [
 		children: [
 			{ path: '', redirectTo: 'signin', pathMatch: 'full' },
 			{ path: 'signin', component: SignInComponent, canMatch: [authGuard({ isAuthorized: false })] },
+			{ path: 'signup', component: SignUpComponent, canMatch: [authGuard({ isAuthorized: false })] },
 		],
 	},
 	{ path: '**', component: NotFoundComponent },
