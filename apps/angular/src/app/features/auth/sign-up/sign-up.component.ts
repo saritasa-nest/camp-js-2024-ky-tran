@@ -8,7 +8,7 @@ import { SignUpFormService } from '@js-camp/angular/core/services/sign-up-form.s
 	selector: 'camp-sign-up',
 	standalone: true,
 	templateUrl: './sign-up.component.html',
-	styleUrl: './sign-up.component.css',
+	styleUrls: ['../auth.component.css', './sign-up.component.css'],
 	imports: [RouterModule, ReactiveFormsModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

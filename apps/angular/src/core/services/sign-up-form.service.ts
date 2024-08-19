@@ -2,16 +2,24 @@ import { inject, Injectable } from '@angular/core';
 import { AbstractControl, NonNullableFormBuilder, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { PASSWORD_MIN_LENGTH } from '@js-camp/angular/shared/constants';
 import { SignUpForm } from '@js-camp/angular/shared/types/auth-form';
+import { AuthFormService } from '@js-camp/angular/core/services/auth-form.service';
 
 /** Sign up form service. */
 @Injectable({ providedIn: 'root' })
-export class SignUpFormService {
+export class SignUpFormService extends AuthFormService {
 	private readonly formBuilder = inject(NonNullableFormBuilder);
 
 	/** Initialize sign up form. */
 	public initialize(): SignUpForm {
 		const nameInput = ['', [Validators.required]];
-		const passwordInput = ['', [Validators.required, Validators.minLength(PASSWORD_MIN_LENGTH), this.validateNonNumericPassword]];
+		const passwordInput = [
+			'',
+			[
+				Validators.required,
+				Validators.minLength(PASSWORD_MIN_LENGTH),
+				super.validateNonNumericPassword,
+			],
+		];
 
 		return this.formBuilder.group({
 			email: ['', [Validators.required, Validators.email]],
@@ -29,14 +37,5 @@ export class SignUpFormService {
 			const passwordConfirm = form.get(passwordConfirmField)?.value;
 			return password === passwordConfirm ? null : { passwordsMismatch: true };
 		};
-	}
-
-	private validateNonNumericPassword(control: AbstractControl): ValidationErrors | null {
-		if (control.value) {
-			const isNumeric = /^\d+$/.test(control.value);
-			return isNumeric ? { numericPassword: true } : null;
-		}
-
-		return null;
 	}
 }

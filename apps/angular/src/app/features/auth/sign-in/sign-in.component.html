@@ -1,45 +1,9 @@
 <h2 class="header-title">Let's "sign in"! Onii-chan :3</h2>
 
 <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
-	<div class="form__group">
-		<label for="sign-in-email" class="form__group-label">Email</label>
+	<camp-field-email [emailControl]="this.form.controls.email" [isLoading]="isLoading()" />
 
-		<input
-			id="sign-in-email"
-			class="form__group-input form__group-email"
-			type="email"
-			name="email"
-			formControlName="email"
-			(blur)="formErrorService.handleEmailError(form)"
-		>
-
-		@if (emailErrorSignal()) {
-			<p class="form__group-error-message">{{ emailErrorSignal() }}</p>
-		}
-	</div>
-
-	<div class="form__group">
-		<label for="sign-in-password" class="form__group-label">Password</label>
-
-		<div class="form__group-input-wrapper">
-			<input
-				id="sign-in-password"
-				class="form__group-input form__group-password"
-				[type]="hidePasswordSignal() ? 'password' : 'text'"
-				name="password"
-				formControlName="password"
-				(blur)="formErrorService.handlePasswordError(form)"
-			>
-
-			<mat-icon class="form__group-input-icon" [class.show]="showToggleHidePasswordIconSignal()" (click)="onToggleHidePassword()">
-				{{hidePasswordSignal() ? 'visibility_off' : 'visibility'}}
-			</mat-icon>
-		</div>
-
-		@if (passwordErrorSignal()) {
-			<p class="form__group-error-message">{{ passwordErrorSignal() }}</p>
-		}
-	</div>
+	<camp-field-password [passwordControl]="this.form.controls.password" [isLoading]="isLoading()" />
 
 	<div class="form__group form__group-call-to-sign-action">
 		<p>Onii-chan does not have an account yet?</p>
@@ -47,6 +11,6 @@
 	</div>
 
 	<div class="form__group">
-		<button class="form__group-submit-button" type="submit" [disabled]="isLoadingSignal()">Sign in</button>
+		<button class="form__group-submit-button" type="submit" [disabled]="isLoading()">Sign in</button>
 	</div>
 </form>
