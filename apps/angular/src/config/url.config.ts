@@ -16,6 +16,9 @@ export class UrlConfig {
 	/** Auth sign in refresh url. */
 	public readonly authSignInRefreshUrl = `${this.authBaseUrl}/token/refresh/`;
 
+	/** Auth sign up url. */
+	public readonly authSignUpUrl = `${this.authBaseUrl}/register/`;
+
 	/** Users base url. */
 	public readonly usersBaseUrl = `${environment.baseUrl}/users`;
 

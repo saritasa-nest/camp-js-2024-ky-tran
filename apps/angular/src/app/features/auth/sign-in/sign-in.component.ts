@@ -17,7 +17,7 @@ import { SignInFormService } from '@js-camp/angular/core/services/sign-in-form.s
 	standalone: true,
 	templateUrl: './sign-in.component.html',
 	styleUrl: './sign-in.component.css',
-	imports: [RouterModule, MatIconModule, ReactiveFormsModule],
+	imports: [RouterModule, ReactiveFormsModule, MatIconModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignInComponent implements OnInit {
@@ -25,11 +25,11 @@ export class SignInComponent implements OnInit {
 
 	private readonly destroyRef = inject(DestroyRef);
 
-	private readonly formService = inject(SignInFormService);
-
 	private readonly userService = inject(UserService);
 
 	private readonly notificationService = inject(NotificationService);
+
+	private readonly formService = inject(SignInFormService);
 
 	/** Form error service. */
 	protected readonly formErrorService = inject(SignInFormErrorService);
@@ -37,7 +37,7 @@ export class SignInComponent implements OnInit {
 	/** Sign in form group. */
 	protected readonly form = this.formService.initialize();
 
-	/** Hide password signal. */
+	/** Hide password signal.*/
 	protected readonly hidePasswordSignal = signal(true);
 
 	/** Show toggle hide password icon. */

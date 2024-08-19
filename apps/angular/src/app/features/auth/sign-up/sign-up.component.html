@@ -1,6 +1,6 @@
 <h2 class="header-title">Let's sign up! Onii-chan :3</h2>
 
-<form class="form">
+<form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
 	<div class="form__group">
 		<label for="sign-up-email" class="form__group-label">Email</label>
 
@@ -9,64 +9,73 @@
 			class="form__group-input form__group-email"
 			type="email"
 			name="email"
+			formControlName="email"
 		>
 
-		<p class="form__group-error-message">Something went wrong!</p>
+		<!-- <p class="form__group-error-message">Something went wrong!</p> -->
 	</div>
 
-	<div class="form__group">
-		<label for="sign-up-first-name" class="form__group-label">First name</label>
+	<form formGroupName="name">
+		<div class="form__group">
+			<label for="sign-up-first-name" class="form__group-label">First name</label>
 
-		<input
-			id="sign-up-first-name"
-			class="form__group-input form__group-email"
-			type="text"
-			name="firstName"
-		>
-
-		<p class="form__group-error-message">Something went wrong!</p>
-	</div>
-
-	<div class="form__group">
-		<label for="sign-up-last-name" class="form__group-label">Last name</label>
-
-		<input
-			id="sign-up-last-name"
-			class="form__group-input form__group-email"
-			type="text"
-			name="lastName"
-		>
-
-		<p class="form__group-error-message">Something went wrong!</p>
-	</div>
-
-	<div class="form__group">
-		<label for="sign-up-password" class="form__group-label">Password</label>
-
-		<div class="form__group-input-wrapper">
 			<input
-				id="sign-up-password"
-				class="form__group-input form__group-password"
-				name="password"
+				id="sign-up-first-name"
+				class="form__group-input form__group-first-name"
+				type="text"
+				name="firstName"
+				formControlName="firstName"
 			>
+
+			<!-- <p class="form__group-error-message">Something went wrong!</p> -->
 		</div>
 
-		<p class="form__group-error-message">Something went wrong!</p>
-	</div>
+		<div class="form__group">
+			<label for="sign-up-last-name" class="form__group-label">Last name</label>
 
-	<div class="form__group">
-		<label for="sign-up-password-confirm" class="form__group-label">Password Confirm</label>
-
-		<div class="form__group-input-wrapper">
 			<input
-				id="sign-up-password-confirm"
-				class="form__group-input form__group-password"
-				name="password"
+				id="sign-up-last-name"
+				class="form__group-input form__group-last-name"
+				type="text"
+				name="lastName"
+				formControlName="lastName"
 			>
+
+			<!-- <p class="form__group-error-message">Something went wrong!</p> -->
+		</div>
+	</form>
+
+	<form formGroupName="passwords">
+		<div class="form__group">
+			<label for="sign-up-password" class="form__group-label">Password</label>
+
+			<div class="form__group-input-wrapper">
+				<input
+					id="sign-up-password"
+					class="form__group-input form__group-password"
+					name="password"
+					formControlName="password"
+				>
+			</div>
+
+			<!-- <p class="form__group-error-message">Something went wrong!</p> -->
 		</div>
 
-		<p class="form__group-error-message">Something went wrong!</p>
-	</div>
+		<div class="form__group">
+			<label for="sign-up-password-confirm" class="form__group-label">Password Confirm</label>
+
+			<div class="form__group-input-wrapper">
+				<input
+					id="sign-up-password-confirm"
+					class="form__group-input form__group-password"
+					name="passwordConfirm"
+					formControlName="passwordConfirm"
+				>
+			</div>
+
+			<!-- <p class="form__group-error-message">Something went wrong!</p> -->
+		</div>
+	</form>
 
 	<div class="form__group form__group-call-to-sign-action">
 		<p>Onii-chan already has an account?</p>
