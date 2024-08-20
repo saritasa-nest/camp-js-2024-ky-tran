@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { FieldErrorComponent } from '@js-camp/angular/app/features/auth/field-error/field-error.component';
-import { SignInFormErrorService } from '@js-camp/angular/core/services/sign-in-form-error.service';
+import { AuthFormErrorService } from '@js-camp/angular/core/services/auth-form-error.service';
+import { createUniqueId } from '@js-camp/angular/core/utils/helpers/create-unique-id';
 
 /** Field Email component. */
 @Component({
@@ -30,7 +31,10 @@ export class FieldEmailComponent {
 	private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
 	/** Form error service. */
-	protected readonly formErrorService = inject(SignInFormErrorService);
+	protected readonly formErrorService = inject(AuthFormErrorService);
+
+	/** Unique id.*/
+	protected readonly uniqueId = createUniqueId('field-email');
 
 	/** Email error. */
 	protected get emailError(): string {

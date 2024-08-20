@@ -1,5 +1,5 @@
 import { AuthErrorDto, AuthErrorsDto } from '../dtos/auth-errors.dto';
-import { AuthError, AuthErrors } from '../models/auth-errors.model';
+import { AuthError, AuthErrors } from '../models/auth-errors';
 
 /** Auth errors mapper. */
 export namespace AuthErrorsMapper {

@@ -22,24 +22,15 @@ export type SignUpForm = FormGroup<Readonly<{
 	/** Email. */
 	email: FormControl<string>;
 
-	/** Name. */
-	name: FormGroup<Readonly<{
+	/** First name. */
+	firstName: FormControl<string>;
 
-		/** First name. */
-		firstName: FormControl<string>;
+	/** Last name. */
+	lastName: FormControl<string>;
 
-		/** Last name. */
-		lastName: FormControl<string>;
-	}>>;
+	/** Password. */
+	password: FormControl<string>;
 
-	/** Passwords. */
-	passwords: FormGroup<Readonly<{
-
-		/** Password. */
-		password: FormControl<string>;
-
-		/** Password confirm. */
-		passwordConfirm: FormControl<string>;
-	}>>;
-
+	/** Password confirm. */
+	passwordConfirm: FormControl<string>;
 }>>;

@@ -1,29 +1,28 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
-import { AuthFormErrorService } from '@js-camp/angular/core/services/auth-form-error.service';
 import { FieldErrorComponent } from '@js-camp/angular/app/features/auth/field-error/field-error.component';
+import { AuthFormErrorService } from '@js-camp/angular/core/services/auth-form-error.service';
 import { createUniqueId } from '@js-camp/angular/core/utils/helpers/create-unique-id';
 
-/** Field Password component. */
+/** Field Name component. */
 @Component({
-	selector: 'camp-field-password',
+	selector: 'camp-field-name',
 	standalone: true,
-	templateUrl: './field-password.component.html',
+	templateUrl: './field-name.component.html',
 	styleUrl: '../auth.component.css',
-	imports: [ReactiveFormsModule, MatIconModule, FieldErrorComponent],
+	imports: [ReactiveFormsModule, FieldErrorComponent],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldPasswordComponent {
+export class FieldNameComponent {
 	/** Label. */
 	@Input()
-	public label = 'Password';
+	public label = 'Name';
 
 	/** Field. */
 	@Input()
-	public field = 'password';
+	public field = 'name';
 
-	/** Password control. */
+	/** Name control. */
 	@Input({ required: true })
 	public control = new FormControl();
 
@@ -42,24 +41,13 @@ export class FieldPasswordComponent {
 	/** Form error service. */
 	protected readonly formErrorService = inject(AuthFormErrorService);
 
-	/** Weather password is hidden.*/
-	protected readonly isPasswordHidden = signal(true);
-
 	/** Unique id.*/
-	protected readonly uniqueId = createUniqueId('field-password');
+	protected readonly uniqueId = createUniqueId('field-name');
 
-	/** Password error. */
-	protected get passwordError(): string {
+	/** Name error. */
+	protected get nameError(): string {
 		const isInvalid = this.control.invalid && (this.control.dirty || this.control.touched);
 		return isInvalid ? this.formErrorService.handleErrorMessage(this.field, this.control.errors) : '';
-	}
-
-	/**
-	 * On toggle password.
-	 * @param event Mouse event.
-	 */
-	protected onTogglePassword(): void {
-		this.isPasswordHidden.set(!this.isPasswordHidden());
 	}
 
 	/** Trigger change detection manually. */

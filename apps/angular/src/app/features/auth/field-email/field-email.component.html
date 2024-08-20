@@ -1,11 +1,11 @@
 <div class="form__group">
-	<label for="sign-in-email" class="form__group-label">Email</label>
+	<label [for]="uniqueId" class="form__group-label">Email</label>
 
 	<input
-		id="sign-in-email"
 		class="form__group-input form__group-email"
 		type="email"
 		name="email"
+		[id]="uniqueId"
 		[formControl]="emailControl"
 	>
 

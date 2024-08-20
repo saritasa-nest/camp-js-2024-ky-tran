@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { AbstractControl, NonNullableFormBuilder, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, NonNullableFormBuilder, ValidationErrors, Validators } from '@angular/forms';
 import { PASSWORD_MIN_LENGTH } from '@js-camp/angular/shared/constants';
 import { SignUpForm } from '@js-camp/angular/shared/types/auth-form';
 import { AuthFormService } from '@js-camp/angular/core/services/auth-form.service';
@@ -9,33 +9,31 @@ import { AuthFormService } from '@js-camp/angular/core/services/auth-form.servic
 export class SignUpFormService extends AuthFormService {
 	private readonly formBuilder = inject(NonNullableFormBuilder);
 
+	private form: SignUpForm | null = null;
+
 	/** Initialize sign up form. */
 	public initialize(): SignUpForm {
-		const nameInput = ['', [Validators.required]];
-		const passwordInput = [
-			'',
-			[
-				Validators.required,
-				Validators.minLength(PASSWORD_MIN_LENGTH),
-				super.validateNonNumericPassword,
-			],
-		];
+		const nameValidators = [Validators.required, this.noAllSpaceValidator];
+		const passwordValidators = [Validators.required, Validators.minLength(PASSWORD_MIN_LENGTH), super.validateNonNumericPassword];
 
-		return this.formBuilder.group({
+		this.form = this.formBuilder.group({
 			email: ['', [Validators.required, Validators.email]],
-			name: this.formBuilder.group({ firstName: nameInput, lastName: nameInput }),
-			passwords: this.formBuilder.group(
-				{ password: passwordInput, passwordConfirm: passwordInput },
-				{ validators: this.passwordsMatchValidator('password', 'passwordConfirm') },
-			),
+			firstName: ['', nameValidators],
+			lastName: ['', nameValidators],
+			password: ['', passwordValidators],
+			passwordConfirm: ['', [...passwordValidators, this.passwordsMatchValidator.bind(this)]],
 		});
+
+		return this.form;
 	}
 
-	private passwordsMatchValidator(passwordField: string, passwordConfirmField: string): ValidatorFn {
-		return (form: AbstractControl): ValidationErrors | null => {
-			const password = form.get(passwordField)?.value;
-			const passwordConfirm = form.get(passwordConfirmField)?.value;
-			return password === passwordConfirm ? null : { passwordsMismatch: true };
-		};
+	private passwordsMatchValidator(control: AbstractControl): ValidationErrors | null {
+		const password = this.form?.controls.password.value ?? null;
+		const passwordConfirm = control.value;
+		return password === passwordConfirm ? null : { passwordsMismatch: true };
+	}
+
+	private noAllSpaceValidator(control: AbstractControl): ValidationErrors | null {
+		return control.value.trim() !== '' ? null : { noAllSpace: true };
 	}
 }

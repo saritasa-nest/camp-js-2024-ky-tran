@@ -1,81 +1,33 @@
 <h2 class="header-title">Let's sign up! Onii-chan :3</h2>
 
 <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
-	<div class="form__group">
-		<label for="sign-up-email" class="form__group-label">Email</label>
+	<camp-field-email #email [emailControl]="this.form.controls.email" [isLoading]="isLoading()" />
 
-		<input
-			id="sign-up-email"
-			class="form__group-input form__group-email"
-			type="email"
-			name="email"
-			formControlName="email"
-		>
+	<camp-field-password #password [control]="this.form.controls.password" [isLoading]="isLoading()" />
 
-		<!-- <p class="form__group-error-message">Something went wrong!</p> -->
-	</div>
+	<camp-field-password
+		#passwordConfirm
+		label="Password confirm"
+		field="passwordConfirm"
+		[control]="this.form.controls.passwordConfirm"
+		[isLoading]="isLoading()"
+	/>
 
-	<form formGroupName="name">
-		<div class="form__group">
-			<label for="sign-up-first-name" class="form__group-label">First name</label>
+	<camp-field-name
+		#firstName
+		label="First name"
+		field="firstName"
+		[control]="this.form.controls.firstName"
+		[isLoading]="isLoading()"
+	/>
 
-			<input
-				id="sign-up-first-name"
-				class="form__group-input form__group-first-name"
-				type="text"
-				name="firstName"
-				formControlName="firstName"
-			>
-
-			<!-- <p class="form__group-error-message">Something went wrong!</p> -->
-		</div>
-
-		<div class="form__group">
-			<label for="sign-up-last-name" class="form__group-label">Last name</label>
-
-			<input
-				id="sign-up-last-name"
-				class="form__group-input form__group-last-name"
-				type="text"
-				name="lastName"
-				formControlName="lastName"
-			>
-
-			<!-- <p class="form__group-error-message">Something went wrong!</p> -->
-		</div>
-	</form>
-
-	<form formGroupName="passwords">
-		<div class="form__group">
-			<label for="sign-up-password" class="form__group-label">Password</label>
-
-			<div class="form__group-input-wrapper">
-				<input
-					id="sign-up-password"
-					class="form__group-input form__group-password"
-					name="password"
-					formControlName="password"
-				>
-			</div>
-
-			<!-- <p class="form__group-error-message">Something went wrong!</p> -->
-		</div>
-
-		<div class="form__group">
-			<label for="sign-up-password-confirm" class="form__group-label">Password Confirm</label>
-
-			<div class="form__group-input-wrapper">
-				<input
-					id="sign-up-password-confirm"
-					class="form__group-input form__group-password"
-					name="passwordConfirm"
-					formControlName="passwordConfirm"
-				>
-			</div>
-
-			<!-- <p class="form__group-error-message">Something went wrong!</p> -->
-		</div>
-	</form>
+	<camp-field-name
+		#lastName
+		label="Last name"
+		field="lastName"
+		[control]="this.form.controls.lastName"
+		[isLoading]="isLoading()"
+	/>
 
 	<div class="form__group form__group-call-to-sign-action">
 		<p>Onii-chan already has an account?</p>

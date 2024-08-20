@@ -12,7 +12,7 @@ export class SignInFormService extends AuthFormService {
 	/** Initialize sign in form. */
 	public initialize(): SignInForm {
 		return this.formBuilder.group({
-			email: ['', [Validators.email, Validators.required]],
+			email: ['', [Validators.required, Validators.email]],
 			password: ['', [Validators.required, Validators.minLength(PASSWORD_MIN_LENGTH), super.validateNonNumericPassword]],
 		});
 	}
