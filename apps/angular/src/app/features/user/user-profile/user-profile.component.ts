@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { first } from 'rxjs';
 import { UserService } from '@js-camp/angular/core/services/user.service';
 import { PATHS } from '@js-camp/core/utils/paths';
+import { NotificationService } from '@js-camp/angular/core/services/notification.service';
 
 /** User Profile component. */
 @Component({
@@ -17,6 +18,8 @@ import { PATHS } from '@js-camp/core/utils/paths';
 export class UserProfileComponent {
 	private readonly router = inject(Router);
 
+	private readonly notificationService = inject(NotificationService);
+
 	/** User service. */
 	protected readonly userService = inject(UserService);
 
@@ -25,8 +28,9 @@ export class UserProfileComponent {
 
 	/** On sign out. */
 	protected onSignOut(): void {
-		this.userService.signOut()
-			.pipe(first())
+		this.userService.signOut().pipe(first())
 			.subscribe(() => this.router.navigate([PATHS.signIn]));
+
+		this.notificationService.notifyAppSuccess('Bye bye! See you later.');
 	}
 }

@@ -5,12 +5,12 @@ import { catchError, first, throwError } from 'rxjs';
 import { AuthFormErrorService } from '@js-camp/angular/core/services/auth-form-error.service';
 import { UserService } from '@js-camp/angular/core/services/user.service';
 import { PATHS } from '@js-camp/core/utils/paths';
-import { AuthError } from '@js-camp/core/models/auth-errors';
+import {  AuthSignInError } from '@js-camp/core/models/auth-errors';
 import { NotificationService } from '@js-camp/angular/core/services/notification.service';
 import { SignInFormService } from '@js-camp/angular/core/services/sign-in-form.service';
 import { FieldEmailComponent } from '@js-camp/angular/app/features/auth/field-email/field-email.component';
 import { FieldPasswordComponent } from '@js-camp/angular/app/features/auth/field-password/field-password.component';
-import { SNACKBAR_DURATION_IN_SECOND } from '@js-camp/angular/shared/constants';
+import { AUTH_SERVER_ERROR_FIELD } from '@js-camp/angular/shared/constants';
 
 /** Sign In component. */
 @Component({
@@ -22,7 +22,8 @@ import { SNACKBAR_DURATION_IN_SECOND } from '@js-camp/angular/shared/constants';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignInComponent {
-	@ViewChildren('formField') formFields: QueryList<FieldEmailComponent | FieldPasswordComponent> | null = null;
+	@ViewChildren('formField')
+	private formFields: QueryList<FieldEmailComponent | FieldPasswordComponent> | null = null;
 
 	private readonly router = inject(Router);
 
@@ -67,13 +68,12 @@ export class SignInComponent {
 					catchError(({ errors }) => {
 						this.stopLoadingSideEffect();
 
-						errors.forEach(({ field, message }: AuthError) => {
+						errors.forEach(({ field, message }: AuthSignInError) => {
 							if (field == null) {
-								this.notificationService.notifyAppError(message, SNACKBAR_DURATION_IN_SECOND);
+								this.notificationService.notifyAppError(message);
 							} else {
-								const serverErrorField = 'serverError';
-								this.formErrorService.setError(field, serverErrorField, message);
-								this.form.controls[field].setErrors({ [serverErrorField]: true });
+								this.formErrorService.setError(field, AUTH_SERVER_ERROR_FIELD, message);
+								this.form.controls[field].setErrors({ [AUTH_SERVER_ERROR_FIELD]: true });
 							}
 						});
 
@@ -83,6 +83,7 @@ export class SignInComponent {
 				)
 				.subscribe(() => {
 					this.stopLoadingSideEffect();
+					this.notificationService.notifyAppSuccess('Sign in successfully.');
 					this.router.navigate([PATHS.home]);
 				});
 		}

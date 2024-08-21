@@ -1,29 +1,15 @@
 <h2 class="header-title">Let's sign up! Onii-chan :3</h2>
 
 <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
-	<camp-field-email [emailControl]="form.controls.email" />
+	<camp-field-email #formField [emailControl]="form.controls.email" />
 
-	<camp-field-password [control]="form.controls.password"  />
-o
-	<camp-field-password
-		label="Password confirm"
-		field="passwordConfirm"
-		[control]="form.controls.passwordConfirm"
-	/>
+	<camp-field-password #formField [control]="form.controls.password" />
 
-	<camp-field-name
-		label="First name"
-		field="firstName"
-		[touched]="form.controls.firstName.touched"
-		[control]="form.controls.firstName"
-	/>
+	<camp-field-password #formField label="Password confirm" field="passwordConfirm" [control]="form.controls.passwordConfirm" />
 
-	<camp-field-name
-		label="Last name"
-		field="lastName"
-		[touched]="form.controls.lastName.touched"
-		[control]="form.controls.lastName"
-	/>
+	<camp-field-name #formField label="First name" field="firstName" [control]="form.controls.firstName" />
+
+	<camp-field-name #formField label="Last name" field="lastName" [control]="form.controls.lastName" />
 
 	<div class="form__group form__group-call-to-sign-action">
 		<p>Onii-chan already has an account?</p>

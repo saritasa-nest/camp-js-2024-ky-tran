@@ -1,10 +1,17 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, QueryList, signal, ViewChildren } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { catchError, first, throwError } from 'rxjs';
 import { SignUpFormService } from '@js-camp/angular/core/services/sign-up-form.service';
 import { FieldEmailComponent } from '@js-camp/angular/app/features/auth/field-email/field-email.component';
 import { FieldPasswordComponent } from '@js-camp/angular/app/features/auth/field-password/field-password.component';
 import { FieldNameComponent } from '@js-camp/angular/app/features/auth/field-name/field-name.component';
+import { UserService } from '@js-camp/angular/core/services/user.service';
+import { NotificationService } from '@js-camp/angular/core/services/notification.service';
+import { AUTH_SERVER_ERROR_FIELD } from '@js-camp/angular/shared/constants';
+import { AuthFormErrorService } from '@js-camp/angular/core/services/auth-form-error.service';
+import { AuthSignUpError } from '@js-camp/core/models/auth-errors';
+import { PATHS } from '@js-camp/core/utils/paths';
 
 /** Sign Up component. */
 @Component({
@@ -16,21 +23,70 @@ import { FieldNameComponent } from '@js-camp/angular/app/features/auth/field-nam
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignUpComponent {
+	@ViewChildren('formField')
+	private formFields: QueryList<FieldEmailComponent | FieldPasswordComponent> | null = null;
+
+	private readonly router = inject(Router);
+
+	private readonly userService = inject(UserService);
+
+	private readonly notificationService = inject(NotificationService);
+
+	/** Form error service. */
+	protected readonly formErrorService = inject(AuthFormErrorService);
+
 	/** Sign up form group. */
 	protected readonly form = inject(SignUpFormService).initialize();
 
 	/** Loading status. */
 	protected readonly isLoading = signal(false);
 
+	private forceFormFieldsDetectChanges() {
+		this.formFields?.forEach(formField => formField.detectChanges());
+	}
+
+	private startLoadingSideEffect(): void {
+		this.isLoading.set(true);
+		this.form.disable();
+	}
+
+	private stopLoadingSideEffect(): void {
+		this.isLoading.set(false);
+		this.form.enable();
+	}
+
 	/** On submit. */
 	protected onSubmit(): void {
 		this.form.markAllAsTouched();
+		this.forceFormFieldsDetectChanges();
 
-		if (!this.form.valid) {
-			console.log(this.form);
-			return;
+		if (this.form.valid) {
+			this.startLoadingSideEffect();
+
+			this.userService.signUp(this.form.getRawValue())
+				.pipe(
+					first(),
+					catchError(({ errors }) => {
+						this.stopLoadingSideEffect();
+
+						errors.forEach(({ field, message }: AuthSignUpError) => {
+							if (field == null) {
+								this.notificationService.notifyAppError(message);
+							} else {
+								this.formErrorService.setError(field, AUTH_SERVER_ERROR_FIELD, message);
+								this.form.controls[field].setErrors({ [AUTH_SERVER_ERROR_FIELD]: true });
+							}
+						});
+
+						this.forceFormFieldsDetectChanges();
+						return throwError(() => new Error('Authorization error.'));
+					}),
+				)
+				.subscribe(() => {
+					this.stopLoadingSideEffect();
+					this.notificationService.notifyAppSuccess('Sign up successfully.');
+					this.router.navigate([PATHS.signIn]);
+				});
 		}
-
-		console.log('Submit');
 	}
 }

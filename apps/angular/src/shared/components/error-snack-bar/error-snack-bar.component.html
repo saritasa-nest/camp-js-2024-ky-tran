@@ -1,4 +1,4 @@
-<span class="error-message" matSnackBarLabel>{{ data.errorMessage }}</span>
+<span [class]="isSuccess ? 'success-message' : 'error-message'" matSnackBarLabel>{{ data.message }}</span>
 <span matSnackBarActions>
   <button type="button" mat-button matSnackBarAction (click)="snackBarRef.dismissWithAction()">X</button>
 </span>

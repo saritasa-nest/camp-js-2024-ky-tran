@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { first, map, Observable, of, shareReplay, switchMap } from 'rxjs';
 import { AuthService } from '@js-camp/angular/core/services/auth.service';
 import { UserStorageService } from '@js-camp/angular/core/services/user-storage.service';
-import { SignIn } from '@js-camp/core/models/sign-in';
+import { SignIn, SignUp } from '@js-camp/core/models/auth';
 import { UrlConfig } from '@js-camp/angular/config/url.config';
 import { User } from '@js-camp/core/models/user';
 import { UserDto } from '@js-camp/core/dtos/user.dto';
@@ -44,7 +44,6 @@ export class UserService {
 	 * @param signInData Sign in data.
 	 */
 	public signIn(signInData: SignIn): Observable<void> {
-
 		return this.authService.signIn(signInData).pipe(
 			first(),
 			switchMap(userSecret => this.userStorageService.saveSecret(userSecret)),
@@ -64,5 +63,13 @@ export class UserService {
 			switchMap(userSecret => userSecret ? this.authService.signInRefresh(userSecret) : of(null)),
 			switchMap(newUserSecret => newUserSecret ? this.userStorageService.saveSecret(newUserSecret) : of(null)),
 		);
+	}
+
+	/**
+	 * Sign up.
+	 * @param signUpData Sign up data.
+	 */
+	public signUp(signUpData: SignUp): Observable<void> {
+		return this.authService.signUp(signUpData).pipe(first(), map(() => undefined));
 	}
 }

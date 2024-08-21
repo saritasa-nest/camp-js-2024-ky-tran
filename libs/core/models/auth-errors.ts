@@ -1,18 +1,39 @@
-/** Auth error field. */
-export enum AuthErrorSignInField {
+/** Auth sign in field error. */
+export enum AuthSignInFieldError {
 	Email = 'email',
 	Password = 'password',
 }
 
-/** Auth error domain model. */
-export type AuthError = Readonly<{
+/** Auth sign in error domain model. */
+export type AuthSignInError = Readonly<{
 
 	/** Error field. */
-	field: AuthErrorSignInField | null;
+	field: AuthSignInFieldError | null;
 
 	/** Error message. */
 	message: string;
 }>;
 
-/** Auth errors domain model. */
-export type AuthErrors = AuthError[];
+/** Auth sign in errors domain model. */
+export type AuthSignInErrors = AuthSignInError[];
+
+/** Auth sign up field error. */
+export enum AuthSignUpFieldError {
+	Email = 'email',
+	Password = 'password',
+	FirstName = 'firstName',
+	LastName = 'lastName',
+}
+
+/** Auth sign up error domain model. */
+export type AuthSignUpError = Readonly<{
+
+	/** Error field. */
+	field: AuthSignUpFieldError | null;
+
+	/** Error message. */
+	message: string;
+}>;
+
+/** Auth sign up errors domain model. */
+export type AuthSignUpErrors = AuthSignUpError[];

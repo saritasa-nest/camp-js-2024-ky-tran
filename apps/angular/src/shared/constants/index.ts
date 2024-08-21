@@ -25,5 +25,17 @@ export const USER_STORAGE_KEY = 'user';
 /** Snackbar duration in second. */
 export const SNACKBAR_DURATION_IN_SECOND = 5;
 
+/** Auth server error field. */
+export const AUTH_SERVER_ERROR_FIELD = 'serverError';
+
+/** Default success message. */
+export const DEFAULT_SUCCESS_MESSAGE = 'Perform action successfully.';
+
 /** Default error message. */
 export const DEFAULT_ERROR_MESSAGE = 'Something went wrong! Please try again.';
+
+/** Success status. */
+export const SUCCESS_STATUS = 'success';
+
+/** Error status. */
+export const ERROR_STATUS = 'error';

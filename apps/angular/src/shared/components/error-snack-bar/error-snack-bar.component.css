@@ -2,7 +2,15 @@
 	display: flex;
 }
 
+.success-message,
+.error-message {
+	font-size: var(--font-size-medium);
+}
+
+.success-message {
+	color: var(--success-color-main);
+}
+
 .error-message {
 	color: var(--error-color-main);
-	font-size: var(--font-size-medium);
 }

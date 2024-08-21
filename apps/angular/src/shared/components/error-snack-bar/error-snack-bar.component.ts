@@ -1,7 +1,14 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_SNACK_BAR_DATA, MatSnackBarAction, MatSnackBarActions, MatSnackBarLabel, MatSnackBarRef } from '@angular/material/snack-bar';
-import { ErrorSnackBarData } from '@js-camp/angular/shared/types/error-snack-bar-data';
+import {
+	MAT_SNACK_BAR_DATA,
+	MatSnackBarAction,
+	MatSnackBarActions,
+	MatSnackBarLabel,
+	MatSnackBarRef,
+} from '@angular/material/snack-bar';
+import { SnackbarData } from '@js-camp/angular/shared/types/snackbar-data';
+import { SUCCESS_STATUS } from '@js-camp/angular/shared/constants';
 
 /** Snackbar component. */
 @Component({
@@ -16,6 +23,9 @@ export class SnackbarComponent {
 	/** Snack bar ref. */
 	protected readonly snackBarRef = inject(MatSnackBarRef);
 
-	/** Error snack bar data. */
-	protected readonly data: ErrorSnackBarData = inject(MAT_SNACK_BAR_DATA);
+	/** Snackbar data. */
+	protected readonly data: SnackbarData = inject(MAT_SNACK_BAR_DATA);
+
+	/** Success status. */
+	protected readonly isSuccess = this.data.status === SUCCESS_STATUS;
 }

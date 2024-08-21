@@ -66,6 +66,10 @@
 	box-shadow: inset 0 0 var(--gap-medium) var(--gap-medium) var(--background-color-primary-extra-bright);
 }
 
+.form__group-input:-webkit-autofill:disabled {
+	box-shadow: inset 0 0 var(--gap-medium) var(--gap-medium) var(--background-color-primary-light);
+}
+
 .form__group-input-icon {
 	position: absolute;
 	top: 50%;
