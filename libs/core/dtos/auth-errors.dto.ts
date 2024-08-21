@@ -1,3 +1,9 @@
+/** Auth error field DTO. */
+export enum AuthErrorSignInFieldDto {
+	Email = 'email',
+	Password = 'password',
+}
+
 /** Auth error DTO. */
 export type AuthErrorDto = Readonly<{
 
@@ -5,7 +11,7 @@ export type AuthErrorDto = Readonly<{
 	code: string;
 
 	/** Error attr. */
-	attr: string | null;
+	attr: AuthErrorSignInFieldDto | string;
 
 	/** Error detail. */
 	detail: string;

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthFormErrorService } from '@js-camp/angular/core/services/auth-form-error.service';
@@ -27,17 +27,13 @@ export class FieldPasswordComponent {
 	@Input({ required: true })
 	public control = new FormControl();
 
-	/** Loading status. */
-	@Input()
-	public set isLoading(isLoading: boolean) {
-		if (isLoading) {
-			this.control.disable();
-		} else {
-			this.control.enable();
-		}
-	}
+	/** Touched. */
+	@Input({ required: true })
+	public touched = false;
 
-	private readonly changeDetectorRef = inject(ChangeDetectorRef);
+	/** Loading status. */
+	@Input({ required: true })
+	public isLoading = false;
 
 	/** Form error service. */
 	protected readonly formErrorService = inject(AuthFormErrorService);
@@ -60,10 +56,5 @@ export class FieldPasswordComponent {
 	 */
 	protected onTogglePassword(): void {
 		this.isPasswordHidden.set(!this.isPasswordHidden());
-	}
-
-	/** Trigger change detection manually. */
-	public detectChanges(): void {
-		this.changeDetectorRef.detectChanges();
 	}
 }

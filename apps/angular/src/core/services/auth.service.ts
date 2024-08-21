@@ -25,7 +25,7 @@ export class AuthService {
 			.pipe(
 				first(),
 				map(userSecretDto => UserSecretMapper.fromDto(userSecretDto)),
-				catchError(({ error }) => throwError(() => ({ errors: AuthErrorsMapper.fromDto(error.errors) }))),
+				catchError(({ error }) => throwError(() => ({ errors: AuthErrorsMapper.signInFromDto(error.errors) }))),
 			);
 	}
 

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SignUpFormService } from '@js-camp/angular/core/services/sign-up-form.service';
@@ -16,26 +16,6 @@ import { FieldNameComponent } from '@js-camp/angular/app/features/auth/field-nam
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignUpComponent {
-	/** Field email instance. */
-	@ViewChild('email')
-	private readonly fieldEmailComponent!: FieldEmailComponent;
-
-	/** Field password instance. */
-	@ViewChild('password')
-	private readonly fieldPasswordComponent!: FieldPasswordComponent;
-
-	/** Field password confirm instance. */
-	@ViewChild('passwordConfirm')
-	private readonly fieldPasswordConfirmComponent!: FieldPasswordComponent;
-
-	/** Field first name instance. */
-	@ViewChild('firstName')
-	private readonly fieldFirstNameComponent!: FieldNameComponent;
-
-	/** Field last name instance. */
-	@ViewChild('lastName')
-	private readonly fieldLastNameComponent!: FieldNameComponent;
-
 	/** Sign up form group. */
 	protected readonly form = inject(SignUpFormService).initialize();
 
@@ -47,14 +27,6 @@ export class SignUpComponent {
 		this.form.markAllAsTouched();
 
 		if (!this.form.valid) {
-			[
-				this.fieldEmailComponent,
-				this.fieldPasswordComponent,
-				this.fieldPasswordConfirmComponent,
-				this.fieldFirstNameComponent,
-				this.fieldLastNameComponent,
-			].forEach(c => c.detectChanges());
-
 			console.log(this.form);
 			return;
 		}

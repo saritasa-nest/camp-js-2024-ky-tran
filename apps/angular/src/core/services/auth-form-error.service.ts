@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ValidationErrors } from '@angular/forms';
 import { DEFAULT_ERROR_MESSAGE, PASSWORD_MIN_LENGTH } from '@js-camp/angular/shared/constants';
 import { AllError, AllErrorString } from '@js-camp/angular/shared/types/auth-form';
-import { AuthErrors } from '@js-camp/core/models/auth-errors';
+import { AuthError, AuthErrors } from '@js-camp/core/models/auth-errors';
 
 /** Form error service. */
 @Injectable({ providedIn: 'root' })
@@ -54,8 +54,8 @@ export class AuthFormErrorService {
 	 * Handle submit error.
 	 * @param errors Errors.
 	 */
-	public handleSubmitError(errors: AuthErrors): { actionErrorMessage: string; } {
-		const actionError = errors.find(error => error.field == null);
-		return { actionErrorMessage: actionError ? actionError.message : DEFAULT_ERROR_MESSAGE };
+	public handleSubmitError(errors: AuthErrors): AuthError {
+		const { field, message } = errors.find(error => error.field == null) ?? errors[0];
+		return { field, message: message ? message : DEFAULT_ERROR_MESSAGE };
 	}
 }

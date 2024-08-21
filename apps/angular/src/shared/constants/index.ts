@@ -19,14 +19,11 @@ export const DEFAULT_PAGE_SIZE_OPTIONS = [5, 10, 20, 30, 50];
 /** The minimum length of password. */
 export const PASSWORD_MIN_LENGTH = 8;
 
-/** Sign in email for development. */
-export const SIGN_IN_EMAIL_DEV = 'test@gmail.com';
-
-/** Sign in password for development. */
-export const SIGN_IN_PASSWORD_DEV = 'asdzxc123$';
-
 /** User storage key. */
 export const USER_STORAGE_KEY = 'user';
+
+/** Snackbar duration in second. */
+export const SNACKBAR_DURATION_IN_SECOND = 5;
 
 /** Default error message. */
 export const DEFAULT_ERROR_MESSAGE = 'Something went wrong! Please try again.';
