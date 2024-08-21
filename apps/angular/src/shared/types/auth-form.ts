@@ -1,7 +1,7 @@
 import { FormControl, FormGroup } from '@angular/forms';
 
 /** All error string. */
-export type AllErrorString = Readonly<Record<string, string>>;
+export type AllErrorString = Record<string, string>;
 
 /** All error. */
 export type AllError = Readonly<Record<string, AllErrorString>>;

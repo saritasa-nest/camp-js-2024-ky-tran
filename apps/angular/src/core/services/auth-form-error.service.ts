@@ -2,11 +2,18 @@ import { Injectable } from '@angular/core';
 import { ValidationErrors } from '@angular/forms';
 import { DEFAULT_ERROR_MESSAGE, PASSWORD_MIN_LENGTH } from '@js-camp/angular/shared/constants';
 import { AllError, AllErrorString } from '@js-camp/angular/shared/types/auth-form';
-import { AuthError, AuthErrors } from '@js-camp/core/models/auth-errors';
 
 /** Form error service. */
 @Injectable({ providedIn: 'root' })
 export class AuthFormErrorService {
+	private allErrors: AllError = {
+		email: { ...this.requiredError, ...this.serverError, email: 'Invalid email address.' },
+		password: { ...this.passwordError, ...this.serverError },
+		passwordConfirm: { ...this.passwordError, ...this.serverError, passwordsMismatch: 'Passwords must match.' },
+		firstName: { ...this.requiredError, ...this.noAllSpaceError, ...this.serverError },
+		lastName: { ...this.requiredError, ...this.noAllSpaceError, ...this.serverError },
+	};
+
 	private get requiredError(): AllErrorString {
 		return { required: 'This field is required.' };
 	}
@@ -23,19 +30,23 @@ export class AuthFormErrorService {
 		return { noAllSpace: 'All space is not valid.' };
 	}
 
-	private getAllErrors(): AllError {
-		return {
-			email: { ...this.requiredError, email: 'Invalid email address.' },
-			password: { ...this.passwordError },
-			passwordConfirm: { ...this.passwordError, passwordsMismatch: 'Passwords must match.' },
-			firstName: { ...this.requiredError, ...this.noAllSpaceError },
-			lastName: { ...this.requiredError, ...this.noAllSpaceError },
-		};
+	private get serverError(): AllErrorString {
+		return { serverError: DEFAULT_ERROR_MESSAGE };
+	}
+
+	/**
+	 * Handle error message.
+	 * @param controlField Control field.
+	 * @param errorField Error field.
+	 * @param errorMessage Error message.
+	 */
+	public setError(controlField: string, errorField: string, errorMessage: string): void {
+		this.allErrors[controlField][errorField] = errorMessage;
 	}
 
 	private getError(controlField: string, errorField: string): string {
 		try {
-			return this.getAllErrors()[controlField][errorField];
+			return this.allErrors[controlField][errorField];
 		} catch (error) {
 			return 'Something went wrong.';
 		}
@@ -48,14 +59,5 @@ export class AuthFormErrorService {
 	 */
 	public handleErrorMessage(field: string, errors: ValidationErrors | null): string {
 		return errors ? this.getError(field, Object.keys(errors)[0]) : '';
-	}
-
-	/**
-	 * Handle submit error.
-	 * @param errors Errors.
-	 */
-	public handleSubmitError(errors: AuthErrors): AuthError {
-		const { field, message } = errors.find(error => error.field == null) ?? errors[0];
-		return { field, message: message ? message : DEFAULT_ERROR_MESSAGE };
 	}
 }

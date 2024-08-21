@@ -1,15 +1,13 @@
 <h2 class="header-title">Let's sign up! Onii-chan :3</h2>
 
 <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
-	<camp-field-email [touched]="form.controls.email.touched" [emailControl]="form.controls.email" />
+	<camp-field-email [emailControl]="form.controls.email" />
 
-	<camp-field-password [isLoading]="isLoading()" [touched]="form.controls.password.touched" [control]="form.controls.password"  />
+	<camp-field-password [control]="form.controls.password"  />
 o
 	<camp-field-password
 		label="Password confirm"
 		field="passwordConfirm"
-		[isLoading]="isLoading()"
-		[touched]="form.controls.email.touched"
 		[control]="form.controls.passwordConfirm"
 	/>
 
@@ -18,7 +16,6 @@ o
 		field="firstName"
 		[touched]="form.controls.firstName.touched"
 		[control]="form.controls.firstName"
-		[isLoading]="isLoading()"
 	/>
 
 	<camp-field-name
@@ -26,7 +23,6 @@ o
 		field="lastName"
 		[touched]="form.controls.lastName.touched"
 		[control]="form.controls.lastName"
-		[isLoading]="isLoading()"
 	/>
 
 	<div class="form__group form__group-call-to-sign-action">

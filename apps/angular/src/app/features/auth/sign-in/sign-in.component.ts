@@ -1,11 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, QueryList, signal, ViewChildren } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { catchError, first, ignoreElements, tap, throwError } from 'rxjs';
+import { catchError, first, throwError } from 'rxjs';
 import { AuthFormErrorService } from '@js-camp/angular/core/services/auth-form-error.service';
 import { UserService } from '@js-camp/angular/core/services/user.service';
 import { PATHS } from '@js-camp/core/utils/paths';
-import { AuthErrors, AuthErrorSignInField } from '@js-camp/core/models/auth-errors';
+import { AuthError } from '@js-camp/core/models/auth-errors';
 import { NotificationService } from '@js-camp/angular/core/services/notification.service';
 import { SignInFormService } from '@js-camp/angular/core/services/sign-in-form.service';
 import { FieldEmailComponent } from '@js-camp/angular/app/features/auth/field-email/field-email.component';
@@ -22,6 +22,8 @@ import { SNACKBAR_DURATION_IN_SECOND } from '@js-camp/angular/shared/constants';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignInComponent {
+	@ViewChildren('formField') formFields: QueryList<FieldEmailComponent | FieldPasswordComponent> | null = null;
+
 	private readonly router = inject(Router);
 
 	private readonly userService = inject(UserService);
@@ -37,35 +39,52 @@ export class SignInComponent {
 	/** Loading status. */
 	protected readonly isLoading = signal(false);
 
+	private forceFormFieldsDetectChanges() {
+		this.formFields?.forEach(formField => formField.detectChanges());
+	}
+
+	private startLoadingSideEffect(): void {
+		this.isLoading.set(true);
+		this.form.disable();
+	}
+
+	private stopLoadingSideEffect(): void {
+		this.isLoading.set(false);
+		this.form.enable();
+	}
+
 	/** On submit. */
 	protected onSubmit(): void {
 		this.form.markAllAsTouched();
+		this.forceFormFieldsDetectChanges();
 
 		if (this.form.valid) {
-			this.isLoading.set(true);
+			this.startLoadingSideEffect();
+
 			this.userService.signIn(this.form.getRawValue())
 				.pipe(
 					first(),
-					tap({
-						next: () => this.router.navigate([PATHS.home]),
-						finalize: () => this.isLoading.set(false),
-					}),
 					catchError(({ errors }) => {
-						const { field, message } = this.formErrorService.handleSubmitError(errors as AuthErrors);
+						this.stopLoadingSideEffect();
 
-						if (field) {
-							this.form.controls[field].setErrors({ [field]: true });
-							// TODO (Ky Tran) Change message.
-							console.log('Catch error', this.form);
-						} else {
-							this.notificationService.notifyAppError(message, SNACKBAR_DURATION_IN_SECOND);
-						}
+						errors.forEach(({ field, message }: AuthError) => {
+							if (field == null) {
+								this.notificationService.notifyAppError(message, SNACKBAR_DURATION_IN_SECOND);
+							} else {
+								const serverErrorField = 'serverError';
+								this.formErrorService.setError(field, serverErrorField, message);
+								this.form.controls[field].setErrors({ [serverErrorField]: true });
+							}
+						});
 
-						return throwError(() => new Error('Authorization error.'))
+						this.forceFormFieldsDetectChanges();
+						return throwError(() => new Error('Authorization error.'));
 					}),
-					ignoreElements(),
 				)
-				.subscribe();
+				.subscribe(() => {
+					this.stopLoadingSideEffect();
+					this.router.navigate([PATHS.home]);
+				});
 		}
 	}
 }
