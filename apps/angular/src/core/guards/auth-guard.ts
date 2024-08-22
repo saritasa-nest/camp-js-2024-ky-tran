@@ -21,9 +21,9 @@ type AuthGuardParams = {
  */
 export function authGuard({ isAuthorized }: AuthGuardParams): CanMatchFn {
 	return () => {
-		const userService = inject(UserService);
-
 		const router = inject(Router);
+
+		const userService = inject(UserService);
 
 		return userService.isAuthorized$.pipe(
 			map(isUserAuthorized => {

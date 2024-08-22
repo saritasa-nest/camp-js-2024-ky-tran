@@ -9,5 +9,7 @@
 		[formControl]="control"
 	>
 
-	<camp-field-error [errorMessage]="nameError" />
+	@if (control.invalid && (control.dirty || control.touched)) {
+		<camp-field-error [field]="field" [errors]="control.errors" />
+	}
 </div>

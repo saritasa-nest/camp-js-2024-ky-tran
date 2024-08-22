@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
+import { ValidationErrors } from '@angular/forms';
+import { AuthFormErrorService } from '@js-camp/angular/core/services/auth-form-error.service';
 import { DEFAULT_ERROR_MESSAGE } from '@js-camp/angular/shared/constants';
 
 /** Field Error component. */
@@ -10,7 +12,19 @@ import { DEFAULT_ERROR_MESSAGE } from '@js-camp/angular/shared/constants';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldErrorComponent {
-	/** Error message. */
-	@Input({ required: true })
-	public errorMessage = DEFAULT_ERROR_MESSAGE;
+	/** Field. */
+	@Input()
+	public field = '';
+
+	/** Field. */
+	@Input()
+	public errors: ValidationErrors | null = null;
+
+	/** Form error service. */
+	protected readonly formErrorService = inject(AuthFormErrorService);
+
+	/** Password error. */
+	protected get errorMessage(): string {
+		return this.formErrorService.handleErrorMessage(this.field, this.errors) ?? DEFAULT_ERROR_MESSAGE;
+	}
 }

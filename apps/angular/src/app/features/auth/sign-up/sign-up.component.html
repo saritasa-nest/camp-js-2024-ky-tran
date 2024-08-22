@@ -1,7 +1,7 @@
 <h2 class="header-title">Let's sign up! Onii-chan :3</h2>
 
 <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
-	<camp-field-email #formField [emailControl]="form.controls.email" />
+	<camp-field-email #formField [control]="form.controls.email" />
 
 	<camp-field-password #formField [control]="form.controls.password" />
 
@@ -17,6 +17,6 @@
 	</div>
 
 	<div class="form__group">
-		<button class="form__group-submit-button" type="submit">Sign up</button>
+		<button class="form__group-submit-button" type="submit" [disabled]="isLoading()">Sign up</button>
 	</div>
 </form>

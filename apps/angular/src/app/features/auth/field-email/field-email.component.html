@@ -7,8 +7,10 @@
 		name="email"
 		autocomplete="email"
 		[id]="uniqueId"
-		[formControl]="emailControl"
+		[formControl]="control"
 	>
 
-	<camp-field-error [errorMessage]="emailError"/>
+	@if (control.invalid && (control.dirty || control.touched)) {
+		<camp-field-error [field]="field" [errors]="control.errors" />
+	}
 </div>

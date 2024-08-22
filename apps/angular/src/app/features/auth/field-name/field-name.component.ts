@@ -34,12 +34,6 @@ export class FieldNameComponent {
 	/** Unique id.*/
 	protected readonly uniqueId = createUniqueId('field-name');
 
-	/** Name error. */
-	protected get nameError(): string {
-		const isInvalid = this.control.invalid && (this.control.dirty || this.control.touched);
-		return isInvalid ? this.formErrorService.handleErrorMessage(this.field, this.control.errors) : '';
-	}
-
 	/** Trigger change detection manually. */
 	public detectChanges(): void {
 		this.changeDetectorRef.detectChanges();

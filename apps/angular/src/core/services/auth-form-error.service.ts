@@ -57,7 +57,7 @@ export class AuthFormErrorService {
 	 * @param field Field.
 	 * @param errors Validation errors.
 	 */
-	public handleErrorMessage(field: string, errors: ValidationErrors | null): string {
-		return errors ? this.getError(field, Object.keys(errors)[0]) : '';
+	public handleErrorMessage(field: string, errors: ValidationErrors | null): string | null {
+		return errors ? this.getError(field, Object.keys(errors)[0]) : null;
 	}
 }

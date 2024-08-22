@@ -14,9 +14,13 @@ import { createUniqueId } from '@js-camp/angular/core/utils/helpers/create-uniqu
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldEmailComponent {
+	/** Field. */
+	@Input()
+	public field = 'email';
+
 	/** Email control. */
 	@Input({ required: true })
-	public emailControl = new FormControl();
+	public control = new FormControl();
 
 	private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
@@ -25,12 +29,6 @@ export class FieldEmailComponent {
 
 	/** Unique id.*/
 	protected readonly uniqueId = createUniqueId('field-email');
-
-	/** Email error. */
-	protected get emailError(): string {
-		const isInvalid = this.emailControl.invalid && (this.emailControl.dirty || this.emailControl.touched);
-		return isInvalid ? this.formErrorService.handleErrorMessage('email', this.emailControl.errors) : '';
-	}
 
 	/** Trigger change detection manually. */
 	public detectChanges(): void {

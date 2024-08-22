@@ -38,12 +38,6 @@ export class FieldPasswordComponent {
 	/** Unique id.*/
 	protected readonly uniqueId = createUniqueId('field-password');
 
-	/** Password error. */
-	protected get passwordError(): string {
-		const isInvalid = this.control.invalid && (this.control.dirty || this.control.touched);
-		return isInvalid ? this.formErrorService.handleErrorMessage(this.field, this.control.errors) : '';
-	}
-
 	/**
 	 * On toggle password.
 	 * @param event Mouse event.

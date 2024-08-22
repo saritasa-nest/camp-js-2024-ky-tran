@@ -1,7 +1,7 @@
 <h2 class="header-title">Let's "sign in"! Onii-chan :3</h2>
 
 <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
-	<camp-field-email #formField [emailControl]="form.controls.email" />
+	<camp-field-email #formField [control]="form.controls.email" />
 
 	<camp-field-password #formField [control]="form.controls.password" />
 
