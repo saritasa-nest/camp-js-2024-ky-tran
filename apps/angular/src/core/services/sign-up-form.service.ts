@@ -32,7 +32,7 @@ export class SignUpFormService extends AuthFormService {
 		const passwordConfirm = this.form?.controls.passwordConfirm.value;
 
 		if (password && passwordConfirm) {
-			return password === passwordConfirm ? null : { passwordsMismatch: true };
+			return password === passwordConfirm ? null : { mismatchPasswords: true };
 		}
 
 		return null;

@@ -23,7 +23,7 @@ export class AuthFormErrorService {
 			...this.requiredError,
 			minlength: ` Minimum length of password is ${PASSWORD_MIN_LENGTH}.`,
 			numericPassword: 'Password can\'t be entirely numeric.',
-			passwordsMismatch: 'Both passwords need to be identical.',
+			mismatchPasswords: 'Both passwords need to be identical.',
 		};
 	}
 
