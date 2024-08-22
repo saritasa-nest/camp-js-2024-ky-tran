@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, QueryList, signal, ViewChildren } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { catchError, first, throwError } from 'rxjs';
@@ -23,9 +23,6 @@ import { PATHS } from '@js-camp/core/utils/paths';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignUpComponent {
-	@ViewChildren('formField')
-	private formFields: QueryList<FieldEmailComponent | FieldPasswordComponent> | null = null;
-
 	private readonly router = inject(Router);
 
 	private readonly userService = inject(UserService);
@@ -41,10 +38,6 @@ export class SignUpComponent {
 	/** Loading status. */
 	protected readonly isLoading = signal(false);
 
-	private forceFormFieldsDetectChanges(): void {
-		this.formFields?.forEach(formField => formField.detectChanges());
-	}
-
 	private startLoadingSideEffect(): void {
 		this.isLoading.set(true);
 		this.form.disable();
@@ -58,7 +51,6 @@ export class SignUpComponent {
 	/** On submit. */
 	protected onSubmit(): void {
 		this.form.markAllAsTouched();
-		this.forceFormFieldsDetectChanges();
 
 		if (this.form.valid) {
 			this.startLoadingSideEffect();
@@ -79,8 +71,6 @@ export class SignUpComponent {
 									this.form.controls[field].setErrors({ [AUTH_SERVER_ERROR_FIELD]: true });
 								}
 							});
-
-							this.forceFormFieldsDetectChanges();
 						}
 
 						return throwError(() => new Error(AUTHORIZATION_ERROR_MESSAGE));

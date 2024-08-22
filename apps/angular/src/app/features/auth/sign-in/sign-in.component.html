@@ -1,9 +1,9 @@
 <h2 class="header-title">Let's "sign in"! Onii-chan :3</h2>
 
 <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
-	<camp-field-email #formField [control]="form.controls.email" />
+	<camp-field-email [control]="form.controls.email" />
 
-	<camp-field-password #formField [control]="form.controls.password" />
+	<camp-field-password [control]="form.controls.password" />
 
 	<div class="form__group form__group-call-to-sign-action">
 		<p>Onii-chan does not have an account yet?</p>

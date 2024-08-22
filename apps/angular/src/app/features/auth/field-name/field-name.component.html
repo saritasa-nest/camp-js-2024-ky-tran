@@ -9,7 +9,7 @@
 		[formControl]="control"
 	>
 
-	@if (control.invalid && (control.dirty || control.touched)) {
+	@if (isInvalid$ | async) {
 		<camp-field-error [field]="field" [errors]="control.errors" />
 	}
 </div>

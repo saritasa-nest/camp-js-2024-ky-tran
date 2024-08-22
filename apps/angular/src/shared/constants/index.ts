@@ -51,3 +51,6 @@ export const SUCCESS_STATUS = 'success';
 
 /** Error status. */
 export const ERROR_STATUS = 'error';
+
+/** Form status invalid. */
+export const FORM_STATUS_INVALID = 'INVALID';
