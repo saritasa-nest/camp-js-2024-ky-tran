@@ -20,17 +20,22 @@ export class SignUpFormService extends AuthFormService {
 			email: ['', [Validators.required, Validators.email]],
 			firstName: ['', nameValidators],
 			lastName: ['', nameValidators],
-			password: ['', passwordValidators],
+			password: ['', [...passwordValidators, this.passwordsMatchValidator.bind(this)]],
 			passwordConfirm: ['', [...passwordValidators, this.passwordsMatchValidator.bind(this)]],
 		});
 
 		return this.form;
 	}
 
-	private passwordsMatchValidator(control: AbstractControl): ValidationErrors | null {
+	private passwordsMatchValidator(_: AbstractControl): ValidationErrors | null {
 		const password = this.form?.controls.password.value ?? null;
-		const passwordConfirm = control.value;
-		return password === passwordConfirm ? null : { passwordsMismatch: true };
+		const passwordConfirm = this.form?.controls.passwordConfirm.value;
+
+		if (password && passwordConfirm) {
+			return password === passwordConfirm ? null : { passwordsMismatch: true };
+		}
+
+		return null;
 	}
 
 	private noAllSpaceValidator(control: AbstractControl): ValidationErrors | null {

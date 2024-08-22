@@ -5,12 +5,12 @@ import { catchError, first, throwError } from 'rxjs';
 import { AuthFormErrorService } from '@js-camp/angular/core/services/auth-form-error.service';
 import { UserService } from '@js-camp/angular/core/services/user.service';
 import { PATHS } from '@js-camp/core/utils/paths';
-import {  AuthSignInError } from '@js-camp/core/models/auth-errors';
+import { AuthSignInErrors } from '@js-camp/core/models/auth-errors';
 import { NotificationService } from '@js-camp/angular/core/services/notification.service';
 import { SignInFormService } from '@js-camp/angular/core/services/sign-in-form.service';
 import { FieldEmailComponent } from '@js-camp/angular/app/features/auth/field-email/field-email.component';
 import { FieldPasswordComponent } from '@js-camp/angular/app/features/auth/field-password/field-password.component';
-import { AUTH_SERVER_ERROR_FIELD } from '@js-camp/angular/shared/constants';
+import { AUTH_SERVER_ERROR_FIELD, AUTHORIZATION_ERROR_MESSAGE, SIGN_IN_MESSAGE } from '@js-camp/angular/shared/constants';
 
 /** Sign In component. */
 @Component({
@@ -40,7 +40,7 @@ export class SignInComponent {
 	/** Loading status. */
 	protected readonly isLoading = signal(false);
 
-	private forceFormFieldsDetectChanges() {
+	private forceFormFieldsDetectChanges(): void {
 		this.formFields?.forEach(formField => formField.detectChanges());
 	}
 
@@ -65,25 +65,29 @@ export class SignInComponent {
 			this.userService.signIn(this.form.getRawValue())
 				.pipe(
 					first(),
-					catchError(({ errors }) => {
-						this.stopLoadingSideEffect();
+					catchError((error: unknown) => {
+						if (error && typeof error === 'object' && 'errors' in error) {
+							const authSignInErrors = error.errors as AuthSignInErrors;
+							this.stopLoadingSideEffect();
 
-						errors.forEach(({ field, message }: AuthSignInError) => {
-							if (field == null) {
-								this.notificationService.notifyAppError(message);
-							} else {
-								this.formErrorService.setError(field, AUTH_SERVER_ERROR_FIELD, message);
-								this.form.controls[field].setErrors({ [AUTH_SERVER_ERROR_FIELD]: true });
-							}
-						});
+							authSignInErrors.forEach(({ field, message }) => {
+								if (field == null) {
+									this.notificationService.notifyAppError(message);
+								} else {
+									this.formErrorService.setError(field, AUTH_SERVER_ERROR_FIELD, message);
+									this.form.controls[field].setErrors({ [AUTH_SERVER_ERROR_FIELD]: true });
+								}
+							});
 
-						this.forceFormFieldsDetectChanges();
-						return throwError(() => new Error('Authorization error.'));
+							this.forceFormFieldsDetectChanges();
+						}
+
+						return throwError(() => new Error(AUTHORIZATION_ERROR_MESSAGE));
 					}),
 				)
 				.subscribe(() => {
 					this.stopLoadingSideEffect();
-					this.notificationService.notifyAppSuccess('Sign in successfully.');
+					this.notificationService.notifyAppSuccess(SIGN_IN_MESSAGE);
 					this.router.navigate([PATHS.home]);
 				});
 		}

@@ -1,13 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, ignoreElements, merge, MonoTypeOperatorFunction, shareReplay, throwError } from 'rxjs';
-import {
-	DEFAULT_ERROR_MESSAGE,
-	DEFAULT_SUCCESS_MESSAGE,
-	ERROR_STATUS,
-	SNACKBAR_DURATION_IN_SECOND,
-	SUCCESS_STATUS,
-} from '@js-camp/angular/shared/constants';
+import { DEFAULT_ERROR_MESSAGE, DEFAULT_SUCCESS_MESSAGE, SNACKBAR_DURATION_IN_SECOND } from '@js-camp/angular/shared/constants';
 import { SnackbarComponent } from '@js-camp/angular/shared/components/error-snack-bar/error-snack-bar.component';
 import { SnackbarData, SnackbarDataStatus } from '@js-camp/angular/shared/types/snackbar-data';
 
@@ -21,7 +15,7 @@ export class NotificationService {
 		horizontalPosition: 'right',
 	};
 
-	private openSnackbar(data: SnackbarData, durationMillisecondOption: { duration?: number }) {
+	private openSnackbar(data: SnackbarData, durationMillisecondOption: { duration?: number; }): void {
 		this.snackBar.openFromComponent(SnackbarComponent, {
 			data,
 			verticalPosition: 'top',
@@ -35,7 +29,7 @@ export class NotificationService {
 	 * @param successMessage Success message.
 	 * @param durationInSecond Duration in second.
 	 */
-	public notifyAppSuccess(successMessage: string | null, durationInSecond = SNACKBAR_DURATION_IN_SECOND): void {
+	public notifyAppSuccess(successMessage: string | null, durationInSecond: number = SNACKBAR_DURATION_IN_SECOND): void {
 		const durationMillisecondOption = durationInSecond ? { duration: durationInSecond * 1000 } : {};
 
 		this.openSnackbar(
@@ -49,7 +43,7 @@ export class NotificationService {
 	 * @param errorMessage Error message.
 	 * @param durationInSecond Duration in second.
 	 */
-	public notifyAppError(errorMessage: string | null, durationInSecond = SNACKBAR_DURATION_IN_SECOND): void {
+	public notifyAppError(errorMessage: string | null, durationInSecond: number = SNACKBAR_DURATION_IN_SECOND): void {
 		const durationMillisecondOption = durationInSecond ? { duration: durationInSecond * 1000 } : {};
 
 		this.openSnackbar(

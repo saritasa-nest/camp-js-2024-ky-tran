@@ -34,6 +34,18 @@ export const DEFAULT_SUCCESS_MESSAGE = 'Perform action successfully.';
 /** Default error message. */
 export const DEFAULT_ERROR_MESSAGE = 'Something went wrong! Please try again.';
 
+/** Authorization error message. */
+export const AUTHORIZATION_ERROR_MESSAGE = 'Authorization failed.';
+
+/** Sign in message. */
+export const SIGN_IN_MESSAGE = 'Sign in successfully.';
+
+/** Sign up message. */
+export const SIGN_UP_MESSAGE = 'Sign up successfully.';
+
+/** Sign out message. */
+export const SIGN_OUT_MESSAGE = 'Bye bye! See you later.';
+
 /** Success status. */
 export const SUCCESS_STATUS = 'success';
 

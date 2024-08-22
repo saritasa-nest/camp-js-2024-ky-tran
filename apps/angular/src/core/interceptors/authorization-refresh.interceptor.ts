@@ -19,7 +19,7 @@ export function authorizationRefreshInterceptor(req: HttpRequest<unknown>, next:
 		return next(req);
 	}
 
-	return next(req).pipe(catchError(error => {
+	return next(req).pipe(catchError((error: unknown) => {
 		if (
 			error instanceof HttpErrorResponse &&
 			error.status === HttpStatusCode.Unauthorized &&

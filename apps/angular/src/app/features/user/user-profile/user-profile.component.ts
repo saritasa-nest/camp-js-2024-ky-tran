@@ -5,6 +5,7 @@ import { first } from 'rxjs';
 import { UserService } from '@js-camp/angular/core/services/user.service';
 import { PATHS } from '@js-camp/core/utils/paths';
 import { NotificationService } from '@js-camp/angular/core/services/notification.service';
+import { SIGN_OUT_MESSAGE } from '@js-camp/angular/shared/constants';
 
 /** User Profile component. */
 @Component({
@@ -31,6 +32,6 @@ export class UserProfileComponent {
 		this.userService.signOut().pipe(first())
 			.subscribe(() => this.router.navigate([PATHS.signIn]));
 
-		this.notificationService.notifyAppSuccess('Bye bye! See you later.');
+		this.notificationService.notifyAppSuccess(SIGN_OUT_MESSAGE);
 	}
 }

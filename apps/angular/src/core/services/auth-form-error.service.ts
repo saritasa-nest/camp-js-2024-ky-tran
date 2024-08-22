@@ -9,7 +9,7 @@ export class AuthFormErrorService {
 	private allErrors: AllError = {
 		email: { ...this.requiredError, ...this.serverError, email: 'Invalid email address.' },
 		password: { ...this.passwordError, ...this.serverError },
-		passwordConfirm: { ...this.passwordError, ...this.serverError, passwordsMismatch: 'Passwords must match.' },
+		passwordConfirm: { ...this.passwordError, ...this.serverError },
 		firstName: { ...this.requiredError, ...this.noAllSpaceError, ...this.serverError },
 		lastName: { ...this.requiredError, ...this.noAllSpaceError, ...this.serverError },
 	};
@@ -23,6 +23,7 @@ export class AuthFormErrorService {
 			...this.requiredError,
 			minlength: ` Minimum length of password is ${PASSWORD_MIN_LENGTH}.`,
 			numericPassword: 'Password can\'t be entirely numeric.',
+			passwordsMismatch: 'Passwords must match.',
 		};
 	}
 

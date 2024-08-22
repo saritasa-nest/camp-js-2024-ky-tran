@@ -8,6 +8,7 @@ import { UrlConfig } from '@js-camp/angular/config/url.config';
 import { UserSecretDto } from '@js-camp/core/dtos/user-secret.dto';
 import { UserSecretMapper } from '@js-camp/core/mappers/user-secret.mapper';
 import { AuthErrorsMapper } from '@js-camp/core/mappers/auth-errors.mapper';
+import { AuthSignInErrorsDto, AuthSignUpErrorsDto } from '@js-camp/core/dtos/auth-errors.dto';
 
 /** Auth service. */
 @Injectable({ providedIn: 'root' })
@@ -25,7 +26,17 @@ export class AuthService {
 			.pipe(
 				first(),
 				map(userSecretDto => UserSecretMapper.fromDto(userSecretDto)),
-				catchError(({ error }) => throwError(() => ({ errors: AuthErrorsMapper.signInFromDto(error.errors) }))),
+				catchError((error: unknown) => throwError(() => {
+					const hasError = error && typeof error === 'object' && 'error' in error;
+
+					if (hasError) {
+						const mainError = error.error;
+						const hasErrors = mainError && typeof mainError === 'object' && 'errors' in mainError;
+						return hasErrors ? { errors: AuthErrorsMapper.signInFromDto(mainError.errors as AuthSignInErrorsDto) } : error;
+					}
+
+					return error;
+				})),
 			);
 	}
 
@@ -48,7 +59,17 @@ export class AuthService {
 			.pipe(
 				first(),
 				map(() => undefined),
-				catchError(({ error }) => throwError(() => ({ errors: AuthErrorsMapper.signUpFromDto(error.errors) }))),
+				catchError((error: unknown) => throwError(() => {
+					const hasError = error && typeof error === 'object' && 'error' in error;
+
+					if (hasError) {
+						const mainError = error.error;
+						const hasErrors = mainError && typeof mainError === 'object' && 'errors' in mainError;
+						return hasErrors ? { errors: AuthErrorsMapper.signUpFromDto(mainError.errors as AuthSignUpErrorsDto) } : error;
+					}
+
+					return error;
+				})),
 			);
 	}
 }
