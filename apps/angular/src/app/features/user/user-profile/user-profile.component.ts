@@ -1,11 +1,12 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { first } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SIGN_OUT_MESSAGE } from '@js-camp/angular/shared/constants';
 import { UserService } from '@js-camp/angular/core/services/user.service';
 import { PATHS } from '@js-camp/core/utils/paths';
 import { NotificationService } from '@js-camp/angular/core/services/notification.service';
-import { SIGN_OUT_MESSAGE } from '@js-camp/angular/shared/constants';
 
 /** User Profile component. */
 @Component({
@@ -19,6 +20,8 @@ import { SIGN_OUT_MESSAGE } from '@js-camp/angular/shared/constants';
 export class UserProfileComponent {
 	private readonly router = inject(Router);
 
+	private readonly destroyRef = inject(DestroyRef);
+
 	private readonly notificationService = inject(NotificationService);
 
 	/** User service. */
@@ -29,7 +32,8 @@ export class UserProfileComponent {
 
 	/** On sign out. */
 	protected onSignOut(): void {
-		this.userService.signOut().pipe(first())
+		this.userService.signOut()
+			.pipe(first(), takeUntilDestroyed(this.destroyRef))
 			.subscribe(() => this.router.navigate([PATHS.signIn]));
 
 		this.notificationService.notifyAppSuccess(SIGN_OUT_MESSAGE);
