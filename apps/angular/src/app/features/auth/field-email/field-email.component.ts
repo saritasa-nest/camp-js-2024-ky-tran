@@ -22,16 +22,16 @@ export class FieldEmailComponent implements OnInit {
 
 	/** Email control. */
 	@Input({ required: true })
-	public control!: FormControl;
+	public emailControl!: FormControl;
 
 	private readonly formFieldService = inject(FormFieldService);
 
-	/** Weather the form field is invalid to display error message. */
+	/** Weather the email control is invalid to display error message. */
 	protected isInvalid$: Observable<boolean> | null = null;
 
 	/** @inheritdoc */
 	public ngOnInit(): void {
-		this.isInvalid$ = this.formFieldService.createIsInvalidObservable(this.control);
+		this.isInvalid$ = this.formFieldService.createIsInvalidObservable(this.emailControl);
 	}
 
 	/** Unique id.*/

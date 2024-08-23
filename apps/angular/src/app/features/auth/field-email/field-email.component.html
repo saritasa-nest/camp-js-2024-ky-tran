@@ -7,10 +7,10 @@
 		name="email"
 		autocomplete="email"
 		[id]="uniqueId"
-		[formControl]="control"
+		[formControl]="emailControl"
 	>
 
 	@if (isInvalid$ | async) {
-		<camp-field-error [field]="field" [errors]="control.errors" />
+		<camp-field-error [field]="field" [errors]="emailControl.errors" />
 	}
 </div>

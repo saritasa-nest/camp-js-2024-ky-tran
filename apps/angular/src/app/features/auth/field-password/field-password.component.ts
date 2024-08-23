@@ -27,7 +27,7 @@ export class FieldPasswordComponent implements OnInit {
 
 	/** Password control. */
 	@Input({ required: true })
-	public control!: FormControl;
+	public passwordControl!: FormControl;
 
 	private readonly formFieldService = inject(FormFieldService);
 
@@ -36,7 +36,7 @@ export class FieldPasswordComponent implements OnInit {
 
 	/** @inheritdoc */
 	public ngOnInit(): void {
-		this.isInvalid$ = this.formFieldService.createIsInvalidObservable(this.control);
+		this.isInvalid$ = this.formFieldService.createIsInvalidObservable(this.passwordControl);
 	}
 
 	/** Unique id.*/

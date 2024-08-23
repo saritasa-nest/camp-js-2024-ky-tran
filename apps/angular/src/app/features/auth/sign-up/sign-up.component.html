@@ -1,11 +1,15 @@
 <h2 class="header-title">Let's sign up! Onii-chan :3</h2>
 
 <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
-	<camp-field-email [control]="form.controls.email" />
+	<camp-field-email [emailControl]="form.controls.email" />
 
-	<camp-field-password [control]="form.controls.password" />
+	<camp-field-password [passwordControl]="form.controls.password" />
 
-	<camp-field-password label="Password confirm" field="passwordConfirm" [control]="form.controls.passwordConfirm" />
+	<camp-field-password
+		label="Password confirm"
+		field="passwordConfirm"
+		[passwordControl]="form.controls.passwordConfirm"
+	/>
 
 	<camp-field-name label="First name" field="firstName" [control]="form.controls.firstName" />
 
