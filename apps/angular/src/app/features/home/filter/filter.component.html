@@ -1,7 +1,7 @@
 <mat-form-field>
   <mat-label>Select Anime Type</mat-label>
-  <mat-select multiple [disabled]="disabled" [value]="(filterParamsProvider$ | async)?.typeIn" (selectionChange)="onSelectionChange($event)">
-    <mat-option>All</mat-option>
+  <mat-select multiple [disabled]="disabled" [value]="selectedTypes()" (selectionChange)="onSelectionChange($event)">
+    <mat-option value="all">All</mat-option>
 		@for (animeType of animeTypes; track $index) {
 			<mat-option [value]="animeType">{{ animeType }}</mat-option>
 		}
