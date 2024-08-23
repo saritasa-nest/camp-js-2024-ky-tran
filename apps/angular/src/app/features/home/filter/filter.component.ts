@@ -1,10 +1,11 @@
-import { booleanAttribute, ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, computed, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { FILTER_PARAMS_TOKEN } from '@js-camp/angular/core/providers/filter-params.provider';
 import { AnimeType } from '@js-camp/core/models/anime';
 import { AnimeFilterParams } from '@js-camp/core/models/anime-filter-params';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 /** Filter component. */
 @Component({
@@ -25,13 +26,33 @@ export class FilterComponent {
 	public readonly selectionChange = new EventEmitter<AnimeFilterParams.Filter>();
 
 	/** Filter params provider. */
-	protected readonly filterParamsProvider$ = inject(FILTER_PARAMS_TOKEN);
+	protected readonly filterParamsProvider = toSignal(inject(FILTER_PARAMS_TOKEN));
 
 	/** Anime types. */
 	protected readonly animeTypes = Object.values(AnimeType);
 
-	private isSelectField(fields: unknown[]): boolean {
-		return Boolean(fields.length) && fields.every(field => field != null);
+	/** Selected types to display on filter UI. */
+	protected selectedTypes = computed(() => {
+		const types: string[] = [...(this.filterParamsProvider()?.typeIn ?? [])];
+
+		if (types.length === this.animeTypes.length) {
+			types.push('all');
+		}
+
+		return types;
+	});
+
+	private selectedFields(fields: readonly string[]): AnimeType[] | null {
+		const isSelectedAllBefore = this.filterParamsProvider()?.typeIn?.length === this.animeTypes.length;
+		const isSelectedAll = fields.some(field => field === 'all');
+
+		if (!fields.length) {
+			return null;
+		}
+		if (isSelectedAllBefore) {
+			return isSelectedAll ? [...fields.filter(field => field !== 'all')] as AnimeType[] : null ;
+		}
+		return isSelectedAll ? this.animeTypes : fields as AnimeType[];
 	}
 
 	/**
@@ -39,6 +60,6 @@ export class FilterComponent {
 	 * @param selectEvent Select Change event.
 	 */
 	protected onSelectionChange(selectEvent: MatSelectChange): void {
-		this.selectionChange.emit({ typeIn: this.isSelectField(selectEvent.value) ? selectEvent.value : null });
+		this.selectionChange.emit({ typeIn: this.selectedFields(selectEvent.value) });
 	}
 }
