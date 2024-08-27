@@ -32,6 +32,15 @@
 	border-inline: var(--width-border-medium) solid var(--background-color-primary-bright);
 }
 
+.table tr {
+	transition: all ease 0.2s;
+	cursor: pointer;
+}
+
+.table tr:hover {
+	filter: brightness(1.1);
+}
+
 .table th,
 .table td {
 	color: var(--text-color-main);

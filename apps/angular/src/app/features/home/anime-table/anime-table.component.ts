@@ -1,5 +1,6 @@
 import { booleanAttribute, ChangeDetectionStrategy, Component, DestroyRef, ElementRef, EventEmitter, inject, Input, numberAttribute, OnInit, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSortModule, Sort } from '@angular/material/sort';
 import { BehaviorSubject, ignoreElements, tap } from 'rxjs';
@@ -21,6 +22,7 @@ import { SortDirection } from '@js-camp/core/models/sort-direction';
 import { SortFields } from '@js-camp/core/models/sort-fields';
 import { SortEventDirection } from '@js-camp/angular/core/enums/sort-event-direction';
 import { AnimeTableColumns } from '@js-camp/angular/core/enums/anime-table-columns';
+import { PATHS } from '@js-camp/core/utils/paths';
 
 /** Anime Table component. */
 @Component({
@@ -74,6 +76,8 @@ export class AnimeTableComponent implements OnInit {
 	@Output()
 	public readonly sortChange = new EventEmitter<AnimeFilterParams.Sort>();
 
+	private readonly router = inject(Router);
+
 	private readonly destroyRef = inject(DestroyRef);
 
 	private readonly filterParamsProvider$ = inject(FILTER_PARAMS_TOKEN);
@@ -101,8 +105,6 @@ export class AnimeTableComponent implements OnInit {
 
 	/** Date format. */
 	protected readonly dateFormat = DATE_FORMAT;
-
-	public constructor() {}
 
 	/** @inheritdoc */
 	public ngOnInit(): void {
@@ -202,5 +204,13 @@ export class AnimeTableComponent implements OnInit {
 	protected createSkeletonAnimeSource(pageSize: number): Anime[] {
 		// 'as Anime' -> only need id for trackBy function works, all the field with no value will be replaced by skeleton loading
 		return Array.from({ length: pageSize }).map((_, index) => ({ id: index } as Anime));
+	}
+
+	/**
+	 * Navigate to the details page of the selected anime.
+	 * @param anime Anime.
+	 */
+	protected onSelectAnime(anime: Anime): void {
+		this.router.navigate([PATHS.animeDetails(anime.id)]);
 	}
 }
