@@ -17,7 +17,7 @@ type Paths = Readonly<{
 /** Url paths. */
 export const PATHS: Paths = {
 	home: '/',
-	animeDetails: (id: number): string => `/anime/${id}`,
+	animeDetails: (id: number) => `/anime/${id}`,
 	userProfile: '/user/profile',
 	signIn: '/auth/signin',
 };

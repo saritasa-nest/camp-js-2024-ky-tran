@@ -41,6 +41,14 @@
 	filter: brightness(1.1);
 }
 
+.table tr:nth-child(even) {
+	background-color: var(--background-color-primary-light);
+}
+
+.table tr:nth-child(even):hover {
+	filter: brightness(0.9);
+}
+
 .table th,
 .table td {
 	color: var(--text-color-main);
@@ -59,10 +67,6 @@
 .table td {
 	font-size: var(--font-size-medium);
 	padding-block: var(--gap-medium);
-}
-
-.table tr:nth-child(even) {
-	background-color: var(--background-color-primary-light);
 }
 
 .mat-column-index {

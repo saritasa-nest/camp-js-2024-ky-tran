@@ -1,0 +1,49 @@
+@if (isLoading()) {
+	<div>Loading...</div>
+}
+
+@if (!isLoading() && !animeDetails()) {
+	<div>No anime details to display.</div>
+}
+
+@if (animeDetails(); as anime) {
+	<section class="anime-details">
+		<div class="anime-details-content">
+			<div class="anime-details-image">
+				<img class="anime-details-image__image" [src]="anime?.imageSrc" alt="Description">
+				<button type="button" class="anime-details-image__button">View full image</button>
+			</div>
+
+			<div class="anime-details-information">
+				<h3>{{ anime?.englishTitle }} -  {{ anime?.japaneseTitle }}</h3>
+				<p><strong>Rating:</strong> {{ anime.rating }}</p>
+				<p><strong>Source:</strong> {{ anime.source }}</p>
+				<p><strong>Season:</strong> {{ anime.season }}</p>
+				<p><strong>Synopsis:</strong> {{ anime.synopsis }}</p>
+			</div>
+		</div>
+
+		<div class="anime-details-trailer">
+			Trailer
+		</div>
+
+		<!-- <p><strong>Airing:</strong> {{ anime.airing ? 'Yes' : 'No' }}</p> -->
+		<!-- <p><strong>Aired:</strong> {{ anime.aired.start }} to {{ anime.aired.end }}</p> -->
+
+		<!-- <h2>Studios</h2>
+		<ul>
+			<li *ngFor="let studio of anime.studios">{{ studio }}</li>
+		</ul>
+
+		<h2>Genres</h2>
+		<ul>
+			<li *ngFor="let genre of anime.genres">{{ genre }}</li>
+		</ul> -->
+
+		<!-- <iframe width="560" height="315" [src]="getYouTubeUrl(anime.trailer_youtube_id)" frameborder="0" allowfullscreen></iframe> -->
+	</section>
+}
+
+<!-- <mat-dialog-content>
+  <img [src]="imageToDisplay" alt="Full-size Image">
+</mat-dialog-content> -->

@@ -1,0 +1,25 @@
+.anime-details {
+	padding: var(--gap-extra-medium);
+}
+
+.anime-details-content {
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+	gap: var(--gap-extra-medium);
+}
+
+.anime-details-image {
+	grid-column: 1 / 2;
+}
+
+.anime-details-image__image {
+	width: 100%;
+}
+
+.anime-details-information {
+	grid-column: 2 / -1;
+}
+
+.anime-details-trailer {
+	margin-top: var(--gap-extra-medium);
+}
