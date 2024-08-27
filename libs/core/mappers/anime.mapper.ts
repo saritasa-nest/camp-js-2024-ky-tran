@@ -1,8 +1,9 @@
-import { AnimeDto } from '../dtos/anime';
+import { AnimeDto } from '../dtos/anime.dto';
 import { Anime } from '../models/anime';
 
 import { AnimeStatusMapper } from './anime-status.mapper';
 import { AnimeTypeMapper } from './anime-type.mapper';
+import { DateRangeMapper } from './date-range.mapper';
 
 /** Anime mapper. */
 export namespace AnimeMapper {
@@ -14,15 +15,12 @@ export namespace AnimeMapper {
 	export function fromDto(dto: AnimeDto): Anime {
 		return {
 			id: dto.id,
-			createdAt: new Date(dto.created),
-			modifiedAt: new Date(dto.modified),
+			createdAt: DateRangeMapper.parseDateFromDto(dto.created),
+			modifiedAt: DateRangeMapper.parseDateFromDto(dto.modified),
 			englishTitle: dto.title_eng,
 			japaneseTitle: dto.title_jpn,
 			imageUrl: dto.image,
-			aired: {
-				startAt: dto.aired.start ? new Date(dto.aired.start) : null,
-				endAt: dto.aired.end ? new Date(dto.aired.end) : null,
-			},
+			aired: DateRangeMapper.fromDto(dto.aired),
 			type: AnimeTypeMapper.fromDto(dto.type),
 			status: AnimeStatusMapper.fromDto(dto.status),
 			averageScore: dto.score,

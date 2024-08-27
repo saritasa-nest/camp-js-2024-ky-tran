@@ -1,0 +1,27 @@
+.skeleton-cell {
+	display: flex;
+	align-items: center;
+	height: var(--width-image-main);
+}
+
+@keyframes skeleton-loading {
+	0% {
+		background-position: 200% 0;
+	}
+
+	100% {
+		background-position: -200% 0;
+	}
+}
+
+.skeleton-cell__content {
+	--background-color-dark: var(--background-color-primary-subtle);
+	--background-color-light: var(--background-color-primary-light);
+
+	flex-grow: 1;
+	flex-basis: 0;
+	height: var(--height-skeleton-cell);
+	background: linear-gradient(to right, var(--background-color-dark), var(--background-color-light));
+	background-size: 200% 100%;
+	animation: skeleton-loading 3s infinite;
+}

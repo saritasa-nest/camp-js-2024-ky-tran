@@ -1,7 +1,22 @@
-<header class="header">
-	<h2 class="header__title">All anime</h2>
-</header>
+@if ({
+	isLoading: isLoading$ | async,
+	animeList: animeList$ | async,
+	pagePaginator: pagePaginator$ | async,
+}; as data) {
+	<header class="header">
+		<h2 class="header__title">Onii-Chan Baka Hentai</h2>
+		<div class="header__actions">
+			<camp-filter [disabled]="data.isLoading" (selectionChange)="onSelectionChange($event)" />
+			<camp-search [disabled]="data.isLoading" (searchChange)="onSearchChange($event)" />
+		</div>
+	</header>
 
-<section class="content">
-	<camp-anime-table />
-</section>
+	<camp-anime-table
+		[isLoading]="data.isLoading"
+		[animeList]="data.isLoading ? [] : data.animeList?.results ?? []"
+		[animeListTotal]="data.animeList?.count"
+		[pagePaginator]="data.pagePaginator"
+		(pageChange)="onPageChange($event)"
+		(sortChange)="onSortChange($event)"
+	/>
+}

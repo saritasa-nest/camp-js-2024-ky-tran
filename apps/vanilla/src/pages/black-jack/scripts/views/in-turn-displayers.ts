@@ -6,7 +6,7 @@ import { Subscriber } from '../models/subscriber';
 export class InTurnDisplayer implements Subscriber<number> {
 	/**
 	 * Updates the display to highlight the current player's turn.
-	 * @param playerIndex - The index of the current player has just finished rolling.
+	 * @param playerIndex The index of the current player has just finished rolling.
 	 */
 	public update(playerIndex: number): void {
 		const inTurnIndex = (playerIndex + 1) % NUMBER_OF_PLAYERS;

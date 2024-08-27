@@ -1,0 +1,10 @@
+:host {
+	margin-top: var(--gap-medium);
+}
+
+.paginator {
+	color: var(--text-color-main);
+	background-color: var(--background-color-primary-bright);
+	font-size: var(--font-size-medium);
+	padding: var(--gap-tiny) var(--gap-extra-small);
+}

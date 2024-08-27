@@ -1,0 +1,11 @@
+<mat-paginator
+	class="paginator"
+	[length]="length"
+	[pageIndex]="pagePaginator.pageNumber - 1"
+	[pageSize]="pagePaginator.pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+	[showFirstLastButtons]="showFirstLastButtons"
+	[disabled]="disabled"
+	(page)="onPageChange($event)"
+  aria-label="Select anime page">
+</mat-paginator>

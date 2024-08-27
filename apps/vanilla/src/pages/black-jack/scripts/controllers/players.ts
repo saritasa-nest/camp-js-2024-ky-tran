@@ -29,8 +29,8 @@ export class Admin extends BaseUser implements Subscriber<PlayerTurnResult> {
 
 	/**
 	 * Updates dice results for a player's turn and notifies subscribers (displayers) with the updated results.
-	 * @param playerIndex - Index of the player whose turn result is being updated.
-	 * @param diceResult - Result of the dice roll for the player's turn.
+	 * @param playerIndex Index of the player whose turn result is being updated.
+	 * @param diceResult Result of the dice roll for the player's turn.
 	 */
 	public update({ playerIndex, diceResult }: PlayerTurnResult): void {
 		this.diceResults.push(diceResult);
@@ -67,8 +67,8 @@ export class Player extends BaseUser implements Subscriber<PlayerTurnResult> {
 	/**
 	 * Updates the player's state with the latest turn result.
 	 * Notifies subscribers with updated results, win status, and next player's turn.
-	 * @param playerIndex - Index of the player whose turn result is being updated.
-	 * @param diceResult - Result of the dice roll for the player's turn.
+	 * @param playerIndex Index of the player whose turn result is being updated.
+	 * @param diceResult Result of the dice roll for the player's turn.
 	 */
 	public update({ playerIndex, diceResult }: PlayerTurnResult): void {
 		if (playerIndex === this.selfIndex) {

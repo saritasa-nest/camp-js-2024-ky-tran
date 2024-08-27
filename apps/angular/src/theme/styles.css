@@ -1,2 +1,6 @@
 @import url("./variables.css");
 @import url("./base.css");
+@import url("./materials/table.css");
+@import url("./materials/select-filter.css");
+@import url("./materials/search.css");
+@import url("./materials/paginator.css");

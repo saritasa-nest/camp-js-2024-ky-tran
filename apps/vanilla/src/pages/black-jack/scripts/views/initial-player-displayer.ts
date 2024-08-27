@@ -23,7 +23,7 @@ export class InitialPlayerDisplayer implements Subscriber<InitialDisplay> {
 
 	/**
 	 * Updates the player view by inserting the generated markup into the container element.
-	 * @param playerIndex - The index of the player whose view is being updated.
+	 * @param playerIndex The index of the player whose view is being updated.
 	 */
 	public update({ playerIndex }: InitialDisplay): void {
 		this.containerEl.insertAdjacentHTML('beforeend', this.generateMarkup(playerIndex));

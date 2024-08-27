@@ -1,16 +1,26 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { AsyncPipe, CommonModule } from '@angular/common';
-import { MatTableModule } from '@angular/material/table';
-import { BehaviorSubject, catchError, finalize, Observable, throwError } from 'rxjs';
-
+import { booleanAttribute, ChangeDetectionStrategy, Component, DestroyRef, ElementRef, EventEmitter, inject, Input, numberAttribute, OnInit, Output, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatSortModule, Sort } from '@angular/material/sort';
+import { BehaviorSubject, ignoreElements, tap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { DATE_FORMAT, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
 import { Anime } from '@js-camp/core/models/anime';
-import { NullablePipe } from '@js-camp/angular/core/pipes/nullable-pipe';
+import { NullablePipe } from '@js-camp/angular/core/pipes/nullable.pipe';
 import { ProgressSpinnerComponent } from '@js-camp/angular/shared/components/progress-spinner/progress-spinner.component';
-import { ErrorMessageComponent } from '@js-camp/angular/shared/components/error-message/error-message.component';
-import { Pagination } from '@js-camp/core/models/pagination';
-import { AnimeService } from '@js-camp/angular/core/services/anime.service';
-import { AnimeTableColumns } from '@js-camp/core/enums/anime-table-columns';
-import { DATE_FORMAT } from '@js-camp/angular/shared/constants';
+import { FILTER_PARAMS_TOKEN } from '@js-camp/angular/core/providers/filter-params.provider';
+import { paginatorAttribute } from '@js-camp/angular/shared/attributes/paginator-attribute';
+import { animeListAttribute } from '@js-camp/angular/shared/attributes/anime-list-attribute';
+import { LazyLoadImageDirective } from '@js-camp/angular/shared/directives/lazy-load-image.directive';
+import { BaseFilterParams } from '@js-camp/core/models/base-filter-params';
+import { SkeletonCellComponent } from '@js-camp/angular/app/features/home/anime-table/skeleton-cell/skeleton-cell.component';
+import { NonNullableFields } from '@js-camp/core/types/non-nullable-fields';
+import { AnimeFilterParams } from '@js-camp/core/models/anime-filter-params';
+import { PaginatorComponent } from '@js-camp/angular/app/features/home/anime-table/paginator/paginator.component';
+import { SortDirection } from '@js-camp/core/models/sort-direction';
+import { SortFields } from '@js-camp/core/models/sort-fields';
+import { SortEventDirection } from '@js-camp/angular/core/enums/sort-event-direction';
+import { AnimeTableColumns } from '@js-camp/angular/core/enums/anime-table-columns';
 
 /** Anime Table component. */
 @Component({
@@ -18,11 +28,70 @@ import { DATE_FORMAT } from '@js-camp/angular/shared/constants';
 	standalone: true,
 	templateUrl: './anime-table.component.html',
 	styleUrl: './anime-table.component.css',
-	imports: [CommonModule, AsyncPipe, MatTableModule, ProgressSpinnerComponent, ErrorMessageComponent, NullablePipe],
+	imports: [
+		CommonModule,
+		MatTableModule,
+		MatSortModule,
+		ProgressSpinnerComponent,
+		NullablePipe,
+		LazyLoadImageDirective,
+		SkeletonCellComponent,
+		PaginatorComponent,
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AnimeTableComponent {
-	private readonly animeService = inject(AnimeService);
+export class AnimeTableComponent implements OnInit {
+	/** Anime table reference. */
+	@ViewChild('table', { read: ElementRef }) private readonly animeTableRef!: ElementRef<HTMLElement>;
+
+	/** Anime list. */
+	@Input({ required: true, transform: animeListAttribute })
+	protected set animeList(values: readonly Anime[]) {
+		this.dataSource.data = [...values];
+	}
+
+	/** Anime list total. */
+	@Input({ required: true, transform: numberAttribute })
+	protected readonly animeListTotal = 0;
+
+	/** Loading status of fetching anime list. */
+	@Input({ required: true, transform: booleanAttribute })
+	protected readonly isLoading = false;
+
+	/**
+	 * Page paginator to store page index and page number.
+	 * Property - pageNumber: Will be converted to the zero-based page index of the displayed list of items.
+	 * Property - pageSize: Number of items to display on a page.
+	 */
+	@Input({ required: true, transform: paginatorAttribute })
+	protected readonly pagePaginator: NonNullableFields<BaseFilterParams.Paginator> | null = null;
+
+	/** Page change event emitter. */
+	@Output()
+	public readonly pageChange = new EventEmitter<BaseFilterParams.Paginator>();
+
+	/** Sort change event emitter. */
+	@Output()
+	public readonly sortChange = new EventEmitter<AnimeFilterParams.Sort>();
+
+	private readonly destroyRef = inject(DestroyRef);
+
+	private readonly filterParamsProvider$ = inject(FILTER_PARAMS_TOKEN);
+
+	/** Convert the list to MatTableDataSource to use MatSort. */
+	protected readonly dataSource = new MatTableDataSource<Anime>();
+
+	/**
+	 * Page sorter to store sort field and sort direction dto.
+	 * Property - active: Sort field.
+	 * Property - direction: Sort direction.
+	 */
+	protected readonly pageSorter$ = new BehaviorSubject<Sort>({ active: '', direction: '' });
+
+	/** A skeleton template for a table while loading. */
+	protected readonly skeletonAnimeSource$ = new BehaviorSubject<Anime[]>(
+		this.createSkeletonAnimeSource(DEFAULT_PAGE_SIZE),
+	);
 
 	/** Anime table column names. */
 	protected readonly animeColumns = AnimeTableColumns;
@@ -33,53 +102,105 @@ export class AnimeTableComponent {
 	/** Date format. */
 	protected readonly dateFormat = DATE_FORMAT;
 
-	/** Stream of anime list. */
-	protected readonly animeList$: Observable<Pagination<Anime>>;
+	public constructor() {}
 
-	/** Loading status of fetching anime list. */
-	protected readonly isLoading$ = new BehaviorSubject(false);
+	/** @inheritdoc */
+	public ngOnInit(): void {
+		this.filterParamsProvider$
+			.pipe(
+				tap(({ pageSize, sortField, sortDirection }) => {
+					this.pageSorter$.next(this.matSortEventToTable({ sortField, sortDirection }));
+					this.skeletonAnimeSource$.next(this.createSkeletonAnimeSource(pageSize ?? DEFAULT_PAGE_SIZE));
+					this.scrollIntoView();
+				}),
+				ignoreElements(),
+				takeUntilDestroyed(this.destroyRef),
+			)
+			.subscribe();
+	}
 
-	/** Error message if something went wrong fetching anime list. */
-	protected readonly error$ = new BehaviorSubject('');
+	private scrollIntoView(): void {
+		if (this.animeTableRef) {
+			this.animeTableRef.nativeElement.scrollIntoView({ block: 'start' });
+		}
+	}
 
-	public constructor() {
-		this.isLoading$.next(true);
+	/**
+	 * Page change handler.
+	 * @param paginator Page event.
+	 */
+	protected onPageChange(paginator: BaseFilterParams.Paginator): void {
+		this.pageChange.emit(paginator);
+	}
 
-		this.animeList$ = this.animeService.getAnimeList().pipe(
-			catchError((error: unknown) => {
-				const errorMessage = error instanceof Error ? error.message : 'Something went wrong!';
-				this.error$.next(errorMessage);
+	private matSortEventFromTable({ active, direction }: Sort): AnimeFilterParams.Sort {
+		let sortDirection: SortDirection | '' = '';
 
-				return throwError(() => error);
-			}),
-			finalize(() => this.isLoading$.next(false)),
-		);
+		if (direction === SortEventDirection.Ascending) {
+			sortDirection = SortDirection.Ascending;
+		}
+		if (direction === SortEventDirection.Descending) {
+			sortDirection = SortDirection.Descending;
+		}
+
+		return {
+			sortField: sortDirection !== '' ? active as SortFields : null,
+			sortDirection: sortDirection !== '' ? sortDirection : null,
+		};
+	}
+
+	private matSortEventToTable({ sortField, sortDirection }: AnimeFilterParams.Sort): Sort {
+		let direction: SortEventDirection | '' = '';
+
+		if (sortDirection === SortDirection.Ascending) {
+			direction = SortEventDirection.Ascending;
+		}
+		if (sortDirection === SortDirection.Descending) {
+			direction = SortEventDirection.Descending;
+		}
+
+		return { active: sortField ?? '', direction };
+	}
+
+	/**
+	 * Sort change event handler.
+	 * @param sortEvent Sort event.
+	 */
+	protected onSortChange(sortEvent: Sort): void {
+		this.sortChange.emit(this.matSortEventFromTable(sortEvent));
+	}
+
+	/**
+	 * Calculate the order of a table row.
+	 * @param rowIndex The index of a table row.
+	 */
+	protected rowOrder(rowIndex: number): number | null {
+		return this.pagePaginator ? (this.pagePaginator.pageNumber - 1) * this.pagePaginator.pageSize + rowIndex + 1 : null;
 	}
 
 	/**
 	 * Get description of an anime image.
-	 * @param anime - Anime.
+	 * @param anime Anime.
 	 */
-	protected animeImageDescription(anime: Anime): string {
-		return anime.englishTitle || anime.japaneseTitle || 'Anime image';
-	}
-
-	/**
-	 * Check if list of anime is empty after fetching data.
-	 * @param isLoading - Loading status.
-	 * @param error - Error message.
-	 * @param anime - List of anime.
-	 */
-	protected isNoData(isLoading: boolean | null, error: string | null, anime: readonly Anime[]): boolean {
-		return isLoading === false && error === '' && anime.length === 0;
+	protected animeImageDescription({ japaneseTitle, englishTitle }: Anime): string {
+		return japaneseTitle ?? englishTitle ?? 'Anime image';
 	}
 
 	/**
 	 * Tracks anime by its unique identifier.
-	 * @param _ - The index of the anime in the list.
-	 * @param anime - The anime object.
+	 * @param _ The index of the anime in the list.
+	 * @param anime The anime object.
 	 */
 	protected trackAnimeById(_: number, anime: Anime): Anime['id'] {
 		return anime.id;
+	}
+
+	/**
+	 * Create a skeleton template for a table while loading.
+	 * @param pageSize Page size.
+	 */
+	protected createSkeletonAnimeSource(pageSize: number): Anime[] {
+		// 'as Anime' -> only need id for trackBy function works, all the field with no value will be replaced by skeleton loading
+		return Array.from({ length: pageSize }).map((_, index) => ({ id: index } as Anime));
 	}
 }

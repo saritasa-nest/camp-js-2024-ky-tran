@@ -1,28 +1,32 @@
 <nav class="sidebar">
-	<ul class="sidebar__list">
-		<li>
-			<a
-				title="Home page"
-				routerLink="/home"
-				routerLinkActive="sidebar__link_active"
-				class="sidebar__link"
-			>
-				Home
+	<div>
+		<header class="sidebar__header">
+			<a title="Home page" routerLink="/home">
+				<img class="sidebar__header-logo" src="assets/saritasa-logo.png" alt="Saritasa Logo">
 			</a>
-		</li>
-		<li>
-			<a
-				title="Settings page"
-				routerLink="/settings"
-				routerLinkActive="sidebar__link_active"
-				class="sidebar__link sidebar__link_disable"
-			>
-				Settings
-			</a>
-		</li>
-	</ul>
+		</header>
+
+		<ul class="sidebar__list">
+			<li>
+				<a class="sidebar__link" title="Home page" routerLink="/home" routerLinkActive="sidebar__link_active">Home</a>
+			</li>
+			<li>
+				<a class="sidebar__link" title="Auth page" routerLink="/auth" routerLinkActive="sidebar__link_active">Auth</a>
+			</li>
+		</ul>
+	</div>
+
+	<footer class="sidebar__footer">
+		<p class="sidebar__footer-text">Builders of Better</p>
+	</footer>
 </nav>
 
 <main class="main">
-	<router-outlet />
+	@defer {
+		<router-outlet />
+	} @placeholder {
+		<camp-progress-spinner />
+	} @error {
+		<camp-error-message />
+	}
 </main>

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 /** Error message component. */
 @Component({
@@ -10,5 +10,6 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 })
 export class ErrorMessageComponent {
 	/** Error message. */
-	public readonly errorMessage = input('Some thing went wrong! Please try again.');
+	@Input()
+	protected readonly errorMessage: string = 'Some thing went wrong! Please try again.';
 }

@@ -1,40 +1,40 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, map, Observable, throwError } from 'rxjs';
-
-import { AppConfig } from '@js-camp/angular/config/app-config';
-import { UrlConfig } from '@js-camp/angular/config/url-config';
-import { Anime } from '@js-camp/core/models/anime';
-import { AnimeDto } from '@js-camp/core/dtos/anime';
-import { PaginationMapper } from '@js-camp/angular/core/mappers/pagination';
-import { PaginationDto } from '@js-camp/core/dtos/pagination';
+import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
+import { UrlConfig } from '@js-camp/angular/config/url.config';
 import { Pagination } from '@js-camp/core/models/pagination';
-import { AnimeMapper } from '@js-camp/core/mappers/anime';
+import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
+import { Anime } from '@js-camp/core/models/anime';
+import { AnimeDto } from '@js-camp/core/dtos/anime.dto';
+import { AnimeMapper } from '@js-camp/core/mappers/anime.mapper';
+import { PaginationMapper } from '@js-camp/core/mappers/pagination.mapper';
+import { AnimeFilterParams } from '@js-camp/core/models/anime-filter-params';
+import { AnimeUrlService } from '@js-camp/angular/core/services/anime-url.service';
 
 /** Anime service. */
 @Injectable({ providedIn: 'root' })
 export class AnimeService {
-	private readonly appConfig = inject(AppConfig);
+	private readonly httpClient = inject(HttpClient);
 
 	private readonly urlConfig = inject(UrlConfig);
 
-	private readonly httpClient = inject(HttpClient);
+	private readonly animeUrlService = inject(AnimeUrlService);
 
-	private readonly paginationMapper = inject(PaginationMapper);
+	/**
+	 * Get anime list.
+	 * @param filterParams Anime filter params.
+	 */
+	public getList(filterParams: AnimeFilterParams.Combined): Observable<Pagination<Anime>> {
+		const httpParams = this.animeUrlService.createAnimeHttpParams(filterParams);
 
-	/** Get anime list. */
-	public getAnimeList(): Observable<Pagination<Anime>> {
-		return this.httpClient
-			.get<PaginationDto<AnimeDto>>(this.urlConfig.animeUrl)
+		return this.httpClient.get<PaginationDto<AnimeDto>>(this.urlConfig.animeUrl, { params: httpParams })
 			.pipe(
-				map(responseDto => this.paginationMapper.fromDto(responseDto, AnimeMapper.fromDto)),
-				catchError((error: unknown) => {
-					if (!this.appConfig.isProduction) {
-						console.error({ error });
-					}
-
-					return throwError(() => new Error('Failed to fetch anime. Please try again.'));
-				}),
+				map(responseDto => PaginationMapper.fromDto(responseDto, AnimeMapper.fromDto)),
+				shareReplay({ refCount: true, bufferSize: 1 }),
+				catchError((error: unknown) => throwError(() => {
+					const errorMessage = error && typeof error === 'object' && 'message' in error ? error.message : 'unknown error';
+					return new Error(`Something went wrong. Please try again. Error message: ${errorMessage}`);
+				})),
 			);
 	}
 }

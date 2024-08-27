@@ -1,4 +1,4 @@
-import { AnimeStatusDto } from '../dtos/anime';
+import { AnimeStatusDto } from '../dtos/anime.dto';
 import { AnimeStatus } from '../models/anime';
 
 /** Mapping from dto to domain model. */
@@ -13,7 +13,7 @@ export namespace AnimeStatusMapper {
 
 	/**
 	 * Mapping from DTO to Domain model.
-	 * @param statusDto - Anime status dto.
+	 * @param statusDto Anime status dto.
 	 */
 	export function fromDto(statusDto: AnimeStatusDto): AnimeStatus {
 		return STATUS_MAPPING_FROM_DTO[statusDto];

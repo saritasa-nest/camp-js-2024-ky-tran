@@ -1,4 +1,4 @@
-import { DateRangeDto } from './date-range';
+import { DateRangeDto } from './date-range.dto';
 
 /** Anime type DTO. */
 export enum AnimeTypeDto {

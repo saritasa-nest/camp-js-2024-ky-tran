@@ -5,7 +5,7 @@
 	--background-color-primary-subtle: #222;
 	--background-color-primary-light: #333;
 	--background-color-primary-bright: #444;
-	--border-color-main: #222;
+	--background-color-primary-extra-bright: #555;
 	--error-color-main: #e41e1e;
 
 	/* Layout */
@@ -13,21 +13,28 @@
 	--width-layout-main: 1280px;
 	--width-layout-sub: 180px;
 	--width-image-main: 150px;
+	--height-skeleton-cell: 24px;
 	--height-table-header: 56px;
 	--width-table-scrollbar: 8px;
 	--width-border-small: 2px;
 	--width-border-medium: 4px;
+	--width-border-large: 6px;
+	--width-paginator-arrow: 24px;
+	--gap-tiny: 4px;
 	--gap-extra-small: 8px;
 	--gap-small: 16px;
 	--gap-medium: 20px;
+	--gap-extra-medium: 24px;
 	--gap-large: 30px;
 	--gap-extra-large: 40px;
 	--gap-huge: 60px;
 
 	/* Font-size */
 	--font-size-root: 10px;
+	--font-size-small: 1.2rem;
 	--font-size-medium: 1.4rem;
 	--font-size-extra-medium: 1.6rem;
+	--font-size-large: 2rem;
 	--font-size-extra-large: 2.4rem;
 
 	/* Util */
