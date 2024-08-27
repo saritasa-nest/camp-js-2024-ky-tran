@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { first } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SIGN_OUT_MESSAGE } from '@js-camp/angular/shared/constants';
 import { UserService } from '@js-camp/angular/core/services/user.service';
@@ -33,7 +32,7 @@ export class UserProfileComponent {
 	/** On sign out. */
 	protected onSignOut(): void {
 		this.userService.signOut()
-			.pipe(first(), takeUntilDestroyed(this.destroyRef))
+			.pipe(takeUntilDestroyed(this.destroyRef))
 			.subscribe(() => this.router.navigate([PATHS.signIn]));
 
 		this.notificationService.notifyAppSuccess(SIGN_OUT_MESSAGE);

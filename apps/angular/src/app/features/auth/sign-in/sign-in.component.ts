@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { catchError, first, throwError } from 'rxjs';
+import { catchError, throwError } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AuthFormErrorService } from '@js-camp/angular/core/services/auth-form-error.service';
 import { UserService } from '@js-camp/angular/core/services/user.service';
 import { PATHS } from '@js-camp/core/utils/paths';
@@ -23,6 +24,8 @@ import { AUTH_SERVER_ERROR_FIELD, AUTHORIZATION_ERROR_MESSAGE, SIGN_IN_MESSAGE }
 })
 export class SignInComponent {
 	private readonly router = inject(Router);
+
+	private readonly destroyRef = inject(DestroyRef);
 
 	private readonly userService = inject(UserService);
 
@@ -56,7 +59,7 @@ export class SignInComponent {
 
 			this.userService.signIn(this.form.getRawValue())
 				.pipe(
-					first(),
+					takeUntilDestroyed(this.destroyRef),
 					catchError((error: unknown) => {
 						if (error && typeof error === 'object' && 'errors' in error) {
 							const authSignInErrors = error.errors as AuthSignInErrors;

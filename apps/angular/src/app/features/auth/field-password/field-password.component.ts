@@ -5,7 +5,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
 import { FormFieldService } from '@js-camp/angular/core/services/form-field.service';
 import { FieldErrorComponent } from '@js-camp/angular/app/features/auth/field-error/field-error.component';
-import { createUniqueId } from '@js-camp/angular/core/utils/helpers/create-unique-id';
 
 /** Field Password component. */
 @Component({
@@ -38,9 +37,6 @@ export class FieldPasswordComponent implements OnInit {
 	public ngOnInit(): void {
 		this.isInvalid$ = this.formFieldService.createIsInvalidObservable(this.passwordControl);
 	}
-
-	/** Unique id.*/
-	protected readonly uniqueId = createUniqueId(this.field);
 
 	/** Weather password is hidden.*/
 	protected readonly isPasswordHidden = signal(true);

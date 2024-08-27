@@ -4,7 +4,6 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { FormFieldService } from '@js-camp/angular/core/services/form-field.service';
 import { FieldErrorComponent } from '@js-camp/angular/app/features/auth/field-error/field-error.component';
-import { createUniqueId } from '@js-camp/angular/core/utils/helpers/create-unique-id';
 
 /** Field Name component. */
 @Component({
@@ -37,7 +36,4 @@ export class FieldNameComponent implements OnInit {
 	public ngOnInit(): void {
 		this.isInvalid$ = this.formFieldService.createIsInvalidObservable(this.control);
 	}
-
-	/** Unique id.*/
-	protected readonly uniqueId = createUniqueId(this.field);
 }

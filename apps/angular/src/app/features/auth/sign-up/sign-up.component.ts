@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { catchError, first, throwError } from 'rxjs';
+import { catchError, throwError } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SignUpFormService } from '@js-camp/angular/core/services/sign-up-form.service';
 import { FieldEmailComponent } from '@js-camp/angular/app/features/auth/field-email/field-email.component';
 import { FieldPasswordComponent } from '@js-camp/angular/app/features/auth/field-password/field-password.component';
@@ -24,6 +25,8 @@ import { PATHS } from '@js-camp/core/utils/paths';
 })
 export class SignUpComponent {
 	private readonly router = inject(Router);
+
+	private readonly destroyRef = inject(DestroyRef);
 
 	private readonly userService = inject(UserService);
 
@@ -57,7 +60,7 @@ export class SignUpComponent {
 
 			this.userService.signUp(this.form.getRawValue())
 				.pipe(
-					first(),
+					takeUntilDestroyed(this.destroyRef),
 					catchError((error: unknown) => {
 						if (error && typeof error === 'object' && 'errors' in error) {
 							const authSignUpErrors = error.errors as AuthSignUpErrors;

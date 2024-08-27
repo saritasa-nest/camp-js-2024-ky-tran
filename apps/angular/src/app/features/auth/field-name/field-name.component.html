@@ -1,13 +1,13 @@
 <div class="form__group">
-	<label [for]="uniqueId" class="form__group-label">{{ label }}</label>
-
-	<input
-		class="form__group-input form__group-first-name"
-		name="firstName"
-		type="text"
-		[id]="uniqueId"
-		[formControl]="control"
-	>
+	<label class="form__group-label">
+		{{ label }}
+		<input
+			class="form__group-input form__group-first-name"
+			name="firstName"
+			type="text"
+			[formControl]="control"
+		>
+	</label>
 
 	@if (isInvalid$ | async) {
 		<camp-field-error [field]="field" [errors]="control.errors" />

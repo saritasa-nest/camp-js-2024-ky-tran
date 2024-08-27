@@ -1,14 +1,14 @@
 <div class="form__group">
-	<label [for]="uniqueId" class="form__group-label">Email</label>
-
-	<input
-		class="form__group-input form__group-email"
-		type="email"
-		name="email"
-		autocomplete="email"
-		[id]="uniqueId"
-		[formControl]="emailControl"
-	>
+	<label class="form__group-label">
+		Email
+		<input
+			class="form__group-input form__group-email"
+			type="email"
+			name="email"
+			autocomplete="email"
+			[formControl]="emailControl"
+		>
+	</label>
 
 	@if (isInvalid$ | async) {
 		<camp-field-error [field]="field" [errors]="emailControl.errors" />

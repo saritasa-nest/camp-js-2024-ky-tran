@@ -18,10 +18,14 @@
 	overflow: hidden;
 }
 
-.form__group {
+.form__group,
+.form__group-label {
 	display: flex;
 	flex-direction: column;
 	gap: var(--gap-extra-small);
+}
+
+.form__group {
 	padding-block: var(--gap-medium-small);
 }
 
