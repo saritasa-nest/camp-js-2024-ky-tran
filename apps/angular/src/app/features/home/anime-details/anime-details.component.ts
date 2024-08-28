@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MatDialog, MatDialogContent } from '@angular/material/dialog';
 import { defer, of, shareReplay, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -12,6 +11,7 @@ import { NotificationService } from '@js-camp/angular/core/services/notification
 import { NullablePipe } from '@js-camp/angular/core/pipes/nullable.pipe';
 import { AnimeImagePopupComponent } from '@js-camp/angular/app/features/home/anime-details/anime-image-popup/anime-image-popup.component';
 import { ProgressSpinnerComponent } from '@js-camp/angular/shared/components/progress-spinner/progress-spinner.component';
+import { SafePipe } from '@js-camp/angular/core/pipes/safe.pipe';
 
 /** Anime Details component. */
 @Component({
@@ -19,7 +19,7 @@ import { ProgressSpinnerComponent } from '@js-camp/angular/shared/components/pro
 	standalone: true,
 	templateUrl: './anime-details.component.html',
 	styleUrl: './anime-details.component.css',
-	imports: [CommonModule, NullablePipe, MatDialogContent, ProgressSpinnerComponent],
+	imports: [CommonModule, NullablePipe, MatDialogContent, ProgressSpinnerComponent, SafePipe],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimeDetailsComponent implements OnInit {
@@ -29,8 +29,6 @@ export class AnimeDetailsComponent implements OnInit {
 	private readonly route = inject(ActivatedRoute);
 
 	private readonly destroyRef = inject(DestroyRef);
-
-	private readonly domSanitizer = inject(DomSanitizer);
 
 	private readonly dialog = inject(MatDialog);
 
@@ -47,7 +45,7 @@ export class AnimeDetailsComponent implements OnInit {
 	/** Date format. */
 	protected readonly dateFormat = DATE_FORMAT;
 
-	/** Place holder. */
+	/** Placeholder. */
 	protected readonly placeholder = 'N/A';
 
 	/** @inheritdoc */
@@ -90,7 +88,7 @@ export class AnimeDetailsComponent implements OnInit {
 	 * Get youtube trailer url by anime id.
 	 * @param id Anime id.
 	 */
-	protected getYoutubeTrailerUrl(id: AnimeDetails['youtubeTrailerId']): SafeResourceUrl {
-		return this.domSanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${id}?hl=en`);
+	protected getYoutubeTrailerUrl(id: AnimeDetails['youtubeTrailerId']): string {
+		return `https://www.youtube.com/embed/${id}?hl=en`;
 	}
 }

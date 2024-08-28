@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, map, Observable, pipe, shareReplay, throwError } from 'rxjs';
+import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
 import { UrlConfig } from '@js-camp/angular/config/url.config';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
@@ -23,9 +23,9 @@ export class AnimeService {
 
 	private readonly animeUrlService = inject(AnimeUrlService);
 
-	private handleError(error: unknown): Observable<never> {
+	private handleError(error: unknown): Error {
 		const errorMessage = error && typeof error === 'object' && 'message' in error ? error.message : 'unknown error';
-		return throwError(() => new Error(`Something went wrong. Please try again. Error message: ${errorMessage}`));
+		return new Error(`Something went wrong. Please try again. Error message: ${errorMessage}`);
 	}
 
 	/**
@@ -39,7 +39,7 @@ export class AnimeService {
 			.pipe(
 				map(responseDto => PaginationMapper.fromDto(responseDto, AnimeMapper.fromDto)),
 				shareReplay({ refCount: true, bufferSize: 1 }),
-				catchError(error => this.handleError(error)),
+				catchError((error: unknown) => throwError(() => this.handleError(error))),
 			);
 	}
 
@@ -52,7 +52,7 @@ export class AnimeService {
 			.pipe(
 				map(animeDetailsDto => AnimeDetailsMapper.fromDto(animeDetailsDto)),
 				shareReplay({ refCount: true, bufferSize: 1 }),
-				catchError(error => this.handleError(error)),
+				catchError((error: unknown) => throwError(() => this.handleError(error))),
 			);
 	}
 }

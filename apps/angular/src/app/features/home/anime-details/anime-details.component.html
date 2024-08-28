@@ -47,7 +47,7 @@
 		<div class="anime-details-trailer">
 			<iframe
 				class="anime-details-trailer__iframe"
-				[src]="getYoutubeTrailerUrl(anime.youtubeTrailerId)"
+				[src]="getYoutubeTrailerUrl(anime.youtubeTrailerId) | appSafe:'resourceUrl'"
 				allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
 				allowfullscreen
 			></iframe>
