@@ -13,7 +13,7 @@ import { AnimeDetailsComponent } from '@js-camp/angular/app/features/home/anime-
 export const appRoutes: Routes = [
 	{ path: '', redirectTo: 'home', pathMatch: 'full' },
 	{ path: 'home', component: HomeComponent },
-	{ path: 'anime/:id', component: AnimeDetailsComponent },
+	{ path: 'anime/:id', component: AnimeDetailsComponent, canMatch: [authGuard({ isAuthorized: true })] },
 	{
 		path: 'user',
 		component: UserComponent,

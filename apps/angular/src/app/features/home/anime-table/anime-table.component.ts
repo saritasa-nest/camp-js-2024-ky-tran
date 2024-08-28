@@ -8,7 +8,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DATE_FORMAT, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
 import { Anime } from '@js-camp/core/models/anime';
 import { NullablePipe } from '@js-camp/angular/core/pipes/nullable.pipe';
-import { ProgressSpinnerComponent } from '@js-camp/angular/shared/components/progress-spinner/progress-spinner.component';
 import { FILTER_PARAMS_TOKEN } from '@js-camp/angular/core/providers/filter-params.provider';
 import { paginatorAttribute } from '@js-camp/angular/shared/attributes/paginator-attribute';
 import { animeListAttribute } from '@js-camp/angular/shared/attributes/anime-list-attribute';
@@ -34,7 +33,6 @@ import { PATHS } from '@js-camp/core/utils/paths';
 		CommonModule,
 		MatTableModule,
 		MatSortModule,
-		ProgressSpinnerComponent,
 		NullablePipe,
 		LazyLoadImageDirective,
 		SkeletonCellComponent,
