@@ -211,4 +211,15 @@ export class AnimeTableComponent implements OnInit {
 	protected onSelectAnime(anime: Anime): void {
 		this.router.navigate([PATHS.animeDetails(anime.id)]);
 	}
+
+	/**
+	 * Navigate to the details page of the selected anime by pressing Enter button.
+	 * @param event Keyboard event.
+	 * @param anime Anime.
+	 */
+	protected onSelectAnimeByKeyDown(event: KeyboardEvent, anime: Anime): void {
+		if (event.key === 'Enter') {
+			this.onSelectAnime(anime);
+		}
+	}
 }

@@ -51,16 +51,24 @@ export class AnimeDetailsComponent implements OnInit {
 	/** @inheritdoc */
 	public ngOnInit(): void {
 		const animeId = Number(this.route.snapshot.paramMap.get('id'));
-		this.isLoading.set(true);
+		this.handleStartFetchingSideEffect();
 
 		defer(() => animeId ? this.animeService.getDetails(animeId) : of(null))
 			.pipe(
-				tap({ finalize: () => this.isLoading.set(false) }),
+				tap({ finalize: () => this.handleFinishFetchingSideEffect() }),
 				this.notificationService.notifyAppErrorPipe(),
 				shareReplay({ refCount: true, bufferSize: 1 }),
 				takeUntilDestroyed(this.destroyRef),
 			)
 			.subscribe(animeDetails => this.animeDetails.set(animeDetails));
+	}
+
+	private handleStartFetchingSideEffect(): void {
+		this.isLoading.set(true);
+	}
+
+	private handleFinishFetchingSideEffect(): void {
+		this.isLoading.set(false);
 	}
 
 	/**
