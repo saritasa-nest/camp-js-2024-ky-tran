@@ -4,15 +4,15 @@ import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
 import { UrlConfig } from '@js-camp/angular/config/url.config';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
-import { Anime } from '@js-camp/core/models/anime';
-import { AnimeDto } from '@js-camp/core/dtos/anime.dto';
-import { AnimeMapper } from '@js-camp/core/mappers/anime.mapper';
 import { PaginationMapper } from '@js-camp/core/mappers/pagination.mapper';
 import { AnimeFilterParams } from '@js-camp/core/models/anime-filter-params';
 import { AnimeUrlService } from '@js-camp/angular/core/services/anime-url.service';
-import { AnimeDetails } from '@js-camp/core/models/anime-details';
-import { AnimeDetailsDto } from '@js-camp/core/dtos/anime-details.dto';
-import { AnimeDetailsMapper } from '@js-camp/core/mappers/anime-details.mapper';
+import { AnimeOverview } from '@js-camp/core/models/anime-overview';
+import { AnimeOverviewDto } from '@js-camp/core/dtos/anime-overview.dto';
+import { AnimeOverviewMapper } from '@js-camp/core/mappers/anime-overview.mapper';
+import { AnimeExtended } from '@js-camp/core/models/anime-extended';
+import { AnimeExtendedDto } from '@js-camp/core/dtos/anime-extended.dto';
+import { AnimeExtendedMapper } from '@js-camp/core/mappers/anime-extended.mapper';
 
 /** Anime service. */
 @Injectable({ providedIn: 'root' })
@@ -32,12 +32,12 @@ export class AnimeService {
 	 * Get anime list.
 	 * @param filterParams Anime filter params.
 	 */
-	public getList(filterParams: AnimeFilterParams.Combined): Observable<Pagination<Anime>> {
+	public getList(filterParams: AnimeFilterParams.Combined): Observable<Pagination<AnimeOverview>> {
 		const httpParams = this.animeUrlService.createAnimeHttpParams(filterParams);
 
-		return this.httpClient.get<PaginationDto<AnimeDto>>(this.urlConfig.animeUrl, { params: httpParams })
+		return this.httpClient.get<PaginationDto<AnimeOverviewDto>>(this.urlConfig.animeUrl, { params: httpParams })
 			.pipe(
-				map(responseDto => PaginationMapper.fromDto(responseDto, AnimeMapper.fromDto)),
+				map(responseDto => PaginationMapper.fromDto(responseDto, AnimeOverviewMapper.fromDto)),
 				shareReplay({ refCount: true, bufferSize: 1 }),
 				catchError((error: unknown) => throwError(() => this.handleError(error))),
 			);
@@ -47,10 +47,10 @@ export class AnimeService {
 	 * Get anime details by id.
 	 * @param id Id.
 	 */
-	public getDetails(id: number): Observable<AnimeDetails> {
-		return this.httpClient.get<AnimeDetailsDto>(`${this.urlConfig.animeUrl}${id}/`)
+	public getDetails(id: number): Observable<AnimeExtended> {
+		return this.httpClient.get<AnimeExtendedDto>(`${this.urlConfig.animeUrl}${id}/`)
 			.pipe(
-				map(animeDetailsDto => AnimeDetailsMapper.fromDto(animeDetailsDto)),
+				map(animeDetailsDto => AnimeExtendedMapper.fromDto(animeDetailsDto)),
 				shareReplay({ refCount: true, bufferSize: 1 }),
 				catchError((error: unknown) => throwError(() => this.handleError(error))),
 			);

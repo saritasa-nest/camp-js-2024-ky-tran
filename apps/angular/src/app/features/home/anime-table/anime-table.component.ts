@@ -6,7 +6,6 @@ import { MatSortModule, Sort } from '@angular/material/sort';
 import { BehaviorSubject, ignoreElements, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DATE_FORMAT, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
-import { Anime } from '@js-camp/core/models/anime';
 import { NullablePipe } from '@js-camp/angular/core/pipes/nullable.pipe';
 import { FILTER_PARAMS_TOKEN } from '@js-camp/angular/core/providers/filter-params.provider';
 import { paginatorAttribute } from '@js-camp/angular/shared/attributes/paginator-attribute';
@@ -22,6 +21,7 @@ import { SortFields } from '@js-camp/core/models/sort-fields';
 import { SortEventDirection } from '@js-camp/angular/core/enums/sort-event-direction';
 import { AnimeTableColumns } from '@js-camp/angular/core/enums/anime-table-columns';
 import { PATHS } from '@js-camp/core/utils/paths';
+import { AnimeOverview } from '@js-camp/core/models/anime-overview';
 
 /** Anime Table component. */
 @Component({
@@ -46,7 +46,7 @@ export class AnimeTableComponent implements OnInit {
 
 	/** Anime list. */
 	@Input({ required: true, transform: animeListAttribute })
-	protected set animeList(values: readonly Anime[]) {
+	protected set animeList(values: readonly AnimeOverview[]) {
 		this.dataSource.data = [...values];
 	}
 
@@ -81,7 +81,7 @@ export class AnimeTableComponent implements OnInit {
 	private readonly filterParamsProvider$ = inject(FILTER_PARAMS_TOKEN);
 
 	/** Convert the list to MatTableDataSource to use MatSort. */
-	protected readonly dataSource = new MatTableDataSource<Anime>();
+	protected readonly dataSource = new MatTableDataSource<AnimeOverview>();
 
 	/**
 	 * Page sorter to store sort field and sort direction dto.
@@ -91,7 +91,7 @@ export class AnimeTableComponent implements OnInit {
 	protected readonly pageSorter$ = new BehaviorSubject<Sort>({ active: '', direction: '' });
 
 	/** A skeleton template for a table while loading. */
-	protected readonly skeletonAnimeSource$ = new BehaviorSubject<Anime[]>(
+	protected readonly skeletonAnimeSource$ = new BehaviorSubject<AnimeOverview[]>(
 		this.createSkeletonAnimeSource(DEFAULT_PAGE_SIZE),
 	);
 
@@ -182,7 +182,7 @@ export class AnimeTableComponent implements OnInit {
 	 * Get description of an anime image.
 	 * @param anime Anime.
 	 */
-	protected animeImageDescription({ japaneseTitle, englishTitle }: Anime): string {
+	protected animeImageDescription({ japaneseTitle, englishTitle }: AnimeOverview): string {
 		return japaneseTitle ?? englishTitle ?? 'Anime image';
 	}
 
@@ -191,7 +191,7 @@ export class AnimeTableComponent implements OnInit {
 	 * @param _ The index of the anime in the list.
 	 * @param anime The anime object.
 	 */
-	protected trackAnimeById(_: number, anime: Anime): Anime['id'] {
+	protected trackAnimeById(_: number, anime: AnimeOverview): AnimeOverview['id'] {
 		return anime.id;
 	}
 
@@ -199,16 +199,16 @@ export class AnimeTableComponent implements OnInit {
 	 * Create a skeleton template for a table while loading.
 	 * @param pageSize Page size.
 	 */
-	protected createSkeletonAnimeSource(pageSize: number): Anime[] {
+	protected createSkeletonAnimeSource(pageSize: number): AnimeOverview[] {
 		// 'as Anime' -> only need id for trackBy function works, all the field with no value will be replaced by skeleton loading
-		return Array.from({ length: pageSize }).map((_, index) => ({ id: index } as Anime));
+		return Array.from({ length: pageSize }).map((_, index) => ({ id: index } as AnimeOverview));
 	}
 
 	/**
 	 * Navigate to the details page of the selected anime.
 	 * @param anime Anime.
 	 */
-	protected onSelectAnime(anime: Anime): void {
+	protected onSelectAnime(anime: AnimeOverview): void {
 		this.router.navigate([PATHS.animeDetails(anime.id)]);
 	}
 
@@ -217,7 +217,7 @@ export class AnimeTableComponent implements OnInit {
 	 * @param event Keyboard event.
 	 * @param anime Anime.
 	 */
-	protected onSelectAnimeByKeyDown(event: KeyboardEvent, anime: Anime): void {
+	protected onSelectAnimeByKeyDown(event: KeyboardEvent, anime: AnimeOverview): void {
 		if (event.key === 'Enter') {
 			this.onSelectAnime(anime);
 		}

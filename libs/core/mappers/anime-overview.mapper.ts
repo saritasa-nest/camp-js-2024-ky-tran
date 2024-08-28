@@ -1,32 +1,28 @@
-import { AnimeDto } from '../dtos/anime.dto';
-import { Anime } from '../models/anime';
+import { AnimeOverviewDto } from '../dtos/anime-overview.dto';
+import { AnimeOverview } from '../models/anime-overview';
 
 import { AnimeStatusMapper } from './anime-status.mapper';
 import { AnimeTypeMapper } from './anime-type.mapper';
 import { DateRangeMapper } from './date-range.mapper';
 
-/** Anime mapper. */
-export namespace AnimeMapper {
+/** Anime overview mapper. */
+export namespace AnimeOverviewMapper {
 
 	/**
 	 * Mapping from dto to domain model.
-	 * @param dto Anime DTO.
+	 * @param dto Anime overview dto.
 	 */
-	export function fromDto(dto: AnimeDto): Anime {
-		return {
+	export function fromDto(dto: AnimeOverviewDto): AnimeOverview {
+		return new AnimeOverview({
 			id: dto.id,
 			createdAt: DateRangeMapper.parseDateFromDto(dto.created),
 			modifiedAt: DateRangeMapper.parseDateFromDto(dto.modified),
+			imageSrc: dto.image,
 			englishTitle: dto.title_eng,
 			japaneseTitle: dto.title_jpn,
-			imageUrl: dto.image,
-			aired: DateRangeMapper.fromDto(dto.aired),
 			type: AnimeTypeMapper.fromDto(dto.type),
 			status: AnimeStatusMapper.fromDto(dto.status),
-			averageScore: dto.score,
-			userScore: dto.user_score,
-			studioIds: dto.studios,
-			genreIds: dto.genres,
-		};
+			aired: DateRangeMapper.fromDto(dto.aired),
+		});
 	}
 }

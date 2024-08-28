@@ -26,8 +26,8 @@ export class UserProfileComponent {
 	/** User service. */
 	protected readonly userService = inject(UserService);
 
-	/** Default user image url. */
-	protected readonly defaultUserImageUrl = 'https://book-catalog-internship.web.app/images/user.png';
+	/** Default user image source. */
+	protected readonly defaultUserImageSrc = 'https://book-catalog-internship.web.app/images/user.png';
 
 	/** On sign out. */
 	protected onSignOut(): void {

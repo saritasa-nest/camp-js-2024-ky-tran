@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { FILTER_PARAMS_TOKEN } from '@js-camp/angular/core/providers/filter-params.provider';
-import { AnimeType } from '@js-camp/core/models/anime';
 import { AnimeFilterParams } from '@js-camp/core/models/anime-filter-params';
+import { AnimeType } from '@js-camp/core/models/anime-type';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 /** Filter component. */

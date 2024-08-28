@@ -11,7 +11,7 @@ export namespace StudioMapper {
 		return new Studio({
 			id: dto.id,
 			name: dto.name,
-			imageUrl: dto.image ?? '',
+			imageSrc: dto.image ?? '',
 		});
 	}
 }

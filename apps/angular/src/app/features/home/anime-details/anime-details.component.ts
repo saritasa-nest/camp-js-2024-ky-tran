@@ -6,12 +6,12 @@ import { defer, of, shareReplay, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DATE_FORMAT } from '@js-camp/angular/shared/constants';
 import { AnimeService } from '@js-camp/angular/core/services/anime.service';
-import { AnimeDetails } from '@js-camp/core/models/anime-details';
 import { NotificationService } from '@js-camp/angular/core/services/notification.service';
 import { NullablePipe } from '@js-camp/angular/core/pipes/nullable.pipe';
 import { AnimeImagePopupComponent } from '@js-camp/angular/app/features/home/anime-details/anime-image-popup/anime-image-popup.component';
 import { ProgressSpinnerComponent } from '@js-camp/angular/shared/components/progress-spinner/progress-spinner.component';
 import { SafePipe } from '@js-camp/angular/core/pipes/safe.pipe';
+import { AnimeExtended } from '@js-camp/core/models/anime-extended';
 
 /** Anime Details component. */
 @Component({
@@ -37,7 +37,7 @@ export class AnimeDetailsComponent implements OnInit {
 	private readonly notificationService = inject(NotificationService);
 
 	/** Anime details. */
-	protected readonly animeDetails = signal<AnimeDetails | null>(null);
+	protected readonly animeDetails = signal<AnimeExtended | null>(null);
 
 	/** Loading status. */
 	protected readonly isLoading = signal(false);
@@ -96,7 +96,7 @@ export class AnimeDetailsComponent implements OnInit {
 	 * Get youtube trailer url by anime id.
 	 * @param id Anime id.
 	 */
-	protected getYoutubeTrailerUrl(id: AnimeDetails['youtubeTrailerId']): string {
+	protected getYoutubeTrailerUrl(id: AnimeExtended['youtubeTrailerId']): string {
 		return `https://www.youtube.com/embed/${id}?hl=en`;
 	}
 }

@@ -1,7 +1,7 @@
 import { SortDirection } from './sort-direction';
-import { AnimeType } from './anime';
 import { SortFields } from './sort-fields';
 import { BaseFilterParams } from './base-filter-params';
+import { AnimeType } from './anime-type';
 
 /** Anime filter params domain model. */
 export namespace AnimeFilterParams {

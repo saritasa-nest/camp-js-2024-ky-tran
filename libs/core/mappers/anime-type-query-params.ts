@@ -1,4 +1,4 @@
-import { AnimeType } from '../models/anime';
+import { AnimeType } from '../models/anime-type';
 
 /** Anime type query params. */
 export enum AnimeTypeQueryParams {

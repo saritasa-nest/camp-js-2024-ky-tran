@@ -9,14 +9,14 @@ export class Studio extends Immerable {
 	/** Studio name. */
 	public readonly name: string;
 
-	/** Studio image url. */
-	public readonly imageUrl: string;
+	/** Studio image source. */
+	public readonly imageSrc: string;
 
 	public constructor(data: StudioConstructorData) {
 		super();
 		this.id = data.id;
 		this.name = data.name;
-		this.imageUrl = data.imageUrl;
+		this.imageSrc = data.imageSrc;
 	}
 }
 
