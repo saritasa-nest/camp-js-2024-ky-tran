@@ -6,6 +6,17 @@ import { SortFieldsUrlMapper } from './sort-fields-query-params.mapper';
 import { SortDirectionQueryParamsMapper } from './sort-direction-query-params.mapper';
 import { BaseQueryParamsMapper } from './base-query-params.mapper';
 
+/**
+ * Assert value in enum.
+ * @param e Enum.
+ * @param token Key.
+ */
+function assertValueInEnum<T extends { [s: string]: unknown; }>(e: T, token: unknown): asserts token is T[keyof T] {
+	if (!Object.values(e).includes(token as T[keyof T])) {
+		throw new Error(`Invalid enum value: ${token}`);
+	}
+}
+
 /** Anime query params mappers. */
 export namespace AnimeQueryParamsMapper {
 
@@ -26,7 +37,10 @@ export namespace AnimeQueryParamsMapper {
 			...BaseQueryParamsMapper.mapCombinedFromDto({ pageNumber, pageSize, search }, defaultPageNumber, defaultPageSize),
 			sortField: sortField ? SortFieldsUrlMapper.fromDto(sortField) : null,
 			sortDirection: sortDirection ? SortDirectionQueryParamsMapper.fromDto(sortDirection) : null,
-			typeIn: typeIn ? typeIn.split(',').map(type => AnimeTypeQueryParamsMapper.fromDto(type as AnimeTypeQueryParams)) : null,
+			typeIn: typeIn ? typeIn.split(',').map(type => {
+				assertValueInEnum(AnimeTypeQueryParams, type);
+				return AnimeTypeQueryParamsMapper.fromDto(type);
+			}) : null,
 		};
 	}
 
