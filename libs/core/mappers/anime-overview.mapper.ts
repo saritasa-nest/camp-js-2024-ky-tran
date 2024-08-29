@@ -9,8 +9,8 @@ import { DateRangeMapper } from './date-range.mapper';
 export namespace AnimeOverviewMapper {
 
 	/**
-	 * Mapping from dto to domain model.
-	 * @param dto Anime overview dto.
+	 * Mapping from DTO to domain model.
+	 * @param dto Anime overview DTO.
 	 */
 	export function fromDto(dto: AnimeOverviewDto): AnimeOverview {
 		return new AnimeOverview({
@@ -18,8 +18,8 @@ export namespace AnimeOverviewMapper {
 			createdAt: DateRangeMapper.parseDateFromDto(dto.created),
 			modifiedAt: DateRangeMapper.parseDateFromDto(dto.modified),
 			imageSrc: dto.image,
-			englishTitle: dto.title_eng,
-			japaneseTitle: dto.title_jpn,
+			englishTitle: dto.title_eng !== '' ? dto.title_eng : null,
+			japaneseTitle: dto.title_jpn !== '' ? dto.title_jpn : null,
 			type: AnimeTypeMapper.fromDto(dto.type),
 			status: AnimeStatusMapper.fromDto(dto.status),
 			aired: DateRangeMapper.fromDto(dto.aired),

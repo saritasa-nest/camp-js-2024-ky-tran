@@ -16,10 +16,10 @@ export class AnimeOverview extends Immerable {
 	public readonly modifiedAt: Date;
 
 	/** English title. */
-	public readonly englishTitle: string;
+	public readonly englishTitle: string | null;
 
 	/** Japanese title. */
-	public readonly japaneseTitle: string;
+	public readonly japaneseTitle: string | null;
 
 	/** Image source. */
 	public readonly imageSrc: string | null;

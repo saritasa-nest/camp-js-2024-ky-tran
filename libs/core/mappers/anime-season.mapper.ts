@@ -12,8 +12,8 @@ const ANIME_SEASON_MAP_FROM_DTO: Readonly<Record<AnimeSeasonDto, AnimeSeason>> =
 export namespace AnimeSeasonMapper {
 
 	/**
-	 * Maps dto to model.
-	 * @param dto Anime dto.
+	 * Maps DTO to model.
+	 * @param dto Anime DTO.
 	 */
 	export function fromDto(dto: AnimeSeasonDto): AnimeSeason {
 		return ANIME_SEASON_MAP_FROM_DTO[dto];

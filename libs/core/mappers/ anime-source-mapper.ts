@@ -24,8 +24,8 @@ const ANIME_SOURCE_MAP_FROM_DTO: Readonly<Record<AnimeSourceDto, AnimeSource>> =
 export namespace AnimeSourceMapper {
 
 	/**
-	 * Maps dto to model.
-	 * @param dto Anime dto.
+	 * Maps DTO to domain model.
+	 * @param dto Anime DTO.
 	 */
 	export function fromDto(dto: AnimeSourceDto): AnimeSource {
 		return ANIME_SOURCE_MAP_FROM_DTO[dto];

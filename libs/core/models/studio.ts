@@ -10,7 +10,7 @@ export class Studio extends Immerable {
 	public readonly name: string;
 
 	/** Studio image source. */
-	public readonly imageSrc: string;
+	public readonly imageSrc: string | null;
 
 	public constructor(data: StudioConstructorData) {
 		super();

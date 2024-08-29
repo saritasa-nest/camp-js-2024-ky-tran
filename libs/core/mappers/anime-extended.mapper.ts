@@ -12,7 +12,7 @@ export namespace AnimeExtendedMapper {
 
 	/**
 	 * Maps from DTO to domain model.
-	 * @param dto Anime extended dto.
+	 * @param dto Anime extended DTO.
 	 */
 	export function fromDto(dto: AnimeExtendedDto): AnimeExtended {
 		return new AnimeExtended({

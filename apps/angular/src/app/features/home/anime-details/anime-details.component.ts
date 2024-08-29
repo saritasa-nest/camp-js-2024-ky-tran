@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogContent } from '@angular/material/dialog';
 import { defer, of, shareReplay, tap } from 'rxjs';
@@ -13,13 +13,24 @@ import { ProgressSpinnerComponent } from '@js-camp/angular/shared/components/pro
 import { SafePipe } from '@js-camp/angular/core/pipes/safe.pipe';
 import { AnimeExtended } from '@js-camp/core/models/anime-extended';
 
+/** Anime information. */
+type AnimeInformation = Readonly<{
+
+	/** Label. */
+	label: string;
+
+	/** Value. */
+	value: string;
+}>;
+
 /** Anime Details component. */
 @Component({
 	selector: 'camp-anime-details',
 	standalone: true,
 	templateUrl: './anime-details.component.html',
 	styleUrl: './anime-details.component.css',
-	imports: [CommonModule, NullablePipe, MatDialogContent, ProgressSpinnerComponent, SafePipe],
+	imports: [MatDialogContent, ProgressSpinnerComponent, SafePipe, NullablePipe],
+	providers: [DatePipe, NullablePipe],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimeDetailsComponent implements OnInit {
@@ -29,6 +40,10 @@ export class AnimeDetailsComponent implements OnInit {
 	private readonly route = inject(ActivatedRoute);
 
 	private readonly destroyRef = inject(DestroyRef);
+
+	private readonly datePipe = inject(DatePipe);
+
+	private readonly nullablePipe = inject(NullablePipe);
 
 	private readonly dialog = inject(MatDialog);
 
@@ -78,6 +93,45 @@ export class AnimeDetailsComponent implements OnInit {
 	 */
 	protected openImagePopup(imageSrc: string | null, imageAlt: string): void {
 		this.dialog.open(AnimeImagePopupComponent, { data: { imageSrc, imageAlt } });
+	}
+
+	/**
+	 * Get image alternative text.
+	 * @param anime Anime details.
+	 */
+	protected imageAlternativeText({ japaneseTitle, englishTitle }: AnimeExtended): string {
+		return japaneseTitle ?? englishTitle ?? 'Anime image';
+	}
+
+	/**
+	 * Get anime information.
+	 * @param anime Anime details.
+	 */
+	protected animeInformation(anime: AnimeExtended): AnimeInformation[] {
+		const { type, status, rating, source, season, synopsis, airingStatus, aired, studios, genres } = anime;
+
+		const startAt = this.nullablePipe.transform(
+			this.datePipe.transform(aired?.startAt, this.dateFormat),
+			this.placeholder,
+		);
+
+		const endAt = this.nullablePipe.transform(
+			this.datePipe.transform(aired?.endAt, this.dateFormat),
+			this.placeholder,
+		);
+
+		return [
+			{ label: 'Type', value: type },
+			{ label: 'Status', value: status },
+			{ label: 'Rating', value: rating },
+			{ label: 'Source', value: source },
+			{ label: 'Season', value: season },
+			{ label: 'Synopsis', value: synopsis },
+			{ label: 'Airing status', value: airingStatus },
+			{ label: 'Aired date', value: `${startAt} to ${endAt}` },
+			{ label: 'Studios', value: this.formatListToString(studios) },
+			{ label: 'Genres', value: this.formatListToString(genres) },
+		];
 	}
 
 	/**

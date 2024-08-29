@@ -27,7 +27,7 @@ export namespace DateRangeMapper {
 	}
 
 	/**
-	 * Mapping from dto to domain model.
+	 * Mapping from DTO to domain model.
 	 * @param dateRangeDto DTO.
 	 */
 	export function fromDto(dateRangeDto: DateRangeDto): DateRange {
@@ -38,7 +38,7 @@ export namespace DateRangeMapper {
 	}
 
 	/**
-	 * Mapping from domain model to dto.
+	 * Mapping from domain model to DTO.
 	 * @param dateRangeModel Domain model.
 	 */
 	export function toDto(dateRangeModel: DateRange): DateRangeDto {

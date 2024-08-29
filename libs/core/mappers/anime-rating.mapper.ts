@@ -14,8 +14,8 @@ const ANIME_RATING_MAP_FROM_DTO: Readonly<Record<AnimeRatingDto, AnimeRating>> =
 export namespace AnimeRatingMapper {
 
 	/**
-	 * Maps dto to model.
-	 * @param dto Anime dto.
+	 * Maps DTO to model.
+	 * @param dto Anime DTO.
 	 */
 	export function fromDto(dto: AnimeRatingDto): AnimeRating {
 		return ANIME_RATING_MAP_FROM_DTO[dto];

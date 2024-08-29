@@ -11,13 +11,13 @@
 				<img
 					class="anime-details-image__image"
 					[src]="anime.imageSrc"
-					[alt]="anime.japaneseTitle || anime.englishTitle | appNullable:placeholder"
+					[alt]="imageAlternativeText(anime)"
 				>
 
 				<button
 					type="button"
 					class="anime-details-image__button"
-					(click)="openImagePopup(anime.imageSrc, anime.japaneseTitle || anime.englishTitle || '')"
+					(click)="openImagePopup(anime.imageSrc, imageAlternativeText(anime))"
 				>
 					View full image
 				</button>
@@ -25,22 +25,13 @@
 
 			<div class="anime-details-information">
 				<h3>{{ anime.englishTitle | appNullable:placeholder }} - {{ anime.japaneseTitle | appNullable:placeholder }}</h3>
-				<p><strong>Type:</strong> {{ anime.type | appNullable:placeholder }}</p>
-				<p><strong>Status:</strong> {{ anime.status | appNullable:placeholder }}</p>
-				<p><strong>Rating:</strong> {{ anime.rating | appNullable:placeholder }}</p>
-				<p><strong>Source:</strong> {{ anime.source | appNullable:placeholder }}</p>
-				<p><strong>Season:</strong> {{ anime.season | appNullable:placeholder }}</p>
-				<p><strong>Synopsis:</strong> {{ anime.synopsis | appNullable:placeholder }}</p>
-				<p><strong>Airing status:</strong> {{ anime.airingStatus | appNullable:placeholder }}</p>
-				<p>
-					<strong>Aired date:</strong>
-					{{
-						anime.aired.startAt | date:dateFormat | appNullable:placeholder }}
-						to
-						{{ anime.aired.endAt | date:dateFormat | appNullable:placeholder }}
-				</p>
-				<p><strong>Studios:</strong> {{ formatListToString(anime.studios) | appNullable:placeholder }}</p>
-				<p><strong>Genres:</strong> {{ formatListToString(anime.genres) | appNullable:placeholder }}</p>
+
+				@for (information of animeInformation(anime); track information.label) {
+					<p>
+						<strong>{{ information.label }}:</strong>
+						{{ information.value | appNullable:placeholder }}.
+					</p>
+				}
 			</div>
 		</div>
 
