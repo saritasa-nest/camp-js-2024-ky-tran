@@ -6,12 +6,14 @@
 	--background-color-primary-light: #333;
 	--background-color-primary-bright: #444;
 	--background-color-primary-extra-bright: #555;
+	--success-color-main: #32e41e;
 	--error-color-main: #e41e1e;
 
 	/* Layout */
 	--height-layout-main: 640px;
 	--width-layout-main: 1280px;
 	--width-layout-sub: 180px;
+	--width-layout-form: 480px;
 	--width-image-main: 150px;
 	--height-skeleton-cell: 24px;
 	--height-table-header: 56px;
@@ -22,12 +24,14 @@
 	--width-paginator-arrow: 24px;
 	--gap-tiny: 4px;
 	--gap-extra-small: 8px;
+	--gap-medium-small: 12px;
 	--gap-small: 16px;
 	--gap-medium: 20px;
 	--gap-extra-medium: 24px;
 	--gap-large: 30px;
 	--gap-extra-large: 40px;
 	--gap-huge: 60px;
+	--gap-extra-huge: 80px;
 
 	/* Font-size */
 	--font-size-root: 10px;
@@ -41,5 +45,7 @@
 	--line-height-title: 1;
 	--line-height-body: 1.5;
 	--line-height-table: 1.6;
+	--font-weight-medium: 500;
+	--font-weight-extra-medium: 600;
 	--box-shadow-scrollbar: 0 3px 13px 1px #0000001f;
 }

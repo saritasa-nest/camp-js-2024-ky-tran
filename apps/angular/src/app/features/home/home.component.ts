@@ -12,9 +12,9 @@ import { AnimeUrlService } from '@js-camp/angular/core/services/anime-url.servic
 import { NotificationService } from '@js-camp/angular/core/services/notification.service';
 import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
-import { toggleExecutionState } from '@js-camp/angular/shared/utils/rxjs/toggleExecutionState';
 import { BaseFilterParams } from '@js-camp/core/models/base-filter-params';
 import { AnimeFilterParams } from '@js-camp/core/models/anime-filter-params';
+import { toggleExecutionState } from '@js-camp/angular/core/utils/rxjs/toggleExecutionState';
 
 /** Home page. */
 @Component({
@@ -60,7 +60,7 @@ export class HomeComponent {
 				switchMap(filterParams => this.animeService.getList(filterParams)
 					.pipe(
 						toggleExecutionState(this.isLoading$),
-						this.notificationService.notifyAppError(),
+						this.notificationService.notifyAppErrorPipe(),
 					)),
 				shareReplay({ refCount: true, bufferSize: 1 }),
 				takeUntilDestroyed(this.destroyRef),

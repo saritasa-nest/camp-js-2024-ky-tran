@@ -1,0 +1,26 @@
+<h2 class="header-title">Let's sign up! Onii-chan :3</h2>
+
+<form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+	<camp-field-email [emailControl]="form.controls.email" />
+
+	<camp-field-password [passwordControl]="form.controls.password" />
+
+	<camp-field-password
+		label="Password confirm"
+		field="passwordConfirm"
+		[passwordControl]="form.controls.passwordConfirm"
+	/>
+
+	<camp-field-name label="First name" field="firstName" [control]="form.controls.firstName" />
+
+	<camp-field-name label="Last name" field="lastName" [control]="form.controls.lastName" />
+
+	<div class="form__group form__group-call-to-sign-action">
+		<p>Onii-chan already has an account?</p>
+		<a class="form__group-link" [routerLink]="['../', 'signin']">Let's sign in</a>
+	</div>
+
+	<div class="form__group">
+		<button class="form__group-submit-button" type="submit" [disabled]="isLoading()">Sign up</button>
+	</div>
+</form>

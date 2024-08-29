@@ -1,0 +1,56 @@
+:host {
+	display: block;
+}
+
+.user-profile {
+	display: flex;
+	align-items: start;
+	flex-direction: column;
+	gap: var(--gap-medium);
+	width: 100%;
+	height: 100%;
+}
+
+.user-info {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	gap: var(--gap-medium-small);
+}
+
+.user-info__image {
+	--width-user-image: 46px;
+
+	width: var(--width-user-image);
+	height: var(--width-user-image);
+	object-fit: cover;
+	border-radius: 100%;
+}
+
+.user-info__name {
+	font-weight: var(--font-weight-medium);
+}
+
+.button {
+	display: inline-block;
+	font-size: var(--font-size-medium);
+	font-weight: var(--font-weight-extra-medium);
+	padding: var(--font-size-small) var(--font-size-large);
+	transition: 0.2s;
+	cursor: pointer;
+}
+
+.button_sign-out {
+	background-color: var(--background-color-primary-bright);
+	color: var(--text-color-main);
+	outline: 1px solid var(--background-color-primary-bright);
+	border: 1px solid var(--background-color-primary-bright);
+}
+
+.button_sign-out:hover {
+	filter: brightness(1.15);
+}
+
+.button_sign-out:active {
+	filter: brightness(1.1);
+}

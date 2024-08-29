@@ -65,7 +65,10 @@
           {
             "alias": ["takeUntilDestroy"]
           }
-        ]
+        ],
+				"@typescript-eslint/no-inferrable-types": ["error", {
+					"ignoreParameters": true
+				}]
       }
     },
     {

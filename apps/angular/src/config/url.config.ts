@@ -4,12 +4,30 @@ import { environment } from '@js-camp/angular/environments/environment';
 /** Url Config. */
 @Injectable({ providedIn: 'root' })
 export class UrlConfig {
-	/** Base URL. */
+	/** Base url. */
 	public readonly baseUrl = environment.baseUrl;
 
-	/** Anime Base URL. */
+	/** Auth base url. */
+	public readonly authBaseUrl = `${environment.baseUrl}/auth`;
+
+	/** Auth sign in url. */
+	public readonly authSignInUrl = `${this.authBaseUrl}/login/`;
+
+	/** Auth sign in refresh url. */
+	public readonly authSignInRefreshUrl = `${this.authBaseUrl}/token/refresh/`;
+
+	/** Auth sign up url. */
+	public readonly authSignUpUrl = `${this.authBaseUrl}/register/`;
+
+	/** Users base url. */
+	public readonly usersBaseUrl = `${environment.baseUrl}/users`;
+
+	/** Users profile url. */
+	public readonly usersProfileUrl = `${this.usersBaseUrl}/profile/`;
+
+	/** Anime base url. */
 	public readonly animeBaseUrl = `${environment.baseUrl}/anime`;
 
-	/** Anime URL. */
+	/** Anime url. */
 	public readonly animeUrl = `${this.animeBaseUrl}/anime/`;
 }
