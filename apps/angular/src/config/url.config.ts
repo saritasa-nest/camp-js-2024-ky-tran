@@ -25,9 +25,6 @@ export class UrlConfig {
 	/** Users profile url. */
 	public readonly usersProfileUrl = `${this.usersBaseUrl}/profile/`;
 
-	/** Anime base url. */
-	public readonly animeBaseUrl = `${environment.baseUrl}/anime`;
-
 	/** Anime url. */
-	public readonly animeUrl = `${this.animeBaseUrl}/anime/`;
+	public readonly animeUrl = `${environment.baseUrl}/anime/`;
 }
