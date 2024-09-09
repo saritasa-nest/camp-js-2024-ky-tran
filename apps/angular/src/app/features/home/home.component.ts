@@ -10,11 +10,11 @@ import { SearchComponent } from '@js-camp/angular/app/features/home/search/searc
 import { AnimeService } from '@js-camp/angular/core/services/anime.service';
 import { AnimeUrlService } from '@js-camp/angular/core/services/anime-url.service';
 import { NotificationService } from '@js-camp/angular/core/services/notification.service';
-import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { BaseFilterParams } from '@js-camp/core/models/base-filter-params';
 import { AnimeFilterParams } from '@js-camp/core/models/anime-filter-params';
 import { toggleExecutionState } from '@js-camp/angular/core/utils/rxjs/toggleExecutionState';
+import { AnimeOverview } from '@js-camp/core/models/anime-overview';
 
 /** Home page. */
 @Component({
@@ -38,7 +38,7 @@ export class HomeComponent {
 	private readonly destroyRef = inject(DestroyRef);
 
 	/** Stream of anime list. */
-	protected readonly animeList$: Observable<Pagination<Anime>>;
+	protected readonly animeList$: Observable<Pagination<AnimeOverview>>;
 
 	/** Loading status of fetching anime list. */
 	protected readonly isLoading$ = new BehaviorSubject(true);

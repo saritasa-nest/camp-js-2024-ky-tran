@@ -28,7 +28,7 @@
 						<div class="table__row-image-container">
 							<img
 								class="table__row-image"
-								[appLazyLoadImage]="anime.imageUrl"
+								[appLazyLoadImage]="anime.imageSrc"
 								src="assets/lazy-load-image.jpg"
 								[alt]="animeImageDescription(anime)"
 							>
@@ -73,7 +73,15 @@
 			</ng-container>
 
 			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-			<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+			<tr
+				mat-row
+				*matRowDef="let row; columns: displayedColumns;"
+				role="button"
+				tabindex="1"
+				(click)="onSelectAnime(row)"
+				(keydown)="onSelectAnimeByKeyDown($event, row)"
+			></tr>
 
 			<tr class="mat-row" *matNoDataRow>
 				<td class="mat-cell table__no-data-row" colspan="7">

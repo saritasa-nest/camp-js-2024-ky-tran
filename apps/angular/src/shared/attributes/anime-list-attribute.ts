@@ -1,9 +1,9 @@
-import { Anime } from '@js-camp/core/models/anime';
+import { AnimeOverview } from '@js-camp/core/models/anime-overview';
 
 /**
  * Anime list attribute transform.
  * @param animeList List of anime.
  */
-export function animeListAttribute(animeList: readonly Anime[] | null): readonly Anime[] {
+export function animeListAttribute(animeList: readonly AnimeOverview[] | null): readonly AnimeOverview[] {
 	return animeList ?? [];
 }

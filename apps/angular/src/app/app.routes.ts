@@ -7,11 +7,13 @@ import { authGuard } from '@js-camp/angular/core/guards/auth-guard';
 import { UserComponent } from '@js-camp/angular/app/features/user/user.component';
 import { UserProfileComponent } from '@js-camp/angular/app/features/user/user-profile/user-profile.component';
 import { SignUpComponent } from '@js-camp/angular/app/features/auth/sign-up/sign-up.component';
+import { AnimeDetailsComponent } from '@js-camp/angular/app/features/home/anime-details/anime-details.component';
 
 /** Routes object. */
 export const appRoutes: Routes = [
 	{ path: '', redirectTo: 'home', pathMatch: 'full' },
 	{ path: 'home', component: HomeComponent },
+	{ path: 'anime/:id', component: AnimeDetailsComponent, canMatch: [authGuard({ isAuthorized: true })] },
 	{
 		path: 'user',
 		component: UserComponent,

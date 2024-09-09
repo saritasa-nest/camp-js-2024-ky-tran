@@ -1,0 +1,48 @@
+@if (isLoading()) {
+	<div class="loading-wrapper">
+		<camp-progress-spinner />
+	</div>
+}
+
+@if (animeDetails(); as anime) {
+	<section class="anime-details">
+		<div class="anime-details-content">
+			<div class="anime-details-image">
+				<img
+					class="anime-details-image__image"
+					[src]="anime.imageSrc"
+					[alt]="imageAlternativeText(anime)"
+				>
+
+				<button
+					type="button"
+					class="anime-details-image__button"
+					(click)="openImagePopup(anime.imageSrc, imageAlternativeText(anime))"
+				>
+					View full image
+				</button>
+			</div>
+
+			<div class="anime-details-information">
+				<h3>{{ anime.englishTitle | appNullable:placeholder }} - {{ anime.japaneseTitle | appNullable:placeholder }}</h3>
+
+				@for (information of animeInformation(anime); track information.label) {
+					<p>
+						<strong>{{ information.label }}:</strong>
+						{{ information.value | appNullable:placeholder }}.
+					</p>
+				}
+			</div>
+		</div>
+
+		<div class="anime-details-trailer">
+			<iframe
+				title="Anime trailer"
+				class="anime-details-trailer__iframe"
+				[src]="getYoutubeTrailerUrl(anime.youtubeTrailerId) | appSafe:'resourceUrl'"
+				allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+				allowfullscreen
+			></iframe>
+		</div>
+	</section>
+}

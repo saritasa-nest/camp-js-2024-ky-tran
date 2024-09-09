@@ -3,7 +3,7 @@
 		<div class="user-info">
 			<img
 				class="user-info__image"
-				[src]="data.user?.avatar ?? this.defaultUserImageUrl"
+				[src]="data.user?.avatar ?? this.defaultUserImageSrc"
 				[alt]="'Image of user ' + data.user?.firstName"
 			>
 			<p class="user-info__name">{{ data.user?.firstName }} {{ data.user?.lastName }}</p>
