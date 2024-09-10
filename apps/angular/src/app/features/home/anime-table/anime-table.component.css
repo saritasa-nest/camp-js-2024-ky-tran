@@ -49,6 +49,11 @@
 	filter: brightness(0.9);
 }
 
+.table tr.table-header:hover {
+	filter: unset;
+	cursor: default;
+}
+
 .table th,
 .table td {
 	color: var(--text-color-main);
@@ -62,6 +67,7 @@
 	height: var(--height-table-header);
 	font-size: var(--font-size-extra-medium);
 	padding-block: var(--gap-extra-small);
+	z-index: 1;
 }
 
 .table td {
@@ -100,6 +106,24 @@
 	width: 100%;
 	aspect-ratio: 1;
 	object-fit: contain;
+}
+
+.table-delete-button {
+	position: relative;
+	top: var(--width-border-small);
+	background-color: unset;
+	border: none;
+	cursor: pointer;
+}
+
+.table-delete-button__icon {
+	display: block;
+	color: var(--background-color-primary-subtle);
+	transition: all ease 0.2s;
+}
+
+.table-delete-button:hover .table-delete-button__icon {
+	color: var(--text-color-main);
 }
 
 .table__no-data-row {

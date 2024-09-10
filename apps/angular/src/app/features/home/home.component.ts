@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BehaviorSubject, Observable, shareReplay, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Observable, shareReplay, startWith, switchMap, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FILTER_PARAMS_PROVIDER, FILTER_PARAMS_TOKEN } from '@js-camp/angular/core/providers/filter-params.provider';
 import { DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE } from '@js-camp/angular/shared/constants';
@@ -40,6 +40,8 @@ export class HomeComponent {
 	/** Stream of anime list. */
 	protected readonly animeList$: Observable<Pagination<AnimeOverview>>;
 
+	private readonly refreshAnimeList$ = new BehaviorSubject<null>(null);
+
 	/** Loading status of fetching anime list. */
 	protected readonly isLoading$ = new BehaviorSubject(true);
 
@@ -54,17 +56,25 @@ export class HomeComponent {
 	});
 
 	public constructor() {
-		this.animeList$ = this.filterParamsProvider$
-			.pipe(
-				tap(filterParams => this.handlePaginatorSideEffect(filterParams)),
-				switchMap(filterParams => this.animeService.getList(filterParams)
-					.pipe(
-						toggleExecutionState(this.isLoading$),
-						this.notificationService.notifyAppErrorPipe(),
-					)),
-				shareReplay({ refCount: true, bufferSize: 1 }),
-				takeUntilDestroyed(this.destroyRef),
-			);
+		this.animeList$ = this.refreshAnimeList$.pipe(
+			startWith(null),
+			switchMap(() => this.filterParamsProvider$
+				.pipe(
+					tap(filterParams => this.handlePaginatorSideEffect(filterParams)),
+					switchMap(filterParams => this.animeService.getList(filterParams)
+						.pipe(
+							toggleExecutionState(this.isLoading$),
+							this.notificationService.notifyAppErrorPipe(),
+						)),
+					shareReplay({ refCount: true, bufferSize: 1 }),
+					takeUntilDestroyed(this.destroyRef),
+				)),
+		);
+	}
+
+	/** Refresh anime list. */
+	protected refreshAnimeList(): void {
+		this.refreshAnimeList$.next(null);
 	}
 
 	private handlePaginatorSideEffect(filterParams: AnimeFilterParams.Combined): void {

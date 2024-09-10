@@ -7,4 +7,5 @@ export enum AnimeTableColumns {
 	AiredStart = 'startDate',
 	Type = 'type',
 	Status = 'status',
+	Remove = 'remove',
 }

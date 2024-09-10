@@ -18,5 +18,6 @@
 		[pagePaginator]="data.pagePaginator"
 		(pageChange)="onPageChange($event)"
 		(sortChange)="onSortChange($event)"
+		(animeDeleted)="refreshAnimeList()"
 	/>
 }

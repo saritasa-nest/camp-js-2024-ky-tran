@@ -48,10 +48,22 @@ export class AnimeService {
 	 * @param id Id.
 	 */
 	public getDetails(id: number): Observable<AnimeExtended> {
-		return this.httpClient.get<AnimeExtendedDto>(`${this.urlConfig.animeUrl}${id}/`)
+		return this.httpClient.get<AnimeExtendedDto>(`${this.urlConfig.animeUrl}${encodeURIComponent(id)}/`)
 			.pipe(
 				map(animeDetailsDto => AnimeExtendedMapper.fromDto(animeDetailsDto)),
 				shareReplay({ refCount: true, bufferSize: 1 }),
+				catchError((error: unknown) => throwError(() => this.handleError(error))),
+			);
+	}
+
+	/**
+	 * Delete anime by id.
+	 * @param id Id.
+	 */
+	public deleteById(id: number): Observable<void> {
+		return this.httpClient.delete<void>(`${this.urlConfig.animeUrl}${encodeURIComponent(id)}/`)
+			.pipe(
+				map(() => undefined),
 				catchError((error: unknown) => throwError(() => this.handleError(error))),
 			);
 	}

@@ -2,6 +2,8 @@ import { booleanAttribute, ChangeDetectionStrategy, Component, DestroyRef, Eleme
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSortModule, Sort } from '@angular/material/sort';
 import { BehaviorSubject, ignoreElements, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -13,6 +15,7 @@ import { animeListAttribute } from '@js-camp/angular/shared/attributes/anime-lis
 import { LazyLoadImageDirective } from '@js-camp/angular/shared/directives/lazy-load-image.directive';
 import { BaseFilterParams } from '@js-camp/core/models/base-filter-params';
 import { SkeletonCellComponent } from '@js-camp/angular/app/features/home/anime-table/skeleton-cell/skeleton-cell.component';
+import { DeleteConfirmationDialogComponent } from '@js-camp/angular/app/features/home/anime-table/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { NonNullableFields } from '@js-camp/core/types/non-nullable-fields';
 import { AnimeFilterParams } from '@js-camp/core/models/anime-filter-params';
 import { PaginatorComponent } from '@js-camp/angular/app/features/home/anime-table/paginator/paginator.component';
@@ -22,6 +25,8 @@ import { SortEventDirection } from '@js-camp/angular/core/enums/sort-event-direc
 import { AnimeTableColumns } from '@js-camp/angular/core/enums/anime-table-columns';
 import { PATHS } from '@js-camp/core/utils/paths';
 import { AnimeOverview } from '@js-camp/core/models/anime-overview';
+import { AnimeService } from '@js-camp/angular/core/services/anime.service';
+import { NotificationService } from '@js-camp/angular/core/services/notification.service';
 
 /** Anime Table component. */
 @Component({
@@ -37,7 +42,9 @@ import { AnimeOverview } from '@js-camp/core/models/anime-overview';
 		LazyLoadImageDirective,
 		SkeletonCellComponent,
 		PaginatorComponent,
+		MatIconModule,
 	],
+	providers: [NullablePipe],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimeTableComponent implements OnInit {
@@ -74,11 +81,23 @@ export class AnimeTableComponent implements OnInit {
 	@Output()
 	public readonly sortChange = new EventEmitter<AnimeFilterParams.Sort>();
 
+	/** Anime deleted event emitter. */
+	@Output()
+	public readonly animeDeleted = new EventEmitter<void>();
+
 	private readonly router = inject(Router);
+
+	private readonly dialog = inject(MatDialog);
 
 	private readonly destroyRef = inject(DestroyRef);
 
 	private readonly filterParamsProvider$ = inject(FILTER_PARAMS_TOKEN);
+
+	private readonly nullablePipe = inject(NullablePipe);
+
+	private readonly animeService = inject(AnimeService);
+
+	private readonly notificationService = inject(NotificationService);
 
 	/** Convert the list to MatTableDataSource to use MatSort. */
 	protected readonly dataSource = new MatTableDataSource<AnimeOverview>();
@@ -221,5 +240,44 @@ export class AnimeTableComponent implements OnInit {
 		if (event.key === 'Enter') {
 			this.onSelectAnime(anime);
 		}
+	}
+
+	private transformTitle(title: string | null): string {
+		return this.nullablePipe.transform(title, 'N/A');
+	}
+
+	/**
+	 * Open a modal to confirm deleting anime by its unique identifier.
+	 * @param event Click event.
+	 * @param anime Anime.
+	 */
+	protected onDeleteAnimeById(event: Event, anime: AnimeOverview): void {
+		event.stopPropagation();
+
+		const animeTitle = `${this.transformTitle(anime.englishTitle)} - ${this.transformTitle(anime.japaneseTitle)}`;
+		const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, { data: { title: animeTitle } });
+
+		dialogRef.componentInstance.isDeleting$.subscribe(isDeleting => {
+			if (isDeleting) {
+				dialogRef.disableClose = true;
+				this.deleteAnimeById(anime.id, dialogRef);
+			}
+		});
+	}
+
+	private deleteAnimeById(id: number, dialogRef: MatDialogRef<DeleteConfirmationDialogComponent, unknown>): void {
+		this.animeService.deleteById(id)
+			.pipe(
+				tap({ finalize: () => this.handleDeleteAnimeSideEffect(dialogRef) }),
+				this.notificationService.notifyAppErrorPipe(),
+				takeUntilDestroyed(this.destroyRef),
+			)
+			.subscribe(() => this.animeDeleted.emit());
+	}
+
+	private handleDeleteAnimeSideEffect(dialogRef: MatDialogRef<DeleteConfirmationDialogComponent, unknown>): void {
+		dialogRef.disableClose = false;
+		dialogRef.componentInstance.isDeleting$.next(false);
+		dialogRef.componentInstance.onCancel();
 	}
 }

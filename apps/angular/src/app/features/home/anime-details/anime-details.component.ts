@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogContent } from '@angular/material/dialog';
@@ -34,9 +34,6 @@ type AnimeInformation = Readonly<{
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimeDetailsComponent implements OnInit {
-	/** Image dialog. */
-	@ViewChild('imageDialog') private readonly imageDialog: TemplateRef<unknown> | null = null;
-
 	private readonly route = inject(ActivatedRoute);
 
 	private readonly destroyRef = inject(DestroyRef);
