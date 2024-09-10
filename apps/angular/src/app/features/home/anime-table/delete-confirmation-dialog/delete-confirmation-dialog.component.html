@@ -1,8 +1,27 @@
-<h1 mat-dialog-title>Delete Anime</h1>
-<div mat-dialog-content>
+<h2 mat-dialog-title class="delete-title">Delete Anime</h2>
+
+<div mat-dialog-content class="delete-content">
 	<p>Are you sure you want to delete anime: "{{ data.title }}"?</p>
 </div>
-<div mat-dialog-actions>
-  <button mat-button type="button" [disabled]="isDeleting$ | async" (click)="onCancel()">Cancel</button>
-  <button mat-button type="button" [disabled]="isDeleting$ | async" (click)="onConfirm()">Delete</button>
+
+<div mat-dialog-actions class="delete-button-wrapper">
+  <button
+		mat-button
+		type="button"
+		class="main-button delete-button delete-button-cancel"
+		[disabled]="isDeleting$ | async"
+		(click)="onClose()"
+	>
+		Cancel
+	</button>
+
+  <button
+		mat-button
+		type="button"
+		class="main-button delete-button delete-button-confirm"
+		[disabled]="isDeleting$ | async"
+		(click)="onConfirm()"
+	>
+		Delete
+	</button>
 </div>

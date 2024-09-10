@@ -1,3 +1,24 @@
-:root {
-	display: block;
+:host {
+	display: flex;
+	flex-direction: column;
+	gap: var(--gap-small);
+	background-color: var(--background-color-primary-bright);
+	padding: var(--gap-medium);
+}
+
+.delete-title,
+.delete-content {
+	color: var(--text-color-main);
+}
+
+.delete-button-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: var(--gap-medium-small);
+	padding-top: var(--gap-extra-small);
+}
+
+.delete-button {
+	padding: var(--gap-extra-small) var(--gap-small);
 }

@@ -10,11 +10,6 @@ import { SnackbarData, SnackbarDataStatus } from '@js-camp/angular/shared/types/
 export class NotificationService {
 	private readonly snackBar = inject(MatSnackBar);
 
-	private readonly snackbarPosition = {
-		verticalPosition: 'top',
-		horizontalPosition: 'right',
-	};
-
 	private openSnackbar(data: SnackbarData, durationMillisecondOption: { duration?: number; }): void {
 		this.snackBar.openFromComponent(SnackbarComponent, {
 			data,

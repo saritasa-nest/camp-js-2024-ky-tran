@@ -272,12 +272,15 @@ export class AnimeTableComponent implements OnInit {
 				this.notificationService.notifyAppErrorPipe(),
 				takeUntilDestroyed(this.destroyRef),
 			)
-			.subscribe(() => this.animeDeleted.emit());
+			.subscribe(() => {
+				this.notificationService.notifyAppSuccess(null);
+				this.animeDeleted.emit();
+			});
 	}
 
 	private handleDeleteAnimeSideEffect(dialogRef: MatDialogRef<DeleteConfirmationDialogComponent, unknown>): void {
 		dialogRef.disableClose = false;
 		dialogRef.componentInstance.isDeleting$.next(false);
-		dialogRef.componentInstance.onCancel();
+		dialogRef.componentInstance.onClose();
 	}
 }

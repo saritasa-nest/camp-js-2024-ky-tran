@@ -27,8 +27,8 @@ export class DeleteConfirmationDialogComponent {
 	/** Whether if delete action is in progress. */
 	public isDeleting$ = new BehaviorSubject(false);
 
-	/** Cancel delete action. */
-	public onCancel(): void {
+	/** Close delete action. */
+	public onClose(): void {
 		this.dialog.close();
 	}
 

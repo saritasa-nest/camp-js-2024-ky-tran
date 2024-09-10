@@ -1,0 +1,19 @@
+button.main-button {
+	background-color: var(--background-color-primary-extra-bright);
+	color: var(--text-color-main);
+	font-size: var(--font-size-medium);
+	font-weight: var(--font-weight-extra-medium);
+	padding: var(--gap-medium-small) var(--gap-small);
+	transition: all ease 0.2s;
+	border: 1px solid var(--background-color-primary-bright);
+	cursor: pointer;
+}
+
+button.main-button:hover {
+	border: 1px solid var(--background-color-primary-light);
+}
+
+button.main-button:disabled {
+	background-color: var(--background-color-primary-light);
+	cursor: not-allowed;
+}
