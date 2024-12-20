@@ -3,12 +3,8 @@
 	flex-direction: column;
 	gap: var(--gap-small);
 	background-color: var(--background-color-primary-bright);
-	padding: var(--gap-medium);
-}
-
-.delete-title,
-.delete-content {
 	color: var(--text-color-main);
+	padding: var(--gap-medium);
 }
 
 .delete-button-wrapper {
